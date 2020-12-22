@@ -1,0 +1,25 @@
+{
+	"name": "@bulletz/common",
+	"version": "1.0.0",
+	"main": "build/index.js",
+	"typings": "build/index.d.ts",
+	"license": "MIT",
+	"scripts": {
+		"lint": "eslint 'src/**/*.{ts,tsx}'",
+		"lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+		"build": "tsc -p tsconfig.json --resolveJsonModule",
+		"start": "tsc -p tsconfig.json --resolveJsonModule --watch"
+	},
+	"dependencies": {
+		"@testing-library/dom": "^7.28.1"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": [
+		">0.2%",
+		"not dead",
+		"not ie <= 11",
+		"not op_mini all"
+	]
+}

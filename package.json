@@ -1,0 +1,25 @@
+{
+  "name": "bulletz",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "useWorkspaces": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "repository": "https://github.com/LukeWood/miniature-parakeet.git",
+  "author": "Luke Wood <lukewoodcs@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn build:common && concurrently --kill-others-on-fail \"yarn start:client\" \"yarn start:server\" \"yarn start:common\"",
+    "start:server": "yarn workspace @bulletz/server start",
+    "start:client": "yarn workspace @bulletz/client start",
+    "start:common": "yarn workspace @bulletz/common start",
+    "build:common": "yarn workspace @bulletz/common build"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0"
+  }
+}
