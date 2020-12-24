@@ -26,8 +26,8 @@ const ANIMATION_SPEED = 0.2;
 export const Player = (props: IProps) => {
   return (<AnimatedSprite
     anchor={new PIXI.Point(0.5, 0.5)}
-    width ={200}
-    height = {200}
+    width ={100}
+    height = {100}
     textures = {textures}
     x={props.player.x}
     animationSpeed = {ANIMATION_SPEED}
