@@ -13,7 +13,7 @@ type AnimatedSpriteProps = {
   height?: number;
   anchor?: PIXI.Point;
 };
-
+//hi im just testing
 function equalAnchors(a1?: PIXI.Point, a2?: PIXI.Point): boolean {
   if ((!a1) && (!a2)) {
     return true;
