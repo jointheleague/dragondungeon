@@ -8,6 +8,8 @@ export interface IInputs {
   down: boolean;
   shoot: boolean;
   autoshoot: boolean;
+  mouseX: number;
+  mouseY: number;
 }
 
 type GameLifecycle = 'lobby' | 'deathmatch';
@@ -25,7 +27,10 @@ export class Player extends Schema {
   @type("number")
   y: number = 1;
 
-  speed:number = 15;
+  @type("number")
+  angle: number = 0;
+
+  speed:number = 20;
   direction: Geometry.Vector = new Geometry.Vector(0, 0);
 
   activeInputs: IInputs= {
@@ -34,7 +39,9 @@ export class Player extends Schema {
     right: false,
     down: false,
     shoot: false,
-    autoshoot: false
+    autoshoot: false,
+    mouseX: 0.0,
+    mouseY: 0.0,
   };
 
   constructor(name: string, host: boolean) {
@@ -58,6 +65,7 @@ export class Player extends Schema {
     if (i.down) {
       resDirection.y+=1;
     }
+    this.angle = Math.atan2(this.y - i.mouseY, this.x - i.mouseX);
     this.direction = resDirection;
   }
 
