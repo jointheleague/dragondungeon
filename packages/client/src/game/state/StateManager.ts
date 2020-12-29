@@ -1,11 +1,11 @@
 import { ColyseusService } from '../../services/colyseus'
 import { Room } from 'colyseus.js';
-import {BehaviorSubject, ReplaySubject, Observable} from 'rxjs';
-import {filter, pairwise, map} from 'rxjs/operators';
+import { BehaviorSubject, ReplaySubject, Observable } from 'rxjs';
+import { filter, pairwise, map } from 'rxjs/operators';
 
-import {Maths} from '@bulletz/common';
+import { Maths } from '@bulletz/common';
 
-import {GameState, IPlayer} from './types';
+import { GameState, IPlayer } from './types';
 
 type PlayerKeys = Array<keyof IPlayer>;
 
@@ -19,18 +19,18 @@ export function isGameRenderState(v: any): v is GameRenderState {
 export interface LobbyRenderState {
   isLobbyState: true;
   sessionId: string;
-  players: {[key: string]: IPlayer};
+  players: { [key: string]: IPlayer };
   room: Room;
 }
 
 export interface GameRenderState {
   isGameRenderState: true;
   frame: number;
-  players: {[key: string]: IPlayer};
+  players: { [key: string]: IPlayer };
 }
 
 function removeRoom(s1: any) {
-  let {room, ...rest} = s1;
+  let { room, ...rest } = s1;
   return rest;
 }
 
@@ -41,28 +41,28 @@ function stateCompare(s1: any, s2: any) {
   const str2 = JSON.stringify(rest2)
   return str1 !== str2;
 }
-function key_diff (a1: string[], a2: string[]) {
+function key_diff(a1: string[], a2: string[]) {
 
-    let a: {[key: string]: boolean} = {};
-    let diff = [];
+  let a: { [key: string]: boolean } = {};
+  let diff = [];
 
-    for (let i = 0; i < a1.length; i++) {
-        a[a1[i]] = true;
+  for (let i = 0; i < a1.length; i++) {
+    a[a1[i]] = true;
+  }
+
+  for (let i = 0; i < a2.length; i++) {
+    if (a[a2[i]]) {
+      delete a[a2[i]];
+    } else {
+      a[a2[i]] = true;
     }
+  }
 
-    for (let i = 0; i < a2.length; i++) {
-        if (a[a2[i]]) {
-            delete a[a2[i]];
-        } else {
-            a[a2[i]] = true;
-        }
-    }
+  for (var k in a) {
+    diff.push(k);
+  }
 
-    for (var k in a) {
-        diff.push(k);
-    }
-
-    return diff;
+  return diff;
 }
 
 function diffStates(states: RenderState[]): boolean {
@@ -70,9 +70,9 @@ function diffStates(states: RenderState[]): boolean {
     throw new Error('diffStates must be called with [state1, state2]');
   }
   const [s1, s2] = states;
-//  console.log(s1, s2)
+  //  console.log(s1, s2)
   // loading done state
-  if (s1 == null ){
+  if (s1 == null) {
     return true;
   }
 
@@ -135,7 +135,7 @@ export class StateManager {
   }
 
   stateCopy(gs: GameState): GameState {
-    if (gs == null ){
+    if (gs == null) {
       return null;
     }
 
@@ -147,7 +147,7 @@ export class StateManager {
 
 
   tick(time: number) {
-    const dx =  time- this.lastTick;
+    const dx = time - this.lastTick;
     this.lastTick = time;
     if (!this.serverState) {
       return;
@@ -181,14 +181,16 @@ export class StateManager {
           x: servPlayer.x,
           y: servPlayer.y,
           host: servPlayer.host,
-          name: servPlayer.name
+          name: servPlayer.name,
+          angle: servPlayer.angle
         }
         continue;
       }
 
       const player = this.clientState.players[pid];
-      this.clientState.players[pid].x = Maths.lerp(player.x, servPlayer.x, dx/100) // Update to deltaTime/50.
-      this.clientState.players[pid].y = Maths.lerp(player.y, servPlayer.y, dx/100) // Update to deltaTime/50.
+      this.clientState.players[pid].x = Maths.lerp(player.x, servPlayer.x, dx / 100) // Update to deltaTime/50.
+      this.clientState.players[pid].y = Maths.lerp(player.y, servPlayer.y, dx / 100) // Update to deltaTime/50.
+      this.clientState.players[pid].angle = servPlayer.angle;
       for (let prop of playerCopyProps) {
         (this.clientState.players[pid] as any)[prop] = servPlayer[prop];
       }

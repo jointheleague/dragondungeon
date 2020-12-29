@@ -5,4 +5,6 @@ export interface IInputs {
   down: boolean;
   shoot: boolean;
   autoshoot: boolean;
+  mouseX: number;
+  mouseY: number;
 }

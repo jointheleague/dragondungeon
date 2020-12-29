@@ -8,6 +8,7 @@ export interface IPlayer {
   host: boolean;
   x: number;
   y: number;
+  angle: number;
 }
 
 export type GameState = IGameState | null;

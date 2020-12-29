@@ -6,7 +6,7 @@ import { useDisableScroll } from '../../hooks';
 import {Controls} from '../controls';
 import {IInputs} from '../controls/types';
 
-import { Player } from './entities/player';
+import { Dragon } from './entities/dragon/index';
 import { render } from "react-pixi-fiber";
 
 import * as PIXI from 'pixi.js';
@@ -39,7 +39,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      this.app.ticker.add((dx) => this.renderScene(dx))
    }
 
-   bunnyRot: number = 0;
+   rotation: number = 0;
    renderScene(dx: number) {
     const state = this.props.stateManager.getGameState();
     if (!isGameRenderState(state)){
@@ -47,11 +47,11 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       return;
     }
 
-    this.bunnyRot += dx/100;
+
     const players = []
     for (let pid in state.players) {
       const player = state.players[pid];
-      players.push(<Player bunnyRot={this.bunnyRot} key={pid} player={player} />,)
+      players.push(<Dragon key={pid} player={player} />,)
     }
     render(
       <>{players}</>,

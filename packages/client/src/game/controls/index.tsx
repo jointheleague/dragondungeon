@@ -9,14 +9,20 @@ const controlsDown: {[key: string]: object} = {
   "w": {up: true},
   "a": {left: true},
   "s": {down: true},
-  "d": {right: true}
+  "d": {right: true},
+  " ": {space: true}
+}
+
+const mouseActivity: {[key: string]: object} = {
+  "position": {x:0.0, y:0.0}
 }
 
 const controlsUp: {[key: string]: object} = {
   "w": {up: false},
   "a": {left: false},
   "s": {down: false},
-  "d": {right: false}
+  "d": {right: false},
+  " ": {space: false}
 }
 
 let activeControls = {
@@ -25,7 +31,10 @@ let activeControls = {
   right: false,
   down: false,
   shoot: false,
-  autoshoot: false
+  autoshoot: false,
+  mouseX: 0.0,
+  mouseY: 0.0,
+  space: false
 };
 
 export const Controls = (props: ControlProps) => {
@@ -46,11 +55,18 @@ export const Controls = (props: ControlProps) => {
       const change = controlsUp[e.key.toLowerCase()] || {};
       updateAndSend(change);
     }
+    const mouseMove = (e: MouseEvent) => {
+      mouseActivity["position"] = {mouseX:e.x, mouseY:e.y};
+      const change = mouseActivity["position"] || {};
+      updateAndSend(change);
+    }
     window.addEventListener("keydown", keydown)
     window.addEventListener("keyup", keyup)
+    window.addEventListener("mousemove", mouseMove);
     return () => {
       window.removeEventListener("keydown", keydown)
       window.removeEventListener("keyup", keyup)
+      window.removeEventListener("mousemove", mouseMove)
     }
   }, [props.actionCallback, updateAndSend])
 
