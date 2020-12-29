@@ -1,5 +1,5 @@
 import { Room, Client } from 'colyseus';
-import {GameState, Player, IInputs} from './game/GameState';
+import {GameState, Player, IInputs, Fireball} from './game/GameState';
 
 interface options {
   name?: string
@@ -57,6 +57,10 @@ export class GameRoom extends Room<GameState> {
     this.onMessage("input", (client: Client, message: IInputs) => {
       this.state.players[client.sessionId].inputs(message);
     })
+  }
+
+  makeFireball(){
+    
   }
 
   startGameLoop() {

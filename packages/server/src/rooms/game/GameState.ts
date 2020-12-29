@@ -1,5 +1,6 @@
-import { Schema, type, MapSchema } from '@colyseus/schema';
+import { Schema, type, MapSchema, ArraySchema, CollectionSchema } from '@colyseus/schema';
 import {Geometry, Maths} from '@bulletz/common';
+import { GameRoom } from 'rooms/GameRoom';
 
 export interface IInputs {
   left: boolean;
@@ -10,11 +11,38 @@ export interface IInputs {
   autoshoot: boolean;
   mouseX: number;
   mouseY: number;
+  space: boolean;
 }
 
 type GameLifecycle = 'lobby' | 'deathmatch';
 
+export class Fireball extends Schema{
+  @type("number")
+  x: number=1;
+
+  @type("number")
+  y: number=1;
+
+  constructor(name: string, x: number, y: number) {
+    super()
+    this.x = x;
+    this.y = y;
+    
+  }
+
+  checkHit(){
+    //check if the fireball hits another dragon here
+    console.log("shoots");
+  }
+
+ }
+
+
+
 export class Player extends Schema {
+  @type([ Fireball ])
+    fireballs = new ArraySchema<Fireball>();
+
   @type("string")
   name: string;
 
@@ -42,6 +70,7 @@ export class Player extends Schema {
     autoshoot: false,
     mouseX: 0.0,
     mouseY: 0.0,
+    space: false
   };
 
   constructor(name: string, host: boolean) {
@@ -64,6 +93,14 @@ export class Player extends Schema {
     }
     if (i.down) {
       resDirection.y+=1;
+    }
+    if(i.space){
+      //console.log("I need to make a fireball here");
+      const fireball = new Fireball(this.name, this.x, this.y)
+      this.fireballs.push(fireball);
+      this.fireballs.forEach(element =>{console.log(element.x);});
+      
+
     }
     this.angle = Math.atan2(this.y - i.mouseY, this.x - i.mouseX);
     this.direction = resDirection;
@@ -96,4 +133,7 @@ export class GameState extends Schema {
 
   @type({map: Player})
   players = new MapSchema<Player>();
+
+  @type({map: Fireball})
+  fireballs = new MapSchema<Fireball>();
 }

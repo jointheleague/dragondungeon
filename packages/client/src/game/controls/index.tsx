@@ -9,7 +9,8 @@ const controlsDown: {[key: string]: object} = {
   "w": {up: true},
   "a": {left: true},
   "s": {down: true},
-  "d": {right: true}
+  "d": {right: true},
+  " ": {space: true}
 }
 
 const mouseActivity: {[key: string]: object} = {
@@ -20,7 +21,8 @@ const controlsUp: {[key: string]: object} = {
   "w": {up: false},
   "a": {left: false},
   "s": {down: false},
-  "d": {right: false}
+  "d": {right: false},
+  " ": {space: false}
 }
 
 let activeControls = {
@@ -32,6 +34,7 @@ let activeControls = {
   autoshoot: false,
   mouseX: 0.0,
   mouseY: 0.0,
+  space: false
 };
 
 export const Controls = (props: ControlProps) => {
