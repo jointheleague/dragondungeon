@@ -23,11 +23,12 @@ export class Fireball extends Schema{
   @type("number")
   y: number=1;
 
+  lifetime: 50;
+
   constructor(name: string, x: number, y: number) {
     super()
     this.x = x;
     this.y = y;
-    
   }
 
   checkHit(){
@@ -41,7 +42,7 @@ export class Fireball extends Schema{
 
 export class Player extends Schema {
   @type([ Fireball ])
-    fireballs = new ArraySchema<Fireball>();
+  fireballs = new ArraySchema<Fireball>();
 
   @type("string")
   name: string;
@@ -94,22 +95,32 @@ export class Player extends Schema {
     if (i.down) {
       resDirection.y+=1;
     }
-    if(i.space){
-      //console.log("I need to make a fireball here");
-      const fireball = new Fireball(this.name, this.x, this.y)
-      this.fireballs.push(fireball);
-      this.fireballs.forEach(element =>{console.log(element.x);});
-      
-
-    }
     this.angle = Math.atan2(this.y - i.mouseY, this.x - i.mouseX);
     this.direction = resDirection;
   }
 
+  fireballCooldown: number = 0;
   tick(dx: number) {
+    const ticks = dx/50;
     if (this.direction.x != 0 || this.direction.y != 0) {
-      this.move(this.direction.x, this.direction.y, this.speed*dx/50)
+      this.move(this.direction.x, this.direction.y, this.speed*ticks)
     }
+    this.fireballCooldown-=ticks;
+    if (this.activeInputs.space && this.fireballCooldown <= 0) {
+      this.fireballCooldown = 10;
+      //console.log("I need to make a fireball here");
+      const fireball = new Fireball(this.name, this.x, this.y)
+      this.fireballs.push(fireball);
+      this.fireballs.forEach(element =>{console.log(element.x);});
+    }
+
+    for (let fireball of this.fireballs) {
+      fireball.lifetime -= ticks;
+    }
+
+    // for each fireball update based on movement
+
+    //this.fireballs = this.fireballs.filter(fb => fb.lifetime > 0);
   }
 
   move(dirX: number, dirY: number, speed: number) {
