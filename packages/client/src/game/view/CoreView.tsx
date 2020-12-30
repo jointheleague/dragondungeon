@@ -11,7 +11,6 @@ export const CoreView = (props: IProps) => {
   const [state, setState] = useState<RenderState>(null)
   useEffect(() => {
     const sub = props.stateManager.state$.subscribe(s => {
-      console.log("new state")
       setState(s)
     })
     return () => {
