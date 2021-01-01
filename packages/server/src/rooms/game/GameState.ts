@@ -23,7 +23,7 @@ export class Fireball extends Schema{
   @type("number")
   y: number=1;
 
-  lifetime: 50;
+lifetime = 50;
 
   constructor(name: string, x: number, y: number) {
     super()
@@ -114,9 +114,22 @@ export class Player extends Schema {
       this.fireballs.forEach(element =>{console.log(element.x);});
     }
 
-    for (let fireball of this.fireballs) {
+  /*  for (let fireball of this.fireballs) {
       fireball.lifetime -= ticks;
+
+      if(fireball.lifetime <= 0){
+        this.fireballs.splice()
+      }
+    }*/
+    for(var i = 0; i<this.fireballs.length; i++){
+      this.fireballs[i].lifetime -= ticks;
+      
+      if(this.fireballs[i].lifetime <=0){
+        this.fireballs.splice(i, 1);
+      }
     }
+    console.log(this.fireballs.length);
+
 
     // for each fireball update based on movement
 
