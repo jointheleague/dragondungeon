@@ -184,10 +184,11 @@ export class StateManager {
           name: servPlayer.name,
           angle: servPlayer.angle,
           fireballs: servPlayer.fireballs
+          
         }
         continue;
       }
-
+      
       // clientState = rendered sprites
       // serverState = real time sprites from server
       const player = this.clientState.players[pid];
@@ -199,7 +200,12 @@ export class StateManager {
         (this.clientState.players[pid] as any)[prop] = servPlayer[prop];
       }
 
-      // Chris update fireballs here
+      //Chris update fireballs here
+      for(let fireball of servPlayer.fireballs){
+        fireball.lifeTime = fireball.lifeTime+1;
+        //console.log(fireball);
+      }
+      
     }
 
   }

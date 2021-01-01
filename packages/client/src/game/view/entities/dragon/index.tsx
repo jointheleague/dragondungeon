@@ -41,7 +41,7 @@ export const TeamOrb = CustomPIXIComponent<PIXI.Graphics, TeamOrbProps>(
         const teamColor = 0xFF0000;
         instance.clear()
         instance.beginFill(teamColor, 1); // Red
-        instance.drawCircle(newProps.x, newProps.y, newProps.radius*( 1));
+        instance.drawCircle(newProps.x, newProps.y, newProps.radius*( 3));
         instance.endFill()
       }
     }
