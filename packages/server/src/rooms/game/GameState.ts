@@ -51,13 +51,13 @@ export class Player extends Schema {
   host: boolean;
 
   @type("number")
-  x: number = 1;
+  x: number = 100;
 
   @type("number")
-  y: number = 1;
+  y: number = 100;
 
   @type("number")
-  angle: number = 0;
+  angle: number = Math.PI;
 
   speed:number = 20;
   direction: Geometry.Vector = new Geometry.Vector(0, 0);
