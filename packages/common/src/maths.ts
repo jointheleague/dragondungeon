@@ -20,6 +20,25 @@ export function lerp(a: number, b: number, n: number): number {
 }
 
 /**
+ * Lerp between two angles
+ * @param from
+ * @param to
+ * @param weight
+ */
+export function lerpAngle(from:number, to:number, weight:number){
+  return from + shortAngleDist(from, to) * weight;
+}
+
+/**
+ * find shortest angle distance.
+ */
+function shortAngleDist(startAngle:number,endAngle:number) {
+  var max = Math.PI*2;
+  var da = (endAngle-startAngle) % max;
+  return 2*da % max - da;
+}
+
+/**
  * Get the distance between two points
  * @param x
  * @param y
