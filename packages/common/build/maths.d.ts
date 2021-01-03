@@ -14,6 +14,13 @@ export declare function calculateAngle(x1: number, y1: number, x2: number, y2: n
  */
 export declare function lerp(a: number, b: number, n: number): number;
 /**
+ * Lerp between two angles
+ * @param from
+ * @param to
+ * @param weight
+ */
+export declare function lerpAngle(from: number, to: number, weight: number): number;
+/**
  * Get the distance between two points
  * @param x
  * @param y

@@ -194,8 +194,7 @@ export class StateManager {
       const player = this.clientState.players[pid];
       this.clientState.players[pid].x = Maths.lerp(player.x, servPlayer.x, dx / 100) // Update to deltaTime/50.
       this.clientState.players[pid].y = Maths.lerp(player.y, servPlayer.y, dx / 100) // Update to deltaTime/50.
-      this.clientState.players[pid].angle = servPlayer.angle;
-
+      this.clientState.players[pid].angle = Maths.lerpAngle(player.angle, servPlayer.angle, dx/100);
       for (let prop of playerCopyProps) {
         (this.clientState.players[pid] as any)[prop] = servPlayer[prop];
       }

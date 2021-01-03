@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.shuffleArray = exports.snapPosition = exports.reverseNumber = exports.degreeToCardinal = exports.normalize2D = exports.round2Digits = exports.clamp = exports.getRandomInt = exports.getDistance = exports.lerp = exports.calculateAngle = void 0;
+exports.shuffleArray = exports.snapPosition = exports.reverseNumber = exports.degreeToCardinal = exports.normalize2D = exports.round2Digits = exports.clamp = exports.getRandomInt = exports.getDistance = exports.lerpAngle = exports.lerp = exports.calculateAngle = void 0;
 /**
  * Get the angle in radiant between two points
  * @param x1
@@ -22,6 +22,24 @@ function lerp(a, b, n) {
     return (1 - n) * a + n * b;
 }
 exports.lerp = lerp;
+/**
+ * Lerp between two angles
+ * @param from
+ * @param to
+ * @param weight
+ */
+function lerpAngle(from, to, weight) {
+    return from + shortAngleDist(from, to) * weight;
+}
+exports.lerpAngle = lerpAngle;
+/**
+ * find shortest angle distance.
+ */
+function shortAngleDist(startAngle, endAngle) {
+    var max = Math.PI * 2;
+    var da = (endAngle - startAngle) % max;
+    return 2 * da % max - da;
+}
 /**
  * Get the distance between two points
  * @param x
