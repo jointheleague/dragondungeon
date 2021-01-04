@@ -13,8 +13,8 @@ interface IProps {
 
 let ANIMATION_SPEED = 0;
 export const Coin = (props: IProps) => {
+  ANIMATION_SPEED = Math.random()/10;
   const coinTextures = useMemo(() => {
-    ANIMATION_SPEED = Math.random()/10;
     //Create textures from spites
     let coinImages = [coinImage1, coinImage2];
     let textures: PIXI.AnimatedSprite["textures"] = [];
