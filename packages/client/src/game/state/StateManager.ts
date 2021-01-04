@@ -201,10 +201,10 @@ export class StateManager {
       }
 
       //Chris update fireballs here
-      for(let fireball of servPlayer.fireballs){
-        fireball.lifeTime = fireball.lifeTime+1;
-        //console.log(fireball);
-      }
+      //for(let fireball of servPlayer.fireballs){
+        
+        
+      //}
       
     }
 

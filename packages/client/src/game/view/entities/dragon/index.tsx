@@ -6,7 +6,7 @@ import dragon1 from "./sprites/tile001.png";
 import dragon2 from "./sprites/tile002.png";
 import dragon3 from "./sprites/tile003.png";
 import dragon4 from "./sprites/tile004.png";
-
+//import fireballTextures from "./fireball/index"
 import {
   CustomPIXIComponent,
 } from "react-pixi-fiber";
@@ -33,6 +33,20 @@ function propsEqual(oldProps: TeamOrbProps, newProps: TeamOrbProps) {
 export const TeamOrb = CustomPIXIComponent<PIXI.Graphics, TeamOrbProps>(
   {
     customDisplayObject: props => new PIXI.Graphics(),
+
+  /* const fireballTextures = useMemo(() => {
+    //Create textures from spites
+    let fireballImages = [dragon1,dragon2,dragon3, dragon4];
+    let textures: PIXI.AnimatedSprite["textures"] = [];
+    dragonImages.forEach(image =>{
+      let texture = PIXI.Texture.from(image);
+       textures.push(texture);
+    });
+    return textures;
+  }, []);  */
+
+
+
     customApplyProps: (instance, oldProps, newProps) => {
       if (newProps.zIndex) {
         instance.zIndex = newProps.zIndex;
@@ -43,6 +57,9 @@ export const TeamOrb = CustomPIXIComponent<PIXI.Graphics, TeamOrbProps>(
         instance.beginFill(teamColor, 1); // Red
         instance.drawCircle(newProps.x, newProps.y, newProps.radius*( 3));
         instance.endFill()
+        
+
+        console.log(instance);
       }
     }
   },

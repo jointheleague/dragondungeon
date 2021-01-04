@@ -49,13 +49,18 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
 
     const players = []
+    const fireballs = []
     for (let pid in state.players) {
       const player = state.players[pid];
       players.push(<Dragon key={pid} player={player} />,)
+      console.log(player.fireballs);
+      fireballs.push(player.fireballs);
     }
     render(
       <>{players}</>,
       this.app.stage
+      
+      
     );
    }
 

@@ -6,7 +6,7 @@ export interface IGameState {
 export interface Fireball {
   x: number;
   y: number;
-  lifeTime: number;
+  
 }
 
 export interface IPlayer {
