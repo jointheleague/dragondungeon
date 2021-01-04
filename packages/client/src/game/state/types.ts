@@ -1,6 +1,7 @@
 export interface IGameState {
   lifecycle: 'lobby' | 'deathmatch';
   players: {[key: string]: IPlayer};
+  coins: ICoin[];
 }
 
 export interface Fireball {
@@ -18,4 +19,9 @@ export interface IPlayer {
   fireballs: Fireball[];
 }
 
+export interface ICoin{
+  key: number;
+  x: number;
+  y:number;
+}
 export type GameState = IGameState | null;

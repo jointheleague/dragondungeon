@@ -148,6 +148,30 @@ export class Player extends Schema {
 
 }
 
+export class Coin extends Schema{
+  @type("number")
+  key: number
+
+  @type("number")
+  x: number=1;
+
+  @type("number")
+  y: number=1;
+
+  constructor( key:number, x: number, y: number) {
+    super()
+    this.x = x;
+    this.y = y;
+    this.key = key;
+  }
+
+  checkHit(){
+    //check if the fireball hits another dragon here
+    console.log("shoots");
+  }
+
+ }
+
 export class GameState extends Schema {
   @type("boolean")
   first: boolean = false;
@@ -157,7 +181,18 @@ export class GameState extends Schema {
 
   @type({map: Player})
   players = new MapSchema<Player>();
+  
+  @type([Coin])
+  coins = new ArraySchema<Coin>();
 
-  @type({map: Fireball})
-  fireballs = new MapSchema<Fireball>();
+  constructor(){
+    super();
+    let coinRadius = 200;
+    let coinCircleX = 250;
+    let coinCircleY = 250;
+    let numberOfCoins = 15;
+    for(let i =0; i < numberOfCoins; i++){
+        this.coins.push(new Coin(i, Math.cos(i)*coinRadius+coinCircleX, Math.sin(i)*coinRadius+coinCircleY));
+    }
+  }
 }
