@@ -1,5 +1,5 @@
 {
-  "name": "@bulletz/client",
+  "name": "@league-toybox/client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

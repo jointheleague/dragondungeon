@@ -12,7 +12,7 @@ function show_error_banner(text: string) {
       text: text,
       close: true,
       duration: 3000,
-      backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+      backgroundColor: "#c60c30",
     },
   ).showToast();
 }
