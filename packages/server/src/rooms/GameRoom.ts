@@ -14,6 +14,9 @@ function normalizeName(name?: string): string {
 }
 
 export class GameRoom extends Room<GameState> {
+
+  maxClients: 4
+
   onCreate (){
       this.setState(new GameState())
       this.registerMessages()

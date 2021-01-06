@@ -2,12 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 :root {
-  --background_color: #121212;
-  --primary_color: #b694f6;
-  --primary_variant: #3700B3;
-  --secondary_color: #03dac4;
-  --secondary_variant: #14cba8;
+  --background_color: black;
+  --primary_color: #f9461c;
+  --primary_variant: #f9461c;
+  --secondary_color: #00a1de;
+  --secondary_variant: #00a1de;
   --text_color: #FFFFFF;
+}
+
+a {
+  color: white;
 }
 
 * {
