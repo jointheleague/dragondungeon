@@ -1,5 +1,5 @@
 {
-  "name": "bulletz",
+  "name": "league-toybox",
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
@@ -14,10 +14,10 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn build:common && concurrently --kill-others-on-fail \"yarn start:client\" \"yarn start:server\" \"yarn start:common\"",
-    "start:server": "yarn workspace @bulletz/server start",
-    "start:client": "yarn workspace @bulletz/client start",
-    "start:common": "yarn workspace @bulletz/common start",
-    "build:common": "yarn workspace @bulletz/common build"
+    "start:server": "yarn workspace @league-toybox/server start",
+    "start:client": "yarn workspace @league-toybox/client start",
+    "start:common": "yarn workspace @league-toybox/common start",
+    "build:common": "yarn workspace @league-toybox/common build"
   },
   "devDependencies": {
     "concurrently": "^5.3.0"
