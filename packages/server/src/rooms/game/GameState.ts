@@ -150,7 +150,7 @@ export class Player extends Schema {
 
 export class Coin extends Schema{
   @type("number")
-  key: number
+  key: number;
 
   @type("number")
   x: number=1;
