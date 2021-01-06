@@ -172,7 +172,7 @@ export class StateManager {
     }
 
     // iterate all server players
-    const playerCopyProps: PlayerKeys = ['host', 'name']
+    const playerCopyProps: PlayerKeys = ['host', 'name', 'fireballs']
     for (let pid of serverPids) {
       const servPlayer = this.serverState.players[pid];
 
@@ -182,11 +182,15 @@ export class StateManager {
           y: servPlayer.y,
           host: servPlayer.host,
           name: servPlayer.name,
-          angle: servPlayer.angle
+          angle: servPlayer.angle,
+          fireballs: servPlayer.fireballs
+          
         }
         continue;
       }
-
+      
+      // clientState = rendered sprites
+      // serverState = real time sprites from server
       const player = this.clientState.players[pid];
       this.clientState.players[pid].x = Maths.lerp(player.x, servPlayer.x, dx / 100) // Update to deltaTime/50.
       this.clientState.players[pid].y = Maths.lerp(player.y, servPlayer.y, dx / 100) // Update to deltaTime/50.
@@ -194,6 +198,13 @@ export class StateManager {
       for (let prop of playerCopyProps) {
         (this.clientState.players[pid] as any)[prop] = servPlayer[prop];
       }
+
+      //Chris update fireballs here
+      //for(let fireball of servPlayer.fireballs){
+        
+        
+      //}
+      
     }
 
   }

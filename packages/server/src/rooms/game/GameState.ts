@@ -1,7 +1,7 @@
 import { Schema, type, MapSchema, ArraySchema, CollectionSchema } from '@colyseus/schema';
 import {Geometry, Maths} from '@bulletz/common';
 import { GameRoom } from 'rooms/GameRoom';
-
+import {v4} from "uuid";
 export interface IInputs {
   left: boolean;
   up: boolean;
@@ -23,11 +23,16 @@ export class Fireball extends Schema{
   @type("number")
   y: number=1;
 
+  @type("string")
+  id: string;
+
+lifetime = 50;
+
   constructor(name: string, x: number, y: number) {
     super()
     this.x = x;
     this.y = y;
-    
+    this.id = v4();
   }
 
   checkHit(){
@@ -41,7 +46,7 @@ export class Fireball extends Schema{
 
 export class Player extends Schema {
   @type([ Fireball ])
-    fireballs = new ArraySchema<Fireball>();
+  fireballs = new ArraySchema<Fireball>();
 
   @type("string")
   name: string;
@@ -94,22 +99,45 @@ export class Player extends Schema {
     if (i.down) {
       resDirection.y+=1;
     }
-    if(i.space){
-      //console.log("I need to make a fireball here");
-      const fireball = new Fireball(this.name, this.x, this.y)
-      this.fireballs.push(fireball);
-      this.fireballs.forEach(element =>{console.log(element.x);});
-      
-
-    }
     this.angle = Math.atan2(this.y - i.mouseY, this.x - i.mouseX);
     this.direction = resDirection;
   }
 
+  fireballCooldown: number = 0;
   tick(dx: number) {
+    const ticks = dx/50;
     if (this.direction.x != 0 || this.direction.y != 0) {
-      this.move(this.direction.x, this.direction.y, this.speed*dx/50)
+      this.move(this.direction.x, this.direction.y, this.speed*ticks)
     }
+    this.fireballCooldown-=ticks;
+    if (this.activeInputs.space && this.fireballCooldown <= 0) {
+      this.fireballCooldown = 10;
+      //console.log("I need to make a fireball here");
+      const fireball = new Fireball(this.name, this.x+60*Math.cos(this.angle-(Math.PI)), this.y+ 60*Math.sin(this.angle-(Math.PI)))
+      this.fireballs.push(fireball);
+      this.fireballs.forEach(element =>{console.log(element.x);});
+    }
+
+  /*  for (let fireball of this.fireballs) {
+      fireball.lifetime -= ticks;
+
+      if(fireball.lifetime <= 0){
+        this.fireballs.splice()
+      }
+    }*/
+    for(var i = 0; i<this.fireballs.length; i++){
+      this.fireballs[i].lifetime -= ticks;
+      
+      if(this.fireballs[i].lifetime <=0){
+        this.fireballs.splice(i, 1);
+      }
+    }
+    console.log(this.fireballs.length);
+
+
+    // for each fireball update based on movement
+
+    //this.fireballs = this.fireballs.filter(fb => fb.lifetime > 0);
   }
 
   move(dirX: number, dirY: number, speed: number) {
