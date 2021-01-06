@@ -113,7 +113,7 @@ export class Player extends Schema {
     if (this.activeInputs.space && this.fireballCooldown <= 0) {
       this.fireballCooldown = 10;
       //console.log("I need to make a fireball here");
-      const fireball = new Fireball(this.name, this.x+70, this.y)
+      const fireball = new Fireball(this.name, this.x+60*Math.cos(this.angle-(Math.PI)), this.y+ 60*Math.sin(this.angle-(Math.PI)))
       this.fireballs.push(fireball);
       this.fireballs.forEach(element =>{console.log(element.x);});
     }
