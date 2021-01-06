@@ -1,5 +1,5 @@
 import { Schema, type, MapSchema, ArraySchema, CollectionSchema } from '@colyseus/schema';
-import {Geometry, Maths} from '@bulletz/common';
+import {Geometry, Maths} from '@league-toybox/common';
 import { GameRoom } from 'rooms/GameRoom';
 import {v4} from "uuid";
 export interface IInputs {

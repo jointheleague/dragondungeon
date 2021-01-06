@@ -3,7 +3,7 @@ import { Room } from 'colyseus.js';
 import { BehaviorSubject, ReplaySubject, Observable } from 'rxjs';
 import { filter, pairwise, map } from 'rxjs/operators';
 
-import { Maths } from '@bulletz/common';
+import { Maths } from '@league-toybox/common';
 
 import { GameState, IPlayer, ICoin } from './types';
 
