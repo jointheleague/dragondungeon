@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {IPlayer} from '../../../state/types';
+import {Fireball} from '../../../state/types';
 import * as PIXI from 'pixi.js-legacy'
 import {AnimatedSprite} from '../AnimatedSprite';
 import fireball1 from "./sprites/tile000.png";
@@ -7,18 +7,18 @@ import fireball2 from "./sprites/tile001.png";
 import fireball3 from "./sprites/tile002.png";
 import fireball4 from "./sprites/tile003.png";
 
-import {
+/*import {
   CustomPIXIComponent,
 } from "react-pixi-fiber";
-
+*/
 interface IProps {
     key: string;
-    player: IPlayer;
+    fireball: Fireball;
 }
 
 const ANIMATION_SPEED = 0.08;
 
-export const Fireball = (props: IProps) => {
+export const FireballView = (props: IProps) => {
     
   const fireballTextures = useMemo(() => {
     //Create textures from spites
@@ -35,14 +35,14 @@ export const Fireball = (props: IProps) => {
     <>
       <AnimatedSprite
       anchor={new PIXI.Point(0.5, 0.5)}
-      width ={100}
-      height = {100}
+      width ={30}
+      height = {70}
       textures = {fireballTextures}
-      rotation={props.player.angle+Math.PI}
-      x={props.player.x}
+      
+      x={props.fireball.x}
       animationSpeed={ANIMATION_SPEED}
       loop= {true}
-      y={props.player.y}
+      y={props.fireball.y}
       />
       
     </>

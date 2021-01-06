@@ -8,7 +8,7 @@ import {IInputs} from '../controls/types';
 
 import { Dragon } from './entities/dragon/index';
 import { render } from "react-pixi-fiber";
-
+import {FireballView} from './entities/fireball/index';
 import * as PIXI from 'pixi.js';
 
 interface GameViewProps {
@@ -52,12 +52,18 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const fireballs = []
     for (let pid in state.players) {
       const player = state.players[pid];
+      
       players.push(<Dragon key={pid} player={player} />,)
-      console.log(player.fireballs);
-      fireballs.push(player.fireballs);
+      
+      
+      for(let fireball of state.players[pid].fireballs){
+        fireballs.push(<FireballView key={fireball.id} fireball = {fireball}/>)
+      }
+      
+      //fireballs.push(player.fireballs);
     }
     render(
-      <>{players}</>,
+      <>{players}{fireballs}</>,
       this.app.stage
       
       

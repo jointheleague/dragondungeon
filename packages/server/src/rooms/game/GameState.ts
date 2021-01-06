@@ -1,7 +1,7 @@
 import { Schema, type, MapSchema, ArraySchema, CollectionSchema } from '@colyseus/schema';
 import {Geometry, Maths} from '@bulletz/common';
 import { GameRoom } from 'rooms/GameRoom';
-
+import {v4} from "uuid";
 export interface IInputs {
   left: boolean;
   up: boolean;
@@ -23,12 +23,16 @@ export class Fireball extends Schema{
   @type("number")
   y: number=1;
 
+  @type("string")
+  id: string;
+
 lifetime = 50;
 
   constructor(name: string, x: number, y: number) {
     super()
     this.x = x;
     this.y = y;
+    this.id = v4();
   }
 
   checkHit(){
@@ -109,7 +113,7 @@ export class Player extends Schema {
     if (this.activeInputs.space && this.fireballCooldown <= 0) {
       this.fireballCooldown = 10;
       //console.log("I need to make a fireball here");
-      const fireball = new Fireball(this.name, this.x, this.y)
+      const fireball = new Fireball(this.name, this.x+70, this.y)
       this.fireballs.push(fireball);
       this.fireballs.forEach(element =>{console.log(element.x);});
     }
