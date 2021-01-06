@@ -3,9 +3,9 @@ import { Room } from 'colyseus.js';
 import { BehaviorSubject, ReplaySubject, Observable } from 'rxjs';
 import { filter, pairwise, map } from 'rxjs/operators';
 
-import { Maths } from '@bulletz/common';
+import { Maths } from '@league-toybox/common';
 
-import { GameState, IPlayer } from './types';
+import { GameState, IPlayer, ICoin } from './types';
 
 type PlayerKeys = Array<keyof IPlayer>;
 
@@ -27,6 +27,7 @@ export interface GameRenderState {
   isGameRenderState: true;
   frame: number;
   players: { [key: string]: IPlayer };
+  coins: ICoin[];
 }
 
 function removeRoom(s1: any) {
@@ -41,6 +42,7 @@ function stateCompare(s1: any, s2: any) {
   const str2 = JSON.stringify(rest2)
   return str1 !== str2;
 }
+
 function key_diff(a1: string[], a2: string[]) {
 
   let a: { [key: string]: boolean } = {};
@@ -141,7 +143,8 @@ export class StateManager {
 
     return {
       lifecycle: gs.lifecycle,
-      players: {}
+      players: {},
+      coins: []
     }
   }
 
@@ -162,7 +165,7 @@ export class StateManager {
     }
 
     this.clientState.lifecycle = this.serverState.lifecycle;
-
+    this.clientState.coins = this.serverState.coins;
     // delete players not in server, but on client
     const serverPids = Object.keys(this.serverState.players)
     const clientPids = Object.keys(this.clientState.players)
@@ -184,7 +187,6 @@ export class StateManager {
           name: servPlayer.name,
           angle: servPlayer.angle,
           fireballs: servPlayer.fireballs
-          
         }
         continue;
       }
@@ -200,11 +202,10 @@ export class StateManager {
       }
 
       //Chris update fireballs here
-      //for(let fireball of servPlayer.fireballs){
-        
-        
-      //}
-      
+
+//      for(let fireball of servPlayer.fireballs){
+//        fireball.lifeTime = fireball.lifeTime+1;
+//      }
     }
 
   }
@@ -223,15 +224,18 @@ export class StateManager {
       }
     }
 
+
+    
     if (this.clientState.lifecycle === 'deathmatch') {
       return {
         isGameRenderState: true,
         frame: Date.now(),
-        players: Object.assign({}, this.clientState.players)
+        players: Object.assign({}, this.clientState.players),
+        coins: this.clientState.coins
       }
     }
 
     return null;
+  
   }
-
 }

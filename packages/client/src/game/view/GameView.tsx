@@ -1,15 +1,13 @@
 import React, { Component} from 'react';
 import { StateManager, isGameRenderState } from '../state/StateManager';
-
 import { useDisableScroll } from '../../hooks';
-
 import {Controls} from '../controls';
 import {IInputs} from '../controls/types';
-
 import { Dragon } from './entities/dragon/index';
 import { render } from "react-pixi-fiber";
 import {FireballView} from './entities/fireball/index';
 import * as PIXI from 'pixi.js';
+import { Coin } from './entities/coin';
 
 interface GameViewProps {
   stateManager: StateManager;
@@ -48,8 +46,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     }
 
 
-    const players = []
-    const fireballs = []
+    const players = [];
+    const coins = [];
+    const fireballs = [];
     for (let pid in state.players) {
       const player = state.players[pid];
       
@@ -62,11 +61,12 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       
       //fireballs.push(player.fireballs);
     }
+    for(let i = 0; i <state.coins.length; i++){
+      coins.push(<Coin key={state.coins[i].key+""} x={state.coins[i].x} y={state.coins[i].y}/>);
+    }
     render(
-      <>{players}{fireballs}</>,
+      <>{coins}{players}{fireballs}</>,
       this.app.stage
-      
-      
     );
    }
 

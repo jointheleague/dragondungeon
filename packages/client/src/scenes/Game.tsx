@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { StateManager } from '../game/state/StateManager';
 import { CoreView } from '../game/view/CoreView';
-import { ColyseusService } from '@bulletz/client/src/services/colyseus'
+import { ColyseusService } from '@league-toybox/client/src/services/colyseus'
 
 import { show_error_banner } from '../util/banner';
 

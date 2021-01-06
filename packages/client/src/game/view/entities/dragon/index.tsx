@@ -85,8 +85,8 @@ export const Dragon = (props: IProps) => {
     <>
       <AnimatedSprite
       anchor={new PIXI.Point(0.5, 0.5)}
-      width ={100}
-      height = {100}
+      width ={90}
+      height = {90}
       textures = {dragonTextures}
       rotation={props.player.angle+Math.PI}
       x={props.player.x}
