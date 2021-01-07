@@ -26,18 +26,22 @@ export class Fireball extends Schema{
   @type("string")
   id: string;
 
-lifetime = 50;
-
-  constructor(name: string, x: number, y: number) {
+lifetime = 40;
+angle;
+speed;
+  constructor(name: string, x: number, y: number, angle: number, speed: number) {
     super()
     this.x = x;
     this.y = y;
     this.id = v4();
+    this.angle = angle;
+    this.speed = speed;
   }
 
-  checkHit(){
-    //check if the fireball hits another dragon here
-    console.log("shoots");
+  checkHit(dragonX: number, dragonY:number){
+      if(Math.sqrt(Math.pow(this.x-dragonX, 2)-Math.pow(this.y-dragonY, 2))<20){
+        console.log("HIT");
+      }
   }
 
  }
@@ -113,26 +117,25 @@ export class Player extends Schema {
     if (this.activeInputs.space && this.fireballCooldown <= 0) {
       this.fireballCooldown = 10;
       //console.log("I need to make a fireball here");
-      const fireball = new Fireball(this.name, this.x+60*Math.cos(this.angle-(Math.PI)), this.y+ 60*Math.sin(this.angle-(Math.PI)))
+      const fireball = new Fireball(this.name, this.x+60*Math.cos(this.angle-(Math.PI)), this.y+ 60*Math.sin(this.angle-(Math.PI)), this.angle, 6)
       this.fireballs.push(fireball);
-      this.fireballs.forEach(element =>{console.log(element.x);});
+      //this.fireballs.forEach(element =>{console.log(element.x);});
     }
 
-  /*  for (let fireball of this.fireballs) {
-      fireball.lifetime -= ticks;
-
-      if(fireball.lifetime <= 0){
-        this.fireballs.splice()
-      }
-    }*/
-    for(var i = 0; i<this.fireballs.length; i++){
-      this.fireballs[i].lifetime -= ticks;
+    for(let fireball of this.fireballs){
+      fireball.lifetime-=ticks;
+      fireball.x += fireball.speed*Math.cos(fireball.angle-Math.PI);
+      fireball.y += fireball.speed*Math.sin(fireball.angle-Math.PI);
       
+    }
+    for(var i = 0; i<this.fireballs.length; i++){
       if(this.fireballs[i].lifetime <=0){
         this.fireballs.splice(i, 1);
       }
     }
-    console.log(this.fireballs.length);
+
+
+    
 
 
     // for each fireball update based on movement

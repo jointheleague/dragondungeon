@@ -77,6 +77,7 @@ export class GameRoom extends Room<GameState> {
     const dx = this.clock.deltaTime;
     for (let id of this.state.players.keys()) {
       this.state.players[id].tick(dx);
+      
     }
   }
 
