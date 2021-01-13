@@ -17,7 +17,9 @@
     "start:server": "yarn workspace @league-toybox/server start",
     "start:client": "yarn workspace @league-toybox/client start",
     "start:common": "yarn workspace @league-toybox/common start",
-    "build:common": "yarn workspace @league-toybox/common build"
+    "build:client": "yarn workspace @league-toybox/client build",
+    "build:common": "yarn workspace @league-toybox/common build",
+    "build": "yarn build:client && yarn build:common"
   },
   "devDependencies": {
     "concurrently": "^5.3.0"
