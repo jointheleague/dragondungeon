@@ -39,9 +39,12 @@ speed;
   }
 
   checkHit(dragonX: number, dragonY:number){
-      if(Math.sqrt(Math.pow(this.x-dragonX, 2)-Math.pow(this.y-dragonY, 2))<20){
-        console.log("HIT");
-      }
+      
+    if(Math.sqrt(Math.pow(this.x-dragonX, 2)-Math.pow(this.y-dragonY, 2))<20){
+        console.log("HIT"); 
+        return true;
+      } else{return false}
+
   }
 
  }
@@ -66,6 +69,9 @@ export class Player extends Schema {
 
   @type("number")
   angle: number = Math.PI;
+
+  @type("number")
+  score: number = 0;
 
   speed:number = 20;
   direction: Geometry.Vector = new Geometry.Vector(0, 0);
@@ -126,7 +132,7 @@ export class Player extends Schema {
       fireball.lifetime-=ticks;
       fireball.x += fireball.speed*Math.cos(fireball.angle-Math.PI);
       fireball.y += fireball.speed*Math.sin(fireball.angle-Math.PI);
-      
+      //fireball.checkHit(this.x, this.y);
     }
     for(var i = 0; i<this.fireballs.length; i++){
       if(this.fireballs[i].lifetime <=0){
@@ -134,7 +140,7 @@ export class Player extends Schema {
       }
     }
 
-
+    
     
 
 
@@ -153,6 +159,7 @@ export class Player extends Schema {
     this.y = this.y + speedY;
   }
 
+  
 }
 
 export class Coin extends Schema{
@@ -172,9 +179,15 @@ export class Coin extends Schema{
     this.key = key;
   }
 
-  checkHit(){
+  checkHit(dragonX: number, dragonY:number){
     //check if the fireball hits another dragon here
-    console.log("shoots");
+    //console.log("shoots");
+
+    if(Math.sqrt(Math.pow(this.x-dragonX, 2)-Math.pow(this.y-dragonY, 2))<20){
+      console.log("HIT COIN"); 
+      return true;
+    } else{return false}
+
   }
 
  }
@@ -201,5 +214,6 @@ export class GameState extends Schema {
     for(let i =0; i < numberOfCoins; i++){
         this.coins.push(new Coin(i, Math.cos(i)*coinRadius+coinCircleX, Math.sin(i)*coinRadius+coinCircleY));
     }
+
   }
 }
