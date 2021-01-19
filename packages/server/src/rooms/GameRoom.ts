@@ -1,3 +1,4 @@
+import { CollectionSchema } from '@colyseus/schema';
 import { Room, Client } from 'colyseus';
 import {GameState, Player, IInputs, Fireball} from './game/GameState';
 
@@ -80,7 +81,32 @@ export class GameRoom extends Room<GameState> {
     const dx = this.clock.deltaTime;
     for (let id of this.state.players.keys()) {
       this.state.players[id].tick(dx);
+
+//dragon collides with fireball code
       
+    for(let id2 of this.state.players.keys()){
+      for(let i=0; i<this.state.players[id2].fireballs.length; i++){
+        if(id != id2){
+          if(this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y)==true){
+            this.state.players[id2].fireballs.splice(i,1);
+            if(this.state.players[id].score>0){
+              this.state.players[id].score--;
+              //this.state.coins.push(new Coin(this.state.coins.length,10 , 10))
+            }
+            
+          }
+        }
+      }
+    }
+//dragon collides with coin code
+    for(let i = 0; i<this.state.coins.length; i++){
+      if(this.state.coins[i].checkHit(this.state.players[id].x, this.state.players[id].y)==true){
+        this.state.coins.splice(i,1);
+        this.state.players[id].score++;
+      }
+    }
+
+console.log(id+"  "+this.state.players[id].score);
     }
   }
 
