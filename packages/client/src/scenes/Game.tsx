@@ -13,41 +13,41 @@ interface IProps extends RouteComponentProps {
   roomId?: string
 }
 
-interface IState { }
+interface IState {
+  loading: boolean;
+}
 
 export default class Game extends Component<IProps, IState>{
   stateManager: StateManager;
-  historySubscription?: Subscription;
-
+  state = {
+    loading: true
+  };
   constructor(props: IProps) {
     super(props)
     this.stateManager = new StateManager(this.props.colyseus, this.props.roomId || 'new')
   }
 
   componentDidMount() {
-
     this.stateManager.setup()
+      .then(() => {
+        this.setState({loading: false});
+        window.history.replaceState({}, "/play/random", "/play/" + this.stateManager.room.id);
+      })
       .catch((e) => {
         navigate("/");
         show_error_banner(`Error joining lobby ${this.props.roomId} does not exist`)
         console.error(e);
       })
-
-    this.historySubscription = this.stateManager
-      .roomId
-      .subscribe(id => {
-        window.history.replaceState({}, "/play/random", "/play/" + id);
-      });
   }
 
   componentWillUnmount() {
-    if (this.historySubscription) {
-      this.historySubscription.unsubscribe()
-    }
     this.stateManager.room?.leave(true);
   }
 
   render(): ReactNode {
+    if (this.state.loading) {
+      return <p>Loading...</p>
+    }
     return <CoreView stateManager={this.stateManager}/>
   }
 

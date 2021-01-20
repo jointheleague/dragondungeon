@@ -25,7 +25,7 @@ class App extends Component {
         <Router>
           <Game colyseus={this.colyseus} roomId="random" path="/play/random" />
           <Game colyseus={this.colyseus} path="/play/:roomId" />
-          <Home colyseus={this.colyseus} path="/"/>
+          <Home path="/"/>
           <Feedback path="/feedback"/>
           <About path="/about"/>
           <ErrorRoute default/>

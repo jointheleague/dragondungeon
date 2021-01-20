@@ -1,9 +1,12 @@
 import React from 'react';
-
-import { LobbyRenderState } from '../state/StateManager';
+import {Room} from 'colyseus.js';
 import { Button, Center, Box, Space } from '../../components';
+import {IGameState} from '../state/types';
 
-interface LobbyStateViewProps extends LobbyRenderState {}
+interface LobbyStateViewProps extends IGameState {
+  sessionId: string;
+  room: Room;
+}
 
 export const LobbyStateView = (props: LobbyStateViewProps) => {
   const isHost = (props.sessionId in props.players) && props.players[props.sessionId].host

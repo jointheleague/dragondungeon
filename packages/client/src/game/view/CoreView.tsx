@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {LobbyStateView} from './LobbyView';
-import { StateManager, RenderState, isLobbyRenderState } from '../state/StateManager';
+import { StateManager } from '../state/StateManager';
+import { IGameState} from '../state/types';
 
 import {GameView} from './GameView'
 
@@ -8,21 +9,24 @@ interface IProps {
   stateManager: StateManager;
 }
 export const CoreView = (props: IProps) => {
-  const [state, setState] = useState<RenderState>(null)
+  const [state, setState] = useState<IGameState | null>(null);
+  const {stateManager} = props;
+
   useEffect(() => {
-    const sub = props.stateManager.state$.subscribe(s => {
-      setState(s)
+    const ref = stateManager.room.onStateChange(newState => {
+      setState(newState)
     })
     return () => {
-      sub.unsubscribe();
+      ref.clear();
     }
-  })
+  }, [stateManager])
 
   if (state == null) {
     return <div>Loading...</div>
   }
-  if (isLobbyRenderState(state)) {
-    return <LobbyStateView {...state}/>
+
+  if (state.lifecycle === 'lobby') {
+    return <LobbyStateView sessionId={stateManager.room.sessionId} room={stateManager.room} {...state}/>
   }
-  return (<GameView stateManager={props.stateManager}/>)
+  return (<GameView stateManager={props.stateManager} state={state}/>)
 }
