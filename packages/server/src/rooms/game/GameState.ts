@@ -140,10 +140,6 @@ export class Player extends Schema {
       }
     }
 
-    
-    
-
-
     // for each fireball update based on movement
 
     //this.fireballs = this.fireballs.filter(fb => fb.lifetime > 0);
