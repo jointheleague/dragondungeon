@@ -21,7 +21,12 @@ class App extends Component {
   }
   render() {
     return (
-      <Suspense fallback={< div > Loading...</div>}>
+      <Suspense fallback={(
+        <>
+          <br /><br /><br />
+          <p style={{ textAlign: 'center' }}>Loading...</p>
+        </>
+      )}>
         <Router>
           <Game colyseus={this.colyseus} roomId="random" path="/play/random" />
           <Game colyseus={this.colyseus} path="/play/:roomId" />
