@@ -1,12 +1,12 @@
 @import-normalize;
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
 
 :root {
   --background_color: black;
-  --primary_color: #f9461c;
-  --primary_variant: #f9461c;
-  --secondary_color: #00a1de;
-  --secondary_variant: #00a1de;
+  --primary_color: #c60c30;
+  --primary_variant: #c60c30;
+  --secondary_color: #f9461c;
+  --secondary_variant: #f9461c;
   --text_color: #FFFFFF;
 }
 
@@ -15,17 +15,16 @@ a {
 }
 
 * {
-  font-family: 'Press Start 2P';
+  font-family: 'Cinzel', serif;
 }
 
 body {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Cinzel', serif;
 	width: 100%;
 	height: 100%;
   padding: 0;
   margin: 0;
   background-color: var(--background_color);
-  pointer-event: none;
   user-select: none;
   color: var(--text_color);
 }

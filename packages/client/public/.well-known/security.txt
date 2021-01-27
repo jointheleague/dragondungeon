@@ -1,4 +1,3 @@
-Contact: mailto:lukewoodcs@gmail.com
-Acknowledgments: /feedback#thanks
+Contact: mailto:dragoncoingame@gmail.com
 Preferred-Languages: en
-Policy: /feedback#appsec
+Policy: /feedback

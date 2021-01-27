@@ -1,5 +1,5 @@
 {
-  "name": "league-toybox",
+  "name": "dragoncoin",
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
@@ -14,11 +14,11 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn build:common && concurrently --kill-others-on-fail \"yarn start:client\" \"yarn start:server\" \"yarn start:common\"",
-    "start:server": "yarn workspace @league-toybox/server start",
-    "start:client": "yarn workspace @league-toybox/client start",
-    "start:common": "yarn workspace @league-toybox/common start",
-    "build:client": "yarn workspace @league-toybox/client build",
-    "build:common": "yarn workspace @league-toybox/common build",
+    "start:server": "yarn workspace @dragoncoin/server start",
+    "start:client": "yarn workspace @dragoncoin/client start",
+    "start:common": "yarn workspace @dragoncoin/common start",
+    "build:client": "yarn workspace @dragoncoin/client build",
+    "build:common": "yarn workspace @dragoncoin/common build",
     "build": "yarn build:client && yarn build:common"
   },
   "devDependencies": {

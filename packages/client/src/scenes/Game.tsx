@@ -46,7 +46,12 @@ export default class Game extends Component<IProps, IState>{
 
   render(): ReactNode {
     if (this.state.loading) {
-      return <p>Loading...</p>
+      return (
+        <>
+          <br /><br /><br />
+          <p style={{ textAlign: 'center' }}>Loading...</p>
+        </>
+      )
     }
     return <CoreView stateManager={this.stateManager}/>
   }
