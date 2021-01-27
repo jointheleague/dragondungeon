@@ -8,10 +8,10 @@ const Feedback = () => {
     }}>
       <br />
       <Link to="/">Back</Link>
-      <h1>Feedback &amp; Security</h1>
-      <h2 id="thanks">Thanks</h2>
+      <h1>Report a bug or security vulnerability</h1>
+      <h2>Hall of <del>shame</del> <ins>fame</ins></h2>
       <p>No one's listed here yet! Go ahead, report some bugs!</p>
-      <h2 id="appsec">Policy</h2>
+      <h2>Policy</h2>
       <p>We are interested in the following bugs:</p>
       <ul>
         <li>XSS attacks targeting other players</li>
@@ -21,10 +21,9 @@ const Feedback = () => {
       <p>We are <b>not</b> interested in the following bugs:</p>
       <ul>
         <li>Network manipulation</li>
-        <li>Proxys</li>
       </ul>
       <h2 id="report">Reporting a bug</h2>
-      <p>To report a bug, please email lukewoodcs@gmail.com.</p>
+      <p>To report a bug, please email dragoncoingame@gmail.com.</p>
     </div>
   );
 }

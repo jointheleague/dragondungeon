@@ -21,7 +21,12 @@ export const CoreView = (props: IProps) => {
   }, [stateManager])
 
   if (state == null) {
-    return <div>Loading...</div>
+    return (
+      <>
+        <br /><br /><br />
+        <p style={{ textAlign: 'center' }}>Loading...</p>
+      </>
+    )
   }
 
   return (<GameView stateManager={props.stateManager} state={state}/>)
