@@ -1,6 +1,7 @@
 import { CollectionSchema } from '@colyseus/schema';
+import { getRandomInt } from '@league-toybox/common/build/maths';
 import { Room, Client } from 'colyseus';
-import {GameState, Player, IInputs, Fireball} from './game/GameState';
+import {GameState, Player, IInputs, Fireball, Coin} from './game/GameState';
 
 interface options {
   name?: string
@@ -91,7 +92,8 @@ export class GameRoom extends Room<GameState> {
             this.state.players[id2].fireballs.splice(i,1);
             if(this.state.players[id].score>0){
               this.state.players[id].score--;
-              //this.state.coins.push(new Coin(this.state.coins.length,10 , 10))
+              const rand = getRandomInt(0, 62)/10;
+              this.state.coins.push(new Coin(this.state.coins.length,this.state.players[id].x+ 100*Math.cos(rand), this.state.players[id].y+100*Math.sin(rand)));
             }
             
           }
