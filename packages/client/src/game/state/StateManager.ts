@@ -26,5 +26,9 @@ export class StateManager {
       return await this.colyseus.client.joinById(this.lobby, options)
     }
   }
+  get id(){
+    return this.room.id;
+  }
 
 }
+

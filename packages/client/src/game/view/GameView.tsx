@@ -9,12 +9,14 @@ import {FireballView} from './entities/fireball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import {IGameState} from '../state/types';
+import { Viewport } from "pixi-viewport";
 
 interface GameViewProps {
   stateManager: StateManager;
   state: IGameState;
-}
 
+}
+const scale = 2;
 interface GameViewState{};
 
 const ScrollDisable = () => {
@@ -25,6 +27,7 @@ const ScrollDisable = () => {
 export class GameView extends Component<GameViewProps, GameViewState> {
    app!: PIXI.Application;
    gameCanvas!: HTMLDivElement;
+   viewport!: Viewport;
 
    /**
     * After mounting, add the Pixi Renderer to the div and start the Application.
@@ -35,6 +38,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
        antialias: true,
      });
      this.gameCanvas!.appendChild(this.app.view);
+     this.viewport = new Viewport();
+     this.viewport.scale = new PIXI.Point(scale, scale);
+     this.app.stage.addChild(this.viewport);
      this.app.start();
      this.app.ticker.add(() => this.renderScene())
    }
@@ -44,9 +50,11 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const players = [];
     const coins = [];
     const fireballs = [];
+    const id  = this.props.stateManager.id
+    const me = this.props.state.players[id];
     for (let pid in state.players) {
       const player = state.players[pid];
-
+      
       players.push(<Dragon key={pid} player={player} />,)
 
 
@@ -56,12 +64,17 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
       //fireballs.push(player.fireballs);
     }
+    if (me !== null) {
+      this.viewport.x = -me.x * scale + 1000 / 2;
+      this.viewport.y = -me.y * scale + 1000 / 2;
+    }
+    
     for(let i = 0; i <state.coins.length; i++){
       coins.push(<Coin key={state.coins[i].key+""} x={state.coins[i].x} y={state.coins[i].y}/>);
     }
     render(
       <>{coins}{players}{fireballs}</>,
-      this.app.stage
+      this.viewport
     );
    }
 

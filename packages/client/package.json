@@ -50,6 +50,7 @@
     "mini-css-extract-plugin": "0.9.0",
     "node-sass": "4.14.1",
     "optimize-css-assets-webpack-plugin": "5.0.3",
+    "pixi-viewport": "^4.18.1",
     "pixi.js": "^5.3.7",
     "pixi.js-legacy": "^5.3.7",
     "pnp-webpack-plugin": "1.6.4",
