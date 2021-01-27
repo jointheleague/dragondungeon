@@ -29,7 +29,7 @@ export class Fireball extends Schema{
 lifetime = 40;
 angle;
 speed;
-  constructor(name: string, x: number, y: number, angle: number, speed: number) {
+  constructor(x: number, y: number, angle: number, speed: number) {
     super()
     this.x = x;
     this.y = y;
@@ -39,12 +39,10 @@ speed;
   }
 
   checkHit(dragonX: number, dragonY:number){
-      
     if(Math.sqrt(Math.pow(this.x-dragonX, 2)-Math.pow(this.y-dragonY, 2))<20){
-        console.log("HIT"); 
+        console.log("HIT");
         return true;
       } else{return false}
-
   }
 
  }
@@ -54,12 +52,6 @@ speed;
 export class Player extends Schema {
   @type([ Fireball ])
   fireballs = new ArraySchema<Fireball>();
-
-  @type("string")
-  name: string;
-
-  @type("boolean")
-  host: boolean;
 
   @type("number")
   x: number = 100;
@@ -88,10 +80,8 @@ export class Player extends Schema {
     space: false
   };
 
-  constructor(name: string, host: boolean) {
+  constructor() {
     super()
-    this.name = name;
-    this.host = host;
   }
 
   inputs(i: IInputs) {
@@ -123,7 +113,7 @@ export class Player extends Schema {
     if (this.activeInputs.space && this.fireballCooldown <= 0) {
       this.fireballCooldown = 10;
       //console.log("I need to make a fireball here");
-      const fireball = new Fireball(this.name, this.x+60*Math.cos(this.angle-(Math.PI)), this.y+ 60*Math.sin(this.angle-(Math.PI)), this.angle, 6)
+      const fireball = new Fireball(this.x+60*Math.cos(this.angle-(Math.PI)), this.y+ 60*Math.sin(this.angle-(Math.PI)), this.angle, 6)
       this.fireballs.push(fireball);
       //this.fireballs.forEach(element =>{console.log(element.x);});
     }
@@ -155,7 +145,7 @@ export class Player extends Schema {
     this.y = this.y + speedY;
   }
 
-  
+
 }
 
 export class Coin extends Schema{
@@ -180,7 +170,7 @@ export class Coin extends Schema{
     //console.log("shoots");
 
     if(Math.sqrt(Math.pow(this.x-dragonX, 2)-Math.pow(this.y-dragonY, 2))<20){
-      console.log("HIT COIN"); 
+      console.log("HIT COIN");
       return true;
     } else{return false}
 
@@ -192,12 +182,9 @@ export class GameState extends Schema {
   @type("boolean")
   first: boolean = false;
 
-  @type("string")
-  lifecycle: GameLifecycle  = "lobby";
-
   @type({map: Player})
   players = new MapSchema<Player>();
-  
+
   @type([Coin])
   coins = new ArraySchema<Coin>();
 

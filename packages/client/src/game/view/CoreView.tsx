@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {LobbyStateView} from './LobbyView';
 import { StateManager } from '../state/StateManager';
 import { IGameState} from '../state/types';
 
@@ -25,8 +24,5 @@ export const CoreView = (props: IProps) => {
     return <div>Loading...</div>
   }
 
-  if (state.lifecycle === 'lobby') {
-    return <LobbyStateView sessionId={stateManager.room.sessionId} room={stateManager.room} {...state}/>
-  }
   return (<GameView stateManager={props.stateManager} state={state}/>)
 }
