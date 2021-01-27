@@ -1,3 +1,3 @@
-# miniature-parakeet
+# DragonCoin
 
-miniature-parakeet is my boilerplate for a react/pixi-fiber/colyseus/typescript stack multiplayer game.
+DragonCoin is an epic game. With dragons. And coins. And fireballs.
