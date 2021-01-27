@@ -1,8 +1,10 @@
 import React, {useEffect, useCallback} from 'react';
 import {IInputs} from './types';
+import {Viewport} from 'pixi-viewport';
 
 interface ControlProps {
     actionCallback: (p: IInputs) => void
+    viewport: Viewport
 }
 
 const controlsDown: {[key: string]: object} = {
@@ -56,7 +58,8 @@ export const Controls = (props: ControlProps) => {
       updateAndSend(change);
     }
     const mouseMove = (e: MouseEvent) => {
-      mouseActivity["position"] = {mouseX:e.x, mouseY:e.y};
+      const worlCoordinates = props.viewport.toWorld(e.x,e.y);
+      mouseActivity["position"] = {mouseX:worlCoordinates.x, mouseY:worlCoordinates.y};
       const change = mouseActivity["position"] || {};
       updateAndSend(change);
     }

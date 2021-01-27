@@ -16,7 +16,7 @@ interface GameViewProps {
   state: IGameState;
 
 }
-const scale = 2;
+const scale = 1;
 interface GameViewState{};
 
 const ScrollDisable = () => {
@@ -64,9 +64,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
       //fireballs.push(player.fireballs);
     }
-    if (me !== null) {
-      this.viewport.x = -me.x * scale + 1000 / 2;
-      this.viewport.y = -me.y * scale + 1000 / 2;
+    if (me !== null && this.viewport!=null) {
+      this.viewport.x = -me.x * scale + window.innerWidth / 2;
+      this.viewport.y = -me.y * scale + window.innerHeight / 2;
     }
     
     for(let i = 0; i <state.coins.length; i++){
@@ -96,7 +96,8 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      let component = this;
      return (
        <>
-       <Controls actionCallback={(v: IInputs) => this.actionCallback(v)}/>
+       <Controls actionCallback={(v: IInputs) => this.actionCallback(v)} viewport={this.viewport}/>
+       
        <ScrollDisable/>
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>

@@ -27,7 +27,7 @@ export class StateManager {
     }
   }
   get id(){
-    return this.room.id;
+    return this.room.sessionId;
   }
 
 }
