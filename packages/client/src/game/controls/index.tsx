@@ -58,8 +58,8 @@ export const Controls = (props: ControlProps) => {
       updateAndSend(change);
     }
     const mouseMove = (e: MouseEvent) => {
-      const worlCoordinates = props.viewport.toWorld(e.x,e.y);
-      mouseActivity["position"] = {mouseX:worlCoordinates.x, mouseY:worlCoordinates.y};
+      const worldCoordinates = props.viewport.toWorld(e.x,e.y);
+      mouseActivity["position"] = {mouseX:worldCoordinates.x, mouseY:worldCoordinates.y};
       const change = mouseActivity["position"] || {};
       updateAndSend(change);
     }

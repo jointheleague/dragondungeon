@@ -9,8 +9,8 @@
       "packages/*"
     ]
   },
-  "repository": "https://github.com/LukeWood/miniature-parakeet.git",
-  "author": "Luke Wood <lukewoodcs@gmail.com>",
+  "repository": "https://github.com/jointheleague/toybox2020game.git",
+  "author": "Luke Wood <lukewoodcs@gmail.com>, Keith Groves <keith.groves@jointheleague.org>, Samuel Sharp <samuel@samuelsharp.com>, Chris Woolson",
   "license": "MIT",
   "scripts": {
     "start": "yarn build:common && concurrently --kill-others-on-fail \"yarn start:client\" \"yarn start:server\" \"yarn start:common\"",

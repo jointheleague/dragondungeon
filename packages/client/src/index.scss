@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
 
 :root {
-  --background_color: black;
   --primary_color: #c60c30;
   --primary_variant: #c60c30;
   --secondary_color: #f9461c;
@@ -24,9 +23,16 @@ body {
 	height: 100%;
   padding: 0;
   margin: 0;
-  background-color: var(--background_color);
+  background: url('/background-tile.png');
   user-select: none;
   color: var(--text_color);
+}
+
+div.centerer {
+  background-color: black;
+  padding: 15px;
+  padding-bottom: 30px;
+  border-radius: 10px;
 }
 
 .interactable {
@@ -36,4 +42,8 @@ body {
 
 h1 {
 	color: var(--primary_color);
+}
+
+.firebaseui-idp-text {
+  font-weight: bolder;
 }

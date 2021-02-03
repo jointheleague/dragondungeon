@@ -4,14 +4,17 @@ import { version } from '../../package.json';
 
 const About = () => {
   return (
-    <div style={{
-      textAlign: 'center'
-    }}>
-      <br />
-      <Link to="/">Back</Link>
-      <h1>About Game</h1>
-      <b>Version {version}</b>
-    </div>
+    <>
+      <br /><br /><br />
+      <div className='centerer' style={{
+        textAlign: 'center'
+      }}>
+        <br />
+        <Link to="/">Back</Link>
+        <h1>About Game</h1>
+        <b>Version {version}</b>
+      </div>
+    </>
   );
 }
 
