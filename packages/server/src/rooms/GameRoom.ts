@@ -1,13 +1,12 @@
 import {
-	CollectionSchema
-} from '@colyseus/schema';
-import {
 	getRandomInt
 } from '@dragoncoin/common/build/maths';
+
 import {
 	Room,
 	Client
 } from 'colyseus';
+
 import {
 	GameState,
 	Player,

@@ -2,19 +2,14 @@ import {
 	Schema,
 	type,
 	MapSchema,
-	ArraySchema,
-	CollectionSchema
+	ArraySchema
 } from '@colyseus/schema';
 import {
 	Geometry,
 	Maths
 } from '@dragoncoin/common';
-import {
-	GameRoom
-} from 'rooms/GameRoom';
-import {
-	v4
-} from "uuid";
+
+import { v4 } from "uuid";
 export interface IInputs {
 	left: boolean;
 	up: boolean;
@@ -26,8 +21,6 @@ export interface IInputs {
 	mouseY: number;
 	space: boolean;
 }
-
-type GameLifecycle = 'lobby' | 'deathmatch';
 
 export class Fireball extends Schema {
 	@type("number")
@@ -127,17 +120,15 @@ export class Player extends Schema {
 		this.fireballCooldown -= ticks;
 		if (this.activeInputs.space && this.fireballCooldown <= 0) {
 			this.fireballCooldown = 10;
-			//console.log("I need to make a fireball here");
 			const fireball = new Fireball(this.x + 60 * Math.cos(this.angle - (Math.PI)), this.y + 60 * Math.sin(this.angle - (Math.PI)), this.angle, 6)
 			this.fireballs.push(fireball);
-			//this.fireballs.forEach(element =>{console.log(element.x);});
 		}
 
 		for (let fireball of this.fireballs) {
 			fireball.lifetime -= ticks;
 			fireball.x += fireball.speed * Math.cos(fireball.angle - Math.PI);
 			fireball.y += fireball.speed * Math.sin(fireball.angle - Math.PI);
-			//fireball.checkHit(this.x, this.y);
+			// fireball.checkHit(this.x, this.y);
 		}
 		for (var i = 0; i < this.fireballs.length; i++) {
 			if (this.fireballs[i].lifetime <= 0) {
