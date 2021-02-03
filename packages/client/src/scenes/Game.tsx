@@ -1,10 +1,9 @@
 import React, { Component, ReactNode } from 'react';
 import { RouteComponentProps, navigate } from '@reach/router';
-import { Subscription } from 'rxjs';
 
 import { StateManager } from '../game/state/StateManager';
 import { CoreView } from '../game/view/CoreView';
-import { ColyseusService } from '@league-toybox/client/src/services/colyseus'
+import { ColyseusService } from '@dragoncoin/client/src/services/colyseus'
 
 import { show_error_banner } from '../util/banner';
 
