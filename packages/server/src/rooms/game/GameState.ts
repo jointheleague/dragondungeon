@@ -8,7 +8,7 @@ import {
 import {
 	Geometry,
 	Maths
-} from '@league-toybox/common';
+} from '@dragoncoin/common';
 import {
 	GameRoom
 } from 'rooms/GameRoom';

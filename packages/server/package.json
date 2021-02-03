@@ -14,7 +14,7 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@league-toybox/common": "1.0.0",
+    "@dragoncoin/common": "1.0.0",
     "@colyseus/schema": "^1.0.3",
     "colyseus": "^0.13.7",
     "express": "^4.17.1",

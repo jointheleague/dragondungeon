@@ -3,7 +3,7 @@ import {
 } from '@colyseus/schema';
 import {
 	getRandomInt
-} from '@league-toybox/common/build/maths';
+} from '@dragoncoin/common/build/maths';
 import {
 	Room,
 	Client
@@ -12,7 +12,6 @@ import {
 	GameState,
 	Player,
 	IInputs,
-	Fireball,
 	Coin
 } from './game/GameState';
 
