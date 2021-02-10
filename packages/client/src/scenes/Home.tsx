@@ -33,9 +33,8 @@ const Game = () => {
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
           ]
         }}  firebaseAuth={firebaseApp.auth()}/>
-        <br /><br /><br />
-        <a href="/about">About</a>
-        <a href="/feedback">Feedback</a>
+        <br />
+        
       </Center>
     </>
   );

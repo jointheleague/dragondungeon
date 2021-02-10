@@ -11,8 +11,6 @@ const Feedback = () => {
         <br />
         <Link to="/">Back</Link>
         <h1>Report a bug or security vulnerability</h1>
-        <h2>Hall of <del>shame</del> <ins>fame</ins></h2>
-        <p>No one's listed here yet! Go ahead, report some bugs!</p>
         <h2>Policy</h2>
         <p>We are interested in the following bugs:</p>
         <ul>
