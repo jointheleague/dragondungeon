@@ -28,6 +28,7 @@ const Game = () => {
         <StyledFirebaseAuth uiConfig={{
           signInSuccessUrl: '/play/random',
           signInOptions: [
+            'anonymous',
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
           ]
