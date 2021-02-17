@@ -72,7 +72,5 @@ export const Controls = (props: ControlProps) => {
       window.removeEventListener("mousemove", mouseMove)
     }
   }, [props.actionCallback, updateAndSend])
-
-  // TODO(lukewood): Mobile controls
   return <></>
 }

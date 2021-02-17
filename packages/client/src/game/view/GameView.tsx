@@ -12,6 +12,7 @@ import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import ReactNipple from 'react-nipple';
 
 let firebaseApp;
 
@@ -24,7 +25,11 @@ try {
     messagingSenderId: "320692217416",
     appId: "1:320692217416:web:04f00569ed1bf7b55e9a7d"
   });
-  console.log(firebaseApp.auth())
+  firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = '/';
+    }
+  });
 } catch {
   window.location.reload();
 }
@@ -116,7 +121,15 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      return (
        <>
        <Controls actionCallback={(v: IInputs) => this.actionCallback(v)} viewport={this.viewport}/>
-       
+       <ReactNipple
+                    options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
+                    style={{
+                        position: 'fixed',
+                        width: '100vw',
+                        height: '100vh'
+                    }}
+                    onMove={(evt, data) => console.log(data.direction)}
+                />
        <ScrollDisable/>
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>
