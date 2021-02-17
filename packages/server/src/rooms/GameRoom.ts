@@ -59,9 +59,6 @@ export class GameRoom extends Room < GameState > {
 		const dx = this.clock.deltaTime;
 		for (let id of this.state.players.keys()) {
 			this.state.players[id].tick(dx);
-
-			//dragon collides with fireball code
-
 			for (let id2 of this.state.players.keys()) {
 				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
 					if (id != id2) {
@@ -77,7 +74,6 @@ export class GameRoom extends Room < GameState > {
 					}
 				}
 			}
-			//dragon collides with coin code
 			for (let i = 0; i < this.state.coins.length; i++) {
 				if (this.state.coins[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
 					this.state.coins.splice(i, 1);
