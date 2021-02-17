@@ -10,6 +10,8 @@ import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
+import { Box } from 'components/box';
+import { Leadboard } from 'components/leaderboard';
 
 interface GameViewProps {
   stateManager: StateManager;
@@ -98,7 +100,8 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      return (
        <>
        <Controls actionCallback={(v: IInputs) => this.actionCallback(v)} viewport={this.viewport}/>
-       
+       <Leadboard>
+       </Leadboard>
        <ScrollDisable/>
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>

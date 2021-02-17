@@ -176,7 +176,6 @@ export class Coin extends Schema {
 		//console.log("shoots");
 
 		if (Math.sqrt(Math.pow(this.x - dragonX, 2) - Math.pow(this.y - dragonY, 2)) < 20) {
-			console.log("HIT COIN");
 			return true;
 		} else {
 			return false
@@ -207,6 +206,5 @@ export class GameState extends Schema {
 		for (let i = 0; i < numberOfCoins; i++) {
 			this.coins.push(new Coin(i, Math.cos(i) * coinRadius + coinCircleX, Math.sin(i) * coinRadius + coinCircleY));
 		}
-
 	}
 }
