@@ -16,7 +16,6 @@ import firebase from 'firebase/app';
 import ReactNipple from 'react-nipple';
 import {Bar} from './entities/healthBar/healthBar';
 import 'firebase/auth';
-
 let firebaseApp;
 
 try {

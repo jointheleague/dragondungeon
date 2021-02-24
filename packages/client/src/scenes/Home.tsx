@@ -36,6 +36,7 @@ const Game = () => {
           signInOptions: [
             'anonymous',
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.GithubAuthProvider.PROVIDER_ID,
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
           ]
         }}  firebaseAuth={firebaseApp.auth()}/>
