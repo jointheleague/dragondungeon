@@ -127,18 +127,18 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      return (
        <>
        <Controls actionCallback={(v: IInputs) => this.actionCallback(v)} viewport={this.viewport}/>
-       <Leadboard>
-       </Leadboard>
        <ReactNipple
                     options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
                     style={{
-                        position: 'fixed',
-                        width: '100vw',
-                        height: '100vh'
+                      position: 'fixed',
+                      width: '100vw',
+                      height: '100vh'
                     }}
-                    onMove={(evt, data) => console.log(data.direction)}
-                />
+                    onMove={(evt:any, data: any) => console.log(data.direction)}
+                    />
        <ScrollDisable/>
+                    <Leadboard>
+                    </Leadboard>
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>
      );

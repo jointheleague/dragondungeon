@@ -4,6 +4,8 @@
   align-items: center;
   margin:auto;
   margin-right: 10px;
+  position: absolute;
+  right:0;
   margin-top: 10px;
   box-shadow: 0 8px 16px rgba(9,30,66,.5);
   border: 1px solid var(--primary_color);
@@ -11,7 +13,7 @@
   border-radius: 8;
   padding: 16px;
   overflow: hidden;
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   max-width: 90%;
 }
