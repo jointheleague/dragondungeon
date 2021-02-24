@@ -13,6 +13,7 @@ import { Viewport } from "pixi-viewport";
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import ReactNipple from 'react-nipple';
+import {Bar} from './entities/healthBar/healthBar';
 
 let firebaseApp;
 
@@ -34,7 +35,6 @@ try {
   window.location.reload();
 }
 
-import {Bar} from './entities/healthBar/healthBar';
 interface GameViewProps {
   stateManager: StateManager;
   state: IGameState;

@@ -15,6 +15,14 @@ import {
 	Bar
 } from './game/GameState';
 
+import * as admin from 'firebase-admin';
+
+const admin_sdk_key = require('../../top_secret/adminsdk.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(admin_sdk_key)
+});
+
 export class GameRoom extends Room < GameState > {
 
 	maxClients: 4
