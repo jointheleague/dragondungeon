@@ -34,6 +34,7 @@ try {
   window.location.reload();
 }
 
+import {Bar} from './entities/healthBar/healthBar';
 interface GameViewProps {
   stateManager: StateManager;
   state: IGameState;
@@ -74,6 +75,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const players = [];
     const coins = [];
     const fireballs = [];
+    const healthBars = [];
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
     for (let pid in state.players) {
@@ -81,11 +83,13 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       
       players.push(<Dragon key={pid} player={player} />,)
 
+      
 
       for(let fireball of state.players[pid].fireballs){
         fireballs.push(<FireballView key={fireball.id} fireball = {fireball}/>)
       }
-
+      healthBars.push(<Bar key ={state.players[pid].bar.key} x={state.players[pid].x-25} y={state.players[pid].y-75} width={50} height={20} color ={100} score={state.players[pid].score}/>)
+      
       //fireballs.push(player.fireballs);
     }
     if (me !== null && this.viewport!=null) {
@@ -97,7 +101,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={state.coins[i].key+""} x={state.coins[i].x} y={state.coins[i].y}/>);
     }
     render(
-      <>{coins}{players}{fireballs}</>,
+      <>{coins}{players}{fireballs}{healthBars}</>,
       this.viewport
     );
    }
