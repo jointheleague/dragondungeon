@@ -21,4 +21,4 @@ server
 
 const PORT = findPort();
 server.listen(PORT);
-console.log(`Listening on ws://localhost:${PORT}`);
+console.log(`ws://localhost:${PORT}`);

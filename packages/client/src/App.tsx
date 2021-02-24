@@ -4,7 +4,6 @@ import { ColyseusService } from 'services/colyseus';
 
 const Game = lazy(() => import('./scenes/Game'));
 const Home = lazy(() => import("./scenes/Home"));
-const About = lazy(() => import("./scenes/About"));
 const Feedback = lazy(() => import("./scenes/Feedback"));
 const ErrorRoute = lazy(() => import("./scenes/ErrorRoute"));
 interface IProps {}
@@ -32,7 +31,6 @@ class App extends Component {
           <Game colyseus={this.colyseus} path="/play/:roomId" />
           <Home path="/"/>
           <Feedback path="/feedback"/>
-          <About path="/about"/>
           <ErrorRoute default/>
         </Router>
       </Suspense>

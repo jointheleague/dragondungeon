@@ -12,6 +12,29 @@ import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Box } from 'components/box';
 import { Leadboard } from 'components/leaderboard';
+import firebase from 'firebase/app';
+import ReactNipple from 'react-nipple';
+import 'firebase/auth';
+
+let firebaseApp;
+
+try {
+  firebaseApp = firebase.initializeApp({
+    apiKey: "AIzaSyCRClPzTZnRSg_fAap6ENnAkxUBQKJGk5w",
+    authDomain: "leaguedragoncoin.firebaseapp.com",
+    projectId: "leaguedragoncoin",
+    storageBucket: "leaguedragoncoin.appspot.com",
+    messagingSenderId: "320692217416",
+    appId: "1:320692217416:web:04f00569ed1bf7b55e9a7d"
+  });
+  firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = '/';
+    }
+  });
+} catch {
+  window.location.reload();
+}
 
 interface GameViewProps {
   stateManager: StateManager;
@@ -102,6 +125,15 @@ export class GameView extends Component<GameViewProps, GameViewState> {
        <Controls actionCallback={(v: IInputs) => this.actionCallback(v)} viewport={this.viewport}/>
        <Leadboard>
        </Leadboard>
+       <ReactNipple
+                    options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
+                    style={{
+                        position: 'fixed',
+                        width: '100vw',
+                        height: '100vh'
+                    }}
+                    onMove={(evt, data) => console.log(data.direction)}
+                />
        <ScrollDisable/>
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>

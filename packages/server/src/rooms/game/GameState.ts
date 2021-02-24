@@ -46,7 +46,6 @@ export class Fireball extends Schema {
 
 	checkHit(dragonX: number, dragonY: number) {
 		if (Math.sqrt(Math.pow(this.x - dragonX, 2) - Math.pow(this.y - dragonY, 2)) < 20) {
-			console.log("HIT");
 			return true;
 		} else {
 			return false
@@ -172,9 +171,6 @@ export class Coin extends Schema {
 	}
 
 	checkHit(dragonX: number, dragonY: number) {
-		//check if the fireball hits another dragon here
-		//console.log("shoots");
-
 		if (Math.sqrt(Math.pow(this.x - dragonX, 2) - Math.pow(this.y - dragonY, 2)) < 20) {
 			return true;
 		} else {
