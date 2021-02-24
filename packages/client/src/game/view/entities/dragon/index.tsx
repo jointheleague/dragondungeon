@@ -78,6 +78,7 @@ export const Dragon = (props: IProps) => {
   }, []);
 
   const fireballs = props.player.fireballs.map((fb, i) => <TeamOrb key={i} x={fb.x} y={fb.y} radius={5}/>)
+  
   return (
     <>
       <AnimatedSprite

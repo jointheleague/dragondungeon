@@ -11,7 +11,8 @@ import {
 	GameState,
 	Player,
 	IInputs,
-	Coin
+	Coin, 
+	Bar
 } from './game/GameState';
 
 export class GameRoom extends Room < GameState > {
@@ -26,6 +27,7 @@ export class GameRoom extends Room < GameState > {
 
 	onJoin(client: Client, options: unknown, _2: any) {
 		this.state.players[client.id] = new Player();
+		
 	}
 
 	onLeave(client: Client, _consent: boolean) {
@@ -39,10 +41,6 @@ export class GameRoom extends Room < GameState > {
 		this.onMessage("input", (client: Client, message: IInputs) => {
 			this.state.players[client.sessionId].inputs(message);
 		})
-	}
-
-	makeFireball() {
-
 	}
 
 	startGameLoop() {
@@ -81,8 +79,24 @@ export class GameRoom extends Room < GameState > {
 				}
 			}
 
+			if(this.state.players[id].x<0){
+				this.state.players[id].x=0;
+			} else if(this.state.players[id].x>2000){
+				this.state.players[id].x=2000;
+			}
+
+			if(this.state.players[id].y<0){
+				this.state.players[id].y=0;
+			} else if(this.state.players[id].y>1000){
+				this.state.players[id].y=1000;
+			}
+
+			
+			
 			// console.log(id + "  " + this.state.players[id].score);
 		}
+		if(this.state.coins.length<100){this.state.coins.push(new Coin(this.state.coins.length, Math.random()*2000, Math.random()*1000));}
+		
 	}
 
 }

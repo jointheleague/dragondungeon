@@ -54,23 +54,43 @@ export class Fireball extends Schema {
 
 }
 
+export class Bar extends Schema {
+	@type("string")
+	key: string;
 
+	@type("number")
+	x: number = 1;
+
+	@type("number")
+	y: number = 1;
+
+	constructor(key: string, x: number, y: number) {
+		super()
+		this.x = x;
+		this.y = y;
+		this.key = key;
+	}
+
+}
 
 export class Player extends Schema {
 	@type([Fireball])
 	fireballs = new ArraySchema < Fireball > ();
 
 	@type("number")
-	x: number = 100;
+	x: number = Math.random()*2000;
 
 	@type("number")
-	y: number = 100;
+	y: number = Math.random()*1000;
 
 	@type("number")
 	angle: number = Math.PI;
 
 	@type("number")
 	score: number = 0;
+
+	@type([Bar])
+	bar = new Bar('', this.x, this.y);
 
 	speed: number = 20;
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
@@ -135,9 +155,8 @@ export class Player extends Schema {
 			}
 		}
 
-		// for each fireball update based on movement
-
-		//this.fireballs = this.fireballs.filter(fb => fb.lifetime > 0);
+		this.bar.x = this.x;
+		this.bar.y = this.y;
 	}
 
 	move(dirX: number, dirY: number, speed: number) {
@@ -181,6 +200,10 @@ export class Coin extends Schema {
 
 }
 
+
+
+
+
 export class GameState extends Schema {
 	@type("boolean")
 	first: boolean = false;
@@ -193,6 +216,8 @@ export class GameState extends Schema {
 	@type([Coin])
 	coins = new ArraySchema < Coin > ();
 
+	
+
 	constructor() {
 		super();
 		let coinRadius = 200;
@@ -200,7 +225,7 @@ export class GameState extends Schema {
 		let coinCircleY = 250;
 		let numberOfCoins = 15;
 		for (let i = 0; i < numberOfCoins; i++) {
-			this.coins.push(new Coin(i, Math.cos(i) * coinRadius + coinCircleX, Math.sin(i) * coinRadius + coinCircleY));
+			this.coins.push(new Coin(i, Math.random()*2000, Math.random()*1000));
 		}
 	}
 }
