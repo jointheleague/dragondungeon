@@ -2,18 +2,7 @@ import { autoDetectRenderer } from 'pixi.js';
 import React, { CSSProperties, ReactNode } from 'react';
 
 import './leaderboard.scss';
-const INPUT: CSSProperties = {
-  fontSize: 16,
-  borderRadius: 8,
-  height: 48,
-  paddingLeft: 8,
-  paddingRight: 8,
-  outline: 'none',
-  border: '2px solid #efefef',
-  boxSizing: 'border-box',
-  width: '100%',
-  maxWidth: '100%',
-};
+
 
 const FOCUSED: CSSProperties = {
   border: 'solid #375a7f 2px',
