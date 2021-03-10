@@ -3,7 +3,6 @@ import { Center } from '../components/center';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { navigate } from '@reach/router';
-import { show_error_banner } from 'util/banner';
 
 let firebaseApp: any;
 
@@ -28,7 +27,6 @@ const Profile = () => {
     () => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          console.log(user.photoURL);
           if (user.photoURL) {
             setProfilePicture(user.photoURL);
           }
