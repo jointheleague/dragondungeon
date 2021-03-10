@@ -3,7 +3,7 @@ import { Center } from '../components/center';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { navigate } from '@reach/router';
-import { show_error_banner } from 'util/banner';
+import DOMPurify from 'dompurify';
 
 let firebaseApp: any;
 
@@ -24,14 +24,16 @@ try {
 
 const Profile = () => {
   const [profilePicture, setProfilePicture] = useState<string>('/icon.png');
+  const [currentUser, setCurrentUser] = useState<any>({});
   useEffect(
     () => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          console.log(user.photoURL);
+          console.log(user);
           if (user.photoURL) {
             setProfilePicture(user.photoURL);
           }
+          setCurrentUser(user);
         } else {
           navigate('/');
         }
@@ -45,6 +47,8 @@ const Profile = () => {
         <a href="/">Back</a>
         <h1>Profile</h1>
         <img src={profilePicture} alt="Profile" height="50px"/>
+        <h2>{currentUser.displayName || currentUser.phoneNumber || (currentUser.isAnonymous ? 'Anonymous' : '')}</h2>
+        <h3></h3>
       </Center>
     </>
   );
