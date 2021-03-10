@@ -6,7 +6,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { navigate } from '@reach/router';
-import { show_error_banner } from '../util/banner';
 
 let firebaseApp: any;
 
@@ -53,15 +52,15 @@ const Game = () => {
         <br /><br /><br />
         {userIsLoggedIn && 
           <>
-            <button onClick={resume} className="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-google firebaseui-id-idp-button" style={{backgroundColor: '#c60c30'}} data-upgraded=",MaterialButton"><span className="firebaseui-idp-icon-wrapper"><img className="firebaseui-idp-icon" alt="" src="/icon.png" /></span><span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bolder' }} className="firebaseui-idp-text firebaseui-idp-text-long">Resume Session</span><span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bolder' }} className="firebaseui-idp-text firebaseui-idp-text-short">Resume</span></button>
+            <button onClick={resume} className="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-google firebaseui-id-idp-button" style={{backgroundColor: '#c60c30'}} data-upgraded=",MaterialButton"><span className="firebaseui-idp-icon-wrapper"><img className="firebaseui-idp-icon" alt="" src="/icon.png" /></span><span style={{ color: '#ffffff', fontSize: '25px', fontWeight: 'bolder' }} className="firebaseui-idp-text firebaseui-idp-text-long">Join Game</span><span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bolder' }} className="firebaseui-idp-text firebaseui-idp-text-short">Join</span></button>
             <br />
-            <button onClick={profilepage} className="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-google firebaseui-id-idp-button" style={{backgroundColor: '#c60c30'}} data-upgraded=",MaterialButton"><span className="firebaseui-idp-icon-wrapper"><img className="firebaseui-idp-icon" alt="" src="/icon.png" /></span><span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bolder' }} className="firebaseui-idp-text firebaseui-idp-text-long">Manage Profile</span><span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bolder' }} className="firebaseui-idp-text firebaseui-idp-text-short">Profile</span></button>
+            <button onClick={profilepage} className="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-google firebaseui-id-idp-button" style={{backgroundColor: '#c60c30'}} data-upgraded=",MaterialButton"><span className="firebaseui-idp-icon-wrapper"><img className="firebaseui-idp-icon" alt="" src="/icon.png" /></span><span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bolder' }} className="firebaseui-idp-text firebaseui-idp-text-long">My Account</span><span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bolder' }} className="firebaseui-idp-text firebaseui-idp-text-short">Account</span></button>
             <br />
             <hr style={{ borderTop: '3px solid #c60c30', borderBottom: 'none', width: '100%' }} />
           </>
         }
         <StyledFirebaseAuth uiConfig={{
-          signInSuccessUrl: '/play/random',
+          signInSuccessUrl: '/',
           signInOptions: [
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
