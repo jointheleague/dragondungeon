@@ -13,7 +13,7 @@ import {
 	IInputs,
 	Coin, 
 	Bar
-} from './game/GameState';
+} from '@dragoncoin/common';
 
 import * as admin from 'firebase-admin';
 

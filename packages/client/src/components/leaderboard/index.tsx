@@ -7,7 +7,8 @@ import './leaderboard.scss';
 const FOCUSED: CSSProperties = {
   border: 'solid #375a7f 2px',
   textAlign: 'center',
-  margin: 'auto'
+  margin: 'auto',
+  width:'100%',
 };
 
 export function Leadboard(props: {
@@ -30,7 +31,7 @@ export function Leadboard(props: {
       </tr>
       <tr style={FOCUSED}>
         <td>
-          Dave the Dragon
+          Dave
         </td>
         <td>
           500

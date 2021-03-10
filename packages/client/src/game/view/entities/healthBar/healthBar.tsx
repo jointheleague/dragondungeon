@@ -38,7 +38,7 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
           newProps.width,
           newProps.height
         );
-        instance.beginFill(255);
+        instance.beginFill(newProps.color);
         instance.drawRect(
           newProps.x+2,
           newProps.y,

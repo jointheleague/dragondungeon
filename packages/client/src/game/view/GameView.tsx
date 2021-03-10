@@ -15,6 +15,7 @@ import { Leadboard } from 'components/leaderboard';
 import firebase from 'firebase/app';
 import ReactNipple from 'react-nipple';
 import {Bar} from './entities/healthBar/healthBar';
+import {Fireball} from '@dragoncoin/common';
 import 'firebase/auth';
 let firebaseApp;
 
@@ -89,7 +90,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       for(let fireball of state.players[pid].fireballs){
         fireballs.push(<FireballView key={fireball.id} fireball = {fireball}/>)
       }
-      healthBars.push(<Bar key ={state.players[pid].bar.key} x={state.players[pid].x-25} y={state.players[pid].y-75} width={50} height={20} color ={100} score={state.players[pid].score}/>)
+      healthBars.push(<Bar key ={state.players[pid].bar.key} x={state.players[pid].x-25} y={state.players[pid].y-75} width={500} height={20} color ={0x11FF11} score={state.players[pid].score}/>)
       
       //fireballs.push(player.fireballs);
     }
