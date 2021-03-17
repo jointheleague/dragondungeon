@@ -10,11 +10,13 @@ import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
+import { Box } from 'components/box';
+import { Leadboard } from 'components/leaderboard';
 import firebase from 'firebase/app';
-import 'firebase/auth';
 import ReactNipple from 'react-nipple';
 import {Bar} from './entities/healthBar/healthBar';
-
+import {Fireball} from '@dragoncoin/common';
+import 'firebase/auth';
 let firebaseApp;
 
 try {
@@ -128,13 +130,15 @@ export class GameView extends Component<GameViewProps, GameViewState> {
        <ReactNipple
                     options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
                     style={{
-                        position: 'fixed',
-                        width: '100vw',
-                        height: '100vh'
+                      position: 'fixed',
+                      width: '100vw',
+                      height: '100vh'
                     }}
-                    onMove={(evt, data) => console.log(data.direction)}
-                />
+                    onMove={(evt:any, data: any) => console.log(data.direction)}
+                    />
        <ScrollDisable/>
+                    <Leadboard>
+                    </Leadboard>
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>
      );

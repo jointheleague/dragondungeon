@@ -29,6 +29,7 @@
     "colyseus.js": "^0.14.0",
     "css-loader": "3.4.2",
     "deep-equal": "^2.0.4",
+    "dompurify": "^2.2.6",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "eslint": "^6.6.0",
@@ -132,9 +133,6 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
     ],
-    "modulePaths": [
-      "/Users/yeti/workspace/miniature-parakeet/packages/client/src"
-    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
@@ -160,5 +158,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "@types/dompurify": "^2.2.1"
   }
 }

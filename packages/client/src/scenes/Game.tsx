@@ -30,12 +30,11 @@ export default class Game extends Component<IProps, IState>{
     this.stateManager.setup()
       .then(() => {
         this.setState({loading: false});
-        window.history.replaceState({}, "/play/random", "/play/" + this.stateManager.room.id);
+        navigate(`/play/${this.stateManager.room.id}`);
       })
       .catch((e) => {
         navigate("/");
-        show_error_banner(`Error joining lobby ${this.props.roomId} does not exist`)
-        console.error(e);
+        show_error_banner('ERROR CODE: FISH (Matchmake/NoServer)');
       })
   }
 
