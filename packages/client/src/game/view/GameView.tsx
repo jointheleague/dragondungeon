@@ -13,6 +13,7 @@ import { Viewport } from "pixi-viewport";
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import ReactNipple from 'react-nipple';
+import {Bar} from './entities/healthBar/healthBar';
 
 let firebaseApp;
 
@@ -34,7 +35,6 @@ try {
   window.location.reload();
 }
 
-import {Bar} from './entities/healthBar/healthBar';
 interface GameViewProps {
   stateManager: StateManager;
   state: IGameState;
@@ -88,7 +88,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       for(let fireball of state.players[pid].fireballs){
         fireballs.push(<FireballView key={fireball.id} fireball = {fireball}/>)
       }
-      healthBars.push(<Bar key ={state.players[pid].bar.key} x={state.players[pid].x-25} y={state.players[pid].y-75} width={50} height={20} color ={100} score={state.players[pid].score}/>)
+      healthBars.push(<Bar key ={state.players[pid].bar.key} x={state.players[pid].x-25} y={state.players[pid].y-75} width={70} height={18} color ={0xe30b1d} score={state.players[pid].score}/>)
       
       //fireballs.push(player.fireballs);
     }

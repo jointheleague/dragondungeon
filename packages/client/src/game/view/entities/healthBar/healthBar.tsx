@@ -27,23 +27,30 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
     customDisplayObject: (_) => new PIXI.Graphics(),
     customApplyProps: (instance, oldProps, newProps) => {
       if (!propsEqual(oldProps, newProps)) {
+        var scoreWidth = Math.min(newProps.score, newProps.width);
         if (newProps.zIndex) {
           instance.zIndex = newProps.zIndex;
         }
         instance.clear();
         instance.beginFill(.2);
         instance.drawRect(
-          newProps.x,
+          newProps.x-2,
           newProps.y,
           newProps.width,
           newProps.height
         );
-        instance.beginFill(255);
-        instance.drawRect(
-          newProps.x+2,
+        instance.drawCircle(
+          newProps.x,
           newProps.y,
-          newProps.score,
-          newProps.height-5
+          newProps.height/2
+        );
+        
+        instance.beginFill(0xe30b1d);
+        instance.drawRect(
+          newProps.x,
+          newProps.y,
+          scoreWidth,
+          newProps.height-3
         );
         instance.endFill();
       }
