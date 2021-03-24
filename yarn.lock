@@ -2493,7 +2493,11 @@
 
 "@types/dompurify@^2.2.1":
   version "2.2.1"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/@types/dompurify/-/dompurify-2.2.1.tgz"
+=======
+  resolved "https://registry.yarnpkg.com/@types/dompurify/-/dompurify-2.2.1.tgz#eebf3af8afe2f577a53acab9d98a3a4cb04bbbe7"
+>>>>>>> be6c89994548d7d7afba5a922acc6b6349ee29c4
   integrity sha512-3JwbEeRVQ3n6+JgBW/hCdkydRk9/vWT+UEglcXEJqLJEcUganDH37zlfLznxPKTZZfDqA9K229l1qN458ubcOQ==
   dependencies:
     "@types/trusted-types" "*"
@@ -2675,12 +2679,20 @@
 
 "@types/trusted-types@*":
   version "2.0.0"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.0.tgz"
+=======
+  resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.0.tgz#aee6e868fcef74f2b8c71614b6df81a601a42f17"
+>>>>>>> be6c89994548d7d7afba5a922acc6b6349ee29c4
   integrity sha512-I8MnZqNXsOLHsU111oHbn3khtvKMi5Bn4qVFsIWSJcCP1KKDiXX5AEw8UPk0nSopeC+Hvxt6yAy1/a5PailFqg==
 
 "@types/uuid@^8.3.0":
   version "8.3.0"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/@types/uuid/-/uuid-8.3.0.tgz"
+=======
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.0.tgz#215c231dff736d5ba92410e6d602050cce7e273f"
+>>>>>>> be6c89994548d7d7afba5a922acc6b6349ee29c4
   integrity sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ==
 
 "@types/ws@^6.0.1":
@@ -4014,9 +4026,15 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001135:
+<<<<<<< HEAD
   version "1.0.30001135"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001135.tgz"
   integrity sha512-ziNcheTGTHlu9g34EVoHQdIu5g4foc8EsxMGC7Xkokmvw0dqNtX8BS8RgCgFBaAiSp2IdjvBxNdh0ssib28eVQ==
+=======
+  version "1.0.30001202"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001202.tgz"
+  integrity sha512-ZcijQNqrcF8JNLjzvEiXqX4JUYxoZa7Pvcsd9UD8Kz4TvhTonOSNRsK+qtvpVL4l6+T1Rh4LFtLfnNWg6BGWCQ==
+>>>>>>> be6c89994548d7d7afba5a922acc6b6349ee29c4
 
 capture-exit@^2.0.0:
   version "2.0.0"
