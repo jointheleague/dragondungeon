@@ -99,8 +99,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       this.viewport.y = -me.y * scale + window.innerHeight / 2;
     }
     
-    for(let i = 0; i <state.coins.length; i++){
-      coins.push(<Coin key={state.coins[i].key+""} x={state.coins[i].x} y={state.coins[i].y}/>);
+    for(let cid in state.coins){
+      //const coin = state.coins[cid];
+      coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y}/>);
     }
     render(
       <>{coins}{players}{fireballs}{healthBars}</>,

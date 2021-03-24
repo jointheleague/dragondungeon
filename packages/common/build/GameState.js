@@ -10,18 +10,20 @@ exports.GameState = void 0;
 const schema_1 = require("@colyseus/schema");
 const Player_1 = require("./Player");
 const Coin_1 = require("./Coin");
+const uuid_1 = require("uuid");
 class GameState extends schema_1.Schema {
     constructor() {
         super();
         this.first = false;
         this.players = new schema_1.MapSchema();
-        this.coins = new schema_1.ArraySchema();
+        this.coins = new schema_1.MapSchema();
         let coinRadius = 200;
         let coinCircleX = 250;
         let coinCircleY = 250;
         let numberOfCoins = 15;
         for (let i = 0; i < numberOfCoins; i++) {
-            this.coins.push(new Coin_1.Coin(i, Math.random() * 2000, Math.random() * 1000));
+            //this.coins[v4] = new Coin(i, Math.random()*2000, Math.random()*1000);
+            this.coins.set(uuid_1.v4(), new Coin_1.Coin(i, Math.random() * 2000, Math.random() * 1000));
         }
     }
 }
@@ -34,7 +36,7 @@ __decorate([
     })
 ], GameState.prototype, "players", void 0);
 __decorate([
-    schema_1.type([Coin_1.Coin])
+    schema_1.type({ map: Coin_1.Coin })
 ], GameState.prototype, "coins", void 0);
 exports.GameState = GameState;
 //# sourceMappingURL=GameState.js.map

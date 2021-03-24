@@ -16,7 +16,7 @@ import {
 } from '@dragoncoin/common';
 
 import * as admin from 'firebase-admin';
-
+import { v4 } from "uuid";
 const admin_sdk_key = require('../../top_secret/adminsdk.json');
 
 admin.initializeApp({
@@ -73,17 +73,19 @@ export class GameRoom extends Room < GameState > {
 							if (this.state.players[id].score > 0) {
 								this.state.players[id].score--;
 								const rand = getRandomInt(0, 62) / 10;
-								this.state.coins.push(new Coin(this.state.coins.length, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
+								this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
 							}
 
 						}
 					}
 				}
 			}
-			for (let i = 0; i < this.state.coins.length; i++) {
-				if (this.state.coins[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
-					this.state.coins.splice(i, 1);
+			//for (let i = 0; i < this.state.coins.size; i++) {
+				for(let cid of this.state.coins.keys()){
+				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
+					this.state.coins.delete(cid);
 					this.state.players[id].score++;
+
 				}
 			}
 
@@ -98,12 +100,14 @@ export class GameRoom extends Room < GameState > {
 			} else if(this.state.players[id].y>1000){
 				this.state.players[id].y=1000;
 			}
-
-			
-			
 			// console.log(id + "  " + this.state.players[id].score);
 		}
-		if(this.state.coins.length<100){this.state.coins.push(new Coin(this.state.coins.length, Math.random()*2000, Math.random()*1000));}
+
+		
+		while(this.state.coins.size<100){
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*1000, Math.random()*1000));
+		}
+		
 		
 	}
 
