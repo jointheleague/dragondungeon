@@ -25,7 +25,8 @@ try {
 const db = firebase.firestore();
 
 const NewUser = () => {
-  return <><a href="/play/random">Start</a></>;
+  navigate('/play/random');
+  return null;
 }
 
 export default NewUser;
