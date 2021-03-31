@@ -30,18 +30,19 @@ const resume = () => {
   firebase.auth().onAuthStateChanged(user => {
     if (user?.isAnonymous) {
       const adj = randomItem(require('../wordlists/adjectives.json'));
-      const nouns = randomItem(require('../wordlists/nouns.json'));
+      const noun = randomItem(require('../wordlists/nouns.json'));
       const d1 = randomItem([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
       const d2 = randomItem([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
       const d3 = randomItem([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
       const d4 = randomItem([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
-      window.localStorage.anonusername = `${adj}-${nouns}-${d1}${d2}${d3}${d4}`.toLowerCase();
+      user.updateProfile({
+        displayName: `${adj}${noun}${d1}${d2}${d3}${d4}`.toLowerCase()
+      });
       navigate('/play/random');
     } else if (user) {
       db.collection(user.uid).doc('profile').get().then((doc) => {
         if (doc.exists) {
-          console.log('new');
-          //navigate('/play/random');
+          navigate('/play/random');
         } else {
           navigate('/onboarding')
         }

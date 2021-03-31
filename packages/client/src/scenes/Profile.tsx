@@ -38,13 +38,17 @@ const Profile = () => {
           }
           setCurrentUser(user);
           db.collection(user.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              if (doc.id == 'stats') {
-                setUserStats(doc.data());
-              } else if (doc.id == 'profile') {
-                setUserProfile(doc.data());
-              }
-            });
+            if (querySnapshot.size == 0) {
+              navigate('/');
+            } else {
+              querySnapshot.forEach((doc) => {
+                if (doc.id == 'stats') {
+                  setUserStats(doc.data());
+                } else if (doc.id == 'profile') {
+                  setUserProfile(doc.data());
+                }
+              });
+            }
           });
         } else {
           navigate('/');
