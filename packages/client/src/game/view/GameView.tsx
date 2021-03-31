@@ -9,6 +9,7 @@ import {FireballView} from './entities/fireball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
+import { BorderFence } from './static/borderFence';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Box } from 'components/box';
@@ -79,7 +80,8 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const coins = [];
     const fireballs = [];
     const healthBars = [];
-    var coinJar = <CoinJar key={"only"} x={1000} y={500}/>;
+    const fences = [];
+    const coinJar = <CoinJar key={"only"} x={1000} y={500}/>;
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
     for (let pid in state.players) {
@@ -94,6 +96,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
       //fireballs.push(player.fireballs);
     }
+    //add fence
+    fences.push(<BorderFence x={1000} y={500}/>);
+    //
     if (me !== null && this.viewport !=null) {
       this.viewport.x = -me.x * scale + window.innerWidth / 2;
       this.viewport.y = -me.y * scale + window.innerHeight / 2;
@@ -104,7 +109,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y}/>);
     }
     render(
-      <>{coinJar}{coins}{players}{fireballs}{healthBars}</>, 
+      <>{coinJar}{fences}{coins}{players}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }

@@ -7,4 +7,5 @@ import { Player } from './Player';
 import { Coin } from './Coin';
 import { Bar } from './Bar';
 import { CoinJar } from './CoinJar';
-export { IInputs, Maths, Geometry, Fireball, GameState, Coin, Bar, Player, CoinJar };
+import { BorderFence } from './BorderFence';
+export { IInputs, Maths, Geometry, Fireball, GameState, Coin, Bar, Player, CoinJar, BorderFence };

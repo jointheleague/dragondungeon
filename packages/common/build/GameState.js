@@ -12,6 +12,7 @@ const Player_1 = require("./Player");
 const Coin_1 = require("./Coin");
 const CoinJar_1 = require("./CoinJar");
 const uuid_1 = require("uuid");
+const _1 = require(".");
 class GameState extends schema_1.Schema {
     constructor() {
         super();
@@ -19,6 +20,7 @@ class GameState extends schema_1.Schema {
         this.players = new schema_1.MapSchema();
         this.coinJar = new CoinJar_1.CoinJar();
         this.coins = new schema_1.MapSchema();
+        this.fences = new schema_1.MapSchema();
         this.debugOn = false;
         let coinRadius = 200;
         let coinCircleX = 250;
@@ -44,6 +46,9 @@ __decorate([
 __decorate([
     schema_1.type({ map: Coin_1.Coin })
 ], GameState.prototype, "coins", void 0);
+__decorate([
+    schema_1.type({ map: _1.BorderFence })
+], GameState.prototype, "fences", void 0);
 __decorate([
     schema_1.type("boolean")
 ], GameState.prototype, "debugOn", void 0);
