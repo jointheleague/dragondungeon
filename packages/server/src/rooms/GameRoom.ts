@@ -92,7 +92,7 @@ export class GameRoom extends Room < GameState > {
 			for(let cid of this.state.coins.keys()){
 				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
 					this.state.coins.delete(cid);
-					this.state.players[id].score++;
+					this.state.players[id].coins++;
 				}
 			}
 
