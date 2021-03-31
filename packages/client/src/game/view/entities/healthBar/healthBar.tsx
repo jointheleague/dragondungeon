@@ -23,7 +23,7 @@ function propsEqual(oldProps: BarProps, newProps: BarProps) {
 }
 
 export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
-  {
+  { 
     customDisplayObject: (_) => new PIXI.Graphics(),
     customApplyProps: (instance, oldProps, newProps) => {
       if (!propsEqual(oldProps, newProps)) {

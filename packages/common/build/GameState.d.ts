@@ -5,5 +5,6 @@ export declare class GameState extends Schema {
     first: boolean;
     players: MapSchema<Player>;
     coins: MapSchema<Coin>;
+    debugOn: boolean;
     constructor();
 }
