@@ -31,18 +31,11 @@ const processUser = () => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
       const selectedName:string = document.querySelector('input')?.value || '';
-      if (selectedName !== '' && DOMPurify.sanitize(selectedName) !== '') {
-        db.collection(user.uid).doc("profile").set({
-          ign: DOMPurify.sanitize(selectedName),
-          ability: 0,
-          tag: 2221
-        })
-        .then(() => {
-            navigate('/play/random');
-        })
-        .catch((error) => {
-            alert("Please try again.");
+      if (DOMPurify.sanitize(selectedName) !== '') {
+        user.updateProfile({
+          displayName: DOMPurify.sanitize(selectedName)
         });
+        navigate('/play/random');
       }
     }
   });

@@ -28,7 +28,6 @@ const Profile = () => {
   const [profilePicture, setProfilePicture] = useState<string>('/icon.png');
   const [currentUser, setCurrentUser] = useState<any>({});
   const [userStats, setUserStats] = useState<any>({});
-  const [userProfile, setUserProfile] = useState<any>({});
   useEffect(
     () => {
       firebase.auth().onAuthStateChanged(user => {
@@ -37,17 +36,11 @@ const Profile = () => {
             setProfilePicture(user.photoURL);
           }
           setCurrentUser(user);
-          db.collection(user.uid).get().then((querySnapshot) => {
-            if (querySnapshot.size == 0) {
-              navigate('/');
+          db.collection(user.uid).doc('stats').get().then((doc) => {
+            if (doc.exists) {
+              setUserStats(doc.data());
             } else {
-              querySnapshot.forEach((doc) => {
-                if (doc.id == 'stats') {
-                  setUserStats(doc.data());
-                } else if (doc.id == 'profile') {
-                  setUserProfile(doc.data());
-                }
-              });
+              setUserStats({});
             }
           });
         } else {
@@ -63,8 +56,7 @@ const Profile = () => {
         <a href="/">Back</a>
         <h1>Profile</h1>
         <img src={profilePicture} alt="Profile" height="50px"/>
-        <h1>{userProfile.ign ? userProfile.ign : '...'}<span style={{ color: "#565a5c" }}>{userProfile.tag ? `#${userProfile.tag}` : ''}</span></h1>
-        <h2>{currentUser.displayName || currentUser.phoneNumber || (currentUser.isAnonymous ? 'Anonymous' : '...')}</h2>
+        <h1>{currentUser.displayName ? currentUser.displayName : '...'}</h1>
         {userStats.highscore ? 
           <>
             <h3><img src="/icon.png" height="20px" /> High Score: {userStats.highscore}</h3>
@@ -75,12 +67,12 @@ const Profile = () => {
             <h3><img src="/icon.png" height="20px" /> Medals Earned: {userStats.medals}</h3>
           </>
         : <>
-            <h3><img src="/icon.png" height="20px" /> Loading...</h3>
-            <h3><img src="/icon.png" height="20px" /> Loading...</h3>
-            <h3><img src="/icon.png" height="20px" /> Loading...</h3>
-            <h3><img src="/icon.png" height="20px" /> Loading...</h3>
-            <h3><img src="/icon.png" height="20px" /> Loading...</h3>
-            <h3><img src="/icon.png" height="20px" /> Loading...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
           </>}
           <br /><br /><br />
         <div style={{
