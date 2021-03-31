@@ -9,7 +9,7 @@
       "packages/*"
     ]
   },
-  "repository": "https://github.com/jointheleague/toybox2020game.git",
+  "repository": "https://github.com/jointheleague/dragoncoin.git",
   "author": "Luke Wood <lukewoodcs@gmail.com>, Keith Groves <keith.groves@jointheleague.org>, Samuel Sharp <samuel@samuelsharp.com>, Chris Woolson",
   "license": "MIT",
   "scripts": {
@@ -23,5 +23,8 @@
   },
   "devDependencies": {
     "concurrently": "^5.3.0"
+  },
+  "dependencies": {
+    "@types/testing-library__dom": "^7.5.0"
   }
 }

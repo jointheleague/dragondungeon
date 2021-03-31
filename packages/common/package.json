@@ -11,7 +11,9 @@
 		"start": "tsc -p tsconfig.json --resolveJsonModule --watch"
 	},
 	"dependencies": {
-		"@testing-library/dom": "^7.28.1"
+		"@colyseus/schema": "^1.0.3",
+		"@testing-library/dom": "^7.28.1",
+		"@types/uuid": "^8.3.0"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
@@ -21,5 +23,8 @@
 		"not dead",
 		"not ie <= 11",
 		"not op_mini all"
-	]
+	],
+	"devDependencies": {
+		"@types/uuid": "^8.3.0"
+	}
 }
