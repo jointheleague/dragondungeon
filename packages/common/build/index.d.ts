@@ -6,4 +6,5 @@ import { GameState } from './GameState';
 import { Player } from './Player';
 import { Coin } from './Coin';
 import { Bar } from './Bar';
-export { IInputs, Maths, Geometry, Fireball, GameState, Coin, Bar, Player };
+import { CoinJar } from './CoinJar';
+export { IInputs, Maths, Geometry, Fireball, GameState, Coin, Bar, Player, CoinJar };

@@ -9,6 +9,7 @@ export declare class Player extends Schema {
     y: number;
     angle: number;
     score: number;
+    coins: number;
     bar: Bar;
     speed: number;
     direction: Geometry.Vector;

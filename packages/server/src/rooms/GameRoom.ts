@@ -12,6 +12,7 @@ import {
 	Player,
 	IInputs,
 	Coin, 
+	CoinJar,
 	Bar
 } from '@dragoncoin/common';
 
@@ -70,8 +71,8 @@ export class GameRoom extends Room < GameState > {
 					if (id != id2) {
 						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
 							this.state.players[id2].fireballs.splice(i, 1);
-							if (this.state.players[id].score > 0) {
-								this.state.players[id].score--;
+							if (this.state.players[id].coins > 0) {
+								this.state.players[id].coins--;
 								const rand = getRandomInt(0, 62) / 10;
 								this.state.coins.push(new Coin(this.state.coins.length, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
 							}
@@ -80,10 +81,18 @@ export class GameRoom extends Room < GameState > {
 					}
 				}
 			}
+
+			//console.log("in the loop");
+
+			if(this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y)){
+				this.state.players[id].score += this.state.players[id].coins;
+				this.state.players[id].coins = 0;
+			}
+
 			for (let i = 0; i < this.state.coins.length; i++) {
 				if (this.state.coins[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
 					this.state.coins.splice(i, 1);
-					this.state.players[id].score++;
+					this.state.players[id].coins ++;
 				}
 			}
 
@@ -92,6 +101,8 @@ export class GameRoom extends Room < GameState > {
 			} else if(this.state.players[id].x>2000){
 				this.state.players[id].x=2000;
 			}
+
+
 
 			if(this.state.players[id].y<0){
 				this.state.players[id].y=0;

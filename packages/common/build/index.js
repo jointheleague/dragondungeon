@@ -19,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Player = exports.Bar = exports.Coin = exports.GameState = exports.Fireball = exports.Geometry = exports.Maths = void 0;
+exports.CoinJar = exports.Player = exports.Bar = exports.Coin = exports.GameState = exports.Fireball = exports.Geometry = exports.Maths = void 0;
 const Maths = __importStar(require("./maths"));
 exports.Maths = Maths;
 const Geometry = __importStar(require("./geometry"));
@@ -34,4 +34,6 @@ const Coin_1 = require("./Coin");
 Object.defineProperty(exports, "Coin", { enumerable: true, get: function () { return Coin_1.Coin; } });
 const Bar_1 = require("./Bar");
 Object.defineProperty(exports, "Bar", { enumerable: true, get: function () { return Bar_1.Bar; } });
+const CoinJar_1 = require("./CoinJar");
+Object.defineProperty(exports, "CoinJar", { enumerable: true, get: function () { return CoinJar_1.CoinJar; } });
 //# sourceMappingURL=index.js.map

@@ -19,6 +19,7 @@ class Player extends schema_1.Schema {
         this.y = Math.random() * 1000;
         this.angle = Math.PI;
         this.score = 0;
+        this.coins = 0;
         this.bar = new Bar_1.Bar('', this.x, this.y);
         this.speed = 20;
         this.direction = new _1.Geometry.Vector(0, 0);
@@ -101,6 +102,9 @@ __decorate([
 __decorate([
     schema_1.type("number")
 ], Player.prototype, "score", void 0);
+__decorate([
+    schema_1.type("number")
+], Player.prototype, "coins", void 0);
 __decorate([
     schema_1.type([Bar_1.Bar])
 ], Player.prototype, "bar", void 0);

@@ -7,6 +7,7 @@ interface BarProps {
   width: number;
   height: number;
   color: number;
+  coins: number;
   score: number;
   zIndex?: number;
 }
@@ -18,6 +19,7 @@ function propsEqual(oldProps: BarProps, newProps: BarProps) {
     oldProps.width === newProps.width &&
     oldProps.color === newProps.color &&
     oldProps.height === newProps.height &&
+    oldProps.coins === newProps.coins &&
     oldProps.score === newProps.score
   );
 }
@@ -28,6 +30,7 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
     customApplyProps: (instance, oldProps, newProps) => {
       if (!propsEqual(oldProps, newProps)) {
         var scoreWidth = Math.min(newProps.score, newProps.width);
+        var coinsWidth = Math.min(newProps.coins, newProps.width);
         if (newProps.zIndex) {
           instance.zIndex = newProps.zIndex;
         }
@@ -44,6 +47,13 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
           newProps.x,
           newProps.y,
           scoreWidth,
+          newProps.height-3
+        );
+        instance.beginFill(255);
+        instance.drawRect(
+          newProps.x,
+          newProps.y+10,
+          coinsWidth,
           newProps.height-3
         );
         instance.endFill();

@@ -8,6 +8,7 @@ import { render } from "react-pixi-fiber";
 import {FireballView} from './entities/fireball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
+import { CoinJar } from './entities/coinJar';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Box } from 'components/box';
@@ -78,6 +79,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const coins = [];
     const fireballs = [];
     const healthBars = [];
+    var coinJar = <CoinJar key={"only"} x={1000} y={500}/>;
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
     for (let pid in state.players) {
@@ -85,16 +87,14 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       
       players.push(<Dragon key={pid} player={player} />,)
 
-      
-
       for(let fireball of state.players[pid].fireballs){
         fireballs.push(<FireballView key={fireball.id} fireball = {fireball}/>)
       }
-      healthBars.push(<Bar key ={state.players[pid].bar.key} x={state.players[pid].x-25} y={state.players[pid].y-75} width={70} height={18} color ={0xe30b1d} score={state.players[pid].score}/>)
+      healthBars.push(<Bar key ={state.players[pid].bar.key} x={state.players[pid].x-25} y={state.players[pid].y-75} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} score={state.players[pid].score}/>)
 
       //fireballs.push(player.fireballs);
     }
-    if (me !== null && this.viewport!=null) {
+    if (me !== null && this.viewport !=null) {
       this.viewport.x = -me.x * scale + window.innerWidth / 2;
       this.viewport.y = -me.y * scale + window.innerHeight / 2;
     }
@@ -103,7 +103,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={state.coins[i].key+""} x={state.coins[i].x} y={state.coins[i].y}/>);
     }
     render(
-      <>{coins}{players}{fireballs}{healthBars}</>,
+      <>{coinJar}{coins}{players}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }

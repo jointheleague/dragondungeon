@@ -7,6 +7,7 @@ import {
 
 import { Player } from './Player';
 import { Coin } from './Coin';
+import { CoinJar } from './CoinJar';
 
 export class GameState extends Schema {
 	@type("boolean")
@@ -19,6 +20,9 @@ export class GameState extends Schema {
 
 	@type([Coin])
 	coins = new ArraySchema < Coin > ();
+
+	@type(CoinJar)
+	coinJar = new CoinJar();
 	
 
 	constructor() {

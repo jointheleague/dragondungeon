@@ -10,12 +10,14 @@ exports.GameState = void 0;
 const schema_1 = require("@colyseus/schema");
 const Player_1 = require("./Player");
 const Coin_1 = require("./Coin");
+const CoinJar_1 = require("./CoinJar");
 class GameState extends schema_1.Schema {
     constructor() {
         super();
         this.first = false;
         this.players = new schema_1.MapSchema();
         this.coins = new schema_1.ArraySchema();
+        this.coinJar = new CoinJar_1.CoinJar();
         let coinRadius = 200;
         let coinCircleX = 250;
         let coinCircleY = 250;
@@ -36,5 +38,8 @@ __decorate([
 __decorate([
     schema_1.type([Coin_1.Coin])
 ], GameState.prototype, "coins", void 0);
+__decorate([
+    schema_1.type(CoinJar_1.CoinJar)
+], GameState.prototype, "coinJar", void 0);
 exports.GameState = GameState;
 //# sourceMappingURL=GameState.js.map

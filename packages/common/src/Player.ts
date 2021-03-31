@@ -21,6 +21,9 @@ export class Player extends Schema {
 	@type("number")
 	score: number = 0;
 
+	@type("number")
+	coins: number = 0;
+
 	@type([Bar])
 	bar = new Bar('', this.x, this.y);
 
