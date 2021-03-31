@@ -6,6 +6,8 @@ const Game = lazy(() => import('./scenes/Game'));
 const Home = lazy(() => import("./scenes/Home"));
 const ErrorRoute = lazy(() => import("./scenes/ErrorRoute"));
 const Profile = lazy(() => import("./scenes/Profile"));
+const NewUser = lazy(() => import("./scenes/NewUser"));
+
 interface IProps {}
 
 class App extends Component {
@@ -31,6 +33,7 @@ class App extends Component {
           <Game colyseus={this.colyseus} path="/play/:roomId" />
           <Home path="/"/>
           <Profile path="/profile"/>
+          <NewUser path="/onboarding" />
           <ErrorRoute default/>
         </Router>
       </Suspense>

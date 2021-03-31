@@ -3,8 +3,8 @@ import { Fireball } from "@dragoncoin/common";
 export interface IGameState {
   lifecycle: 'lobby' | 'deathmatch';
   players: {[key: string]: IPlayer};
-  coins: ICoin[];
   coinJar: ICoinJar;
+  coins: {[key: string]: ICoin};
   bars: IBar[];
 }
 

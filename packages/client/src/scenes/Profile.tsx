@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Center } from '../components/center';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 import { navigate } from '@reach/router';
 import DOMPurify from 'dompurify';
 
@@ -21,18 +22,27 @@ try {
   window.location.reload();
 }
 
+const db = firebase.firestore();
+
 const Profile = () => {
   const [profilePicture, setProfilePicture] = useState<string>('/icon.png');
   const [currentUser, setCurrentUser] = useState<any>({});
+  const [userStats, setUserStats] = useState<any>({});
   useEffect(
     () => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          console.log(user);
           if (user.photoURL) {
             setProfilePicture(user.photoURL);
           }
           setCurrentUser(user);
+          db.collection(user.uid).doc('stats').get().then((doc) => {
+            if (doc.exists) {
+              setUserStats(doc.data());
+            } else {
+              setUserStats({});
+            }
+          });
         } else {
           navigate('/');
         }
@@ -46,13 +56,25 @@ const Profile = () => {
         <a href="/">Back</a>
         <h1>Profile</h1>
         <img src={profilePicture} alt="Profile" height="50px"/>
-        <h1>{currentUser.displayName || currentUser.phoneNumber || (currentUser.isAnonymous ? 'Anonymous' : '')}</h1>
-        <h2>Stats</h2>
-        <h3><img src="/icon.png" height="20px" /> High Score: 0</h3>
-        <h3><img src="/icon.png" height="20px" /> Lifetime Coins: 0</h3>
-        <h3><img src="/icon.png" height="20px" /> Dragons Killed: 0</h3>
-        <h3><img src="/icon.png" height="20px" /> Badges Earned: 0</h3>
-        <h2>Abilities</h2>
+        <h1>{currentUser.displayName ? currentUser.displayName : '...'}</h1>
+        {userStats.highscore ? 
+          <>
+            <h3><img src="/icon.png" height="20px" /> High Score: {userStats.highscore}</h3>
+            <h3><img src="/icon.png" height="20px" /> Lifetime Coins: {userStats.coins}</h3>
+            <h3><img src="/icon.png" height="20px" /> Damage Done: {userStats.damagedone}</h3>
+            <h3><img src="/icon.png" height="20px" /> Damage Taken: {userStats.damagetaken}</h3>
+            <h3><img src="/icon.png" height="20px" /> K/D (Damage Done/Taken) Ratio: {(userStats.damagedone / userStats.damagetaken).toFixed(2)}</h3>
+            <h3><img src="/icon.png" height="20px" /> Medals Earned: {userStats.medals}</h3>
+          </>
+        : <>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" /> ...</h3>
+          </>}
+          <br /><br /><br />
         <div style={{
           backgroundColor: '#c60c30',
           color: 'white',

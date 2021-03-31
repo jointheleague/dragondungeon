@@ -8,7 +8,7 @@ import {
 import { Player } from './Player';
 import { Coin } from './Coin';
 import { CoinJar } from './CoinJar';
-
+import { v4 } from "uuid";
 export class GameState extends Schema {
 	@type("boolean")
 	first: boolean = false;
@@ -18,13 +18,12 @@ export class GameState extends Schema {
 	})
 	players = new MapSchema < Player > ();
 
-	@type([Coin])
-	coins = new ArraySchema < Coin > ();
-
 	@type(CoinJar)
 	coinJar = new CoinJar();
 	
-
+	@type({map: Coin})
+	coins = new MapSchema < Coin > ();
+	
 	constructor() {
 		super();
 		let coinRadius = 200;
@@ -32,7 +31,8 @@ export class GameState extends Schema {
 		let coinCircleY = 250;
 		let numberOfCoins = 15;
 		for (let i = 0; i < numberOfCoins; i++) {
-			this.coins.push(new Coin(i, Math.random()*2000, Math.random()*1000));
+			//this.coins[v4] = new Coin(i, Math.random()*2000, Math.random()*1000);
+			this.coins.set(v4(), new Coin(i, Math.random()*2000, Math.random()*1000));
 		}
 	}
 }

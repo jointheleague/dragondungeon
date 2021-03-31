@@ -6,11 +6,12 @@ interface IProps {
   text: string
   disabled?: boolean;
   dataClipboardText?: string;
+  style?: any;
 };
 
 export const Button = (props: IProps) => {
   return (<button
-    style={{ fontSize: '20px' }}
+    style={{ ...props.style, fontSize: '20px' }}
     className="button"
     disabled={props.disabled}
     data-clipboard-text={props.dataClipboardText}
