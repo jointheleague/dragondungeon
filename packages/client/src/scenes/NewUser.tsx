@@ -34,7 +34,8 @@ const processUser = () => {
       if (DOMPurify.sanitize(selectedName) !== '') {
         user.updateProfile({
           displayName: DOMPurify.sanitize(selectedName)
-        })
+        });
+        navigate('/play/random');
       }
     }
   });
