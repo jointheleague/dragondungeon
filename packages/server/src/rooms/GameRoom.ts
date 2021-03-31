@@ -78,6 +78,9 @@ export class GameRoom extends Room < GameState > {
 								const rand = getRandomInt(0, 62) / 10;
 								this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
 							}
+							if(this.state.players[id].score > 0){
+								this.state.players[id].score--;
+							}
 
 						}
 					}
@@ -88,9 +91,10 @@ export class GameRoom extends Room < GameState > {
 				this.state.players[id].score += this.state.players[id].coins;
 				this.state.players[id].coins = 0;
 			}
+
 			//for (let i = 0; i < this.state.coins.size; i++) {
 			for(let cid of this.state.coins.keys()){
-				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
+				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) == true && this.state.players[id].coins < 10) {
 					this.state.coins.delete(cid);
 					this.state.players[id].coins++;
 				}
@@ -101,8 +105,6 @@ export class GameRoom extends Room < GameState > {
 			} else if(this.state.players[id].x>2000){
 				this.state.players[id].x=2000;
 			}
-
-
 
 			if(this.state.players[id].y<0){
 				this.state.players[id].y=0;

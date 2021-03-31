@@ -30,7 +30,7 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
     customApplyProps: (instance, oldProps, newProps) => {
       if (!propsEqual(oldProps, newProps)) {
         var scoreWidth = Math.min(newProps.score, newProps.width);
-        var coinsWidth = Math.min(newProps.coins, newProps.width);
+        var coinsWidth = newProps.coins;
         if (newProps.zIndex) {
           instance.zIndex = newProps.zIndex;
         }
@@ -49,11 +49,18 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
           scoreWidth,
           newProps.height-3
         );
+        instance.beginFill(.2);
+        instance.drawRect(
+          newProps.x-2,
+          newProps.y+10,
+          newProps.width+5,
+          newProps.height
+        );
         instance.beginFill(255);
         instance.drawRect(
           newProps.x,
           newProps.y+10,
-          coinsWidth,
+          coinsWidth*7,
           newProps.height-3
         );
         instance.endFill();
