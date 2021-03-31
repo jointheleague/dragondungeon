@@ -24,6 +24,9 @@ export class GameState extends Schema {
 	@type({map: Coin})
 	coins = new MapSchema < Coin > ();
 	
+	@type("boolean")
+	debugOn: boolean = false;
+
 	constructor() {
 		super();
 		let coinRadius = 200;

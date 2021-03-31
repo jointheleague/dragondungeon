@@ -25,6 +25,7 @@ export const Coin = (props: IProps) => {
     return textures;
   }, []);
 
+  
   return (
     <AnimatedSprite
     anchor={new PIXI.Point(0.5, 0.5)}

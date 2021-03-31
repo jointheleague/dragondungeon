@@ -19,6 +19,7 @@ class GameState extends schema_1.Schema {
         this.players = new schema_1.MapSchema();
         this.coinJar = new CoinJar_1.CoinJar();
         this.coins = new schema_1.MapSchema();
+        this.debugOn = false;
         let coinRadius = 200;
         let coinCircleX = 250;
         let coinCircleY = 250;
@@ -38,10 +39,13 @@ __decorate([
     })
 ], GameState.prototype, "players", void 0);
 __decorate([
+    schema_1.type(CoinJar_1.CoinJar)
+], GameState.prototype, "coinJar", void 0);
+__decorate([
     schema_1.type({ map: Coin_1.Coin })
 ], GameState.prototype, "coins", void 0);
 __decorate([
-    schema_1.type(CoinJar_1.CoinJar)
-], GameState.prototype, "coinJar", void 0);
+    schema_1.type("boolean")
+], GameState.prototype, "debugOn", void 0);
 exports.GameState = GameState;
 //# sourceMappingURL=GameState.js.map

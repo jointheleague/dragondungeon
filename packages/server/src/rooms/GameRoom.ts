@@ -25,7 +25,7 @@ admin.initializeApp({
 });
 
 export class GameRoom extends Room < GameState > {
-
+	counter = 0;
 	maxClients: 4
 
 	onCreate() {
@@ -57,12 +57,14 @@ export class GameRoom extends Room < GameState > {
 			this.clock.tick();
 			this.tick();
 		}, 1000 / 60);
+		
 	}
 	cancelGameLoop() {
 		this.clock.clear()
 	}
 
 	tick() {
+		this.counter++;
 		const dx = this.clock.deltaTime;
 		for (let id of this.state.players.keys()) {
 			this.state.players[id].tick(dx);
@@ -111,8 +113,8 @@ export class GameRoom extends Room < GameState > {
 		}
 
 		
-		while(this.state.coins.size<100){
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*1000, Math.random()*1000));
+		if(this.state.coins.size<100&&this.counter%100==0){
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*2000, Math.random()*1000));
 		}
 		
 		

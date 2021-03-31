@@ -41,9 +41,11 @@ export const AnimatedSprite = CustomPIXIComponent<PIXI.AnimatedSprite, AnimatedS
     customApplyProps: (instance, _oldProps, newProps) => {
       if (instance.loop !== newProps.loop) {
         instance.loop = (!!newProps.loop);
+        instance.play();
       }
       if (instance.animationSpeed !== newProps?.animationSpeed) {
         instance.animationSpeed = newProps.animationSpeed || 1;
+        instance.play();
       }
       if (instance.rotation !== newProps?.rotation) {
         instance.rotation = newProps.rotation || 0;
@@ -70,6 +72,7 @@ export const AnimatedSprite = CustomPIXIComponent<PIXI.AnimatedSprite, AnimatedS
           instance.anchor = newProps.anchor
         }
       }
+      
     },
     customDidAttach: instance => {
       instance.play()
