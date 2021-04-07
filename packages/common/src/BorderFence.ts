@@ -7,7 +7,7 @@ export class BorderFence extends Schema {
 	@type("number")
 	y: number = 1;
 
-	constructor(key: number, x: number, y: number) {
+	constructor(x: number, y: number) {
 		super()
 		this.x = x;
 		this.y = y;

@@ -97,7 +97,18 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       //fireballs.push(player.fireballs);
     }
     //add fence
-    fences.push(<BorderFence x={1000} y={500}/>);
+    for(var i = 0; i < 8; i ++){
+      fences.push(<BorderFence x={i*267+65} y={-60} angle={0}/>);
+    }
+    for(var i = 0; i < 8; i ++){
+      fences.push(<BorderFence x={i*267+65} y={1060} angle={0}/>);
+    }
+    for(var i = 0; i < 5; i ++){
+      fences.push(<BorderFence x={-60} y={i*267-30} angle={ Math.PI/2}/>);
+    }
+    for(var i = 0; i < 5; i ++){
+      fences.push(<BorderFence x={2060} y={i*267-30} angle={Math.PI/2}/>);
+    }
     //
     if (me !== null && this.viewport !=null) {
       this.viewport.x = -me.x * scale + window.innerWidth / 2;

@@ -6,6 +6,7 @@ import FenceImage1 from './sprites/Fence.png';
 interface IProps {
     x: number;
     y: number;
+    angle: number;
 }
 
 
@@ -29,6 +30,7 @@ export const BorderFence = (props: IProps) => {
     width ={267}
     height = {72}
     textures = {fenceTextures}
+    rotation={props.angle}
     x={props.x}
     animationSpeed = {ANIMATION_SPEED}
     loop= {true}
