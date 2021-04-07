@@ -3,6 +3,13 @@ import {
   CustomPIXIComponent,
 } from "react-pixi-fiber";
 
+
+import {settings, SCALE_MODES} from 'pixi.js';
+
+settings.ROUND_PIXELS = true;
+settings.SCALE_MODE = SCALE_MODES.NEAREST;
+
+
 type AnimatedSpriteProps = {
   textures: PIXI.AnimatedSprite["textures"];
   animationSpeed?: number;
