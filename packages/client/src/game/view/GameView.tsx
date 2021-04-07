@@ -9,7 +9,7 @@ import {FireballView} from './entities/fireball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
-import { BorderFence } from './static/borderFence';
+import { BorderFence } from './entities/borderFence';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Box } from 'components/box';

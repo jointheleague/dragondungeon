@@ -9,7 +9,7 @@ import { Player } from './Player';
 import { Coin } from './Coin';
 import { CoinJar } from './CoinJar';
 import { v4 } from "uuid";
-import { BorderFence } from '.';
+import { BorderFence } from './BorderFence';
 export class GameState extends Schema {
 	@type("boolean")
 	first: boolean = false;

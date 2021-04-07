@@ -12,7 +12,7 @@ const Player_1 = require("./Player");
 const Coin_1 = require("./Coin");
 const CoinJar_1 = require("./CoinJar");
 const uuid_1 = require("uuid");
-const _1 = require(".");
+const BorderFence_1 = require("./BorderFence");
 class GameState extends schema_1.Schema {
     constructor() {
         super();
@@ -47,7 +47,7 @@ __decorate([
     schema_1.type({ map: Coin_1.Coin })
 ], GameState.prototype, "coins", void 0);
 __decorate([
-    schema_1.type({ map: _1.BorderFence })
+    schema_1.type({ map: BorderFence_1.BorderFence })
 ], GameState.prototype, "fences", void 0);
 __decorate([
     schema_1.type("boolean")
