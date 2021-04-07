@@ -4,3 +4,4 @@ node_modules/
 *.log
 packages/server/top_secret
 packages/common/build
+yarn-error.log

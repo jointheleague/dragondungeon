@@ -40,8 +40,8 @@ const resume = () => {
       });
       navigate('/play/random');
     } else if (user) {
-      db.collection(user.uid).doc('profile').get().then((doc) => {
-        if (doc.exists) {
+      db.collection(user.uid).doc('login').get().then((doc) => {
+        if (doc.data()?.hasPickedIGN) {
           navigate('/play/random');
         } else {
           navigate('/onboarding')

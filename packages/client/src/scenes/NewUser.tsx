@@ -35,7 +35,11 @@ const processUser = () => {
         user.updateProfile({
           displayName: DOMPurify.sanitize(selectedName)
         });
-        navigate('/play/random');
+        db.collection(user.uid).doc('login').set({
+          hasPickedIGN: true
+        }).then(() => {
+          navigate('/play/random');
+        });
       }
     }
   });
