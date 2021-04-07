@@ -12,13 +12,13 @@ import { CoinJar } from './entities/coinJar';
 import { BorderFence } from './entities/borderFence';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
-import { Box } from 'components/box';
 import { Leadboard } from 'components/leaderboard';
 import firebase from 'firebase/app';
 import ReactNipple from 'react-nipple';
 import {Bar} from './entities/healthBar/healthBar';
-import {Fireball} from '@dragoncoin/common';
+import { v4 } from "uuid";
 import 'firebase/auth';
+
 let firebaseApp;
 
 try {
@@ -33,6 +33,8 @@ try {
   firebase.auth().onAuthStateChanged(user => {
     if (!user) {
       window.location.href = '/';
+    } else {
+      console.log(user.displayName);
     }
   });
 } catch {
@@ -92,11 +94,10 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       for(let fireball of state.players[pid].fireballs){
         fireballs.push(<FireballView key={fireball.id} fireball = {fireball}/>)
       }
-      healthBars.push(<Bar key ={state.players[pid].bar.key} x={state.players[pid].x-25} y={state.players[pid].y-75} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} score={state.players[pid].score}/>)
+      healthBars.push(<Bar key={v4()} x={state.players[pid].x-25} y={state.players[pid].y-75} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} score={state.players[pid].score}/>)
 
       //fireballs.push(player.fireballs);
     }
-    //add fence
     for(var i = 0; i < 8; i ++){
       fences.push(<BorderFence x={i*267+65} y={-60} angle={0}/>);
     }

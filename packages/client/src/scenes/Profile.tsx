@@ -7,7 +7,6 @@ import { navigate } from '@reach/router';
 import DOMPurify from 'dompurify';
 
 let firebaseApp: any;
-let data: any;
 
 try {
   firebaseApp = firebase.initializeApp({
@@ -56,23 +55,23 @@ const Profile = () => {
         <a href="/">Back</a>
         <h1>Profile</h1>
         <img src={profilePicture} alt="Profile" height="50px"/>
-        <h1>{currentUser.displayName ? currentUser.displayName : '...'}</h1>
+        <h1>{DOMPurify.sanitize(currentUser.displayName) ? DOMPurify.sanitize(currentUser.displayName) : '...'}</h1>
         {userStats.highscore ? 
           <>
-            <h3><img src="/icon.png" height="20px" /> High Score: {userStats.highscore}</h3>
-            <h3><img src="/icon.png" height="20px" /> Lifetime Coins: {userStats.coins}</h3>
-            <h3><img src="/icon.png" height="20px" /> Damage Done: {userStats.damagedone}</h3>
-            <h3><img src="/icon.png" height="20px" /> Damage Taken: {userStats.damagetaken}</h3>
-            <h3><img src="/icon.png" height="20px" /> K/D (Damage Done/Taken) Ratio: {(userStats.damagedone / userStats.damagetaken).toFixed(2)}</h3>
-            <h3><img src="/icon.png" height="20px" /> Medals Earned: {userStats.medals}</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> High Score: {userStats.highscore}</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Lifetime Coins: {userStats.coins}</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Damage Done: {userStats.damagedone}</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Damage Taken: {userStats.damagetaken}</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: {(userStats.damagedone / userStats.damagetaken).toFixed(2)}</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Medals Earned: {userStats.medals}</h3>
           </>
         : <>
-            <h3><img src="/icon.png" height="20px" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
           </>}
           <br /><br /><br />
         <div style={{
@@ -83,7 +82,7 @@ const Profile = () => {
           padding: '10px',
           cursor: 'pointer'
         }}>
-          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" />
+          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
           <br />
           <h4 style={{ cursor: 'pointer' }}>Fireballs</h4>
         </div><br />
@@ -95,7 +94,7 @@ const Profile = () => {
           padding: '10px',
           cursor: 'pointer'
         }}>
-          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" />
+          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
           <br />
           <h4 style={{ cursor: 'pointer' }}>Snowballs</h4>
         </div><br />
@@ -107,7 +106,7 @@ const Profile = () => {
           padding: '10px',
           cursor: 'pointer'
         }}>
-          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" />
+          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
           <br />
           <h4 style={{ cursor: 'pointer' }}>Lightning</h4>
         </div><br />
@@ -119,7 +118,7 @@ const Profile = () => {
           padding: '10px',
           cursor: 'pointer'
         }}>
-          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" />
+          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
           <br />
           <h4 style={{ cursor: 'pointer' }}>Poison</h4>
         </div><br />

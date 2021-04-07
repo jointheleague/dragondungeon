@@ -1,4 +1,3 @@
-import { autoDetectRenderer } from 'pixi.js';
 import React, { CSSProperties, ReactNode } from 'react';
 
 import './leaderboard.scss';
@@ -21,22 +20,24 @@ export function Leadboard(props: {
   } = props;
   return <div style={style} className="container-box">{children}
     <table style={FOCUSED}>
-      <tr style={FOCUSED}>
-        <th >
-          name
-        </th>
-        <th >
-          coins
-        </th>
-      </tr>
-      <tr style={FOCUSED}>
-        <td>
-          Dave
-        </td>
-        <td>
-          500
-      </td>
-      </tr>
+      <tbody>
+        <tr style={FOCUSED}>
+          <th>
+            name
+          </th>
+          <th>
+            coins
+          </th>
+        </tr>
+        <tr style={FOCUSED}>
+          <td>
+            Dave
+          </td>
+          <td>
+            500
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 }

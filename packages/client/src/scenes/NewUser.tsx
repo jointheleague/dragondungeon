@@ -10,7 +10,6 @@ import { navigate } from '@reach/router';
 import DOMPurify from 'dompurify';
 
 let firebaseApp: any;
-let data: any;
 
 try {
   firebaseApp = firebase.initializeApp({
