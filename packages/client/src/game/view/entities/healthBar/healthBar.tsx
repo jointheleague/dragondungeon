@@ -38,25 +38,11 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
         instance.beginFill(.2);
         instance.drawRect(
           newProps.x-2,
-          newProps.y,
-          newProps.width,
-          newProps.height
-        );
-        instance.beginFill(newProps.color);
-        instance.drawRect(
-          newProps.x,
-          newProps.y,
-          scoreWidth,
-          newProps.height-3
-        );
-        instance.beginFill(.2);
-        instance.drawRect(
-          newProps.x-2,
           newProps.y+10,
           newProps.width+5,
           newProps.height
         );
-        instance.beginFill(255);
+        instance.beginFill(newProps.color);
         instance.drawRect(
           newProps.x,
           newProps.y+10,
