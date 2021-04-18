@@ -8,7 +8,6 @@ interface BarProps {
   height: number;
   color: number;
   coins: number;
-  score: number;
   zIndex?: number;
 }
 
@@ -19,8 +18,7 @@ function propsEqual(oldProps: BarProps, newProps: BarProps) {
     oldProps.width === newProps.width &&
     oldProps.color === newProps.color &&
     oldProps.height === newProps.height &&
-    oldProps.coins === newProps.coins &&
-    oldProps.score === newProps.score
+    oldProps.coins === newProps.coins
   );
 }
 
@@ -29,7 +27,6 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
     customDisplayObject: (_) => new PIXI.Graphics(),
     customApplyProps: (instance, oldProps, newProps) => {
       if (!propsEqual(oldProps, newProps)) {
-        var scoreWidth = Math.min(newProps.score, newProps.width);
         var coinsWidth = newProps.coins;
         if (newProps.zIndex) {
           instance.zIndex = newProps.zIndex;
