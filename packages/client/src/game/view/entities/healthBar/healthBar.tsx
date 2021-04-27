@@ -8,6 +8,7 @@ interface BarProps {
   height: number;
   color: number;
   coins: number;
+  name: string;
   zIndex?: number;
 }
 
@@ -18,7 +19,8 @@ function propsEqual(oldProps: BarProps, newProps: BarProps) {
     oldProps.width === newProps.width &&
     oldProps.color === newProps.color &&
     oldProps.height === newProps.height &&
-    oldProps.coins === newProps.coins
+    oldProps.coins === newProps.coins &&
+    oldProps.name === newProps.name 
   );
 }
 
@@ -27,7 +29,6 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
     customDisplayObject: (_) => new PIXI.Graphics(),
     customApplyProps: (instance, oldProps, newProps) => {
       if (!propsEqual(oldProps, newProps)) {
-        var coinsWidth = newProps.coins;
         if (newProps.zIndex) {
           instance.zIndex = newProps.zIndex;
         }
@@ -43,12 +44,17 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
         instance.drawRect(
           newProps.x,
           newProps.y+10,
-          coinsWidth*7,
+          newProps.coins*7.5,
           newProps.height-3
         );
+        let name = new PIXI.Text(newProps.name, {fontFamily : 'Arial', fontSize: 20, align : 'center', fill: 0xfcba03 });
+        name.x = newProps.x - (newProps.name.length*5)+35;
+        name.y = newProps.y-15;
+        instance.addChild(name);
         instance.endFill();
       }
     },
+    
   },
   "Bar"
 );

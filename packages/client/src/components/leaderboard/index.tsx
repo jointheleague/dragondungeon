@@ -25,7 +25,7 @@ export function Leadboard(props: {
           <th>
             name
           </th>
-          <th>
+          <th> 
             coins
           </th>
         </tr>
