@@ -34,9 +34,10 @@ export class GameRoom extends Room < GameState > {
 		this.startGameLoop();
 	}
 
-	onJoin(client: Client, options: unknown, _2: any) {
+	async onJoin(client: Client, options: {token: string}, _2: any) {
+		const user = await admin.auth().verifyIdToken(options.token);
+		console.log(user);
 		this.state.players[client.id] = new Player();
-		
 	}
 
 	onLeave(client: Client, _consent: boolean) {
