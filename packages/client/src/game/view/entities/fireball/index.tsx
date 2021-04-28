@@ -38,7 +38,7 @@ export const FireballView = (props: IProps) => {
       width ={30}
       height = {70}
       textures = {fireballTextures}
-      
+      rotation={props.fireball.angle + Math.PI/2}
       x={props.fireball.x}
       animationSpeed={ANIMATION_SPEED}
       loop= {true}

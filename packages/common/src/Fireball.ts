@@ -8,11 +8,13 @@ export class Fireball extends Schema {
 	@type("number")
 	y: number = 1;
 
+	@type("number")
+	angle: number = 0;
+
 	@type("string")
 	id: string;
 
 	lifetime = 40;
-	angle;
 	speed;
 	constructor(x: number, y: number, angle: number, speed: number) {
 		super()
