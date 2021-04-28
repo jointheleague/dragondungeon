@@ -21,7 +21,7 @@ const ANIMATION_SPEED = 0.08;
 export const FireballView = (props: IProps) => {
     
   const fireballTextures = useMemo(() => {
-    //Create textures from spites
+    //Create textures from sprites
     let fireballImages = [fireball1,fireball2,fireball3, fireball4];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     fireballImages.forEach(image =>{

@@ -6,6 +6,7 @@ import {IInputs} from '../controls/types';
 import { Dragon } from './entities/dragon/index';
 import { render } from "react-pixi-fiber";
 import {FireballView} from './entities/fireball/index';
+import {IceballView} from './entities/iceball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
@@ -70,7 +71,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       players.push(<Dragon key={pid} player={player} />,)
 
       for(let fireball of state.players[pid].fireballs){
-        fireballs.push(<FireballView key={fireball.id} fireball = {fireball} />)
+
+        fireballs.push(<IceballView key={fireball.id} iceball={fireball}/>)
+
       }
       healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y-80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={"NAME HERE - " + state.players[pid].score }/>)
 

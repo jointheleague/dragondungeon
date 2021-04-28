@@ -1,10 +1,12 @@
 import { ColyseusService } from '../../services/colyseus'
 import { Room } from 'colyseus.js';
 import {IGameState} from './types';
+
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { navigate } from '@reach/router';
 import randomItem from 'random-item';
+
 
 export class StateManager {
   room!: Room<IGameState>;
