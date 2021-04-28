@@ -18,6 +18,7 @@ export class StateManager {
     const options = {
       name: localStorage.getItem('name'),
     }
+
     if (this.lobby === 'new') {
       return await this.colyseus.client.create('game', options)
     } else if (this.lobby === 'random') {
