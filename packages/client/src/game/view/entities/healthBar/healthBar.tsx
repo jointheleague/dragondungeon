@@ -48,7 +48,7 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
           newProps.height-3
         );
         let name = new PIXI.Text(newProps.name, {fontFamily : 'Arial', fontSize: 20, align : 'center', fill: 0xfcba03 });
-        name.x = newProps.x - (newProps.name.length*5)+35;
+        name.x = newProps.x - (name.width/2)+35;
         name.y = newProps.y-15;
         instance.addChild(name);
         instance.endFill();

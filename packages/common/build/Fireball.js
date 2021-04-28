@@ -14,6 +14,7 @@ class Fireball extends schema_1.Schema {
         super();
         this.x = 1;
         this.y = 1;
+        this.angle = 0;
         this.lifetime = 40;
         this.x = x;
         this.y = y;
@@ -36,6 +37,9 @@ __decorate([
 __decorate([
     schema_1.type("number")
 ], Fireball.prototype, "y", void 0);
+__decorate([
+    schema_1.type("number")
+], Fireball.prototype, "angle", void 0);
 __decorate([
     schema_1.type("string")
 ], Fireball.prototype, "id", void 0);
