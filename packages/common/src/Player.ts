@@ -27,6 +27,12 @@ export class Player extends Schema {
 	@type([Bar])
 	bar = new Bar('', this.x, this.y);
 
+	@type("string")
+	onlineName!: string;
+
+	@type("string")
+	onlineID!: string;
+
 	speed: number = 20;
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
 
