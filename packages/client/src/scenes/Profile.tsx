@@ -6,21 +6,6 @@ import 'firebase/firestore';
 import { navigate } from '@reach/router';
 import DOMPurify from 'dompurify';
 
-let firebaseApp: any;
-
-try {
-  firebaseApp = firebase.initializeApp({
-    apiKey: "AIzaSyCRClPzTZnRSg_fAap6ENnAkxUBQKJGk5w",
-    authDomain: "leaguedragoncoin.firebaseapp.com",
-    projectId: "leaguedragoncoin",
-    storageBucket: "leaguedragoncoin.appspot.com",
-    messagingSenderId: "320692217416",
-    appId: "1:320692217416:web:04f00569ed1bf7b55e9a7d"
-  });
-} catch {
-  window.location.reload();
-}
-
 const db = firebase.firestore();
 
 const Profile = () => {

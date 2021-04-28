@@ -1,7 +1,8 @@
 import { ColyseusService } from '../../services/colyseus'
 import { Room } from 'colyseus.js';
 import {IGameState} from './types';
-
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 export class StateManager {
   room!: Room<IGameState>;
@@ -16,8 +17,9 @@ export class StateManager {
 
   async getGameRoom(): Promise<Room> {
     const options = {
-      name: localStorage.getItem('name'),
+      token: await firebase.auth().currentUser?.getIdToken(),
     }
+
     if (this.lobby === 'new') {
       return await this.colyseus.client.create('game', options)
     } else if (this.lobby === 'random') {

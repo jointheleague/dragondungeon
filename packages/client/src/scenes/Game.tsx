@@ -30,11 +30,12 @@ export default class Game extends Component<IProps, IState>{
     this.stateManager.setup()
       .then(() => {
         this.setState({loading: false});
-        navigate(`/play/${this.stateManager.room.id}`);
+        window.history.replaceState(null, 'DragonCoin', `/play/${this.stateManager.room.id}`);
       })
       .catch((e) => {
         navigate("/");
-        show_error_banner('ERROR CODE: FISH (Matchmake/NoServer)');
+        console.error(e);
+        show_error_banner('ERROR CODE: FISH (Init/StateManagerError)');
       })
   }
 
