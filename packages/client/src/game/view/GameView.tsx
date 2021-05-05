@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { StateManager } from '../state/StateManager';
 import { useDisableScroll } from '../../hooks';
 import {Controls} from '../controls';
@@ -64,7 +64,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const me = this.props.state.players[id];
     for (let pid in state.players) {
       const player = state.players[pid];
-      
+
+      // TODO: Use player name/id for stuff
+
       players.push(<Dragon key={pid} player={player} />,)
 
       for(let fireball of state.players[pid].fireballs){

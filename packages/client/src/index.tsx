@@ -15,14 +15,6 @@ firebase.initializeApp({
   appId: "1:320692217416:web:04f00569ed1bf7b55e9a7d"
 });
 
-firebase.auth().onAuthStateChanged(user => {
-  if (!user) {
-    window.location.href = '/';
-  } else {
-    console.log(user.displayName);
-  }
-});
-
 ReactDOM.render(
     <App />,
   document.getElementById('root')

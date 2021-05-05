@@ -36,8 +36,9 @@ export class GameRoom extends Room < GameState > {
 
 	async onJoin(client: Client, options: {token: string}, _2: any) {
 		const user = await admin.auth().verifyIdToken(options.token);
-		console.log(user);
 		this.state.players[client.id] = new Player();
+		this.state.players[client.id].onlineName = user.name;
+		this.state.players[client.id].onlineID = user.uid;
 	}
 
 	onLeave(client: Client, _consent: boolean) {

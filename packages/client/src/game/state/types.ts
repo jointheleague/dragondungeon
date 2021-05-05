@@ -25,6 +25,8 @@ export interface IPlayer {
   bar: IBar;
   score: number;
   coins: number;
+  onlineName: string;
+  onlineID: string;
 }
 
 export interface ICoin{
