@@ -70,7 +70,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       for(let fireball of state.players[pid].fireballs){
         fireballs.push(<FireballView key={fireball.id} fireball = {fireball} />)
       }
-      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y-80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={"NAME HERE - " + state.players[pid].score }/>)
+      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y-80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].name + " - " + state.players[pid].score }/>)
 
       //fireballs.push(player.fireballs);
     }

@@ -61,7 +61,7 @@ class Player extends schema_1.Schema {
         }
         this.fireballCooldown -= ticks;
         if (this.activeInputs.space && this.fireballCooldown <= 0) {
-            this.fireballCooldown = 1;
+            this.fireballCooldown = 10;
             const fireball = new Fireball_1.Fireball(this.x + 60 * Math.cos(this.angle - (Math.PI)), this.y + 60 * Math.sin(this.angle - (Math.PI)), this.angle, 6);
             this.fireballs.push(fireball);
         }
