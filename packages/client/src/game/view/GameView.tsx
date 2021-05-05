@@ -10,6 +10,8 @@ import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
 import { BorderFence } from './entities/borderFence';
+
+import { movingBackground } from './entities/movingBackground';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Leadboard } from 'components/leaderboard';

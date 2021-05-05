@@ -108,5 +108,11 @@ __decorate([
 __decorate([
     schema_1.type([Bar_1.Bar])
 ], Player.prototype, "bar", void 0);
+__decorate([
+    schema_1.type("string")
+], Player.prototype, "onlineName", void 0);
+__decorate([
+    schema_1.type("string")
+], Player.prototype, "onlineID", void 0);
 exports.Player = Player;
 //# sourceMappingURL=Player.js.map
