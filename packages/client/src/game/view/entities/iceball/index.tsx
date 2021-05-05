@@ -38,7 +38,7 @@ export const IceballView = (props: IProps) => {
       width ={270}
       height = {150}
       textures = {iceballTextures}
-      
+      rotation={props.iceball.angle + Math.PI/2}
       x={props.iceball.x}
       animationSpeed={ANIMATION_SPEED}
       loop= {true}
