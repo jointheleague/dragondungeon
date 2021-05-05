@@ -35,8 +35,8 @@ export const IceballView = (props: IProps) => {
     <>
       <AnimatedSprite
       anchor={new PIXI.Point(0.5, 0.5)}
-      width ={200}
-      height = {140}
+      width ={270}
+      height = {150}
       textures = {iceballTextures}
       
       x={props.iceball.x}
