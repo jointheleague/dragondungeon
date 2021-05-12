@@ -8,7 +8,7 @@ export class CoinJar extends Schema {
 	@type("number")
 	y: number = 0;
 
-	constructor(x: number = 1000, y: number = 500) {
+	constructor(x: number = 1000, y: number = 1000) {
 		super()
 		this.x = x;
 		this.y = y;

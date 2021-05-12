@@ -110,15 +110,15 @@ export class GameRoom extends Room < GameState > {
 
 			if(this.state.players[id].y<0){
 				this.state.players[id].y=0;
-			} else if(this.state.players[id].y>1000){
-				this.state.players[id].y=1000;
+			} else if(this.state.players[id].y>2000){
+				this.state.players[id].y=2000;
 			}
 			// console.log(id + "  " + this.state.players[id].score);
 		}
 
 		
 		if(this.state.coins.size<100&&this.counter%100==0){
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*2000, Math.random()*1000));
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*2000, Math.random()*2000));
 		}
 		
 		

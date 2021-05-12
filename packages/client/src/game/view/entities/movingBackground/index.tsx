@@ -1,12 +1,12 @@
 import React, {useMemo} from 'react';
 import * as PIXI from 'pixi.js';
 import {AnimatedSprite} from '../../entities/AnimatedSprite';
-import TileImage1 from './sprites/tile1.png';
-import TileImage2 from './sprites/tile2.png';
-import TileImage3 from './sprites/tile3.png';
-import TileImage4 from './sprites/tile4.png';
-import TileImage5 from './sprites/tile5.png';
-import TileImage6 from './sprites/tile6.png';
+import TileImage1 from './sprites/tile1.jpg';
+import TileImage2 from './sprites/tile2.jpg';
+import TileImage3 from './sprites/tile3.jpg';
+import TileImage4 from './sprites/tile4.jpg';
+import TileImage5 from './sprites/tile5.jpg';
+import TileImage6 from './sprites/tile6.jpg';
 
 interface IProps {
     x: number;
@@ -15,8 +15,8 @@ interface IProps {
 
 
 let ANIMATION_SPEED = 0;
-export const movingBackground = (props: IProps) => {
-  ANIMATION_SPEED = Math.random()/10;
+export const MovingBackground = (props: IProps) => {
+  ANIMATION_SPEED = Math.random()/100;
   const tileTextures = useMemo(() => {
     //Create textures from spites
     let tileImages = [TileImage1,TileImage2,TileImage3,TileImage4,TileImage5,TileImage6];
@@ -31,8 +31,8 @@ export const movingBackground = (props: IProps) => {
   return (
     <AnimatedSprite
     anchor={new PIXI.Point(0.5, 0.5)}
-    width ={100}
-    height = {100}
+    width ={177}
+    height = {177}
     textures = {tileTextures}
     x={props.x}
     animationSpeed = {ANIMATION_SPEED}
