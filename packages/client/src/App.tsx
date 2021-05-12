@@ -16,8 +16,7 @@ class App extends Component {
     super(props)
     this.colyseus = new ColyseusService(
       'ws',
-      window.location.hostname,
-      '8001'
+      window.localStorage.server || `${window.location.hostname}:8001`,
     );
   }
   render() {

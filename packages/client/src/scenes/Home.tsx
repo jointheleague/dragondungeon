@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '../components';
-import { Space } from '../components/space';
-import { Center } from '../components/center';
+import { Box, Space, Center } from '../components';
 import firebase from 'firebase/app';
 import randomItem from 'random-item';
 import 'firebase/auth';
@@ -40,7 +38,7 @@ const profilepage = () => {
   navigate('/profile');
 }
 
-const Game = () => {
+const Game = (props: any) => {
   const [ userIsLoggedIn, setUserIsLoggedIn ] = useState<boolean>(false);
   useEffect(
     () => {
@@ -51,6 +49,7 @@ const Game = () => {
       });
     }, []
   )
+
   return (
     <>
       <br /><br /><br />
@@ -82,6 +81,13 @@ const Game = () => {
           ]
         }}  firebaseAuth={firebase.auth()}/>
         <br />
+        { props.location.search.includes('debug') ?
+          <input type="text" placeholder="Development Server" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid #c60c30', width:'45%' }} onChange={() => {
+            window.localStorage.server = document.querySelector('input')?.value;
+            window.location.reload();
+          }} /> :
+          null
+        }
       </Center>
     </>
   );
