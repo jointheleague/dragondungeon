@@ -14,7 +14,7 @@ export default class ErrorRoute extends Component<IProps, IState>  {
     const path = props.location?.pathname;
     
     if (path?.includes("play")) {
-      show_error_banner('ERROR CODE: COW (Matchmake/NoRoom)');
+      show_error_banner('COW');
     }
 
     navigate("/")
