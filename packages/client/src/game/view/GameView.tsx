@@ -17,6 +17,7 @@ import { Leadboard } from 'components/leaderboard';
 import ReactNipple from 'react-nipple';
 import {Bar} from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
+import { show_error_banner } from 'util/banner';
 
 interface GameViewProps {
   stateManager: StateManager;
@@ -86,8 +87,12 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     }
     //
     if (me !== null && this.viewport !=null) {
-      this.viewport.x = -me.x * scale + window.innerWidth / 2;
-      this.viewport.y = -me.y * scale + window.innerHeight / 2;
+      try {
+        this.viewport.x = -me.x * scale + window.innerWidth / 2;
+        this.viewport.y = -me.y * scale + window.innerHeight / 2; 
+      } catch {
+        show_error_banner('RAT');
+      }
     }
     var tileAmt = 16;
     for(var i = 0; i < tileAmt; i++){
@@ -124,15 +129,15 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      return (
        <>
        <Controls actionCallback={(v: IInputs) => this.actionCallback(v)} viewport={this.viewport}/>
-       <ReactNipple
-                    options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
-                    style={{
-                      position: 'fixed',
-                      width: '100vw',
-                      height: '100vh'
-                    }}
-                    onMove={(evt:any, data: any) => console.log(data.direction)}
-                    />
+        <ReactNipple
+          options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
+          style={{
+            position: 'fixed',
+            width: '100vw',
+            height: '100vh'
+          }}
+          onMove={(evt:any, data: any) => console.log(data.direction)}
+        />
        <ScrollDisable/>
                     <Leadboard>
                     </Leadboard>

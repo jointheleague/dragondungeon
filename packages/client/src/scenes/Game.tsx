@@ -35,7 +35,7 @@ export default class Game extends Component<IProps, IState>{
       .catch((e) => {
         navigate("/");
         console.error(e);
-        show_error_banner('ERROR CODE: FISH (Init/StateManagerError)');
+        show_error_banner('FISH');
       })
   }
 

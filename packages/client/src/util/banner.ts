@@ -9,7 +9,7 @@ function show_error_banner(text: string) {
   console.error(text);
   Toastify(
     {
-      text: text,
+      text: `Error: ${text}`,
       close: true,
       duration: 3000,
       backgroundColor: "#c60c30",
