@@ -74,7 +74,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       for(let fireball of state.players[pid].fireballs){
         fireballs.push(<FireballView key={fireball.id} fireball = {fireball} />)
       }
-      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y-80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].name + " - " + state.players[pid].score + " - " +  state.players[pid].x + " , " + + state.players[pid].y}/>)
+      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y-80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].name + " - " + state.players[pid].score}/>)
 
       //fireballs.push(player.fireballs);
     }
@@ -89,7 +89,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       this.viewport.x = -me.x * scale + window.innerWidth / 2;
       this.viewport.y = -me.y * scale + window.innerHeight / 2;
     }
-    var tileAmt = 14;
+    var tileAmt = 16;
     for(var i = 0; i < tileAmt; i++){
       for(var j = 0; j < tileAmt; j++){
           tiles.push(<MovingBackground key={i + "" + j} x={(me.x - (tileAmt*177)/2)/2 + i*177} y={ (me.y - (tileAmt*177)/2)/2 + j*177}/>);

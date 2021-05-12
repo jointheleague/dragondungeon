@@ -9,12 +9,16 @@ export class MovingBackground extends Schema {
 
 	@type("number")
 	y: number = 1;
+	
+	@type("number")
+	tile: number = 1;
 
-	constructor(key: string, x: number, y: number) {
+	constructor(key: string, x: number, y: number, tile: number) {
 		super()
 		this.x = x;
 		this.y = y;
 		this.key = key;
+		this.tile = tile;
 	}
 
 }
