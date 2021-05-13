@@ -1,7 +1,10 @@
 import React, {useMemo} from 'react';
 import * as PIXI from 'pixi.js';
 import {AnimatedSprite} from '../../entities/AnimatedSprite';
-import FenceImage1 from './sprites/Fence.png';
+import FenceImage from './sprites/Fence.png';
+import FenceImage1 from './sprites/Fence1.png';
+import FenceImage2 from './sprites/Fence1.png';
+import FenceImage3 from './sprites/Fence1.png';
 
 interface IProps {
     x: number;
@@ -15,7 +18,7 @@ export const BorderFence = (props: IProps) => {
   ANIMATION_SPEED = Math.random()/10;
   const fenceTextures = useMemo(() => {
     //Create textures from spites
-    let fenceImages = [FenceImage1];
+    let fenceImages = [FenceImage];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     fenceImages.forEach(image =>{
       let texture = PIXI.Texture.from(image);

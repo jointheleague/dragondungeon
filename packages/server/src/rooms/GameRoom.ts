@@ -80,10 +80,6 @@ export class GameRoom extends Room < GameState > {
 								const rand = getRandomInt(0, 62) / 10;
 								this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
 							}
-							if(this.state.players[id].score > 0){
-								this.state.players[id].score--;
-							}
-
 						}
 					}
 				}
