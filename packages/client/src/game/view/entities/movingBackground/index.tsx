@@ -20,11 +20,8 @@ export const MovingBackground = (props: IProps) => {
   const tileTextures = useMemo(() => {
     //Create textures from spites
     let tileImages = [TileImage1,TileImage2,TileImage3,TileImage4,TileImage5,TileImage6];
-    let textures: PIXI.AnimatedSprite["textures"] = [];
-    tileImages.forEach(image =>{
-      let texture = PIXI.Texture.from(image);
-       textures.push(texture);
-    });
+    let chosenImage = tileImages[ (Math.random()*5)];
+    let textures: PIXI.AnimatedSprite["textures"] = [PIXI.Texture.from(tileImages[Math.floor(Math.random()*5)])];
     return textures;
   }, []);
 
