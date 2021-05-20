@@ -95,9 +95,10 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       }
     }
     var tileAmt = 16;
+    var midpoint = (tileAmt*177)/2;
     for(var i = 0; i < tileAmt; i++){
       for(var j = 0; j < tileAmt; j++){
-          tiles.push(<MovingBackground key={i + "" + j} x={(me.x - (tileAmt*177)/2)/2 + i*177} y={ (me.y - (tileAmt*177)/2)/2 + j*177}/>);
+          tiles.push(<MovingBackground key={i + "" + j} x={(me.x - midpoint)/2 + i*177 -(177*5)/7} y={ (me.y - midpoint)/2 + j*177 -(177*5)/7}/>);
       }
     }
     for(let cid in state.coins){
