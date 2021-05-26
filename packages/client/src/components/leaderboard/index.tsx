@@ -18,7 +18,7 @@ export function Leadboard(props: {
     style,
     children,
   } = props;
-  return <div style={style} className="container-box">{children}
+  return <div style={style} className="leaderboard-box">{children}
     <table style={FOCUSED}>
       <tbody>
         <tr style={FOCUSED}>

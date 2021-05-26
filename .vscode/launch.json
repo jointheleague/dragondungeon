@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "command": "yarn start",
+      "name": "Start All",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "yarn start:client",
+      "name": "Start Client",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "yarn start:common",
+      "name": "Start Common",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "yarn start:server",
+      "name": "Start Server",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "yarn build",
+      "name": "Build",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "yarn build:client",
+      "name": "Build Client",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "yarn build:common",
+      "name": "Build Common",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+  ]
+}

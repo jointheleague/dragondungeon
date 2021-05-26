@@ -2,9 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a36d3cbe-f66c-40ab-98a7-f2e4af005987" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/client/src/game/view/entities/background/grass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/client/src/game/view/entities/background/tile1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/client/src/game/view/entities/background/tile2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/client/src/game/view/entities/background/tile3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/client/src/game/view/entities/background/tile4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/client/src/game/view/entities/background/tile5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/client/src/game/view/entities/background/tile6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/common/build/Player.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/common/build/Player.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/client/src/components/leaderboard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/client/src/components/leaderboard/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/client/src/components/leaderboard/leaderboard.scss" beforeDir="false" afterPath="$PROJECT_DIR$/packages/client/src/components/leaderboard/leaderboard.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/client/src/game/controls/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/client/src/game/controls/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/client/src/game/view/GameView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/client/src/game/view/GameView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/client/src/game/view/entities/iceball/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/client/src/game/view/entities/iceball/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/client/src/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/packages/client/src/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/client/src/scenes/ErrorRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/client/src/scenes/ErrorRoute.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/client/src/scenes/Game.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/client/src/scenes/Game.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/client/src/util/banner.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/client/src/util/banner.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

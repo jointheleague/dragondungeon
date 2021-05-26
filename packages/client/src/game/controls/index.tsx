@@ -1,6 +1,7 @@
 import React, {useEffect, useCallback} from 'react';
 import {IInputs} from './types';
 import {Viewport} from 'pixi-viewport';
+import { show_error_banner } from 'util/banner';
 
 interface ControlProps {
     actionCallback: (p: IInputs) => void
@@ -58,10 +59,14 @@ export const Controls = (props: ControlProps) => {
       updateAndSend(change);
     }
     const mouseMove = (e: MouseEvent) => {
-      const worldCoordinates = props.viewport.toWorld(e.x,e.y);
-      mouseActivity["position"] = {mouseX:worldCoordinates.x, mouseY:worldCoordinates.y};
-      const change = mouseActivity["position"] || {};
-      updateAndSend(change);
+      try {
+        const worldCoordinates = props.viewport.toWorld(e.x,e.y);
+        mouseActivity["position"] = {mouseX:worldCoordinates.x, mouseY:worldCoordinates.y};
+        const change = mouseActivity["position"] || {};
+        updateAndSend(change); 
+      } catch {
+        show_error_banner('BAT');
+      }
     }
     window.addEventListener("keydown", keydown)
     window.addEventListener("keyup", keyup)
