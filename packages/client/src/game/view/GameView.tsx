@@ -13,7 +13,7 @@ import { BorderFence } from './entities/borderFence';
 import { MovingBackground } from './entities/movingBackground';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
-import { Leadboard } from 'components/leaderboard';
+import { Leaderboard } from 'components/leaderboard';
 import ReactNipple from 'react-nipple';
 import {Bar} from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
@@ -140,8 +140,16 @@ export class GameView extends Component<GameViewProps, GameViewState> {
           onMove={(evt:any, data: any) => console.log(data.direction)}
         />
        <ScrollDisable/>
-                    <Leadboard>
-                    </Leadboard>
+                    <div>
+                    <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px'}}>Leaderboard</h1>
+            <table id='students'>
+               <tbody>
+               <Leaderboard p={this.props.stateManager.room.state.players}>
+                    </Leaderboard>
+               </tbody>
+            </table>
+         </div>
+                    
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>
      );
