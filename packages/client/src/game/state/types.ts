@@ -40,4 +40,5 @@ export interface ICoinJar{
   x: number;
   y:number;
 }
+
 export type GameState = IGameState | null;

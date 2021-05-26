@@ -11,6 +11,7 @@ import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
 import { BorderFence } from './entities/borderFence';
+import { MovingBackground } from './entities/movingBackground';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Leadboard } from 'components/leaderboard';
@@ -61,7 +62,8 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const fireballs = [];
     const healthBars = [];
     const fences = [];
-    const coinJar = <CoinJar key={"only"} x={1000} y={500}/>;
+    const tiles = [];
+    const coinJar = <CoinJar key={"only"} x={1000} y={1000}/>;
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
     for (let pid in state.players) {
@@ -76,21 +78,15 @@ export class GameView extends Component<GameViewProps, GameViewState> {
         fireballs.push(<IceballView key={fireball.id} iceball={fireball}/>)
 
       }
-      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y-80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].name + " - " + state.players[pid].score }/>)
+      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y-80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].name + " - " + state.players[pid].score}/>)
 
       //fireballs.push(player.fireballs);
     }
     for(var i = 0; i < 8; i ++){
-      fences.push(<BorderFence x={i*267+65} y={-60} angle={0}/>);
-    }
-    for(var i = 0; i < 8; i ++){
-      fences.push(<BorderFence x={i*267+65} y={1060} angle={0}/>);
-    }
-    for(var i = 0; i < 5; i ++){
-      fences.push(<BorderFence x={-60} y={i*267-30} angle={ Math.PI/2}/>);
-    }
-    for(var i = 0; i < 5; i ++){
-      fences.push(<BorderFence x={2060} y={i*267-30} angle={Math.PI/2}/>);
+      fences.push(<BorderFence x={i*267+60} y={-76} angle={0}/>);
+      fences.push(<BorderFence x={i*267+60} y={2076} angle={0}/>);
+      fences.push(<BorderFence x={-76} y={i*267+60} angle={ Math.PI/2}/>);
+      fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2}/>);
     }
     //
     if (me !== null && this.viewport !=null) {
@@ -101,13 +97,19 @@ export class GameView extends Component<GameViewProps, GameViewState> {
         show_error_banner('RAT');
       }
     }
-    
+    var tileAmt = 16;
+    var midpoint = (tileAmt*177)/2;
+    for(var i = 0; i < tileAmt; i++){
+      for(var j = 0; j < tileAmt; j++){
+          tiles.push(<MovingBackground key={i + "" + j} x={(me.x - midpoint)/2 + i*177 -(177*5)/7} y={ (me.y - midpoint)/2 + j*177 -(177*5)/7}/>);
+      }
+    }
     for(let cid in state.coins){
       //const coin = state.coins[cid];
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y}/>);
     }
     render(
-      <>{coinJar}{fences}{coins}{players}{fireballs}{healthBars}</>, 
+      <>{tiles}{coinJar}{fences}{coins}{players}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }

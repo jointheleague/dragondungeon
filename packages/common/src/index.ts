@@ -8,5 +8,6 @@ import {Coin} from './Coin';
 import {Bar} from './Bar';
 import {CoinJar} from './CoinJar';
 import {BorderFence} from './BorderFence';
+import {MovingBackground} from './MovingBackground';
 
-export {IInputs, Maths, Geometry, Fireball, GameState, Coin, Bar, Player, CoinJar, BorderFence};
+export {IInputs, Maths, Geometry, Fireball, GameState, Coin, Bar, Player, CoinJar, BorderFence, MovingBackground};
