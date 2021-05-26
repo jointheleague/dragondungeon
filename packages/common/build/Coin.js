@@ -19,7 +19,6 @@ class Coin extends schema_1.Schema {
     }
     checkHit(dragonX, dragonY) {
         if (Math.sqrt((Math.pow((this.x) - (dragonX), 2)) + (Math.pow((this.y) - (dragonY), 2))) < 50) {
-            //console.log(Math.sqrt((Math.pow((this.x-10) - (dragonX-45), 2)) - (Math.pow((this.y-10) - (dragonY-45), 2))));
             return true;
         }
         else {

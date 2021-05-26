@@ -86,7 +86,6 @@ export class GameRoom extends Room < GameState > {
 					}
 				}
 			}
-			
 			if(this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y)){
 				this.state.players[id].score += this.state.players[id].coins;
 				this.state.players[id].coins = 0;
@@ -105,7 +104,7 @@ export class GameRoom extends Room < GameState > {
 			} else if(this.state.players[id].x>2000){
 				this.state.players[id].x=2000;
 			}
-
+		
 			if(this.state.players[id].y<0){
 				this.state.players[id].y=0;
 			} else if(this.state.players[id].y>1000){

@@ -12,7 +12,7 @@ import { CoinJar } from './entities/coinJar';
 import { BorderFence } from './entities/borderFence';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
-import { Leadboard } from 'components/leaderboard';
+import  {Leaderboard}  from 'components/leaderboard'; //?
 import firebase from 'firebase/app';
 import ReactNipple from 'react-nipple';
 import {Bar} from './entities/healthBar/healthBar';
@@ -78,6 +78,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
    renderScene() {
     const state = this.props.state;
+    const leaderboard = [];
     const players = [];
     const coins = [];
     const fireballs = [];
@@ -97,6 +98,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       healthBars.push(<Bar key={v4()} x={state.players[pid].x-25} y={state.players[pid].y-75} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} score={state.players[pid].score}/>)
 
       //fireballs.push(player.fireballs);
+      leaderboard.push(Leaderboard )
     }
     for(var i = 0; i < 8; i ++){
       fences.push(<BorderFence x={i*267+65} y={-60} angle={0}/>);
@@ -119,7 +121,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     for(let cid in state.coins){
       //const coin = state.coins[cid];
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y}/>);
-    }
+    } 
     render(
       <>{coinJar}{fences}{coins}{players}{fireballs}{healthBars}</>, 
       this.viewport
@@ -155,8 +157,16 @@ export class GameView extends Component<GameViewProps, GameViewState> {
                     onMove={(evt:any, data: any) => console.log(data.direction)}
                     />
        <ScrollDisable/>
-                    <Leadboard>
-                    </Leadboard>
+                    <div>
+                    <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px'}}>Leaderboard</h1>
+            <table id='students'>
+               <tbody>
+               <Leaderboard p={this.props.stateManager.room.state.players}>
+                    </Leaderboard>
+               </tbody>
+            </table>
+         </div>
+                    
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>
      );

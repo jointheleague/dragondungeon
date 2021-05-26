@@ -21,6 +21,7 @@ class Player extends schema_1.Schema {
         this.score = 0;
         this.coins = 0;
         this.bar = new Bar_1.Bar('', this.x, this.y);
+        this.name = "no nameasdasdasdawsd";
         this.speed = 20;
         this.direction = new _1.Geometry.Vector(0, 0);
         this.activeInputs = {
@@ -108,5 +109,8 @@ __decorate([
 __decorate([
     schema_1.type([Bar_1.Bar])
 ], Player.prototype, "bar", void 0);
+__decorate([
+    schema_1.type("string")
+], Player.prototype, "name", void 0);
 exports.Player = Player;
 //# sourceMappingURL=Player.js.map

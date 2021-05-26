@@ -11,6 +11,7 @@ export declare class Player extends Schema {
     score: number;
     coins: number;
     bar: Bar;
+    name: string;
     speed: number;
     direction: Geometry.Vector;
     activeInputs: IInputs;

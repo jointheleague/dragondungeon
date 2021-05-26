@@ -6,6 +6,7 @@ export interface IGameState {
   coinJar: ICoinJar;
   coins: {[key: string]: ICoin};
   bars: IBar[];
+  
 }
 
 
@@ -13,6 +14,11 @@ export interface IBar{
   x: number;
   y: number;
   key: string;
+}
+
+export interface ILeaderboard{
+  name: string;
+  score: number;
 }
 
 export interface IPlayer {

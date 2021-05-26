@@ -4,7 +4,6 @@ import { Bar } from "./Bar";
 import { Fireball } from "./Fireball";
 import { IInputs } from "./IInputs";
 
-
 export class Player extends Schema {
 	@type([Fireball])
 	fireballs = new ArraySchema < Fireball > ();
@@ -26,6 +25,12 @@ export class Player extends Schema {
 
 	@type([Bar])
 	bar = new Bar('', this.x, this.y);
+
+
+	
+
+	@type("string")
+	name = "no name";
 
 	speed: number = 20;
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
