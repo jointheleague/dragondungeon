@@ -74,12 +74,14 @@ export class GameRoom extends Room < GameState > {
 				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
 					if (id != id2) {
 						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
-						    var fireBallspeed = this.state.players[id2].fireballs[i].speed;
-							var fireBallangle = this.state.players[id2].fireballs[i].angle + Math.PI;
-							this.state.players[id].x += fireBallspeed*Math.cos(fireBallangle);
-							this.state.players[id].y += fireBallspeed*Math.sin(fireBallangle);
-							if (this.state.players[id].coins > 0) {
+						    var fireBall = this.state.players[id2].fireballs[i];
+							const coinChance = .1; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
+							const lifetimeRemove = 2; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
+							this.state.players[id].x += fireBall.speed * Math.cos(fireBall.angle + Math.PI);
+							this.state.players[id].y += fireBall.speed * Math.sin(fireBall.angle + Math.PI);
+							if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
 								this.state.players[id].coins--;
+								fireBall.lifetime -= lifetimeRemove;
 								const rand = getRandomInt(0, 62) / 10;
 								this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
 							}
@@ -89,11 +91,11 @@ export class GameRoom extends Room < GameState > {
 			}
 			
 			if(this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y)){
-				this.state.players[id].score += this.state.players[id].coins;
-				this.state.players[id].coins = 0;
+				// when a player has collided with the coinjar
+				this.state.players[id].score += this.state.players[id].coins;// add coins to players score
+				this.state.players[id].coins = 0;// remove coins
 			}
 
-			//for (let i = 0; i < this.state.coins.size; i++) {
 			for(let cid of this.state.coins.keys()){
 				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) == true && this.state.players[id].coins < 10) {
 					this.state.coins.delete(cid);
