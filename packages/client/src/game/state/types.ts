@@ -41,4 +41,9 @@ export interface ICoinJar{
   y:number;
 }
 
+export interface ILeaderboard{
+  name: string;
+  score: number;
+}
+
 export type GameState = IGameState | null;
