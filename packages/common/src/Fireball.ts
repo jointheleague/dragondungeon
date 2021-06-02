@@ -14,6 +14,9 @@ export class Fireball extends Schema {
 	@type("string")
 	id: string;
 
+	//@type("string")
+	//ability: "Iceball" | "Fireball";
+
 	lifetime = 40;
 	speed;
 	constructor(x: number, y: number, angle: number, speed: number) {
@@ -23,6 +26,7 @@ export class Fireball extends Schema {
 		this.id = v4();
 		this.angle = angle;
 		this.speed = speed;
+		//this.ability = ability;
 	}
 
 	checkHit(dragonX: number, dragonY: number) {
