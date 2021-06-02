@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StateManager } from '../state/StateManager';
-import { IGameState} from '../state/types';
+import { IGameState } from '../state/types';
+import { show_tutorial } from './tutorial';
 
 import {GameView} from './GameView'
 
@@ -18,6 +19,7 @@ export const CoreView = (props: IProps) => {
     return () => {
       ref.clear();
     }
+    show_tutorial();
   }, [stateManager])
 
   if (state == null) {

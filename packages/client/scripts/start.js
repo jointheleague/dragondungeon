@@ -2,6 +2,7 @@
 
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
+process.env.GENERATE_SOURCEMAP = 'true';
 
 process.on('unhandledRejection', err => {
   throw err;

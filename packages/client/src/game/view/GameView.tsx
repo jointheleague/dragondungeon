@@ -84,11 +84,11 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       //fireballs.push(player.fireballs);
       leaderboard.push(Leaderboard )
     }
-    for(var i = 0; i < 8; i ++){
-      fences.push(<BorderFence x={i*267+60} y={-76} angle={0}/>);
-      fences.push(<BorderFence x={i*267+60} y={2076} angle={0}/>);
-      fences.push(<BorderFence x={-76} y={i*267+60} angle={ Math.PI/2}/>);
-      fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2}/>);
+    for(var i = 0; i < 8; i++){
+      fences.push(<BorderFence x={i*267+60} y={-76} angle={0} key={`fence1${i}`} />);
+      fences.push(<BorderFence x={i*267+60} y={2076} angle={0} key={`fence2${i}`} />);
+      fences.push(<BorderFence x={-76} y={i*267+60} angle={ Math.PI/2} key={`fence3${i}`} />);
+      fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2} key={`fence4${i}`} />);
     }
     //
     if (me !== null && this.viewport !=null) {
@@ -103,7 +103,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     var midpoint = (tileAmt*177)/2;
     for(var i = 0; i < tileAmt; i++){
       for(var j = 0; j < tileAmt; j++){
-          tiles.push(<MovingBackground key={i + "" + j} x={(me.x - midpoint)/2 + i*177 -(177*5)/7} y={ (me.y - midpoint)/2 + j*177 -(177*5)/7}/>);
+          tiles.push(<MovingBackground key={i + "-" + j} x={(me.x - midpoint)/2 + i*177 -(177*5)/7} y={ (me.y - midpoint)/2 + j*177 -(177*5)/7}/>);
       }
     }
     for(let cid in state.coins){
