@@ -10,7 +10,7 @@ interface LeaderboardProps {
 }
 
 interface Ranking {
-  name: string;
+  onlineName: string;
   score: number;
 }
 interface LeaderboardState {
@@ -30,7 +30,7 @@ class Leaderboard extends Component <LeaderboardProps, LeaderboardState>
   return ranking.map((ranking: Ranking, index:any) => {
      //const { player } = student //destructuring
      const score = ranking.score;
-    var name = ranking.name;
+    var name = ranking.onlineName;
     if(name == null){name = "unNamed"}
      return (
         <tr key={index}>
