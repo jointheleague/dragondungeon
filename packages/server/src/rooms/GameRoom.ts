@@ -74,12 +74,10 @@ export class GameRoom extends Room < GameState > {
 				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
 					if (id != id2) {
 						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
-							//this.state.players[id2].fireballs.splice(i, 1);
-							//rotation={props.fireball.angle + Math.PI/2}
-						    var speed = this.state.players[id2].fireballs[i].speed;
-							var angle = this.state.players[id2].fireballs[i].angle + Math.PI;
-							this.state.players[id].x += speed*Math.cos(angle);
-							this.state.players[id].y += speed*Math.sin(angle);
+						    var fireBallspeed = this.state.players[id2].fireballs[i].speed;
+							var fireBallangle = this.state.players[id2].fireballs[i].angle + Math.PI;
+							this.state.players[id].x += fireBallspeed*Math.cos(fireBallangle);
+							this.state.players[id].y += fireBallspeed*Math.sin(fireBallangle);
 							if (this.state.players[id].coins > 0) {
 								this.state.players[id].coins--;
 								const rand = getRandomInt(0, 62) / 10;
