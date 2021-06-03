@@ -46,7 +46,13 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
           newProps.y+10,
           newProps.coins*7.5,
           newProps.height-3
-        );
+        );/*
+        instance.beginFill(newProps.color);
+        instance.drawCircle(
+          newProps.x+35,
+          newProps.y+80,
+          5
+        );*/
         let name = new PIXI.Text(newProps.name, {fontFamily : 'Arial', fontSize: 20, align : 'center', fill: 0xfcba03 });
         name.x = newProps.x - (name.width/2)+35;
         name.y = newProps.y-15;

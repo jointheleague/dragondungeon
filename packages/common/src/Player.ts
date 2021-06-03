@@ -67,7 +67,7 @@ export class Player extends Schema {
 		if (i.down) {
 			resDirection.y += 1;
 		}
-		this.angle = Math.atan2(this.y - i.mouseY, this.x - i.mouseX);
+		this.angle = Math.atan2(this.y + 70 - i.mouseY, this.x - i.mouseX);
 		this.direction = resDirection;
 	}
 
@@ -80,7 +80,7 @@ export class Player extends Schema {
 		this.fireballCooldown -= ticks;
 		if (this.activeInputs.space && this.fireballCooldown <= 0) {
 			this.fireballCooldown = 10;
-			const fireball = new Fireball(this.x + 60 * Math.cos(this.angle - (Math.PI)), this.y + 60 * Math.sin(this.angle - (Math.PI)), this.angle, 6)
+			const fireball = new Fireball(this.x + 45 * Math.cos(this.angle), this.y + 45 * Math.sin(this.angle), this.angle, 6)
 			this.fireballs.push(fireball);
 		}
 
