@@ -67,7 +67,8 @@ export class Player extends Schema {
 		if (i.down) {
 			resDirection.y += 1;
 		}
-		this.angle = Math.atan2(this.y + 70 - i.mouseY, this.x - i.mouseX);
+		this.angle = Math.atan2(this.y + 90 - i.mouseY, this.x - i.mouseX);
+		// if 70 is not added to the y component things get weird
 		this.direction = resDirection;
 	}
 
