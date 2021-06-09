@@ -58,7 +58,7 @@ render() {
 
 
   return (
-     <div>
+     <div className="leaderboard-box" >
         <table id='students'>
            <tbody>
               <tr>{this.renderTableHeader()}</tr>
@@ -75,13 +75,14 @@ export {Leaderboard}
 
 
 
-/*
+
 const FOCUSED: CSSProperties = {
   border: 'solid #375a7f 2px',
   textAlign: 'center',
   margin: 'auto',
   width:'100%',
 };
+/*
 export function Leadboard(props: {
   style?: CSSProperties;
   children: ReactNode;

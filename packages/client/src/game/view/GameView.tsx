@@ -146,7 +146,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
         />
        <ScrollDisable/>
                     <div>
-                    <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px'}}>Leaderboard</h1>
             <table id='students'>
                <tbody>
                <Leaderboard p={this.props.stateManager.room.state.players}>

@@ -68,6 +68,7 @@ const ANIMATION_SPEED = 0.08;
 export const Dragon = (props: IProps) => {
   const dragonTextures = useMemo(() => {
     //Create textures from spites
+    console.log("Delete this check");
     let dragonImages = [dragon1,dragon2,dragon3, dragon4];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     dragonImages.forEach(image =>{

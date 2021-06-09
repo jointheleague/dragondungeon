@@ -1,20 +1,24 @@
 .leaderboard-box {
-  text-align: right;
+  text-align: left;
   display: block;
-  align-items: center;
+  align-items: left;
   margin:auto;
-  margin-right: 10px;
-  margin-left: 30px;
+  margin-right: 40px;
+  margin-left: 40px;
   position: absolute;
   right:0px;
-  margin-top: 10px;
-  box-shadow: 0 8px 16px rgba(9,30,66,.5);
+  margin-top: 20px;
+  box-shadow: 0 8px 16px rgba(163, 144, 61, 0.425);
   border: 1px solid var(--primary_color);
-  background-color: rgba(255, 255, 255, 0.12);
-  border-radius: 8;
+  background-color: rgb(223, 57, 57);
+  border-radius: 2;
   padding: 16px;
   overflow: hidden;
   width: 200px;
   height: 200px;
   max-width: 90%;
+}
+
+th, td{
+  width: 200px;
 }
