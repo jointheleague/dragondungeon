@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Space, Center, Button } from '../components';
-import randomItem from 'random-item';
-import { getAuth, onAuthStateChanged, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, updateProfile, GoogleAuthProvider, signInWithPopup, signInAnonymously } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
 
@@ -11,15 +10,6 @@ const auth = getAuth();
 const resume = () => {
   onAuthStateChanged(auth, async (user) => {
     if (user?.isAnonymous) {
-      const adj = randomItem(require('../wordlists/adjectives.json'));
-      const noun = randomItem(require('../wordlists/nouns.json'));
-      const d1 = randomItem([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
-      const d2 = randomItem([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
-      const d3 = randomItem([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
-      const d4 = randomItem([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
-      updateProfile(user, {
-        displayName: `${adj}${noun}${d1}${d2}${d3}${d4}`.toLowerCase()
-      });
       navigate('/play/random');
     } else if (user) {
       const user_data = await getDoc(doc(db, user.uid, "login"));
@@ -63,15 +53,19 @@ const Game = (props: any) => {
         {userIsLoggedIn && 
           <>
             <Button onClick={resume} text="Play" />
-            <br />
             <Button onClick={profilepage} text="Account" />
-            <br />
           </>
         }
         {!userIsLoggedIn &&
-          <Button text="Sign In with Google" onClick={() => {
-            signInWithPopup(auth, new GoogleAuthProvider());
-          }} />
+          <>
+            <Button text="Sign In with Google" onClick={() => {
+              signInWithPopup(auth, new GoogleAuthProvider());
+            }} />
+
+            <Button text="Continue without Login" onClick={() => {
+              signInAnonymously(auth);
+            }} />
+          </>
         }
         <br />
         { props.location.search.includes('debug') ?
