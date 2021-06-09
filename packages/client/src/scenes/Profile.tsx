@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { Center } from '../components/center';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
 import DOMPurify from 'dompurify';
 
-const db = firebase.firestore();
+const db = getFirestore();
+const auth = getAuth();
 
 const Profile = () => {
   const [profilePicture, setProfilePicture] = useState<string>('/icon.png');
@@ -14,19 +14,22 @@ const Profile = () => {
   const [userStats, setUserStats] = useState<any>({});
   useEffect(
     () => {
-      firebase.auth().onAuthStateChanged(user => {
+      onAuthStateChanged(auth, async (user) => {
         if (user) {
           if (user.photoURL) {
             setProfilePicture(user.photoURL);
           }
           setCurrentUser(user);
-          db.collection(user.uid).doc('stats').get().then((doc) => {
-            if (doc.exists) {
-              setUserStats(doc.data());
-            } else {
-              setUserStats({});
-            }
-          });
+          // db.collection(user.uid).doc('stats').get().then((doc) => {
+          //   if (doc.exists) {
+          //     setUserStats(doc.data());
+          //   } else {
+          //     setUserStats({});
+          //   }
+          // });
+
+          const stats = await getDoc(doc(db, user.uid, "stats"));
+          setUserStats(stats || {});
         } else {
           navigate('/');
         }

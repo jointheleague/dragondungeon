@@ -13,13 +13,15 @@ export const CoreView = (props: IProps) => {
   const {stateManager} = props;
 
   useEffect(() => {
+    show_tutorial();
+
     const ref = stateManager.room.onStateChange(newState => {
       setState(newState)
-    })
+    });
+
     return () => {
       ref.clear();
-    }
-    show_tutorial();
+    };
   }, [stateManager])
 
   if (state == null) {

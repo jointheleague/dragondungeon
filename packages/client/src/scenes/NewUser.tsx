@@ -3,24 +3,27 @@ import { Center } from '../components/center';
 import { Box } from '../components/box';
 import { Space } from '../components/space';
 import { Button } from '../components/button';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { navigate } from '@reach/router';
 import DOMPurify from 'dompurify';
 
-const db = firebase.firestore();
+const db = getFirestore();
+const auth = getAuth();
 
 const processUser = () => {
-  firebase.auth().onAuthStateChanged(user => {
+  onAuthStateChanged(auth, user => {
     if (user) {
       const selectedName:string = document.querySelector('input')?.value || '';
+
       if (DOMPurify.sanitize(selectedName) !== '') {
-        user.updateProfile({
+
+        updateProfile(user, {
           displayName: DOMPurify.sanitize(selectedName)
         });
-        db.collection(user.uid).doc('login').set({
-          hasPickedIGN: true
+
+        setDoc(doc(db, user.uid, "login"), {
+          hasPickedIGN: true,
         }).then(() => {
           navigate('/play/random');
         });
