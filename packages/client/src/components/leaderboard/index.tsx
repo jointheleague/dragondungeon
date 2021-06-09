@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode, Component } from 'react';
+import React, { Component } from 'react';
 
 import './leaderboard.scss';
 import {IGameState, IPlayer} from 'game/state/types';

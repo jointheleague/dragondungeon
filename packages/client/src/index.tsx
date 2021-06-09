@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import { initializeApp } from 'firebase/app';
 
-firebase.initializeApp({
+initializeApp({
   apiKey: "AIzaSyCRClPzTZnRSg_fAap6ENnAkxUBQKJGk5w",
   authDomain: "leaguedragoncoin.firebaseapp.com",
   projectId: "leaguedragoncoin",

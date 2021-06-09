@@ -76,6 +76,6 @@ export const Controls = (props: ControlProps) => {
       window.removeEventListener("keyup", keyup)
       window.removeEventListener("mousemove", mouseMove)
     }
-  }, [props.actionCallback, updateAndSend])
+  }, [props.actionCallback, updateAndSend, props.viewport])
   return <></>
 }
