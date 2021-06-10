@@ -40,10 +40,9 @@ export class GameRoom extends Room < GameState > {
 		if (user.name == null) {
 			const adjectives = require('../../wordlists/adjectives.json');
 			const nouns = require('../../wordlists/nouns.json');
-			const adjective1 = adjectives[Math.floor(Math.random() * adjectives.length)];
-			const adjective2 = adjectives[Math.floor(Math.random() * adjectives.length)];
+			const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
 			const noun = nouns[Math.floor(Math.random() * nouns.length)];
-			this.state.players[client.id].onlineName = `${adjective1}${adjective2}${noun}`.toLowerCase();
+			this.state.players[client.id].onlineName = `${adjective}-${noun}`.toLowerCase();
 		} else {
 			this.state.players[client.id].onlineName = user.name;
 		}
