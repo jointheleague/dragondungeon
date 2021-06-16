@@ -1,7 +1,8 @@
 import * as express from 'express';
-import { createServer } from 'http';
+import * as fs from 'fs';
+import { createServer } from 'https';
 import { Server } from 'colyseus';
-import {GameRoom} from './rooms/GameRoom';
+import { GameRoom } from './rooms/GameRoom';
 
 function findPort(): number {
   return 8001;
@@ -11,7 +12,10 @@ const app = express();
 app.use(express.json());
 
 const server = new Server({
-  server: createServer(app),
+  server: createServer({
+    key: fs.readFileSync('../../key.pem'),
+    cert: fs.readFileSync('../../cert.pem'),
+  }, app),
   express: app
 })
 
