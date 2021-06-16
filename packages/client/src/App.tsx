@@ -15,7 +15,7 @@ class App extends Component {
   constructor(props: IProps) {
     super(props)
     this.colyseus = new ColyseusService(
-      'ws',
+      window.localStorage.protocol || 'wss',
       window.localStorage.server || `${window.location.hostname}:8001`,
     );
   }

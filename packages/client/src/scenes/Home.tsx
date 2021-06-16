@@ -69,9 +69,14 @@ const Game = (props: any) => {
         }
         <br />
         { props.location.search.includes('debug') ?
-          <input type="text" placeholder="Development Server" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid #c60c30', width:'45%' }} onChange={() => {
-            window.localStorage.server = document.querySelector('input')?.value;
-          }} /> :
+          <>
+            <input type="text" placeholder="Development Server" id="dbg-dev" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid #c60c30', width:'45%' }} onChange={() => {
+              window.localStorage.server = (document.querySelector('#dbg-dev') as HTMLInputElement).value;
+            }} />
+            <input type="text" placeholder="Websocket Protocol" id="dbg-pro" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid #c60c30', width:'45%' }} onChange={() => {
+              window.localStorage.protocol = (document.querySelector('#dbg-pro') as HTMLInputElement).value;
+            }} />
+          </> :
           null
         }
       </Center>
