@@ -39,7 +39,15 @@ export class GameRoom extends Room < GameState > {
 	async onJoin(client: Client, options: {token: string}, _2: any) {
 		const user = await admin.auth().verifyIdToken(options.token);
 		this.state.players[client.id] = new Player();
-		this.state.players[client.id].onlineName = user.name;
+		if (user.name == null) {
+			const adjectives = require('../../wordlists/adjectives.json');
+			const nouns = require('../../wordlists/nouns.json');
+			const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+			const noun = nouns[Math.floor(Math.random() * nouns.length)];
+			this.state.players[client.id].onlineName = `${adjective}-${noun}`.toLowerCase();
+		} else {
+			this.state.players[client.id].onlineName = user.name;
+		}
 		this.state.players[client.id].onlineID = user.uid;
 	}
 

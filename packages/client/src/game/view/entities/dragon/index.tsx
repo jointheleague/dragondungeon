@@ -6,7 +6,6 @@ import dragon1 from "./sprites/tile001.png";
 import dragon2 from "./sprites/tile002.png";
 import dragon3 from "./sprites/tile003.png";
 import dragon4 from "./sprites/tile004.png";
-//import fireballTextures from "./fireball/index"
 import {
   CustomPIXIComponent,
 } from "react-pixi-fiber";
@@ -67,7 +66,7 @@ const ANIMATION_SPEED = 0.08;
 
 export const Dragon = (props: IProps) => {
   const dragonTextures = useMemo(() => {
-    //Create textures from spites
+    // TODO: Create textures from spites
     let dragonImages = [dragon1,dragon2,dragon3, dragon4];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     dragonImages.forEach(image =>{

@@ -1,20 +1,37 @@
 .leaderboard-box {
-  text-align: right;
+  text-align: left;
   display: block;
-  align-items: center;
-  margin:auto;
-  margin-right: 10px;
-  margin-left: 30px;
+  margin: auto;
+  margin-right: 40px;
+  margin-left: 40px;
   position: absolute;
-  right:0px;
-  margin-top: 10px;
-  box-shadow: 0 8px 16px rgba(9,30,66,.5);
-  border: 1px solid var(--primary_color);
-  background-color: rgba(255, 255, 255, 0.12);
-  border-radius: 8;
+  right: 0px;
+  margin-top: 20px;
+  border: 3px solid var(--primary_color);
+  border-radius: 2;
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 16px;
   overflow: hidden;
-  width: 200px;
-  height: 200px;
-  max-width: 90%;
+  height: 90px;
+}
+
+@media only screen and (max-width: 600px) {
+  .leaderboard-box {
+    max-width: 90%;
+    min-width: 70%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .leaderboard-box {
+    max-width: 40vw;
+  }
+}
+
+tr, th {
+  padding: 10px;
+}
+
+.score {
+  text-align: center;
 }

@@ -28,27 +28,27 @@ class Leaderboard extends Component <LeaderboardProps, LeaderboardState>
  renderTableData(ranking:Ranking[]) {
 
   return ranking.map((ranking: Ranking, index:any) => {
-     //const { player } = student //destructuring
-     const score = ranking.score;
+    const score = ranking.score;
     var name = ranking.onlineName;
+
     if(name == null){name = "unNamed"}
      return (
         <tr key={index}>
            <td>{name}</td>
-           <td>{score}</td>
+           <td className="score">{score}</td>
         </tr>
      )
   })
 }
+
 renderTableHeader() {
-  let header = (["Name "," Score"])
+  let header = (["Name","Coins"])
   return header.map((key, index) => {
      return <th key={index}>{key.toUpperCase()}</th>
   })
 }
-render() {
-  // compute the current ranking based on this.props.p
-  
+
+render() {  
   const newArr = [];
   for(let pid in this.props.p){
     newArr.push(this.props.p[pid]);
@@ -58,7 +58,7 @@ render() {
 
 
   return (
-     <div>
+     <div className="leaderboard-box" >
         <table id='students'>
            <tbody>
               <tr>{this.renderTableHeader()}</tr>
@@ -69,49 +69,5 @@ render() {
   )
 }
 }
-export {Leaderboard}
 
-
-
-
-
-/*
-const FOCUSED: CSSProperties = {
-  border: 'solid #375a7f 2px',
-  textAlign: 'center',
-  margin: 'auto',
-  width:'100%',
-};
-export function Leadboard(props: {
-  style?: CSSProperties;
-  children: ReactNode;
-  players: IPlayer;
-}): React.ReactElement {
-  const {
-    style,
-    children,
-  } = props;
-  return <div style={style} className="container-box">{children}
-    <table style={FOCUSED}>
-      <tbody>
-        <tr style={FOCUSED}>
-          <th>
-            name
-          </th>
-          <th>
-            coins
-          </th>
-        </tr>
-        <tr style={FOCUSED}>
-          <td>
-            Dave
-          </td>
-          <td>
-            500
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-}
-*/
+export { Leaderboard }

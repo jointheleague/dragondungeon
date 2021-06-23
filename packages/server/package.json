@@ -19,6 +19,7 @@
     "colyseus": "^0.13.7",
     "express": "^4.17.1",
     "firebase-admin": "^9.5.0",
-    "http": "^0.0.1-security"
+    "http": "^0.0.1-security",
+    "random-item": "^4.0.1"
   }
 }
