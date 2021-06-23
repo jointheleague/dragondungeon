@@ -10,6 +10,7 @@ import { Coin } from './Coin';
 import { CoinJar } from './CoinJar';
 import { v4 } from "uuid";
 import { BorderFence } from './BorderFence';
+import { Countdown } from './Countdown';
 export class GameState extends Schema {
 	@type("boolean")
 	first: boolean = false;
@@ -27,6 +28,9 @@ export class GameState extends Schema {
 
 	@type({map: BorderFence})
 	fences = new MapSchema < BorderFence > ();
+
+	@type(Countdown)
+	countdown = new Countdown(4,30);
 	
 	@type("boolean")
 	debugOn: boolean = false;

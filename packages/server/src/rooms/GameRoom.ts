@@ -13,6 +13,7 @@ import {
 	IInputs,
 	Coin, 
 	CoinJar,
+	Countdown,
 	Bar
 } from '@dragoncoin/common';
 
@@ -32,6 +33,7 @@ export class GameRoom extends Room < GameState > {
 		this.setState(new GameState())
 		this.registerMessages();
 		this.startGameLoop();
+		this.state.countdown = new Countdown(5, 0);
 	}
 
 	async onJoin(client: Client, options: {token: string}, _2: any) {
@@ -66,63 +68,68 @@ export class GameRoom extends Room < GameState > {
 	}
 
 	tick() {
-		this.counter++;
-		const dx = this.clock.deltaTime;
-		for (let id of this.state.players.keys()) {
-			this.state.players[id].tick(dx);
-			for (let id2 of this.state.players.keys()) {
-				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
-					if (id != id2) {
-						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
-						    var fireBall = this.state.players[id2].fireballs[i];
-							const coinChance = .1; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
-							const lifetimeRemove = 2; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
-							this.state.players[id].x += fireBall.speed * Math.cos(fireBall.angle + Math.PI);
-							this.state.players[id].y += fireBall.speed * Math.sin(fireBall.angle + Math.PI);
-							if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
-								this.state.players[id].coins--;
-								fireBall.lifetime -= lifetimeRemove;
-								const rand = getRandomInt(0, 62) / 10;
-								this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
+			this.counter++;
+			const dx = this.clock.deltaTime;
+			
+			if(!this.state.countdown.done){
+				this.state.countdown.elaspseTime();
+			}else{
+				this.cancelGameLoop();
+			}
+			for (let id of this.state.players.keys()) {
+				this.state.players[id].tick(dx);
+				for (let id2 of this.state.players.keys()) {
+					for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
+						if (id != id2) {
+							if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
+								var fireBall = this.state.players[id2].fireballs[i];
+								const coinChance = .1; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
+								const lifetimeRemove = 2; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if the player is heavy)
+								this.state.players[id].x += fireBall.speed * Math.cos(fireBall.angle + Math.PI);
+								this.state.players[id].y += fireBall.speed * Math.sin(fireBall.angle + Math.PI);
+								if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
+									this.state.players[id].coins--;
+									fireBall.lifetime -= lifetimeRemove;
+									const rand = getRandomInt(0, 62) / 10;
+									this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
+								}
 							}
 						}
 					}
 				}
+				
+				if(this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y)){
+					// when a player has collided with the coinjar
+					this.state.players[id].score += this.state.players[id].coins;// add coins to players score
+					this.state.players[id].coins = 0;// remove coins
+				}
+
+				for(let cid of this.state.coins.keys()){
+					if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) == true && this.state.players[id].coins < 10) {
+						this.state.coins.delete(cid);
+						this.state.players[id].coins++;
+					}
+				}
+
+				if(this.state.players[id].x<0){
+					this.state.players[id].x=0;
+				} else if(this.state.players[id].x>2000){
+					this.state.players[id].x=2000;
+				}
+
+				if(this.state.players[id].y<0){
+					this.state.players[id].y=0;
+				} else if(this.state.players[id].y>2000){
+					this.state.players[id].y=2000;
+				}
+				
+			}
+
+			
+			if(this.state.coins.size<100&&this.counter%100==0){
+				this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*2000, Math.random()*2000));
 			}
 			
-			if(this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y)){
-				// when a player has collided with the coinjar
-				this.state.players[id].score += this.state.players[id].coins;// add coins to players score
-				this.state.players[id].coins = 0;// remove coins
-			}
-
-			for(let cid of this.state.coins.keys()){
-				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) == true && this.state.players[id].coins < 10) {
-					this.state.coins.delete(cid);
-					this.state.players[id].coins++;
-				}
-			}
-
-			if(this.state.players[id].x<0){
-				this.state.players[id].x=0;
-			} else if(this.state.players[id].x>2000){
-				this.state.players[id].x=2000;
-			}
-
-			if(this.state.players[id].y<0){
-				this.state.players[id].y=0;
-			} else if(this.state.players[id].y>2000){
-				this.state.players[id].y=2000;
-			}
-			// console.log(id + "  " + this.state.players[id].score);
-		}
-
-		
-		if(this.state.coins.size<100&&this.counter%100==0){
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*2000, Math.random()*2000));
-		}
-		
-		
 	}
 
 }

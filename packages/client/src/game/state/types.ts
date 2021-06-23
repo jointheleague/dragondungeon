@@ -1,4 +1,5 @@
 import { Fireball } from "@dragoncoin/common";
+import { InteractionManager } from "pixi.js";
 
 export interface IGameState {
   lifecycle: 'lobby' | 'deathmatch';
@@ -6,8 +7,14 @@ export interface IGameState {
   coinJar: ICoinJar;
   coins: {[key: string]: ICoin};
   bars: IBar[];
+  countdown: ICountdown;
 }
 
+export interface ICountdown{
+  seconds: number;
+  minutes: number;
+  done: boolean;
+}
 
 export interface IBar{
   x: number;

@@ -15,6 +15,7 @@ import { MovingBackground } from './entities/movingBackground';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Leaderboard } from 'components/leaderboard';
+import { Countdown } from 'components/countdown';
 import ReactNipple from 'react-nipple';
 import {Bar} from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
@@ -145,18 +146,22 @@ export class GameView extends Component<GameViewProps, GameViewState> {
           onMove={(evt:any, data: any) => console.log(data.direction)}
         />
        <ScrollDisable/>
-          <div>
-            <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px'}}>Leaderboard</h1>
-            <table id='students'>
-               <tbody>
-               <Leaderboard p={this.props.stateManager.room.state.players}>
-                    </Leaderboard>
-               </tbody>
-            </table>
-         </div>
-         <div>
-           <h1>TIMER</h1>
-         </div>
+          <div style={{display: 'flex', alignItems: 'row'}}>
+            <div style={{ marginLeft: '2vw'}}>
+              <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px'}}>Leaderboard</h1>
+              <table id='students'>
+                <tbody>
+                <Leaderboard p={this.props.stateManager.room.state.players}>
+                      </Leaderboard>
+                </tbody>
+              </table>
+            </div>
+            <div style={{marginLeft: '3vw'}}>
+              <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px'}}>Countdown</h1>
+              <Countdown time={this.props.state.countdown}>
+              </Countdown>
+            </div>
+          </div>
                     
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>

@@ -1,0 +1,20 @@
+.timer-box {
+  text-align: center;
+  display: block;
+  align-items: center;
+  margin:auto;
+  margin-right: 10px;
+  margin-left: 30px;
+  position: absolute;
+  right:0px;
+  margin-top: 10px;
+  box-shadow: 0 8px 16px rgba(9,30,66,.5);
+  border: 1px solid var(--primary_color);
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 8;
+  padding: 16px;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  max-width: 90%;
+}
