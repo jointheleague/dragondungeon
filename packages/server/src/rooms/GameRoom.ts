@@ -47,6 +47,10 @@ export class GameRoom extends Room < GameState > {
 			this.state.players[client.id].onlineName = user.name;
 		}
 		this.state.players[client.id].onlineID = user.uid;
+
+		setInterval(() => {
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[client.id].x + Math.random() * 1000, this.state.players[client.id].y + Math.random() * 1000));
+		}, 600);
 	}
 
 	onLeave(client: Client, _consent: boolean) {
