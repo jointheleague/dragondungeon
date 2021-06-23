@@ -35,3 +35,12 @@ tr, th {
 .score {
   text-align: center;
 }
+
+#students {
+  display: flex;
+  flex-direction: row;
+}
+
+#countdown {
+  width: 5vw;
+}

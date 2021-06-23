@@ -146,24 +146,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
           onMove={(evt:any, data: any) => console.log(data.direction)}
         />
        <ScrollDisable/>
-          <div style={{display: 'flex', alignItems: 'row'}}>
-            <div style={{ marginLeft: '2vw'}}>
-              <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px'}}>Leaderboard</h1>
-              <table id='students'>
-                <tbody>
-                <Leaderboard p={this.props.stateManager.room.state.players}>
-                      </Leaderboard>
-                </tbody>
-              </table>
-            </div>
-            <div style={{marginLeft: '3vw'}}>
-              <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px'}}>Countdown</h1>
-              <Countdown time={this.props.state.countdown}>
-              </Countdown>
-            </div>
+          <div style={{marginLeft : '3vw'}}>
+            <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard>
           </div>
-
-                    
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
        </>
      );

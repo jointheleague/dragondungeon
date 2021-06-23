@@ -71,6 +71,7 @@ export class GameRoom extends Room < GameState > {
 		}, 1000 / 60);
 		
 	}
+	
 	cancelGameLoop() {
 		this.clock.clear()
 	}

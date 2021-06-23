@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
 import './leaderboard.scss';
-import {IGameState, IPlayer} from 'game/state/types';
+import {IGameState, IPlayer, ICountdown} from 'game/state/types';
 interface GameViewProps {
   state: IGameState;
 }
 interface LeaderboardProps {
   p: {[key: string]: IPlayer}
+  t: ICountdown
 }
 
 interface Ranking {
@@ -48,6 +49,16 @@ renderTableHeader() {
   })
 }
 
+renderCountdown(){
+  if(this.props.t.done){
+    return <h2>Game Over</h2>
+  }
+  if(Math.floor(this.props.t.seconds) < 10){
+    return <h2>{this.props.t.minutes} : 0{Math.floor(this.props.t.seconds)}</h2>
+  }
+  return <h2>{this.props.t.minutes} : {Math.floor(this.props.t.seconds)}</h2>
+}
+
 render() {  
   const newArr = [];
   for(let pid in this.props.p){
@@ -60,10 +71,13 @@ render() {
   return (
      <div className="leaderboard-box" >
         <table id='students'>
-           <tbody>
-              <tr>{this.renderTableHeader()}</tr>
-              {this.renderTableData(newArr)}
-           </tbody>
+          <tbody id='countdown'>
+            {this.renderCountdown()}
+          </tbody>
+          <tbody id='leaderboard'>
+            <tr>{this.renderTableHeader()}</tr>
+            {this.renderTableData(newArr)}
+          </tbody>
         </table>
      </div>
   )
