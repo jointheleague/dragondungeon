@@ -142,7 +142,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
             width: '100vw',
             height: '100vh'
           }}
-          onMove={(evt:any, data: any) => console.log(data.direction)}
         />
        <ScrollDisable/>
                     <div>
