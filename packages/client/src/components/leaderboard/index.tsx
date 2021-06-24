@@ -35,8 +35,8 @@ class Leaderboard extends Component <LeaderboardProps, LeaderboardState>
     if(name == null){name = "unNamed"}
      return (
         <tr key={index}>
-           <td>{name}</td>
-           <td className="score">{score}</td>
+           <td className="playerData">{name}</td>
+           <td className="playerData">{score}</td>
         </tr>
      )
   })

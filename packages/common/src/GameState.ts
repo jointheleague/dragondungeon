@@ -30,7 +30,7 @@ export class GameState extends Schema {
 	fences = new MapSchema < BorderFence > ();
 
 	@type(Countdown)
-	countdown = new Countdown(4,30);
+	countdown = new Countdown(0,30);
 	
 	@type("boolean")
 	debugOn: boolean = false;

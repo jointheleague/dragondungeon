@@ -67,15 +67,15 @@ export class Player extends Schema {
 		if (i.down) {
 			resDirection.y += 1;
 		}
-		this.angle = Math.atan2(this.y + 90 - i.mouseY, this.x - i.mouseX);
-		// if 70 is not added to the y component things get weird
+		this.angle = Math.atan2(this.y - i.mouseY, this.x - i.mouseX);
+		//console.log(i.mouseX);
 		this.direction = resDirection;
 	}
 
 	fireballCooldown: number = 0;
 	tick(dx: number) {
 		const ticks = dx / 50;
-		if (this.direction.x != 0 || this.direction.y != 0) {
+		if (this.direction.x !== 0 || this.direction.y !== 0) {
 			this.move(this.direction.x, this.direction.y, this.speed * ticks)
 		}
 		this.fireballCooldown -= ticks;
@@ -106,6 +106,11 @@ export class Player extends Schema {
 
 		const speedX = Maths.round2Digits(dirX * (speed / magnitude));
 		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
+
+		this.activeInputs.mouseX += 10;
+
+		console.log(this.x + " , " + this.activeInputs.mouseX);
+
 
 		this.x = this.x + speedX;
 		this.y = this.y + speedY;

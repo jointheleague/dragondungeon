@@ -32,7 +32,7 @@ tr, th {
   padding: 10px;
 }
 
-.score {
+.playerData {
   text-align: center;
 }
 
@@ -42,5 +42,6 @@ tr, th {
 }
 
 #countdown {
-  width: 5vw;
+  min-width: 5.5vw;
+  margin-right: 2vw;
 }
