@@ -73,12 +73,9 @@ export class Player extends Schema {
 			resDirection.y += 1;
 		}
 		this.direction = resDirection;
-		if(Math.trunc(i.mouseX) !== Math.trunc(this.lastInputs.mouseX)){
-			this.lastInputs.mouseX = i.mouseX;
-			this.angle = Math.atan2(this.y - i.mouseY, this.x - i.mouseX);
-		}
-		if(Math.trunc(i.mouseY) !== Math.trunc(this.lastInputs.mouseY)){
+		if(Math.trunc(i.mouseX) !== Math.trunc(this.lastInputs.mouseX) || Math.trunc(i.mouseY) !== Math.trunc(this.lastInputs.mouseY)){
 			this.lastInputs.mouseY = i.mouseY;
+			this.lastInputs.mouseX = i.mouseX
 			this.angle = Math.atan2(this.y - i.mouseY, this.x - i.mouseX);
 		}
 	}
