@@ -54,12 +54,6 @@ export class GameRoom extends Room < GameState > {
 				this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[client.id].x + Math.random() * 1000, this.state.players[client.id].y + Math.random() * 1000));
 			}
 		}, 600);
-
-		setInterval(() => {
-			if (this.state.players[client.id].x) {
-				this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[client.id].x + Math.random() * 1000, this.state.players[client.id].y + Math.random() * 1000));
-			}
-		}, 600);
 	}
 
 	onLeave(client: Client, _consent: boolean) {
@@ -153,10 +147,10 @@ export class GameRoom extends Room < GameState > {
 		//this controls the rate of the coins spawning during game
 		
 		if(this.state.coins.size<100&&this.counter%20==0){
-			const newX = Math.random()*2000;
-			const newY = Math.random()*2000;
-			if(!Maths.checkWalls(newX, newY)){
-				this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*2000, Math.random()*2000));
+			const newCoinX = Math.random()*2000;
+			const newCoinY = Math.random()*2000;
+			if(!Maths.checkWalls(newCoinX, newCoinY)){
+				this.state.coins.set(v4(), new Coin(this.state.coins.size, newCoinX, newCoinY));
 			}
 			/*
 			   var c = 0;
