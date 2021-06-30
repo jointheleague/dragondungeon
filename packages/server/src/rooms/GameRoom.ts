@@ -61,6 +61,7 @@ export class GameRoom extends Room < GameState > {
 	registerMessages() {
 		this.onMessage("input", (client: Client, message: IInputs) => {
 			this.state.players[client.sessionId].inputs(message);
+			console.log("got player input");
 		})
 	}
 
