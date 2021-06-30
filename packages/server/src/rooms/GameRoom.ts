@@ -13,7 +13,8 @@ import {
 	IInputs,
 	Coin, 
 	CoinJar,
-	Bar
+	Bar,
+	Maths
 } from '@dragoncoin/common';
 
 import * as admin from 'firebase-admin';
@@ -78,6 +79,7 @@ export class GameRoom extends Room < GameState > {
 		const dx = this.clock.deltaTime;
 		for (let id of this.state.players.keys()) {
 			this.state.players[id].tick(dx);
+
 			for (let id2 of this.state.players.keys()) {
 				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
 					if (id != id2) {
@@ -85,13 +87,24 @@ export class GameRoom extends Room < GameState > {
 						    var fireBall = this.state.players[id2].fireballs[i];
 							const coinChance = .1; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
 							const lifetimeRemove = 2; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
-							this.state.players[id].x += fireBall.speed * Math.cos(fireBall.angle + Math.PI);
-							this.state.players[id].y += fireBall.speed * Math.sin(fireBall.angle + Math.PI);
+							
+							const newX = this.state.players[id].x+fireBall.speed * Math.cos(fireBall.angle + Math.PI);
+							const newY = this.state.players[id].y+ fireBall.speed * Math.sin(fireBall.angle + Math.PI);
+							if(!Maths.checkWalls(newX, newY)){
+								this.state.players[id].x = newX;
+								this.state.players[id].y = newY;
+							}
+							console.log(this.state.players[id].x+"    "+this.state.players[id].y)
 							if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
 								this.state.players[id].coins--;
 								fireBall.lifetime -= lifetimeRemove;
 								const rand = getRandomInt(0, 62) / 10;
-								this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
+								
+								const newX = this.state.players[id].x + 100 * Math.cos(rand)
+								const newY = this.state.players[id].y + 100 * Math.sin(rand)
+								if(!Maths.checkWalls(newX, newY)){
+									this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY));
+								}
 							}
 						}
 					}
@@ -125,9 +138,37 @@ export class GameRoom extends Room < GameState > {
 			// console.log(id + "  " + this.state.players[id].score);
 		}
 
+		//this controls the rate of the coins spawning during game
 		
-		if(this.state.coins.size<100&&this.counter%100==0){
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*2000, Math.random()*2000));
+		if(this.state.coins.size<100&&this.counter%20==0){
+			const newX = Math.random()*2000;
+			const newY = Math.random()*2000;
+			if(!Maths.checkWalls(newX, newY)){
+				this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random()*2000, Math.random()*2000));
+			}
+			/*
+			   var c = 0;
+			while(c<1){
+				var rX = Math.random()*2000;
+				var rY = Math.random()*2000;
+				const gameWidth = 2000;
+		const gameHeight = 2000;
+		//offset is horizontal/vertical distance to center
+		const offset = gameWidth/2;
+		const offsetX = Math.abs(rX-offset);
+		const offsetY = Math.abs(rY-offset);
+		const boxLength = 600;
+		const innerBoxLength = 200;
+		if(offsetX< boxLength && offsetY<boxLength){
+			if(offsetX>innerBoxLength && offsetY>innerBoxLength){
+				if(  (offsetX>innerBoxLength && offsetX<40+innerBoxLength) || (offsetY>innerBoxLength && offsetY<40+innerBoxLength)  ){
+					this.state.coins.set(v4(), new Coin(this.state.coins.size, rX, rY));
+					c = c+1;
+				}
+			}
+		}
+			}
+			*/
 		}
 		
 		

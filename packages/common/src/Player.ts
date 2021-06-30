@@ -76,6 +76,7 @@ export class Player extends Schema {
 	tick(dx: number) {
 		const ticks = dx / 50;
 		if (this.direction.x != 0 || this.direction.y != 0) {
+			//wall code
 			this.move(this.direction.x, this.direction.y, this.speed * ticks)
 		}
 		this.fireballCooldown -= ticks;
@@ -87,8 +88,15 @@ export class Player extends Schema {
 
 		for (let fireball of this.fireballs) {
 			fireball.lifetime -= ticks;
-			fireball.x += fireball.speed * Math.cos(fireball.angle - Math.PI);
-			fireball.y += fireball.speed * Math.sin(fireball.angle - Math.PI);
+
+			var newX = fireball.x+(fireball.speed * Math.cos(fireball.angle - Math.PI));
+			var newY = fireball.y+(fireball.speed * Math.sin(fireball.angle - Math.PI));
+			if(!Maths.checkWalls(newX, newY)){
+				fireball.x = newX;
+				fireball.y = newY;
+			} else{
+				fireball.lifetime = 0;
+			}
 			// fireball.checkHit(this.x, this.y);
 		}
 		for (var i = 0; i < this.fireballs.length; i++) {
@@ -103,13 +111,19 @@ export class Player extends Schema {
 
 	move(dirX: number, dirY: number, speed: number) {
 		const magnitude = Maths.normalize2D(dirX, dirY);
-
+		console.log(this.x+"    "+this.y)
 		const speedX = Maths.round2Digits(dirX * (speed / magnitude));
 		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
-
-		this.x = this.x + speedX;
-		this.y = this.y + speedY;
+		const newX = this.x+speedX;
+		const newY = this.y+speedY;
+		if(Maths.checkWalls(newX, newY)==false){
+			this.x = newX;
+			this.y = newY;
+		}
+		
 	}
+
+	
 
 
 }
