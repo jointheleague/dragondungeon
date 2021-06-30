@@ -14,8 +14,11 @@ class App extends Component {
   colyseus: ColyseusService;
   constructor(props: IProps) {
     super(props)
+
+    const protocol = window.localStorage.protocol || (window.location.protocol.includes('https') ? 'wss' : 'ws') || 'wss';
+
     this.colyseus = new ColyseusService(
-      window.localStorage.protocol || 'wss',
+      protocol,
       window.localStorage.server || `${window.location.hostname}:8001`,
     );
   }
