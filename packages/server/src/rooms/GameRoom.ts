@@ -48,12 +48,6 @@ export class GameRoom extends Room < GameState > {
 			this.state.players[client.id].onlineName = user.name;
 		}
 		this.state.players[client.id].onlineID = user.uid;
-
-		setInterval(() => {
-			if (this.state.players[client.id].x) {
-				this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[client.id].x + Math.random() * 1000, this.state.players[client.id].y + Math.random() * 1000));
-			}
-		}, 600);
 	}
 
 	onLeave(client: Client, _consent: boolean) {
@@ -83,6 +77,13 @@ export class GameRoom extends Room < GameState > {
 	tick() {
 		this.counter++;
 		const dx = this.clock.deltaTime;
+
+		for(let i = this.state.coins.values.length; i < this.state.players.values.length * 3; i++) {
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 100, Math.random() * 100));
+		}
+
+		
+
 		for (let id of this.state.players.keys()) {
 			this.state.players[id].tick(dx);
 
@@ -143,41 +144,5 @@ export class GameRoom extends Room < GameState > {
 			}
 			// console.log(id + "  " + this.state.players[id].score);
 		}
-
-		//this controls the rate of the coins spawning during game
-		
-		if(this.state.coins.size<100&&this.counter%20==0){
-			const newCoinX = Math.random()*2000;
-			const newCoinY = Math.random()*2000;
-			if(!Maths.checkWalls(newCoinX, newCoinY)){
-				this.state.coins.set(v4(), new Coin(this.state.coins.size, newCoinX, newCoinY));
-			}
-			/*
-			   var c = 0;
-			while(c<1){
-				var rX = Math.random()*2000;
-				var rY = Math.random()*2000;
-				const gameWidth = 2000;
-		const gameHeight = 2000;
-		//offset is horizontal/vertical distance to center
-		const offset = gameWidth/2;
-		const offsetX = Math.abs(rX-offset);
-		const offsetY = Math.abs(rY-offset);
-		const boxLength = 600;
-		const innerBoxLength = 200;
-		if(offsetX< boxLength && offsetY<boxLength){
-			if(offsetX>innerBoxLength && offsetY>innerBoxLength){
-				if(  (offsetX>innerBoxLength && offsetX<40+innerBoxLength) || (offsetY>innerBoxLength && offsetY<40+innerBoxLength)  ){
-					this.state.coins.set(v4(), new Coin(this.state.coins.size, rX, rY));
-					c = c+1;
-				}
-			}
-		}
-			}
-			*/
-		}
-		
-		
 	}
-
 }
