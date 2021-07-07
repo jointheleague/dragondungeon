@@ -2,6 +2,7 @@ import React, {useEffect, useCallback} from 'react';
 import {IInputs} from './types';
 import {Viewport} from 'pixi-viewport';
 import { show_error_banner } from 'util/banner';
+import { debuglog } from 'util';
 
 interface ControlProps {
     actionCallback: (p: IInputs) => void
@@ -35,8 +36,7 @@ let activeControls = {
   down: false,
   shoot: false,
   autoshoot: false,
-  mouseX: 0.0,
-  mouseY: 0.0,
+  angle: 0.0,
   space: false
 };
 
@@ -45,6 +45,8 @@ export const Controls = (props: ControlProps) => {
 
   const updateAndSend = useCallback((change: object) => {
     const updated =  Object.assign({}, activeControls, change);
+ 
+
     actionCallback(updated)
     activeControls = updated;
   }, [actionCallback])
@@ -60,9 +62,15 @@ export const Controls = (props: ControlProps) => {
     }
     const mouseMove = (e: MouseEvent) => {
       try {
-        const worldCoordinates = props.viewport.toWorld(e.x,e.y);
-        mouseActivity["position"] = {mouseX:worldCoordinates.x, mouseY:worldCoordinates.y};
-        const change = mouseActivity["position"] || {};
+        //const worldCoordinates = props.viewport.toWorld(e.x,e.y);
+
+        const X = window.innerWidth/2;
+        const Y = window.innerHeight/2;
+
+        //mouseActivity["position"] = {mouseX:worldCoordinates.x, mouseY:worldCoordinates.y};
+
+        const change = {angle : -Math.atan2(X - e.x, Y - e.y) + Math.PI/2};
+
         updateAndSend(change); 
       } catch {
         show_error_banner('BAT');

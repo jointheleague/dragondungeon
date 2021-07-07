@@ -43,15 +43,9 @@ export class Player extends Schema {
 		down: false,
 		shoot: false,
 		autoshoot: false,
-		mouseX: 0.0,
-		mouseY: 0.0,
+		angle: 0.0,
 		space: false
 	};
-
-	lastInputs = {
-		mouseX: 0.0,
-		mouseY: 0.0
-	}
 
 	constructor() {
 		super()
@@ -73,11 +67,8 @@ export class Player extends Schema {
 			resDirection.y += 1;
 		}
 		this.direction = resDirection;
-		if(Math.trunc(i.mouseX) !== Math.trunc(this.lastInputs.mouseX) || Math.trunc(i.mouseY) !== Math.trunc(this.lastInputs.mouseY)){
-			this.lastInputs.mouseY = i.mouseY;
-			this.lastInputs.mouseX = i.mouseX
-			this.angle = Math.atan2(this.y - i.mouseY, this.x - i.mouseX);
-		}
+		//this.angle = Math.atan2(i.mouseX - this.x, i.mouseY - this.y)
+		this.angle = i.angle;
 	}
 
 	fireballCooldown: number = 0;

@@ -17,6 +17,7 @@ interface Ranking {
 interface LeaderboardState {
   rankings: Ranking[];
 }
+
 class Leaderboard extends Component <LeaderboardProps, LeaderboardState>
 {
   state: LeaderboardState;
