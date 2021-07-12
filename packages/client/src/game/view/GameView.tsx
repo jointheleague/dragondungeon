@@ -80,7 +80,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
         fireballs.push(<IceballView key={fireball.id} iceball={fireball}/>)
 
       }
-      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y-80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].onlineName}/>)
+      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y - 80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].onlineName}/>)
       //println("fs");
       //fireballs.push(player.fireballs);
       leaderboard.push(Leaderboard )
@@ -88,7 +88,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     for(var i = 0; i < 8; i++){
       fences.push(<BorderFence x={i*267+60} y={-76} angle={0} key={`fence1${i}`} />);
       fences.push(<BorderFence x={i*267+60} y={2076} angle={0} key={`fence2${i}`} />);
-      fences.push(<BorderFence x={-76} y={i*267+60} angle={ Math.PI/2} key={`fence3${i}`} />);
+      fences.push(<BorderFence x={-76} y={i*267+60} angle={Math.PI/2} key={`fence3${i}`} />);
       fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2} key={`fence4${i}`} />);
     }
     //
@@ -104,7 +104,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     var midpoint = (tileAmt*177)/2;
     for(var i = 0; i < tileAmt; i++){
       for(var j = 0; j < tileAmt; j++){
-          tiles.push(<MovingBackground key={i + "-" + j} x={(me.x - midpoint)/2 + i*177 -(177*5)/7} y={ (me.y - midpoint)/2 + j*177 -(177*5)/7}/>);
+          tiles.push(<MovingBackground key={`${i}-${j}`} x={(me.x - midpoint)/2 + i*177 -(177*5)/7} y={ (me.y - midpoint)/2 + j*177 -(177*5)/7}/>);
       }
     }
     for(let cid in state.coins){

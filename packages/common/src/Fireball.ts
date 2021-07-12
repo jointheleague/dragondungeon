@@ -14,6 +14,9 @@ export class Fireball extends Schema {
 	@type("string")
 	id: string;
 
+	@type("number")
+	fireballRadius: number = 25;
+
 	//@type("string")
 	//ability: "Iceball" | "Fireball";
 
@@ -30,7 +33,7 @@ export class Fireball extends Schema {
 	}
 
 	checkHit(dragonX: number, dragonY: number) {
-		if (Math.sqrt(Math.pow(this.x - dragonX, 2) - Math.pow(this.y - dragonY, 2)) < 20) {
+		if (Math.sqrt(Math.pow(this.x - dragonX, 2) - Math.pow(this.y - dragonY, 2)) < this.fireballRadius) {
 			return true;
 		} else {
 			return false

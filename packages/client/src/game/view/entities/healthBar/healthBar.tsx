@@ -33,29 +33,29 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
           instance.zIndex = newProps.zIndex;
         }
         instance.clear();
+        /*instance.beginFill(newProps.color);
+        instance.drawCircle(
+          newProps.x + 35,
+          newProps.y + 80,
+          50
+        );*/
         instance.beginFill(.2);
         instance.drawRect(
-          newProps.x-2,
-          newProps.y+10,
-          newProps.width+5,
+          newProps.x - 2,
+          newProps.y + 10,
+          newProps.width + 5,
           newProps.height
         );
         instance.beginFill(newProps.color);
         instance.drawRect(
           newProps.x,
-          newProps.y+10,
-          newProps.coins*7.5,
-          newProps.height-3
-        );/*
-        instance.beginFill(newProps.color);
-        instance.drawCircle(
-          newProps.x+35,
-          newProps.y+80,
-          5
-        );*/
+          newProps.y + 10,
+          newProps.coins * 7.5,
+          newProps.height - 3
+        );
         let name = new PIXI.Text(newProps.name, {fontFamily : 'Arial', fontSize: 20, align : 'center', fill: 0xfcba03 });
-        name.x = newProps.x - (name.width/2)+35;
-        name.y = newProps.y-15;
+        name.x = newProps.x - (name.width / 2) + 35;
+        name.y = newProps.y - 15;
         instance.addChild(name);
         instance.endFill();
       }
