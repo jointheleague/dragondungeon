@@ -8,6 +8,7 @@ interface IProps {
     key: string;
     x: number;
     y: number;
+    size: number;
 }
 
 
@@ -29,8 +30,8 @@ export const Coin = (props: IProps) => {
   return (
     <AnimatedSprite
     anchor={new PIXI.Point(0.5, 0.5)}
-    width ={20}
-    height = {20}
+    width ={props.size}
+    height = {props.size}
     textures = {coinTextures}
     x={props.x}
     animationSpeed = {ANIMATION_SPEED}

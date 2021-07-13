@@ -116,8 +116,24 @@ export class GameRoom extends Room < GameState > {
 
 				for(let cid of this.state.coins.keys()){
 					if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) == true && this.state.players[id].coins < 10) {
+						var coins = this.state.players[id].coins;
+						switch(this.state.coins[cid].getSize()){
+							case (20):
+								coins ++;
+								break;
+							case (25):
+								coins += 2;
+								break;
+							case (30):
+								coins += 4;
+								break;
+							case (100):
+								coins = 0;
+								this.state.players[id].score += 50;
+								break;
+						}
+						this.state.players[id].coins = Math.min(coins,10);
 						this.state.coins.delete(cid);
-						this.state.players[id].coins++;
 					}
 				}
 

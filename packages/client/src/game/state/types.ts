@@ -39,7 +39,8 @@ export interface IPlayer {
 export interface ICoin{
   key: number;
   x: number;
-  y:number;
+  y: number;
+  size: number;
 }
 
 export interface ICoinJar{
