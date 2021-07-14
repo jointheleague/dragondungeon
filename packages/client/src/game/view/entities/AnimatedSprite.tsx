@@ -20,6 +20,8 @@ type AnimatedSpriteProps = {
   width?: number;
   height?: number;
   anchor?: PIXI.Point;
+  xScale?: number; //this neends to be either 1 for normal or -1 for flip over x axis
+  yScale?: number; //same here but y axis
 };
 
 function equalAnchors(a1?: PIXI.Point, a2?: PIXI.Point): boolean {
@@ -70,6 +72,12 @@ export const AnimatedSprite = CustomPIXIComponent<PIXI.AnimatedSprite, AnimatedS
       }
       if (newProps.width !== undefined && instance.width !== newProps.width) {
         instance.width = newProps.width;
+      }
+      if(newProps.xScale !== undefined && instance.scale.x !== newProps.xScale){
+        instance.scale.x = newProps.xScale;
+      }
+      if(newProps.yScale !== undefined && instance.scale.y !== newProps.yScale){
+        instance.scale.y = newProps.yScale;
       }
       if (newProps.height !== undefined && instance.height !== newProps.height) {
         instance.height = newProps.height;

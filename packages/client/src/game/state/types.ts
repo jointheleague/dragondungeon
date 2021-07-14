@@ -54,4 +54,5 @@ export interface ILeaderboard{
   score: number;
 }
 
+
 export type GameState = IGameState | null;

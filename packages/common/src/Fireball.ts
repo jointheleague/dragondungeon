@@ -1,4 +1,5 @@
 import { Schema, type } from "@colyseus/schema";
+import { Geometry} from ".";
 import { v4 } from "uuid";
 
 export class Fireball extends Schema {

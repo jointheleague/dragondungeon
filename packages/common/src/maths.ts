@@ -132,3 +132,27 @@ export function shuffleArray(array: any[]) {
 
   return result;
 }
+
+export function checkWalls(newX:number, newY:number){
+  const gameWidth = 2000;
+  const gameHeight = 2000;
+  //this just checks the basic outer walls
+  if(newX>gameWidth || newY>gameHeight || newX<0 || newY<0){
+    return true;
+  }
+  //offset is horizontal/vertical distance to center
+  const offset = gameWidth/2;
+  const offsetX = Math.abs(newX-offset);
+  const offsetY = Math.abs(newY-offset);
+  const boxLength = 680;
+  const innerBoxLength = 200;
+  if(offsetX< boxLength && offsetY<boxLength){
+    if(offsetX>innerBoxLength && offsetY>innerBoxLength){
+      //console.log(newX+"    "+newY);
+      if(  (offsetX>innerBoxLength && offsetX<120+innerBoxLength) || (offsetY>innerBoxLength && offsetY<120+innerBoxLength)  ){
+        return true;
+      }
+    }
+  }
+  return false;
+}

@@ -77,7 +77,10 @@ export const Dragon = (props: IProps) => {
   }, []);
 
   const fireballs = props.player.fireballs.map((fb, i) => <TeamOrb key={i} x={fb.x} y={fb.y} radius={5}/>)
-  
+  var yS = 5;
+  if(Math.abs(props.player.angle)<(Math.PI/2)){
+    yS = -5;
+  }
   return (
     <>
       <AnimatedSprite
@@ -90,6 +93,8 @@ export const Dragon = (props: IProps) => {
       animationSpeed={ANIMATION_SPEED}
       loop= {true}
       y={props.player.y}
+      xScale = {5}
+      yScale = {yS}
       />
       {fireballs}
     </>

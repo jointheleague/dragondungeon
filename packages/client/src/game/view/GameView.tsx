@@ -11,6 +11,7 @@ import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
 import { BorderFence } from './entities/borderFence';
+import { Wall } from './entities/wall';
 import { MovingBackground } from './entities/movingBackground';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
@@ -65,9 +66,11 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const healthBars = [];
     const fences = [];
     const tiles = [];
+    const walls = [];
     const coinJar = <CoinJar key={"only"} x={1000} y={1000}/>;
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
+    
     for (let pid in state.players) {
       const player = state.players[pid];
 
@@ -91,6 +94,21 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       fences.push(<BorderFence x={-76} y={i*267+60} angle={Math.PI/2} key={`fence3${i}`} />);
       fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2} key={`fence4${i}`} />);
     }
+    const xLen = 400;
+    const yLen = 40;
+    //top right
+    walls.push(<Wall x={1240} y={760} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2} />)
+    walls.push(<Wall x={1240} y={720} xLength ={xLen} yLength = {yLen} angle = {0} />)
+    //bottom right
+    walls.push(<Wall x={1240} y={1240} xLength ={xLen} yLength = {yLen} angle = {0}/>)
+    walls.push(<Wall x={1280} y={1240} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2}/>)
+    //bottom left
+    walls.push(<Wall x={760} y={1280} xLength ={xLen} yLength = {yLen} angle = {Math.PI}/>)
+    walls.push(<Wall x={760} y={1240} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2}/>)
+    //top left
+    walls.push(<Wall x={760} y={760} xLength ={xLen} yLength = {yLen} angle = {Math.PI}/>)
+    walls.push(<Wall x={720} y={760} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2}/>)
+
     //
     if (me !== null && this.viewport !=null) {
       try {
@@ -112,7 +130,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size}/>);
     }
     render(
-      <>{tiles}{coinJar}{fences}{coins}{players}{fireballs}{healthBars}</>, 
+      <>{tiles}{coinJar}{fences}{coins}{players}{fireballs}{healthBars}{walls}</>, 
       this.viewport
     );
    }
@@ -143,8 +161,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
             width: '100vw',
             height: '100vh'
           }}
-          onMove={(evt:any, data: any) => console.log(data.direction)}
-        />
+          onMove={(evt:any, data: any) => console.log(data.direction)}/>
        <ScrollDisable/>
           <div style={{marginLeft : '3vw'}}>
             <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard>
