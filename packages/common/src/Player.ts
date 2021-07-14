@@ -74,8 +74,7 @@ export class Player extends Schema {
 	fireballCooldown: number = 0;
 	tick(dx: number) {
 		const ticks = dx / 50;
-		if (this.direction.x != 0 || this.direction.y != 0) {
-			//wall code
+		if (this.direction.x !== 0 || this.direction.y !== 0) {
 			this.move(this.direction.x, this.direction.y, this.speed * ticks)
 		}
 		this.fireballCooldown -= ticks;
@@ -115,7 +114,7 @@ export class Player extends Schema {
 		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
 		const newX = this.x+speedX;
 		const newY = this.y+speedY;
-		if(Maths.checkWalls(newX, newY)==false){
+		if(Maths.checkWalls(newX, newY) == false){
 			this.x = newX;
 			this.y = newY;
 		}
