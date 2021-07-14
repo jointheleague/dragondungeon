@@ -82,11 +82,10 @@ export class GameRoom extends Room < GameState > {
 		this.counter++;
 		const dx = this.clock.deltaTime;
 		this.state.countdown.elaspseTime();
-		for(let i = this.state.coins.values.length; i < this.state.players.values.length * 3; i++) {
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 100, Math.random() * 100));
-		}
 
-		
+		for(let i = this.state.coins.size; i < this.state.players.size * 5; i++) {
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 2000, Math.random() * 2000));
+		}
 
 		for (let id of this.state.players.keys()) {
 			this.state.players[id].tick(dx);
@@ -96,8 +95,8 @@ export class GameRoom extends Room < GameState > {
 					if (id != id2) {
 						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
 						    var fireBall = this.state.players[id2].fireballs[i];
-							const coinChance = .1; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
-							const lifetimeRemove = 2; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
+							const coinChance = .2; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
+							const lifetimeRemove = 1; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
 							
 							const newX = this.state.players[id].x+fireBall.speed * Math.cos(fireBall.angle + Math.PI);
 							const newY = this.state.players[id].y+ fireBall.speed * Math.sin(fireBall.angle + Math.PI);
@@ -110,7 +109,7 @@ export class GameRoom extends Room < GameState > {
 								this.state.players[id].coins--;
 								fireBall.lifetime -= lifetimeRemove;
 								const rand = getRandomInt(0, 62) / 10;
-								
+
 								const newX = this.state.players[id].x + 100 * Math.cos(rand)
 								const newY = this.state.players[id].y + 100 * Math.sin(rand)
 								if(!Maths.checkWalls(newX, newY)){
@@ -150,16 +149,16 @@ export class GameRoom extends Room < GameState > {
 					}
 				}
 
-				if(this.state.players[id].x<0){
-					this.state.players[id].x=0;
-				} else if(this.state.players[id].x>2000){
-					this.state.players[id].x=2000;
+				if(this.state.players[id].x < 0){
+					this.state.players[id].x = 0;
+				} else if(this.state.players[id].x > 2000){
+					this.state.players[id].x = 2000;
 				}
 
-				if(this.state.players[id].y<0){
-					this.state.players[id].y=0;
-				} else if(this.state.players[id].y>2000){
-					this.state.players[id].y=2000;
+				if(this.state.players[id].y < 0){
+					this.state.players[id].y = 0;
+				} else if(this.state.players[id].y > 2000){
+					this.state.players[id].y = 2000;
 				}
 				
 			}

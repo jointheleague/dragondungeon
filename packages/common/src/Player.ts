@@ -13,7 +13,7 @@ export class Player extends Schema {
 	x: number = Math.random()*2000;
 
 	@type("number")
-	y: number = Math.random()*1000;
+	y: number = Math.random()*2000;
 
 	@type("number")
 	angle: number = Math.PI;
@@ -109,7 +109,7 @@ export class Player extends Schema {
 
 	move(dirX: number, dirY: number, speed: number) {
 		const magnitude = Maths.normalize2D(dirX, dirY);
-		console.log(this.x+"    "+this.y)
+		//console.log(this.x+"    "+this.y)
 		const speedX = Maths.round2Digits(dirX * (speed / magnitude));
 		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
 		const newX = this.x+speedX;
