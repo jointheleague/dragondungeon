@@ -93,15 +93,15 @@ export class GameRoom extends Room < GameState > {
 						if (id != id2) {
 							if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
 								var fireBall = this.state.players[id2].fireballs[i];
-								const coinChance = .1; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
-								const lifetimeRemove = 2; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if the player is heavy)
+								const coinChance = .2; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
+								const lifetimeRemove = .5; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if the player is heavy)
 								this.state.players[id].x += fireBall.speed * Math.cos(fireBall.angle + Math.PI);
 								this.state.players[id].y += fireBall.speed * Math.sin(fireBall.angle + Math.PI);
 								if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
 									this.state.players[id].coins--;
 									fireBall.lifetime -= lifetimeRemove;
 									const rand = getRandomInt(0, 62) / 10;
-									this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand)));
+									this.state.coins.set(v4(), new Coin(this.state.coins.size, this.state.players[id].x + 100 * Math.cos(rand), this.state.players[id].y + 100 * Math.sin(rand), 20));
 								}
 							}
 						}
