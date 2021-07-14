@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import * as PIXI from 'pixi.js';
 import {AnimatedSprite} from '../../entities/AnimatedSprite';
-import WallImage from './sprites/WallPic.png';
+import WallImage from './sprites/TotalWall.jpg';
 
 interface IProps {
     x: number;

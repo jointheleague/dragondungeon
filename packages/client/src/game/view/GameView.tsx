@@ -94,7 +94,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       fences.push(<BorderFence x={-76} y={i*267+60} angle={Math.PI/2} key={`fence3${i}`} />);
       fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2} key={`fence4${i}`} />);
     }
-    const xLen = 400;
+    const xLen = 427.5;
     const yLen = 40;
     //top right
     walls.push(<Wall x={1240} y={760} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2} />)

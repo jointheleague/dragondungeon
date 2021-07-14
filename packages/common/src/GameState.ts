@@ -30,7 +30,7 @@ export class GameState extends Schema {
 	fences = new MapSchema < BorderFence > ();
 
 	@type(Countdown)
-	countdown = new Countdown(0,30);
+	countdown = new Countdown(0, 30);
 	
 	@type("boolean")
 	debugOn: boolean = false;
@@ -40,10 +40,12 @@ export class GameState extends Schema {
 		let coinRadius = 200;
 		let coinCircleX = 250;
 		let coinCircleY = 250;
-		let numberOfCoins = 15;/*
+		let numberOfCoins = 15;
+		/*
 		for (let i = 0; i < numberOfCoins; i++) {
 			this.coins.set(v4(), new Coin(i, Math.random()*2000, Math.random()*1000));
-		}*/
+		}
+		*/
 	}
 }
 
