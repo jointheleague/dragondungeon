@@ -89,13 +89,16 @@ export class Player extends Schema {
 
 			var newX = fireball.x+(fireball.speed * Math.cos(fireball.angle - Math.PI));
 			var newY = fireball.y+(fireball.speed * Math.sin(fireball.angle - Math.PI));
-			if(!Maths.checkWalls(newX, newY)){
+			if(!Maths.checkWalls(newX, fireball.y)){
 				fireball.x = newX;
-				fireball.y = newY;
-			} else{
-				fireball.lifetime = 0;
+			}else{
+				fireball.lifetime -= .3;
 			}
-			// fireball.checkHit(this.x, this.y);
+			if(!Maths.checkWalls(fireball.x, newY)){
+				fireball.y = newY;
+			}else{
+				fireball.lifetime -= .3;
+			}
 		}
 		for (var i = 0; i < this.fireballs.length; i++) {
 			if (this.fireballs[i].lifetime <= 0) {
@@ -112,11 +115,13 @@ export class Player extends Schema {
 		//console.log(this.x+"    "+this.y)
 		const speedX = Maths.round2Digits(dirX * (speed / magnitude));
 		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
-		const newX = this.x+speedX;
-		const newY = this.y+speedY;
-		if(Maths.checkWalls(newX, newY) == false){
-			this.x = newX;
+		const newX = this.x + speedX;
+		const newY = this.y + speedY;
+		if(!Maths.checkWalls(this.x, newY)){
 			this.y = newY;
+		}
+		if(!Maths.checkWalls(newX, this.y)){
+			this.x = newX;
 		}
 		
 	}

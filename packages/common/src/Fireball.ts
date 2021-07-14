@@ -16,7 +16,7 @@ export class Fireball extends Schema {
 	id: string;
 
 	@type("number")
-	fireballRadius: number = 25;
+	fireballRadius: number = 20;
 
 	//@type("string")
 	//ability: "Iceball" | "Fireball";
