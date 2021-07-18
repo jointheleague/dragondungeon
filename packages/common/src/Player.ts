@@ -6,6 +6,7 @@ import { IInputs } from "./IInputs";
 
 
 export class Player extends Schema {
+
 	@type([Fireball])
 	fireballs = new ArraySchema < Fireball > ();
 
@@ -32,6 +33,9 @@ export class Player extends Schema {
 
 	@type("string")
 	onlineID!: string;
+	
+	@type("string")
+	ballType: string;
 
 	speed: number = 20;
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
@@ -47,8 +51,9 @@ export class Player extends Schema {
 		space: false
 	};
 
-	constructor() {
+	constructor(ballType : string) {
 		super()
+		this.ballType = ballType;
 	}
 
 	inputs(i: IInputs) {
@@ -78,9 +83,10 @@ export class Player extends Schema {
 			this.move(this.direction.x, this.direction.y, this.speed * ticks)
 		}
 		this.fireballCooldown -= ticks;
-		if (this.activeInputs.space && this.fireballCooldown <= 0) {
+		if (this.activeInputs.space && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI))) {
 			this.fireballCooldown = 10;
-			const fireball = new Fireball(this.x + 45 * Math.cos(this.angle), this.y + 45 * Math.sin(this.angle), this.angle, 6)
+			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType);
+			console.log(fireball.type);
 			this.fireballs.push(fireball);
 		}
 

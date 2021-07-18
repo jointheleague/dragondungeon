@@ -15,7 +15,8 @@ import {
 	CoinJar,
 	Bar,
 	Maths,
-	Countdown
+	Countdown,
+	Fireball
 } from '@dragoncoin/common';
 
 import * as admin from 'firebase-admin';
@@ -39,7 +40,7 @@ export class GameRoom extends Room < GameState > {
 
 	async onJoin(client: Client, options: {token: string}, _2: any) {
 		const user = await admin.auth().verifyIdToken(options.token);
-		this.state.players[client.id] = new Player();
+		this.state.players[client.id] = new Player("electricity");
 		if (user.name == null) {
 			const adjectives = require('../../wordlists/adjectives.json');
 			const nouns = require('../../wordlists/nouns.json');
@@ -100,13 +101,14 @@ export class GameRoom extends Room < GameState > {
 							
 							const newX = this.state.players[id].x + fireBall.speed * 2 * Math.cos(fireBall.angle + Math.PI);
 							const newY = this.state.players[id].y + fireBall.speed * 2 * Math.sin(fireBall.angle + Math.PI);
+
 							if(!Maths.checkWalls(this.state.players[id].x, newY)){
 								this.state.players[id].y = newY;
 							}
 							if(!Maths.checkWalls(newX, this.state.players[id].y)){
 								this.state.players[id].x = newX;
 							}
-							console.log(this.state.players[id].x + "    " + this.state.players[id].y)
+							//console.log(this.state.players[id].x + "    " + this.state.players[id].y)
 							if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
 								this.state.players[id].coins--;
 								fireBall.lifetime -= lifetimeRemove;
@@ -117,6 +119,21 @@ export class GameRoom extends Room < GameState > {
 								if(!Maths.checkWalls(newX, newY)){
 									this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20));
 								}
+							}
+
+
+							switch (fireBall.type) {
+								case "electricity":
+									if(this.state.players[id].fireballs.length < 20 &&  Math.random() > .9){
+										var angle = Math.random() * 6.28;
+										this.state.players[id2].fireballs.push(new Fireball(this.state.players[id].x + 45 * Math.cos(angle), this.state.players[id].y + 45 * Math.sin(angle), angle + Math.PI, 6, "electricity"));
+									}
+									break;
+							
+								case "ice":	
+									fireBall.width += 1;
+									fireBall.height += 1.87;
+									break;
 							}
 						}
 					}
@@ -142,7 +159,6 @@ export class GameRoom extends Room < GameState > {
 								coins += 4;
 								break;
 							case (100):
-								coins = 0;
 								this.state.players[id].score += 50;
 								break;
 						}

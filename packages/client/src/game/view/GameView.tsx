@@ -6,7 +6,7 @@ import {IInputs} from '../controls/types';
 import { Dragon } from './entities/dragon/index';
 import { render } from "react-pixi-fiber";
 import {FireballView} from './entities/fireball/index';
-import {IceballView} from './entities/iceball/index';
+//import {IceballView} from './entities/iceball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
@@ -16,7 +16,7 @@ import { MovingBackground } from './entities/movingBackground';
 import {IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Leaderboard } from 'components/leaderboard';
-import { Countdown } from 'components/countdown';
+//import { Countdown } from 'components/countdown';
 import ReactNipple from 'react-nipple';
 import {Bar} from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
@@ -73,14 +73,13 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     
     for (let pid in state.players) {
       const player = state.players[pid];
-
+      //console.log("ball type in Gview, " + player.ballType);
       // TODO: Use player name/id for stuff
-
+      
       players.push(<Dragon key={pid} player={player} />,)
 
       for(let fireball of state.players[pid].fireballs){
-
-        fireballs.push(<IceballView key={fireball.id} iceball={fireball}/>)
+        fireballs.push(<FireballView key={fireball.id} fireball={fireball} />)
 
       }
       healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y - 80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].onlineName}/>)
@@ -130,7 +129,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size}/>);
     }
     render(
-      <>{tiles}{coinJar}{fences}{coins}{players}{fireballs}{healthBars}{walls}</>, 
+      <>{tiles}{coinJar}{fences}{walls}{coins}{players}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }

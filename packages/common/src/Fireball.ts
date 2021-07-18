@@ -1,8 +1,8 @@
 import { Schema, type } from "@colyseus/schema";
-import { Geometry} from ".";
 import { v4 } from "uuid";
 
-export class Fireball extends Schema {
+class Fireball extends Schema {
+
 	@type("number")
 	x: number = 1;
 
@@ -16,25 +16,31 @@ export class Fireball extends Schema {
 	id: string;
 
 	@type("number")
-	fireballRadius: number = 20;
+	width: number;
 
-	//@type("string")
-	//ability: "Iceball" | "Fireball";
+	@type("number")
+	height: number;
+
+	@type("string")
+    type: string = "fire";//fire, ice, electricity, poision
 
 	lifetime = 40;
 	speed;
-	constructor(x: number, y: number, angle: number, speed: number) {
+
+	constructor(x: number, y: number, angle: number, speed: number, type: string) {
 		super()
+		this.width = 45;
+		this.height = 84.4;
 		this.x = x;
 		this.y = y;
 		this.id = v4();
 		this.angle = angle;
 		this.speed = speed;
-		//this.ability = ability;
+		this.type = type;
 	}
 
 	checkHit(dragonX: number, dragonY: number) {
-		if (Math.sqrt(Math.pow(this.x - dragonX, 2) - Math.pow(this.y - dragonY, 2)) < this.fireballRadius) {
+		if (Math.sqrt(Math.pow(this.x - dragonX, 2) - Math.pow(this.y - dragonY, 2)) < this.width/2) {
 			return true;
 		} else {
 			return false
@@ -42,3 +48,5 @@ export class Fireball extends Schema {
 	}
 
 }
+
+export {Fireball};

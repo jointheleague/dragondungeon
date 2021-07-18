@@ -1,6 +1,8 @@
 import { Fireball } from "@dragoncoin/common";
 import { InteractionManager } from "pixi.js";
 
+export {Fireball};
+
 export interface IGameState {
   lifecycle: 'lobby' | 'deathmatch';
   players: {[key: string]: IPlayer};
@@ -15,6 +17,7 @@ export interface ICountdown{
   minutes: number;
   done: boolean;
 }
+
 
 export interface IBar{
   x: number;
@@ -34,6 +37,7 @@ export interface IPlayer {
   coins: number;
   onlineName: string;
   onlineID: string;
+  ballType: Fireball.Types;
 }
 
 export interface ICoin{
