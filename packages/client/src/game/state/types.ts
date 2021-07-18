@@ -37,7 +37,7 @@ export interface IPlayer {
   coins: number;
   onlineName: string;
   onlineID: string;
-  ballType: Fireball.Types;
+  ballType: string;
 }
 
 export interface ICoin{

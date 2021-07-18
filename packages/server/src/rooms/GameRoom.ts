@@ -40,7 +40,25 @@ export class GameRoom extends Room < GameState > {
 
 	async onJoin(client: Client, options: {token: string}, _2: any) {
 		const user = await admin.auth().verifyIdToken(options.token);
-		this.state.players[client.id] = new Player("electricity");
+		var s = "";
+		switch(Math.floor(Math.random()*5)){
+            case 0:
+             	s = "fire";
+             	break;
+            case 1:
+             	s = "ice";
+              	break;
+            case 2:
+        		s = "poison";
+            	break;
+            case 3:
+            	s = "mud";
+            	break;
+			case 4:
+				s = "electricity";
+				break;
+          }
+		this.state.players[client.id] = new Player(s);
 		if (user.name == null) {
 			const adjectives = require('../../wordlists/adjectives.json');
 			const nouns = require('../../wordlists/nouns.json');
@@ -110,14 +128,18 @@ export class GameRoom extends Room < GameState > {
 							}
 							//console.log(this.state.players[id].x + "    " + this.state.players[id].y)
 							if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
-								this.state.players[id].coins--;
+								this.state.players[id].coins --;
 								fireBall.lifetime -= lifetimeRemove;
-								const rand = getRandomInt(0, 62) / 10;
+								if(fireBall.type == "poison"){
+									this.state.players[id2].coins ++;
+								}else{
+									const rand = getRandomInt(0, 62) / 10;
 
-								const newX = this.state.players[id].x + 100 * Math.cos(rand)
-								const newY = this.state.players[id].y + 100 * Math.sin(rand)
-								if(!Maths.checkWalls(newX, newY)){
-									this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20));
+									const newX = this.state.players[id].x + 100 * Math.cos(rand)
+									const newY = this.state.players[id].y + 100 * Math.sin(rand)
+									if(!Maths.checkWalls(newX, newY)){
+										this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20));
+									}
 								}
 							}
 
@@ -129,10 +151,12 @@ export class GameRoom extends Room < GameState > {
 										this.state.players[id2].fireballs.push(new Fireball(this.state.players[id].x + 45 * Math.cos(angle), this.state.players[id].y + 45 * Math.sin(angle), angle + Math.PI, 6, "electricity"));
 									}
 									break;
-							
-								case "ice":	
+								case "mud":	
 									fireBall.width += 1;
 									fireBall.height += 1.87;
+									break;
+								case "ice":
+									this.state.players[id].deceleration = 0.3;
 									break;
 							}
 						}

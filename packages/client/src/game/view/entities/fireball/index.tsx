@@ -23,6 +23,11 @@ import poisonball2 from "./sprites/poisonball2.png";
 import poisonball3 from "./sprites/poisonball3.png";
 import poisonball4 from "./sprites/poisonball4.png";
 
+import mudball1 from "./sprites/mudball1.png";
+import mudball2 from "./sprites/mudball2.png";
+import mudball3 from "./sprites/mudball3.png";
+import mudball4 from "./sprites/mudball4.png";
+
 /*import {
   CustomPIXIComponent,
 } from "react-pixi-fiber";
@@ -50,6 +55,9 @@ export const FireballView = (props: IProps) => {
         break;
       case "poison":
         fireballImages = [poisonball1, poisonball2, poisonball3, poisonball4];
+        break;
+      case "mud":
+        fireballImages = [mudball1, mudball2, mudball3, mudball4];
         break;
       default:
         fireballImages = [fireball1, fireball2, fireball3, fireball4];

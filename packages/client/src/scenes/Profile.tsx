@@ -44,6 +44,7 @@ const Profile = () => {
         <h1>Profile</h1>
         <img src={profilePicture} alt="Profile" height="50px"/>
         <h1>{DOMPurify.sanitize(currentUser.displayName) ? DOMPurify.sanitize(currentUser.displayName) : '...'}</h1>
+        
         {userStats.highscore ? 
           <>
             <h3><img src="/icon.png" height="20px" alt="Coin" /> High Score: {userStats.highscore}</h3>
@@ -66,7 +67,7 @@ const Profile = () => {
           backgroundColor: '#c60c30',
           color: 'white',
           borderRadius: '5px',
-          width: '100px',
+          width: '20vw',
           padding: '10px',
           cursor: 'pointer'
         }}>
@@ -78,37 +79,49 @@ const Profile = () => {
           backgroundColor: '#00a1de',
           color: 'white',
           borderRadius: '5px',
-          width: '100px',
+          width: '20vw',
           padding: '10px',
           cursor: 'pointer'
         }}>
           <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
           <br />
-          <h4 style={{ cursor: 'pointer' }}>Snowballs</h4>
+          <h4 style={{ cursor: 'pointer' }}>Iceballs</h4>
         </div><br />
         <div style={{
           backgroundColor: '#f9e300',
           color: 'black',
           borderRadius: '5px',
-          width: '100px',
+          width: '20vw',
           padding: '10px',
           cursor: 'pointer'
         }}>
           <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
           <br />
-          <h4 style={{ cursor: 'pointer' }}>Lightning</h4>
+          <h4 style={{ cursor: 'pointer' }}>Electricballs</h4>
         </div><br />
         <div style={{
           backgroundColor: '#009b3a',
           color: 'white',
           borderRadius: '5px',
-          width: '100px',
+          width: '20vw',
           padding: '10px',
           cursor: 'pointer'
         }}>
           <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
           <br />
-          <h4 style={{ cursor: 'pointer' }}>Poison</h4>
+          <h4 style={{ cursor: 'pointer' }}>Poisonballs</h4>
+        </div><br />
+        <div style={{
+          backgroundColor: '#3d2904',
+          color: 'white',
+          borderRadius: '5px',
+          width: '20vw',
+          padding: '10px',
+          cursor: 'pointer'
+        }}>
+          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
+          <br />
+          <h4 style={{ cursor: 'pointer' }}>Mudballs</h4>
         </div><br />
       </Center>
     </>

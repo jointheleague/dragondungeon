@@ -37,7 +37,12 @@ export class Player extends Schema {
 	@type("string")
 	ballType: string;
 
+	@type("number")
 	speed: number = 20;
+
+	@type("number")
+	deceleration: number = 1;
+
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
 
 	activeInputs: IInputs = {
@@ -80,21 +85,23 @@ export class Player extends Schema {
 	tick(dx: number) {
 		const ticks = dx / 50;
 		if (this.direction.x !== 0 || this.direction.y !== 0) {
-			this.move(this.direction.x, this.direction.y, this.speed * ticks)
+			this.move(this.direction.x, this.direction.y, this.speed * this.deceleration * ticks)
+			if(this.deceleration < 1){
+				this.deceleration *= 1.09;
+			}
 		}
 		this.fireballCooldown -= ticks;
 		if (this.activeInputs.space && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI))) {
 			this.fireballCooldown = 10;
 			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType);
-			console.log(fireball.type);
 			this.fireballs.push(fireball);
 		}
 
 		for (let fireball of this.fireballs) {
 			fireball.lifetime -= ticks;
 
-			var newX = fireball.x+(fireball.speed * Math.cos(fireball.angle - Math.PI));
-			var newY = fireball.y+(fireball.speed * Math.sin(fireball.angle - Math.PI));
+			var newX = fireball.x + (fireball.speed * Math.cos(fireball.angle - Math.PI));
+			var newY = fireball.y + (fireball.speed * Math.sin(fireball.angle - Math.PI));
 			if(!Maths.checkWalls(newX, fireball.y)){
 				fireball.x = newX;
 			}else{
