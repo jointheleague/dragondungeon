@@ -53,14 +53,16 @@ const Profile = () => {
             <h3><img src="/icon.png" height="20px" alt="Coin" /> Damage Taken: {userStats.damagetaken}</h3>
             <h3><img src="/icon.png" height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: {(userStats.damagedone / userStats.damagetaken).toFixed(2)}</h3>
             <h3><img src="/icon.png" height="20px" alt="Coin" /> Medals Earned: {userStats.medals}</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Chosen ball type: {userStats.ballType}</h3>
           </>
         : <>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> ...</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> High Score: X</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Lifetime Coins: X</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Damage Done: X</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Damage Taken: X</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: X/X</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Medals Earned: X</h3>
+            <h3><img src="/icon.png" height="20px" alt="Coin" /> Chosen ball type: X</h3>
           </>}
           <br /><br /><br />
         <div style={{
@@ -69,11 +71,13 @@ const Profile = () => {
           borderRadius: '5px',
           width: '20vw',
           padding: '10px',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row'
         }}>
-          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
+          <img src="/fireball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
           <br />
-          <h4 style={{ cursor: 'pointer' }}>Fireballs</h4>
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px' }}>Fireballs</h4>
         </div><br />
         <div style={{
           backgroundColor: '#00a1de',
@@ -81,11 +85,13 @@ const Profile = () => {
           borderRadius: '5px',
           width: '20vw',
           padding: '10px',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row'
         }}>
-          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
+          <img src="/iceball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
           <br />
-          <h4 style={{ cursor: 'pointer' }}>Iceballs</h4>
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Iceballs</h4>
         </div><br />
         <div style={{
           backgroundColor: '#f9e300',
@@ -93,11 +99,13 @@ const Profile = () => {
           borderRadius: '5px',
           width: '20vw',
           padding: '10px',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row'
         }}>
-          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
+          <img src="/electricball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
           <br />
-          <h4 style={{ cursor: 'pointer' }}>Electricballs</h4>
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Electricballs</h4>
         </div><br />
         <div style={{
           backgroundColor: '#009b3a',
@@ -105,11 +113,13 @@ const Profile = () => {
           borderRadius: '5px',
           width: '20vw',
           padding: '10px',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row'
         }}>
-          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
+          <img src="/poisonball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
           <br />
-          <h4 style={{ cursor: 'pointer' }}>Poisonballs</h4>
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Poisonballs</h4>
         </div><br />
         <div style={{
           backgroundColor: '#3d2904',
@@ -117,11 +127,13 @@ const Profile = () => {
           borderRadius: '5px',
           width: '20vw',
           padding: '10px',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row'
         }}>
-          <img src="/icon.png" style={{ cursor: 'pointer' }} height="20px" alt="Coin" />
+          <img src="/mudball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
           <br />
-          <h4 style={{ cursor: 'pointer' }}>Mudballs</h4>
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Mudballs</h4>
         </div><br />
       </Center>
     </>

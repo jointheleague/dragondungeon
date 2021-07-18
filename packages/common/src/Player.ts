@@ -38,7 +38,7 @@ export class Player extends Schema {
 	ballType: string;
 
 	@type("number")
-	speed: number = 20;
+	speed: number = 16;
 
 	@type("number")
 	deceleration: number = 1;
