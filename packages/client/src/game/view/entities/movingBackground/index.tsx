@@ -1,12 +1,12 @@
 import React, {useMemo} from 'react';
 import * as PIXI from 'pixi.js';
 import { AnimatedSprite } from '../../entities/AnimatedSprite';
-import TileImage1 from './sprites/tile1.jpg';
-import TileImage2 from './sprites/tile2.jpg';
-import TileImage3 from './sprites/tile3.jpg';
-import TileImage4 from './sprites/tile4.jpg';
-import TileImage5 from './sprites/tile5.jpg';
-import TileImage6 from './sprites/tile6.jpg';
+import TileImage1 from './sprites/tile1.png';
+import TileImage2 from './sprites/tile2.png';
+import TileImage3 from './sprites/tile3.png';
+import TileImage4 from './sprites/tile4.png';
+import TileImage5 from './sprites/tile5.png';
+import TileImage6 from './sprites/tile6.png';
 
 interface IProps {
     x: number;
