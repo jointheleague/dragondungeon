@@ -47,22 +47,22 @@ const Profile = () => {
         
         {userStats.highscore ? 
           <>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> High Score: {userStats.highscore}</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Lifetime Coins: {userStats.coins}</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Damage Done: {userStats.damagedone}</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Damage Taken: {userStats.damagetaken}</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: {(userStats.damagedone / userStats.damagetaken).toFixed(2)}</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Medals Earned: {userStats.medals}</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Chosen ball type: {userStats.ballType}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> High Score: {userStats.highscore}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Lifetime Coins: {userStats.coins}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Damage Done: {userStats.damagedone}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Damage Taken: {userStats.damagetaken}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: {(userStats.damagedone / userStats.damagetaken).toFixed(2)}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Medals Earned: {userStats.medals}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen ball type: {userStats.ballType}</h3>
           </>
         : <>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> High Score: X</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Lifetime Coins: X</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Damage Done: X</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Damage Taken: X</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: X/X</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Medals Earned: X</h3>
-            <h3><img src="/icon.png" height="20px" alt="Coin" /> Chosen ball type: X</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> High Score: X</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Lifetime Coins: X</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Damage Done: X</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Damage Taken: X</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: X/X</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Medals Earned: X</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen ball type: X</h3>
           </>}
           <br /><br /><br />
         <div style={{
@@ -75,7 +75,7 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/fireball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
+          <img src="/fireball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated'}} height="50px" alt="Fireball" />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px' }}>Fireballs</h4>
         </div><br />
@@ -89,7 +89,7 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/iceball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
+          <img src="/iceball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Iceballs</h4>
         </div><br />
@@ -103,7 +103,7 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/electricball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
+          <img src="/electricball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Electricballs</h4>
         </div><br />
@@ -117,7 +117,7 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/poisonball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
+          <img src="/poisonball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Poisonballs</h4>
         </div><br />
@@ -131,7 +131,7 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/mudball.png" style={{ cursor: 'pointer' }} height="50px" alt="Fireball" />
+          <img src="/mudball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Mudballs</h4>
         </div><br />

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { StateManager } from '../state/StateManager';
 import { useDisableScroll } from '../../hooks';
-import {Controls} from '../controls';
-import {IInputs} from '../controls/types';
+import { Controls } from '../controls';
+import { IInputs } from '../controls/types';
 import { Dragon } from './entities/dragon/index';
 import { render } from "react-pixi-fiber";
-import {FireballView} from './entities/fireball/index';
+import { FireballView } from './entities/fireball/index';
+import { CollisionBall } from './entities/collisonball/collisonball';
 //import {IceballView} from './entities/iceball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
@@ -13,12 +14,12 @@ import { CoinJar } from './entities/coinJar';
 import { BorderFence } from './entities/borderFence';
 import { Wall } from './entities/wall';
 import { MovingBackground } from './entities/movingBackground';
-import {IGameState} from '../state/types';
+import { IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Leaderboard } from 'components/leaderboard';
 //import { Countdown } from 'components/countdown';
 import ReactNipple from 'react-nipple';
-import {Bar} from './entities/healthBar/healthBar';
+import { Bar } from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
 import { show_error_banner } from 'util/banner';
 
@@ -67,6 +68,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const fences = [];
     const tiles = [];
     const walls = [];
+    const colliders = [];
     const coinJar = <CoinJar key={"only"} x={1000} y={1000}/>;
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
@@ -79,13 +81,13 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       players.push(<Dragon key={pid} player={player} />,)
 
       for(let fireball of state.players[pid].fireballs){
+        //colliders.push(<CollisionBall rot={fireball.angle} width={fireball.width} height={fireball.height} x={fireball.x} y={fireball.y} circle={false}/>)
         fireballs.push(<FireballView key={fireball.id} fireball={fireball} />)
-
       }
       healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y - 80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].onlineName}/>)
       //println("fs");
       //fireballs.push(player.fireballs);
-      leaderboard.push(Leaderboard )
+      leaderboard.push(Leaderboard)
     }
     for(var i = 0; i < 8; i++){
       fences.push(<BorderFence x={i*267+60} y={-76} angle={0} key={`fence1${i}`} />);
@@ -93,8 +95,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       fences.push(<BorderFence x={-76} y={i*267+60} angle={Math.PI/2} key={`fence3${i}`} />);
       fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2} key={`fence4${i}`} />);
     }
-    const xLen = 720;
-    const yLen = 67.5;
+    const xLen = 455.625;
+    const yLen = 39.375;  
+
     //top right
     walls.push(<Wall x={1240} y={760} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2} />)
     walls.push(<Wall x={1240} y={720} xLength ={xLen} yLength = {yLen} angle = {0} />)
@@ -129,7 +132,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size}/>);
     }
     render(
-      <>{tiles}{coinJar}{fences}{walls}{coins}{players}{fireballs}{healthBars}</>, 
+      <>{tiles}{coinJar}{fences}{walls}{colliders}{coins}{players}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }

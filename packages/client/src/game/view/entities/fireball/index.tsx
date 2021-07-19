@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {Fireball} from '../../../state/types';
 import * as PIXI from 'pixi.js-legacy'
 import {AnimatedSprite} from '../AnimatedSprite';
+import { CustomPIXIComponent } from "react-pixi-fiber";
 
 import fireball1 from "./sprites/fireball1.png";
 import fireball2 from "./sprites/fireball2.png";
@@ -27,6 +28,8 @@ import mudball1 from "./sprites/mudball1.png";
 import mudball2 from "./sprites/mudball2.png";
 import mudball3 from "./sprites/mudball3.png";
 import mudball4 from "./sprites/mudball4.png";
+
+import blankBall from "./sprites/blankBall.png";
 
 /*import {
   CustomPIXIComponent,
@@ -62,6 +65,7 @@ export const FireballView = (props: IProps) => {
       default:
         fireballImages = [fireball1, fireball2, fireball3, fireball4];
     }
+    //fireballImages = [blankBall];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     fireballImages.forEach(image =>{
       let texture = PIXI.Texture.from(image);

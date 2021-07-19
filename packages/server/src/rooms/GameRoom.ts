@@ -116,14 +116,16 @@ export class GameRoom extends Room < GameState > {
 						    var fireBall = this.state.players[id2].fireballs[i];
 							const coinChance = .2; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
 							const lifetimeRemove = 1; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
-							
-							const newX = this.state.players[id].x + fireBall.speed * 2 * Math.cos(fireBall.angle + Math.PI);
-							const newY = this.state.players[id].y + fireBall.speed * 2 * Math.sin(fireBall.angle + Math.PI);
 
-							if(!Maths.checkWalls(this.state.players[id].x, newY)){
+							const oldX = this.state.players[id].x;
+							const oldY = this.state.players[id].y;
+							const newX = oldX + fireBall.speed * 2 * Math.cos(fireBall.angle + Math.PI);
+							const newY = oldY + fireBall.speed * 2 * Math.sin(fireBall.angle + Math.PI);
+
+							if(!Maths.checkWalls(oldX, newY)){
 								this.state.players[id].y = newY;
 							}
-							if(!Maths.checkWalls(newX, this.state.players[id].y)){
+							if(!Maths.checkWalls(newX, oldY)){
 								this.state.players[id].x = newX;
 							}
 							//console.log(this.state.players[id].x + "    " + this.state.players[id].y)

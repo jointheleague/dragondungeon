@@ -38,7 +38,7 @@ export class Player extends Schema {
 	ballType: string;
 
 	@type("number")
-	speed: number = 16;
+	speed: number = 18;
 
 	@type("number")
 	deceleration: number = 1;
@@ -56,9 +56,21 @@ export class Player extends Schema {
 		space: false
 	};
 
+	setPosition(){
+		var newX = 0;
+		var newY = 0;
+		do {
+			newX = Math.random()*2000;
+			newY = Math.random()*2000;
+		}while (Maths.checkWalls(newX,newY))
+		this.x = newX;
+		this.y = newY;
+	} 
+
 	constructor(ballType : string) {
 		super()
 		this.ballType = ballType;
+		this.setPosition();
 	}
 
 	inputs(i: IInputs) {
