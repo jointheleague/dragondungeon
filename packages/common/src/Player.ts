@@ -62,7 +62,7 @@ export class Player extends Schema {
 		do {
 			newX = Math.random()*2000;
 			newY = Math.random()*2000;
-		}while (Maths.checkWalls(newX,newY))
+		}while (Maths.checkWalls(newX, newY, 45))
 		this.x = newX;
 		this.y = newY;
 	} 
@@ -103,7 +103,7 @@ export class Player extends Schema {
 			}
 		}
 		this.fireballCooldown -= ticks;
-		if (this.activeInputs.space && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI))) {
+		if (this.activeInputs.space && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI), 22.5)) {
 			this.fireballCooldown = 10;
 			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType);
 			this.fireballs.push(fireball);
@@ -114,12 +114,12 @@ export class Player extends Schema {
 
 			var newX = fireball.x + (fireball.speed * Math.cos(fireball.angle - Math.PI));
 			var newY = fireball.y + (fireball.speed * Math.sin(fireball.angle - Math.PI));
-			if(!Maths.checkWalls(newX, fireball.y)){
+			if(!Maths.checkWalls(newX, fireball.y, 22.5)){
 				fireball.x = newX;
 			}else{
 				fireball.lifetime -= .3;
 			}
-			if(!Maths.checkWalls(fireball.x, newY)){
+			if(!Maths.checkWalls(fireball.x, newY, 22.5)){
 				fireball.y = newY;
 			}else{
 				fireball.lifetime -= .3;
@@ -142,10 +142,10 @@ export class Player extends Schema {
 		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
 		const newX = this.x + speedX;
 		const newY = this.y + speedY;
-		if(!Maths.checkWalls(this.x, newY)){
+		if(!Maths.checkWalls(this.x, newY, 45)){
 			this.y = newY;
 		}
-		if(!Maths.checkWalls(newX, this.y)){
+		if(!Maths.checkWalls(newX, this.y, 45)){
 			this.x = newX;
 		}
 		

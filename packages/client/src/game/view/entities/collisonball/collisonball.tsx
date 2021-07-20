@@ -36,7 +36,7 @@ export const CollisionBall = CustomPIXIComponent<PIXI.Graphics, CollisionBallPro
             newProps.width
           );
         }else{
-          instance.rotation = Math.PI;
+          instance.rotation = newProps.rot + Math.PI;
           instance.drawRect(
             newProps.x - newProps.width/2,
             newProps.y - newProps.height/2,

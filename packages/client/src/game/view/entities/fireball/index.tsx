@@ -77,7 +77,7 @@ export const FireballView = (props: IProps) => {
   return (
     <>
       <AnimatedSprite
-      anchor= {new PIXI.Point(0.5, 0.5)}
+      anchor= {new PIXI.Point(0.5, 0.733)}
       width = {props.fireball.width}
       height = {props.fireball.height}
       x = {props.fireball.x}

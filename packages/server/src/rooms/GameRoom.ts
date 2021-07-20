@@ -100,7 +100,7 @@ export class GameRoom extends Room < GameState > {
 	spawnCoin(){
 		var newX = Math.random() * 2000;
 		var newY = Math.random() * 2000;
-		while(Maths.checkWalls(newX,newY)){
+		while(Maths.checkWalls(newX, newY, 20)){
 			newX = Math.random() * 2000;
 			newY = Math.random() * 2000;
 		}
@@ -111,7 +111,7 @@ export class GameRoom extends Room < GameState > {
 		var rand = getRandomInt(0, 62) / 10;
 		var newX = x + 100 * Math.cos(rand);
 		var newY = y + 100 * Math.sin(rand);
-		while(Maths.checkWalls(newX, newY)){
+		while(Maths.checkWalls(newX, newY, 20)){
 			rand = getRandomInt(0, 62) / 10;
 			newX = x + 100 * Math.cos(rand);
 			newY = y + 100 * Math.sin(rand);
@@ -141,13 +141,13 @@ export class GameRoom extends Room < GameState > {
 
 							const oldX = this.state.players[id].x;
 							const oldY = this.state.players[id].y;
-							const newX = oldX + fireBall.speed * 2 * Math.cos(fireBall.angle + Math.PI);
-							const newY = oldY + fireBall.speed * 2 * Math.sin(fireBall.angle + Math.PI);
+							const newX = oldX + (fireBall.speed * Math.cos(fireBall.angle - Math.PI));
+							const newY = oldY + (fireBall.speed * Math.sin(fireBall.angle - Math.PI));
 
-							if(!Maths.checkWalls(oldX, newY)){
+							if(!Maths.checkWalls(oldX, newY, 45)){
 								this.state.players[id].y = newY;
 							}
-							if(!Maths.checkWalls(newX, oldY)){
+							if(!Maths.checkWalls(newX, oldY, 45)){
 								this.state.players[id].x = newX;
 							}
 							//console.log(this.state.players[id].x + "    " + this.state.players[id].y)

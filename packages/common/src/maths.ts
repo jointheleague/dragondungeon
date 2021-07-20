@@ -132,7 +132,27 @@ export function shuffleArray(array: any[]) {
 
   return result;
 }
+/*
+export function lineOverlap(xmin1: number, xmax1: number, xmin2: number, xmax2: number){
+  return (xmax1 >= xmin2 && xmax2 >= xmin1);
+}
 
+export function boxOverlap(xmin1: number, xmax1: number, ymin1: number, ymax1: number, xmin2: number, xmax2: number,  ymin2: number, ymax2: number ){
+  return (lineOverlap(xmin1, xmax1, xmin2, xmax2) && lineOverlap(ymin1, ymax1, ymin2, ymax2));
+}
+
+export function pointInBox(x: number, y: number, xmin: number, xmax: number, ymin: number, ymax:number){
+  return (x >= xmin && y >= ymin && x <= xmax && y <= ymax);
+}
+
+export function lineInCircle(){
+  return ();
+}
+
+export function boxCircleOverlap(x: number, y: number, rad:number, xmin: number, xmax: number, ymin: number, ymax:number){
+  return (pointInBox(x, y, xmin, xmax, ymin, ymax) );
+}*/
+/*
 export function checkWalls(newX: number, newY: number){
   const gameWidth = 2000;
   const gameHeight = 2000;
@@ -144,15 +164,38 @@ export function checkWalls(newX: number, newY: number){
   const offset = gameWidth/2;
   const offsetX = Math.abs(newX - offset);
   const offsetY = Math.abs(newY - offset);
-  const boxLength = 735;//680
+  const boxLength = 735;
   const innerBoxLength = 200;
   if(offsetX < boxLength && offsetY < boxLength){
     if(offsetX > innerBoxLength && offsetY > innerBoxLength){
-      //console.log(newX+"    "+newY);
       if((offsetX > innerBoxLength && offsetX < 120 + innerBoxLength) || (offsetY > innerBoxLength && offsetY < 120 + innerBoxLength)){
         return true;
       }
     }
   }
   return false;
+}
+*/
+export function checkWalls (newX: number, newY: number, rad: number){
+  const gameWidth = 2000;
+  const gameHeight = 2000;
+  //this just checks the basic outer walls
+  if(newX > gameWidth+(50-rad) || newY > gameHeight+(50-rad) || newX < rad-50 || newY < rad-50){
+    return true;
+  }
+  //wall width
+  const width = 42;
+  //offset of player from middle
+  const offX = Math.abs(newX - gameWidth/2);
+  const offY = Math.abs(newY - gameHeight/2);
+  //wall start/end
+  const inner = 200+39.375;
+  const outer = 735-39.375;
+  //if in outer box
+  if(offX > inner - rad && offY > inner - rad && offX < outer + rad && offY < outer + rad){
+    //vertical || horizontal wall
+    if(offX < inner + width + rad || offY < inner + width + rad ){
+      return true;
+    }
+  }
 }

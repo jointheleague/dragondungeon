@@ -14,7 +14,6 @@ interface IProps {
 
 let ANIMATION_SPEED = 0;
 export const Wall = (props: IProps) => {
-  ANIMATION_SPEED = Math.random()/10;
   const fenceTextures = useMemo(() => {
     let fenceImages = [WallImage];
     let textures: PIXI.AnimatedSprite["textures"] = [];
@@ -32,7 +31,6 @@ export const Wall = (props: IProps) => {
     height = {props.yLength}
     textures = {fenceTextures}
     x={props.x}
-    animationSpeed = {ANIMATION_SPEED}
     rotation = {props.angle}
     loop= {true}
     y={props.y}
