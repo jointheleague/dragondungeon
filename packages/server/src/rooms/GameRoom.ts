@@ -97,13 +97,35 @@ export class GameRoom extends Room < GameState > {
 		this.clock.clear()
 	}
 
+	spawnCoin(){
+		var newX = Math.random() * 2000;
+		var newY = Math.random() * 2000;
+		while(Maths.checkWalls(newX,newY)){
+			newX = Math.random() * 2000;
+			newY = Math.random() * 2000;
+		}
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 2000, Math.random() * 2000));
+	}
+
+	createCoin(x: number, y: number){
+		var rand = getRandomInt(0, 62) / 10;
+		var newX = x + 100 * Math.cos(rand);
+		var newY = y + 100 * Math.sin(rand);
+		while(Maths.checkWalls(newX, newY)){
+			rand = getRandomInt(0, 62) / 10;
+			newX = x + 100 * Math.cos(rand);
+			newY = y + 100 * Math.sin(rand);
+		}
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20));
+	}
+
 	tick() {
 		this.counter++;
 		const dx = this.clock.deltaTime;
 		this.state.countdown.elaspseTime();
 
 		for(let i = this.state.coins.size; i < this.state.players.size * 5; i++) {
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 2000, Math.random() * 2000));
+			this.spawnCoin();
 		}
 
 		for (let id of this.state.players.keys()) {
@@ -135,13 +157,7 @@ export class GameRoom extends Room < GameState > {
 								if(fireBall.type == "poison"){
 									this.state.players[id2].coins ++;
 								}else{
-									const rand = getRandomInt(0, 62) / 10;
-
-									const newX = this.state.players[id].x + 100 * Math.cos(rand)
-									const newY = this.state.players[id].y + 100 * Math.sin(rand)
-									if(!Maths.checkWalls(newX, newY)){
-										this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20));
-									}
+									this.createCoin(this.state.players[id].x,this.state.players[id].y);
 								}
 							}
 

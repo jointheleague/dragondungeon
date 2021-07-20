@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import { CustomPIXIComponent } from "react-pixi-fiber";
 
 interface CollisionBallProps {
+
   x: number;
   y: number;
   rot: number;
@@ -15,7 +16,9 @@ function propsEqual(oldProps: CollisionBallProps, newProps: CollisionBallProps) 
     oldProps.x === newProps.x &&
     oldProps.y === newProps.y &&
     oldProps.width === newProps.width &&
-    oldProps.height === newProps.height
+    oldProps.height === newProps.height &&
+    oldProps.rot === newProps.rot &&
+    oldProps.circle === newProps.circle 
   );
 }
 
@@ -33,9 +36,7 @@ export const CollisionBall = CustomPIXIComponent<PIXI.Graphics, CollisionBallPro
             newProps.width
           );
         }else{
-          //instance.pivot.x = 1;
-          //instance.pivot.y = 1;
-          //instance.rotation = Math.PI;
+          instance.rotation = Math.PI;
           instance.drawRect(
             newProps.x - newProps.width/2,
             newProps.y - newProps.height/2,
