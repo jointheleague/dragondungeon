@@ -43,6 +43,12 @@ export class Player extends Schema {
 	@type("number")
 	deceleration: number = 1;
 
+	@type("boolean")
+	isBot!: boolean;
+
+	@type("boolean")
+	gameOver: boolean = false;
+
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
 
 	activeInputs: IInputs = {
@@ -137,7 +143,6 @@ export class Player extends Schema {
 
 	move(dirX: number, dirY: number, speed: number) {
 		const magnitude = Maths.normalize2D(dirX, dirY);
-		//console.log(this.x+"    "+this.y)
 		const speedX = Maths.round2Digits(dirX * (speed / magnitude));
 		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
 		const newX = this.x + speedX;

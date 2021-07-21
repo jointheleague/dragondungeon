@@ -21,7 +21,9 @@ import {
 
 import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
+
 const admin_sdk_key = require('../../top_secret/adminsdk.json');
+const botnames = require('./botnames.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(admin_sdk_key)
@@ -29,7 +31,8 @@ admin.initializeApp({
 
 export class GameRoom extends Room < GameState > {
 	counter = 0;
-	maxClients: 4
+	botTimeout = 0;
+	maxClients: 10
 
 	onCreate() {
 		this.setState(new GameState())
@@ -124,11 +127,82 @@ export class GameRoom extends Room < GameState > {
 		const dx = this.clock.deltaTime;
 		this.state.countdown.elaspseTime();
 
-		for(let i = this.state.coins.size; i < this.state.players.size * 5; i++) {
-			this.spawnCoin();
+		if (this.state.countdown.done) {
+			this.state.players.forEach((player: Player) => {
+				player.gameOver = true;
+			});
 		}
 
+		for (let i = this.state.coins.size; i < this.state.players.size * 50; i++) {
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 2000, Math.random() * 2000));
+		}
+
+		if (this.state.players.size < 6) {
+			let bot = new Player("Fire");
+			bot.isBot = true;
+			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
+			let botNameGender = Math.random() > 0.5 ? true : false;
+			let botNameFirst = botNameGender ? botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] : botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
+			let botNameLast = botNameRegion.surnames[Math.floor(Math.random() * botNameRegion.surnames.length)];
+			switch (Math.floor(Math.random() * 5)) {
+				case 0:
+					bot.onlineName = botNameFirst.toLowerCase();
+					break;
+				case 1:
+					bot.onlineName = botNameFirst.toLowerCase() + botNameLast.toLowerCase();
+					break;
+				case 2:
+					bot.onlineName = botNameFirst.toLowerCase() + botNameFirst;
+					break;
+				case 3:
+					bot.onlineName = botNameLast + "1";
+					break;
+				case 4:
+					bot.onlineName = botNameFirst + "1";
+					break; 
+			}
+			this.state.players.set(v4(), bot);
+		}
+		
+
 		for (let id of this.state.players.keys()) {
+			if (this.state.players[id].isBot && this.botTimeout == 0) {
+				let botDir = Math.floor(Math.random() * 4);
+				switch(botDir) {
+					case 0:
+						this.state.players[id].inputs({
+							up: true,
+							down: false,
+						});
+						break;
+					case 1:
+						this.state.players[id].inputs({
+							up: false,
+							down: true,
+							space: true,
+						});
+						break;
+					case 2:
+						this.state.players[id].inputs({
+							left: true,
+							right: false,
+						});
+						break;
+					case 3:
+						this.state.players[id].inputs({
+							left: false,
+							right: true,
+						});
+						break;
+					}
+				}
+			
+			if (this.botTimeout == 0) {
+				this.botTimeout = Math.floor(Math.random() * 20) + 1;
+			}
+
+			this.botTimeout--;
+
 			this.state.players[id].tick(dx);
 
 			for (let id2 of this.state.players.keys()) {
