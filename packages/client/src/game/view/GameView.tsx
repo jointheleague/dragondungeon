@@ -20,6 +20,7 @@ import ReactNipple from 'react-nipple';
 import { Bar } from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
 import { show_error_banner } from 'util/banner';
+import { navigate } from '@reach/router';
 
 interface GameViewProps {
   stateManager: StateManager;
