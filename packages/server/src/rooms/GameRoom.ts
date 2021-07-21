@@ -117,7 +117,7 @@ export class GameRoom extends Room < GameState > {
 		do {
 			newX = Math.random() * 2000;
 			newY = Math.random() * 2000;
-		}while(Maths.checkWalls(newX, newY, size))
+		}while(Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size));
 	
 	}
@@ -145,8 +145,8 @@ export class GameRoom extends Room < GameState > {
 			});
 		}
 
-		for (let i = this.state.coins.size; i < this.state.players.size * 50; i++) {
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 2000, Math.random() * 2000));
+		for (let i = this.state.coins.size; i < this.state.players.size * 5; i++) {
+			this.spawnCoin();
 		}
 
 		if (this.state.players.size < 6) {

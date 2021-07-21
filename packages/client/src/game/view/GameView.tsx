@@ -129,7 +129,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size}/>);
     }
     render(
-      <>{tiles}{coinJar}{fences}{walls}{coins}{fireballs}{healthBars}{players}</>, 
+      <>{tiles}{coinJar}{fences}{walls}{coins}{players}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }

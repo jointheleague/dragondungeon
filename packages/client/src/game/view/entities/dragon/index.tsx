@@ -78,7 +78,7 @@ export const Dragon = (props: IProps) => {
     return textures;
   }, []);
 
-  const fireballs = props.player.fireballs.map((fb, i) => <TeamOrb key={i} x={fb.x} y={fb.y} radius={fb.width/2 + 4}/>)
+  const fireballs = props.player.fireballs.map((fb, i) => <TeamOrb key={i} x={fb.x} y={fb.y} radius={4}/>)
   var yS = 5;
   if(Math.abs(props.player.angle)<(Math.PI/2)){
     yS = -5;
