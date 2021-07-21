@@ -6,8 +6,6 @@ import { IInputs } from '../controls/types';
 import { Dragon } from './entities/dragon/index';
 import { render } from "react-pixi-fiber";
 import { FireballView } from './entities/fireball/index';
-import { CollisionBall } from './entities/collisonball/collisonball';
-//import {IceballView} from './entities/iceball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
@@ -68,11 +66,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const fences = [];
     const tiles = [];
     const walls = [];
-    const colliders = [];
     const coinJar = <CoinJar key={"only"} x={1000} y={1000}/>;
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
-    
     for (let pid in state.players) {
       const player = state.players[pid];
       //console.log("ball type in Gview, " + player.ballType);
@@ -81,7 +77,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       players.push(<Dragon key={pid} player={player} />,)
 
       for(let fireball of state.players[pid].fireballs){
-        //colliders.push(<CollisionBall key={fireball.id} rot={fireball.angle} width={fireball.width} height={fireball.height} x={fireball.x} y={fireball.y} circle={false}/>)
         fireballs.push(<FireballView key={fireball.id} fireball={fireball} />)
       }
       healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y - 80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].onlineName}/>)
@@ -89,6 +84,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       //fireballs.push(player.fireballs);
       leaderboard.push(Leaderboard)
     }
+
     for(var i = 0; i < 8; i++){
       fences.push(<BorderFence x={i*267+60} y={-76} angle={0} key={`fence1${i}`} />);
       fences.push(<BorderFence x={i*267+60} y={2076} angle={0} key={`fence2${i}`} />);
@@ -132,7 +128,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size}/>);
     }
     render(
-      <>{tiles}{coinJar}{fences}{walls}{colliders}{coins}{players}{fireballs}{healthBars}</>, 
+      <>{tiles}{coinJar}{fences}{walls}{coins}{fireballs}{healthBars}{players}</>, 
       this.viewport
     );
    }

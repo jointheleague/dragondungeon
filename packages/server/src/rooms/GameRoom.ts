@@ -98,24 +98,36 @@ export class GameRoom extends Room < GameState > {
 	}
 
 	spawnCoin(){
-		var newX = Math.random() * 2000;
-		var newY = Math.random() * 2000;
-		while(Maths.checkWalls(newX, newY, 20)){
+		var num = Math.random();
+		var size = 20;
+		if(num >= .75){
+			size += 5;
+			if(num >= .95){
+				size += 5;
+				if(num >= .995){
+					size = 100;
+				}
+			}
+		}
+		var newX;
+		var newY;
+		do {
 			newX = Math.random() * 2000;
 			newY = Math.random() * 2000;
-		}
-		this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 2000, Math.random() * 2000));
+		}while(Maths.checkWalls(newX, newY, size))
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size));
+	
 	}
 
 	createCoin(x: number, y: number){
-		var rand = getRandomInt(0, 62) / 10;
-		var newX = x + 100 * Math.cos(rand);
-		var newY = y + 100 * Math.sin(rand);
-		while(Maths.checkWalls(newX, newY, 20)){
+		var rand;
+		var newX;
+		var newY;
+		do {
 			rand = getRandomInt(0, 62) / 10;
 			newX = x + 100 * Math.cos(rand);
 			newY = y + 100 * Math.sin(rand);
-		}
+		}while(Maths.checkWalls(newX, newY, 20))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20));
 	}
 
@@ -134,7 +146,7 @@ export class GameRoom extends Room < GameState > {
 			for (let id2 of this.state.players.keys()) {
 				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
 					if (id != id2) {
-						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y) == true) {
+						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y)) {
 						    var fireBall = this.state.players[id2].fireballs[i];
 							const coinChance = .2; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
 							const lifetimeRemove = 1; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
@@ -154,7 +166,7 @@ export class GameRoom extends Room < GameState > {
 							if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
 								this.state.players[id].coins --;
 								fireBall.lifetime -= lifetimeRemove;
-								if(fireBall.type == "poison"){
+								if(fireBall.type == "poison" && this.state.players[id2].coins < 10){
 									this.state.players[id2].coins ++;
 								}else{
 									this.createCoin(this.state.players[id].x,this.state.players[id].y);
@@ -164,7 +176,7 @@ export class GameRoom extends Room < GameState > {
 
 							switch (fireBall.type) {
 								case "electricity":
-									if(this.state.players[id].fireballs.length < 20 &&  Math.random() > .9){
+									if(this.state.players[id2].fireballs.length < 10 &&  Math.random() > .9){
 										var angle = Math.random() * 6.28;
 										this.state.players[id2].fireballs.push(new Fireball(this.state.players[id].x + 45 * Math.cos(angle), this.state.players[id].y + 45 * Math.sin(angle), angle + Math.PI, 6, "electricity"));
 									}
@@ -172,6 +184,7 @@ export class GameRoom extends Room < GameState > {
 								case "mud":	
 									fireBall.width += 1;
 									fireBall.height += 1.87;
+									//fireBall.speed += .05;
 									break;
 								case "ice":
 									this.state.players[id].deceleration = 0.3;

@@ -13,25 +13,12 @@ export class Coin extends Schema {
 	@type("number")
 	size: number = 20;
 
-	constructor(key: number, x: number, y: number, size: number = 0) {
+	constructor(key: number, x: number, y: number, size: number) {
 		super()
 		this.x = x;
 		this.y = y;
 		this.key = key;
-		var num = Math.random();
 		this.size = size;
-		if(size === 0){
-			this.size += 20;
-			if(num >= .75){
-				this.size += 5;
-				if(num >= .95){
-					this.size += 5;
-					if(num >= .995){
-						this.size = 100;
-					}
-				}
-			}
-		}
 	}
 
 	public getSize(){

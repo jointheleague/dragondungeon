@@ -55,7 +55,7 @@ export const TeamOrb = CustomPIXIComponent<PIXI.Graphics, TeamOrbProps>(
         const teamColor = 0xFF0000;
         instance.clear()
         instance.beginFill(teamColor, 1); // Red
-        instance.drawCircle(newProps.x, newProps.y, newProps.radius*( 3));
+        instance.drawCircle(newProps.x, newProps.y, newProps.radius);
         instance.endFill()
       }
     }
@@ -78,7 +78,7 @@ export const Dragon = (props: IProps) => {
     return textures;
   }, []);
 
-  const fireballs = props.player.fireballs.map((fb, i) => <TeamOrb key={i} x={fb.x} y={fb.y} radius={5}/>)
+  const fireballs = props.player.fireballs.map((fb, i) => <TeamOrb key={i} x={fb.x} y={fb.y} radius={fb.width/2 + 4}/>)
   var yS = 5;
   if(Math.abs(props.player.angle)<(Math.PI/2)){
     yS = -5;
