@@ -252,11 +252,11 @@ export class GameRoom extends Room < GameState > {
 								case "electricity":
 									if(this.state.players[id2].fireballs.length < 10 &&  Math.random() > .9){
 										var angle = Math.random() * 6.28;
-										this.state.players[id2].fireballs.push(new Fireball(this.state.players[id].x + 45 * Math.cos(angle), this.state.players[id].y + 45 * Math.sin(angle), angle + Math.PI, 6, "electricity"));
+										this.state.players[id2].fireballs.push(new Fireball(this.state.players[id].x + 50 * Math.cos(angle), this.state.players[id].y + 50 * Math.sin(angle), angle + Math.PI, 6, "electricity"));
 									}
 									break;
 								case "mud":	
-									fireBall.width += 1;
+									fireBall.width += 2;
 									fireBall.height += 1.87;
 									//fireBall.speed += .05;
 									break;
