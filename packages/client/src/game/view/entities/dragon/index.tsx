@@ -1,15 +1,26 @@
 import React, {useMemo} from 'react';
 import {IPlayer} from '../../../state/types';
 import * as PIXI from 'pixi.js-legacy'
-import {AnimatedSprite} from '../AnimatedSprite';
-import dragon1 from "./sprites/tile001.png";
-import dragon2 from "./sprites/tile002.png";
-import dragon3 from "./sprites/tile003.png";
-import dragon4 from "./sprites/tile004.png";
-import blankDragon from "./sprites/blankDragon.png";
-import {
+import {AnimatedSprite} from '../AnimatedSprite';import {
   CustomPIXIComponent,
 } from "react-pixi-fiber";
+
+import dragon1 from "./sprites/dragon2.png";
+import dragon2 from "./sprites/dragon3.png";
+import dragon3 from "./sprites/dragon4.png";
+import dragon4 from "./sprites/dragon5.png";
+
+import lightDragon1 from "./sprites/lightDragon2.png";
+import lightDragon2 from "./sprites/lightDragon3.png";
+import lightDragon3 from "./sprites/lightDragon4.png";
+import lightDragon4 from "./sprites/lightDragon5.png";
+
+import goldDragon1 from "./sprites/goldDragon2.png";
+import goldDragon2 from "./sprites/goldDragon3.png";
+import goldDragon3 from "./sprites/goldDragon4.png";
+import goldDragon4 from "./sprites/goldDragon5.png";
+
+import blankDragon from "./sprites/blankDragon.png";
 
 interface IProps {
     key: string;
@@ -68,7 +79,17 @@ const ANIMATION_SPEED = 0.08;
 export const Dragon = (props: IProps) => {
   const dragonTextures = useMemo(() => {
     // TODO: Create textures from spites
-    let dragonImages = [dragon1,dragon2,dragon3, dragon4];
+    let dragonImages;
+    switch(Math.floor(Math.random()*3)){
+      case 0:
+        dragonImages = [lightDragon1, lightDragon2, lightDragon3, lightDragon4];
+        break;
+      case 1:
+        dragonImages = [goldDragon1, goldDragon2, goldDragon3, goldDragon4];
+        break
+      default:
+        dragonImages = [dragon1, dragon2, dragon3, dragon4];
+    }
     //let dragonImages = [blankDragon];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     dragonImages.forEach(image =>{

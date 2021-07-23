@@ -14,7 +14,8 @@ const controlsDown: {[key: string]: object} = {
   "a": {left: true},
   "s": {down: true},
   "d": {right: true},
-  " ": {space: true}
+  " ": {space: true},
+  "x": {autoshoot: true}
 }
 
 const mouseActivity: {[key: string]: object} = {
@@ -26,7 +27,8 @@ const controlsUp: {[key: string]: object} = {
   "a": {left: false},
   "s": {down: false},
   "d": {right: false},
-  " ": {space: false}
+  " ": {space: false},
+  "x": {autoshoot: false}
 }
 
 let activeControls = {
@@ -53,7 +55,7 @@ export const Controls = (props: ControlProps) => {
 
   useEffect(() => {
     const keydown = (e: KeyboardEvent) => {
-      const change = controlsDown[e.key.toLowerCase()] || {};
+      var change = controlsDown[e.key.toLowerCase()]  || {};
       updateAndSend(change);
     }
     const keyup = (e: KeyboardEvent) => {

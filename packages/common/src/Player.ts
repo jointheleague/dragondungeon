@@ -47,6 +47,9 @@ export class Player extends Schema {
 	isBot!: boolean;
 
 	@type("boolean")
+	autoshootOn: boolean = false;
+
+	@type("boolean")
 	gameOver: boolean = false;
 
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
@@ -80,6 +83,13 @@ export class Player extends Schema {
 	}
 
 	inputs(i: IInputs) {
+		if(i.autoshoot){
+			if(this.autoshootOn){
+				this.autoshootOn = false;
+			}else{
+				this.autoshootOn = true;
+			}
+		}
 		this.activeInputs = Object.assign({}, this.activeInputs, i);
 		const resDirection = new Geometry.Vector(0, 0);
 		if (i.right) {
@@ -109,9 +119,9 @@ export class Player extends Schema {
 			}
 		}
 		this.fireballCooldown -= ticks;
-		if (this.activeInputs.space && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI), 22.5)) {
+		if ((this.autoshootOn || this.activeInputs.space) && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI), 22.5)) {
 			this.fireballCooldown = 10;
-			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType);
+			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType, 40);
 			this.fireballs.push(fireball);
 		}
 

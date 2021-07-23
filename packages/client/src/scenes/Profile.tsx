@@ -54,6 +54,7 @@ const Profile = () => {
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: {(userStats.damagedone / userStats.damagetaken).toFixed(2)}</h3>
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Medals Earned: {userStats.medals}</h3>
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen ball type: {userStats.ballType}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen skin: {userStats.skin}</h3>
           </>
         : <>
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> High Score: X</h3>
@@ -63,6 +64,7 @@ const Profile = () => {
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: X/X</h3>
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Medals Earned: X</h3>
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen ball type: X</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen skin: X</h3>
           </>}
           <br /><br /><br />
         <div style={{
@@ -80,7 +82,7 @@ const Profile = () => {
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px' }}>Fireballs</h4>
         </div><br />
         <div style={{
-          backgroundColor: '#00a1de',
+          backgroundColor: '#0081b2',
           color: 'white',
           borderRadius: '5px',
           width: '20vw',
@@ -94,8 +96,8 @@ const Profile = () => {
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Iceballs</h4>
         </div><br />
         <div style={{
-          backgroundColor: '#f9e300',
-          color: 'black',
+          backgroundColor: '#c6b918',
+          color: 'white',
           borderRadius: '5px',
           width: '20vw',
           padding: '10px',
@@ -108,7 +110,7 @@ const Profile = () => {
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Electricballs</h4>
         </div><br />
         <div style={{
-          backgroundColor: '#009b3a',
+          backgroundColor: '#047b2c',
           color: 'white',
           borderRadius: '5px',
           width: '20vw',
@@ -122,7 +124,7 @@ const Profile = () => {
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Poisonballs</h4>
         </div><br />
         <div style={{
-          backgroundColor: '#3d2904',
+          backgroundColor: '#312103',
           color: 'white',
           borderRadius: '5px',
           width: '20vw',
@@ -134,6 +136,48 @@ const Profile = () => {
           <img src="/mudball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Mudballs</h4>
+        </div><br />
+        <div style={{
+          backgroundColor: '#f9461c',
+          color: 'white',
+          borderRadius: '5px',
+          width: '20vw',
+          padding: '10px',
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row'
+        }}>
+          <img src="/basicDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Basic Dragon" />
+          <br />
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Basic Dragon</h4>
+        </div><br />
+        <div style={{
+          backgroundColor: '#f9461c',
+          color: 'white',
+          borderRadius: '5px',
+          width: '20vw',
+          padding: '10px',
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row'
+        }}>
+          <img src="/lightDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Light Dragon" />
+          <br />
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Light Dragon</h4>
+        </div><br />
+        <div style={{
+          backgroundColor: '#f9461c',
+          color: 'white',
+          borderRadius: '5px',
+          width: '20vw',
+          padding: '10px',
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'row'
+        }}>
+          <img src="/goldDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Gold Dragon" />
+          <br />
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Gold Dragon</h4>
         </div><br />
       </Center>
     </>

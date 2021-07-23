@@ -24,10 +24,12 @@ class Fireball extends Schema {
 	@type("string")
     type: string = "fire";//fire, ice, electricity, poision
 
-	lifetime = 40;
+	@type("number")
+	lifetime: number = 40;
+
 	speed;
 
-	constructor(x: number, y: number, angle: number, speed: number, type: string) {
+	constructor(x: number, y: number, angle: number, speed: number, type: string, lifetime: number) {
 		super()
 		this.width = 45;
 		this.height = 84.4;
@@ -37,6 +39,7 @@ class Fireball extends Schema {
 		this.angle = angle;
 		this.speed = speed;
 		this.type = type;
+		this.lifetime = lifetime;
 	}
 
 	checkHit(dragonX: number, dragonY: number) {

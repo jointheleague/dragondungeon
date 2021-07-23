@@ -255,7 +255,8 @@ export class GameRoom extends Room < GameState > {
 										const newX = this.state.players[id].x + 50 * Math.cos(angle);
 										const newY = this.state.players[id].y + 50 * Math.sin(angle);
 										if(!Maths.checkWalls(newX, newY, 22.5)){
-											this.state.players[id2].fireballs.push(new Fireball(newX, newY, angle + Math.PI, 6, "electricity"));
+											this.state.players[id2].fireballs.push(new Fireball(newX, newY, angle + Math.PI, 7, "electricity", 20));
+											
 										}
 									}
 									break;
