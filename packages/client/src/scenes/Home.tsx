@@ -29,7 +29,7 @@ const profilepage = () => {
   navigate('/profile');
 }
 
-const tutorialpage = () => {
+const infopage = () => {
   navigate('/tutorial');
 }
 
@@ -58,7 +58,7 @@ const Game = (props: any) => {
           <>
             <Button onClick={resume} text="Play" />
             <Button onClick={profilepage} text="Account" />
-            <Button onClick={tutorialpage} text="Tutorial" />
+            <Button onClick={infopage} text="Tutorial" />
           </>
         }
         {!userIsLoggedIn &&

@@ -84,11 +84,7 @@ export class Player extends Schema {
 
 	inputs(i: IInputs) {
 		if(i.autoshoot){
-			if(this.autoshootOn){
-				this.autoshootOn = false;
-			}else{
-				this.autoshootOn = true;
-			}
+			this.autoshootOn = !this.autoshootOn;
 		}
 		this.activeInputs = Object.assign({}, this.activeInputs, i);
 		const resDirection = new Geometry.Vector(0, 0);
