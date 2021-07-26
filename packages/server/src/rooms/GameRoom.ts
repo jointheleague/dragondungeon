@@ -266,7 +266,7 @@ export class GameRoom extends Room < GameState > {
 									//fireBall.speed += .05;
 									break;
 								case "ice":
-									this.state.players[id].deceleration = 0.3;
+									this.state.players[id].deceleration = 2;
 									break;
 							}
 						}

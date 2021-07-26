@@ -40,6 +40,10 @@ class Fireball extends Schema {
 		this.speed = speed;
 		this.type = type;
 		this.lifetime = lifetime;
+		if(this.type === "mud"){
+			this.width *= 1.2;
+			this.height *= 1.2;
+		}
 	}
 
 	checkHit(dragonX: number, dragonY: number) {

@@ -27,8 +27,10 @@ const Info = () => {
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px', alignSelf: 'center' }}>Controls</h4>
         </div>
         <br />
-        <p>Move using, W A S D</p>
-        <p style={{textAlign:'center'}}>Shoot fireballs with the SPACEBAR <br/> To continiously shoot fireballs, hold SPACEBAR or press the X key</p>
+        <p style={{textAlign:'center'}}>
+        Move using, W A S D
+        <br/>Shoot fireballs with the SPACEBAR 
+        <br/>To continiously shoot fireballs, hold SPACEBAR or press the X key</p>
         <br />
         <div style={{
           backgroundColor: '#737373',

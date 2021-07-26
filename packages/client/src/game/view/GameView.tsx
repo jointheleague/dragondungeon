@@ -64,7 +64,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const coins = [];
     const fireballs = [];
     const healthBars = [];
-    const fences = [];
     const tiles = [];
     const walls = [];
     const coinJar = <CoinJar key={"only"} x={1000} y={1000}/>;
@@ -86,14 +85,29 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       leaderboard.push(Leaderboard)
     }
 
-    for(var i = 0; i < 8; i++){
-      fences.push(<BorderFence x={i*267+60} y={-76} angle={0} key={`fence1${i}`} />);
-      fences.push(<BorderFence x={i*267+60} y={2076} angle={0} key={`fence2${i}`} />);
-      fences.push(<BorderFence x={-76} y={i*267+60} angle={Math.PI/2} key={`fence3${i}`} />);
-      fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2} key={`fence4${i}`} />);
-    }
+    //for(var i = 0; i < 8; i++){
+    //  fences.push(<BorderFence x={i*267+60} y={-76} angle={0} key={`fence1${i}`} />);
+    //  fences.push(<BorderFence x={i*267+60} y={2076} angle={0} key={`fence2${i}`} />);
+    //  fences.push(<BorderFence x={-76} y={i*267+60} angle={Math.PI/2} key={`fence3${i}`} />);
+    //  fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2} key={`fence4${i}`} />);
+    //}
+  
     const xLen = 455.625;
-    const yLen = 39.375;  
+    const xLen2 = 275.625;
+    const xLen3 = 185.625;
+    const yLen = 39.375; 
+
+    for(var i = 0; i < 4; i++){
+      walls.push(<Wall x={i*xLen - yLen} y={-yLen} xLength ={xLen} yLength = {yLen} angle = {0} />)
+      walls.push(<Wall x={i*xLen - yLen} y={2000} xLength ={xLen} yLength = {yLen} angle = {0} />)
+      walls.push(<Wall x={0} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
+      walls.push(<Wall x={2000 + yLen} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
+    }
+
+    walls.push(<Wall x={4*xLen - yLen} y={-yLen} xLength ={xLen2} yLength = {yLen} angle = {0} />)
+    walls.push(<Wall x={4*xLen - yLen} y={2000} xLength ={xLen2} yLength = {yLen} angle = {0} />)
+    walls.push(<Wall x={0} y={4*xLen} xLength ={xLen3} yLength = {yLen} angle = {Math.PI/2} />)
+    walls.push(<Wall x={2000 + yLen} y={4*xLen} xLength ={xLen3} yLength = {yLen} angle = {Math.PI/2} />)
 
     //top right
     walls.push(<Wall x={1240} y={760} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2} />)
@@ -129,7 +143,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size}/>);
     }
     render(
-      <>{tiles}{coinJar}{fences}{walls}{coins}{players}{fireballs}{healthBars}</>, 
+      <>{tiles}{coinJar}{walls}{coins}{players}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }

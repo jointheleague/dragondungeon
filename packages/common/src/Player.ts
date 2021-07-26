@@ -83,7 +83,7 @@ export class Player extends Schema {
 	}
 
 	inputs(i: IInputs) {
-		if(i.autoshoot){
+		if(i.autoshoot && !this.activeInputs.autoshoot){
 			this.autoshootOn = !this.autoshootOn;
 		}
 		this.activeInputs = Object.assign({}, this.activeInputs, i);
@@ -109,9 +109,9 @@ export class Player extends Schema {
 	tick(dx: number) {
 		const ticks = dx / 50;
 		if (this.direction.x !== 0 || this.direction.y !== 0) {
-			this.move(this.direction.x, this.direction.y, this.speed * this.deceleration * ticks)
-			if(this.deceleration < 1){
-				this.deceleration *= 1.09;
+			this.move(this.direction.x, this.direction.y, this.speed * (1/this.deceleration) * ticks)
+			if(this.deceleration > 1){
+				this.deceleration *= .9;
 			}
 		}
 		this.fireballCooldown -= ticks;
