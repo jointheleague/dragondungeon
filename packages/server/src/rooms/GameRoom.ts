@@ -43,25 +43,37 @@ export class GameRoom extends Room < GameState > {
 
 	async onJoin(client: Client, options: {token: string}, _2: any) {
 		const user = await admin.auth().verifyIdToken(options.token);
-		var s = "";
+		var s1 = "";
+		var s2 = "";
 		switch(Math.floor(Math.random()*5)){
             case 0:
-             	s = "fire";
+             	s1 = "fire";
              	break;
             case 1:
-             	s = "ice";
+             	s1 = "ice";
               	break;
             case 2:
-        		s = "poison";
+        		s1 = "poison";
             	break;
             case 3:
-            	s = "mud";
+            	s1 = "mud";
             	break;
 			case 4:
-				s = "electricity";
+				s1 = "electricity";
 				break;
-          }
-		this.state.players[client.id] = new Player(s);
+        }
+		switch(Math.floor(Math.random()*3)){
+        	case 0:
+           		s2 = "normal";
+         		break;
+          	case 1:
+            	s2 = "light";
+            	break;
+        	case 2:
+        		s2 = "gold";
+            	break;
+        }
+		this.state.players[client.id] = new Player(s1, s2);
 		if (user.name == null) {
 			const adjectives = require('../../wordlists/adjectives.json');
 			const nouns = require('../../wordlists/nouns.json');
@@ -150,7 +162,7 @@ export class GameRoom extends Room < GameState > {
 		}
 
 		if (this.state.players.size < 6) {
-			let bot = new Player("Fire");
+			let bot = new Player("Fire", "normal");
 			bot.isBot = true;
 			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
 			let botNameGender = Math.random() > 0.5 ? true : false;

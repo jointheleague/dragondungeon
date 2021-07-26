@@ -37,6 +37,9 @@ export class Player extends Schema {
 	@type("string")
 	ballType: string;
 
+	@type("string")
+	skinType: string;
+
 	@type("number")
 	speed: number = 18;
 
@@ -76,9 +79,10 @@ export class Player extends Schema {
 		this.y = newY;
 	} 
 
-	constructor(ballType : string) {
+	constructor(ballType : string, skinType : string) {
 		super()
 		this.ballType = ballType;
+		this.skinType = skinType;
 		this.setPosition();
 	}
 

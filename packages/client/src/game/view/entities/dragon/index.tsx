@@ -21,6 +21,7 @@ import goldDragon3 from "./sprites/goldDragon4.png";
 import goldDragon4 from "./sprites/goldDragon5.png";
 
 import blankDragon from "./sprites/blankDragon.png";
+import { Player } from '../../../../../../common/build';
 
 interface IProps {
     key: string;
@@ -80,11 +81,11 @@ export const Dragon = (props: IProps) => {
   const dragonTextures = useMemo(() => {
     // TODO: Create textures from spites
     let dragonImages;
-    switch(Math.floor(Math.random()*3)){
-      case 0:
+    switch(props.player.skinType){
+      case "light":
         dragonImages = [lightDragon1, lightDragon2, lightDragon3, lightDragon4];
         break;
-      case 1:
+      case "gold":
         dragonImages = [goldDragon1, goldDragon2, goldDragon3, goldDragon4];
         break
       default:

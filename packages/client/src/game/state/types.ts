@@ -38,6 +38,7 @@ export interface IPlayer {
   onlineName: string;
   onlineID: string;
   ballType: string;
+  skinType: string;
 }
 
 export interface ICoin{
