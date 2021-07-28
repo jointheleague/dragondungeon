@@ -19,11 +19,20 @@ const GameOver = () => {
           <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>Game Over</h1>
         </Box>
         <Space size='m'/>
-        <h1>Coins : 300</h1>
-        <div style={{display:'flex', flexDirection:'row'}}>
-          <h1>Hits </h1>
-          <h2>Dealt : 60 Recived : 70</h2>
-        </div>
+        <h1>Score : 240</h1>
+        <h2 >Hits Dealt : 60</h2>
+        <h2 style={{marginTop:'0px'}}> Hits Recived : 70</h2>
+        
+        <h2 style={{marginTop:'0px'}}> Coins picked up : 350</h2>
+        <h2 style={{marginTop:'0px'}}> Place on leaderboard : 5</h2>
+        <Space size='m'/>
+        <h1>Past Top Scores</h1>
+        <ul>
+          <li >154</li>
+          <li>120</li>
+          <li>55</li>
+          <li>21</li>
+        </ul>
         <Space size='m'/>
         <Button onClick={homepage} text="Home" />
       </Center>
