@@ -33,6 +33,10 @@ const infopage = () => {
   navigate('/tutorial');
 }
 
+const gameoverpage = () => {
+  navigate('/gameover');
+}
+
 const Game = (props: any) => {
   const [ userIsLoggedIn, setUserIsLoggedIn ] = useState<boolean>(false);
   useEffect(
@@ -59,6 +63,7 @@ const Game = (props: any) => {
             <Button onClick={resume} text="Play" />
             <Button onClick={profilepage} text="Account" />
             <Button onClick={infopage} text="Tutorial" />
+            <Button onClick={gameoverpage} text="GameOver" />
           </>
         }
         {!userIsLoggedIn &&

@@ -107,9 +107,17 @@ export class GameRoom extends Room < GameState > {
 		}, 1000 / 60);
 		
 	}
-	
+
 	cancelGameLoop() {
 		this.clock.clear()
+	}
+
+	gameOver(){
+		this.cancelGameLoop();
+		this.state.players.forEach((player: Player) => {
+			player.gameOver = true;
+		});
+		
 	}
 
 	spawnCoin(){
@@ -152,9 +160,7 @@ export class GameRoom extends Room < GameState > {
 		this.state.countdown.elaspseTime();
 
 		if (this.state.countdown.done) {
-			this.state.players.forEach((player: Player) => {
-				player.gameOver = true;
-			});
+			this.gameOver();
 		}
 
 		for (let i = this.state.coins.size; i < this.state.players.size * 5; i++) {

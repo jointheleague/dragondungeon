@@ -7,6 +7,7 @@ const Home = lazy(() => import("./scenes/Home"));
 const ErrorRoute = lazy(() => import("./scenes/ErrorRoute"));
 const Profile = lazy(() => import("./scenes/Profile"));
 const Tutorial = lazy(() => import("./scenes/Tutorial"));
+const GameOver = lazy(() => import("./scenes/GameOver"));
 const NewUser = lazy(() => import("./scenes/NewUser"));
 
 interface IProps {}
@@ -37,6 +38,7 @@ class App extends Component {
           <Home path="/"/>
           <Profile path="/profile"/>
           <Tutorial path="/tutorial"/>
+          <GameOver path="/gameover"/>
           <NewUser path="/onboarding" />
           <ErrorRoute default/>
         </Router>
