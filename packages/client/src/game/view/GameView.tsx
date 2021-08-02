@@ -176,7 +176,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
           }}
           onMove={(evt:any, data: any) => console.log(data.direction)}/>
        <ScrollDisable/>
-          <div style={{marginLeft : '3vw'}}>
+          <div style={{marginLeft : '3vw', display:'flex'}}>
             <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard>
           </div>
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />

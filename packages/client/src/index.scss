@@ -49,10 +49,13 @@ h1 {
   font-weight: bolder;
 }
 
-ul {
+.scores {
   list-style-type: circle;
+  
 }
 
-ul li {
+.scores li {
   font-size: 25px;
+  max-width: 350px;
+  align-self: center;
 }

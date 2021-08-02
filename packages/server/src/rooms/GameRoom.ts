@@ -32,7 +32,7 @@ admin.initializeApp({
 export class GameRoom extends Room < GameState > {
 	counter = 0;
 	botTimeout = 0;
-	maxClients: 10
+	maxClients: 10;
 
 	onCreate() {
 		this.setState(new GameState())
@@ -114,10 +114,10 @@ export class GameRoom extends Room < GameState > {
 
 	gameOver(){
 		this.cancelGameLoop();
+		this.state.gameOver = true;
 		this.state.players.forEach((player: Player) => {
 			player.gameOver = true;
 		});
-		
 	}
 
 	spawnCoin(){
@@ -298,7 +298,7 @@ export class GameRoom extends Room < GameState > {
 				}
 
 				for(let cid of this.state.coins.keys()){
-					if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) == true && this.state.players[id].coins < 10) {
+					if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) && this.state.players[id].coins < 10) {
 						var coins = this.state.players[id].coins;
 						switch(this.state.coins[cid].getSize()){
 							case (20):

@@ -7,6 +7,7 @@ import { ColyseusService } from '@dragoncoin/client/src/services/colyseus'
 
 import { show_error_banner } from '../util/banner';
 
+
 interface IProps extends RouteComponentProps {
   colyseus: ColyseusService
   roomId?: string
@@ -18,9 +19,12 @@ interface IState {
 
 export default class Game extends Component<IProps, IState>{
   stateManager: StateManager;
+
   state = {
-    loading: true
+    loading: true,
+    gameOver: false
   };
+
   constructor(props: IProps) {
     super(props)
     this.stateManager = new StateManager(this.props.colyseus, this.props.roomId || 'new')
@@ -44,6 +48,9 @@ export default class Game extends Component<IProps, IState>{
   }
 
   render(): ReactNode {
+    if(this.state.gameOver){
+      navigate('/gameover');
+    }
     if (this.state.loading) {
       return (
         <>

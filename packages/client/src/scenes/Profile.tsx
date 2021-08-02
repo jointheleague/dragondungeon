@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Center } from '../components/center';
+import { Box, Space, Center, Button } from '../components';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
@@ -41,7 +41,11 @@ const Profile = () => {
       <br /><br /><br />
       <Center>
         <a href="/">Back</a>
-        <h1>Profile</h1>
+        <Space size='l'/>
+        <Box>
+          <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>Profile</h1>
+        </Box>
+        <Space size='l'/>
         <img src={profilePicture} alt="Profile" height="50px"/>
         <h1>{DOMPurify.sanitize(currentUser.displayName) ? DOMPurify.sanitize(currentUser.displayName) : '...'}</h1>
         
@@ -180,6 +184,7 @@ const Profile = () => {
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Gold Dragon</h4>
         </div><br />
       </Center>
+        <Space size='xl'/>
     </>
   );
 }

@@ -22,6 +22,10 @@ export class StateManager {
       onAuthStateChanged(auth, user => user ? resolve(user) : reject());
     })
   }
+
+  gameOver(){
+    
+  }
   
 
   async getGameRoom(): Promise<Room> {

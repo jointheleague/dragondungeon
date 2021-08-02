@@ -26,9 +26,9 @@ const GameOver = () => {
         <h2 style={{marginTop:'0px'}}> Coins picked up : 350</h2>
         <h2 style={{marginTop:'0px'}}> Place on leaderboard : 5</h2>
         <Space size='m'/>
-        <h1>Past Top Scores</h1>
-        <ul>
-          <li >154</li>
+        <h1>Your Past Top Scores</h1>
+        <ul className="scores" style={{marginTop:'0px'}}>
+          <li>154</li>
           <li>120</li>
           <li>55</li>
           <li>21</li>
@@ -36,6 +36,15 @@ const GameOver = () => {
         <Space size='m'/>
         <Button onClick={homepage} text="Home" />
       </Center>
+      <p style={{height:'9999999px'}}></p>
+      <Center>
+        <h1>Top Score Ever</h1>
+        <ul className="scores" style={{marginTop:'0px'}}>
+          <li >999,999,999</li>
+          <li><a href="https://www.poetryfoundation.org/poems/46565/ozymandias" target="_blank" rel="noopener"> Look on my Works, ye Mighty, and despair!</a></li>
+        </ul>
+      </Center>
+      <Space size='giant'/>
     </>
   );
 }

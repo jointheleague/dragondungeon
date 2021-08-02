@@ -10,6 +10,7 @@ export interface IGameState {
   coins: {[key: string]: ICoin};
   bars: IBar[];
   countdown: ICountdown;
+  gameOver: boolean;
 }
 
 export interface ICountdown{

@@ -35,17 +35,11 @@ export class GameState extends Schema {
 	@type("boolean")
 	debugOn: boolean = false;
 
+	@type("boolean")
+	gameOver: boolean = false;
+
 	constructor() {
 		super();
-		let coinRadius = 200;
-		let coinCircleX = 250;
-		let coinCircleY = 250;
-		let numberOfCoins = 15;
-		/*
-		for (let i = 0; i < numberOfCoins; i++) {
-			this.coins.set(v4(), new Coin(i, Math.random()*2000, Math.random()*1000));
-		}
-		*/
 	}
 }
 
