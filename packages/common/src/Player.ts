@@ -129,7 +129,16 @@ export class Player extends Schema {
 		}
 		this.fireballCooldown -= ticks;
 		if ((this.autoshootOn || this.activeInputs.space) && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI), 22.5)) {
-			this.fireballCooldown = 10;
+			switch(this.ballType){
+				case "fire":
+					this.fireballCooldown = 8;
+					break;
+				case "ice" || "mud":
+					this.fireballCooldown = 10;
+					break;
+				default :
+					this.fireballCooldown = 12;
+			}
 			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType, 40);
 			this.fireballs.push(fireball);
 		}
