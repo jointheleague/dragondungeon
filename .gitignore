@@ -5,4 +5,5 @@ node_modules/
 *.log
 packages/server/top_secret
 packages/common/build
+*.DS_Store
 yarn_error.log
