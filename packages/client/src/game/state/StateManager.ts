@@ -8,6 +8,7 @@ const auth = getAuth();
 
 export class StateManager {
   room!: Room<IGameState>;
+
   constructor(
      private readonly colyseus: ColyseusService,
      private readonly lobby: string
@@ -22,11 +23,6 @@ export class StateManager {
       onAuthStateChanged(auth, user => user ? resolve(user) : reject());
     })
   }
-
-  gameOver(){
-    
-  }
-  
 
   async getGameRoom(): Promise<Room> {
     var user;

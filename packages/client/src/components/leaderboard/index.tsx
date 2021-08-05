@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 
 import './leaderboard.scss';
 import {IGameState, IPlayer, ICountdown} from 'game/state/types';
+
 interface GameViewProps {
   state: IGameState;
 }
+
 interface LeaderboardProps {
   p: {[key: string]: IPlayer}
   t: ICountdown
@@ -14,6 +16,7 @@ interface Ranking {
   onlineName: string;
   score: number;
 }
+
 interface LeaderboardState {
   rankings: Ranking[];
 }
@@ -54,6 +57,17 @@ renderCountdown(){
   if(this.props.t.done){
     return <h2>Game Over</h2>
   }
+  
+  if(this.props.t.minutes === 0){
+    if(Math.floor(this.props.t.seconds) <= 30){
+      if(Math.floor(this.props.t.seconds) <= 10){
+        return <h1 style={{color:'red', fontSize:'50px', marginTop:'20px'}}>{Math.floor(this.props.t.seconds)}</h1>
+      }
+      return <h1 style={{color:'orange'}}>{Math.floor(this.props.t.seconds)}</h1>
+    }
+    return <h2>0 : {Math.floor(this.props.t.seconds)}</h2>
+  }
+
   if(Math.floor(this.props.t.seconds) < 10){
     return <h2>{this.props.t.minutes} : 0{Math.floor(this.props.t.seconds)}</h2>
   }

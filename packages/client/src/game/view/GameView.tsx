@@ -25,8 +25,8 @@ import { navigate } from '@reach/router';
 interface GameViewProps {
   stateManager: StateManager;
   state: IGameState;
-
 }
+
 const scale = 1;
 interface GameViewState{};
 

@@ -38,7 +38,7 @@ export class GameRoom extends Room < GameState > {
 		this.setState(new GameState())
 		this.registerMessages();
 		this.startGameLoop();
-		this.state.countdown = new Countdown(5, 0);
+		this.state.countdown = new Countdown(0, 20);// should be 5, 0 'min, sec'
 	}
 
 	async onJoin(client: Client, options: {token: string}, _2: any) {
@@ -239,7 +239,9 @@ export class GameRoom extends Room < GameState > {
 				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
 					if (id != id2) {
 						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y)) {
-						    var fireBall = this.state.players[id2].fireballs[i];
+						    this.state.players[id2].hitsDealt ++;
+							this.state.players[id].hitsRecived ++;
+							var fireBall = this.state.players[id2].fireballs[i];
 							const coinChance = .2; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
 							const lifetimeRemove = 1; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
 
@@ -299,6 +301,7 @@ export class GameRoom extends Room < GameState > {
 
 				for(let cid of this.state.coins.keys()){
 					if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) && this.state.players[id].coins < 10) {
+						
 						var coins = this.state.players[id].coins;
 						switch(this.state.coins[cid].getSize()){
 							case (20):
@@ -312,8 +315,10 @@ export class GameRoom extends Room < GameState > {
 								break;
 							case (100):
 								this.state.players[id].score += 50;
+								this.state.players[id].coinsPickedUp += 50;
 								break;
 						}
+						this.state.players[id].coinsPickedUp += Math.min(coins, 10)-this.state.players[id].coins;
 						this.state.players[id].coins = Math.min(coins,10);
 						this.state.coins.delete(cid);
 					}

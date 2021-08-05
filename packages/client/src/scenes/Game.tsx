@@ -21,8 +21,7 @@ export default class Game extends Component<IProps, IState>{
   stateManager: StateManager;
 
   state = {
-    loading: true,
-    gameOver: false
+    loading: true
   };
 
   constructor(props: IProps) {
@@ -48,9 +47,6 @@ export default class Game extends Component<IProps, IState>{
   }
 
   render(): ReactNode {
-    if(this.state.gameOver){
-      navigate('/gameover');
-    }
     if (this.state.loading) {
       return (
         <>
@@ -59,7 +55,11 @@ export default class Game extends Component<IProps, IState>{
         </>
       )
     }
-    return <CoreView stateManager={this.stateManager}/>
+    return (
+      <>
+        <CoreView stateManager={this.stateManager}/>
+      </>
+    )
   }
 
 }

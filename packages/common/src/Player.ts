@@ -55,6 +55,15 @@ export class Player extends Schema {
 	@type("boolean")
 	gameOver: boolean = false;
 
+	@type("number")
+	hitsRecived: number = 0;
+
+	@type("number")
+	hitsDealt: number = 0;
+
+	@type("number")
+	coinsPickedUp: number = 0;
+
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
 
 	activeInputs: IInputs = {

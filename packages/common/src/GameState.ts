@@ -11,6 +11,7 @@ import { CoinJar } from './CoinJar';
 import { v4 } from "uuid";
 import { BorderFence } from './BorderFence';
 import { Countdown } from './Countdown';
+
 export class GameState extends Schema {
 	@type("boolean")
 	first: boolean = false;

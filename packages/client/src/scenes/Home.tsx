@@ -63,7 +63,6 @@ const Game = (props: any) => {
             <Button onClick={resume} text="Play" />
             <Button onClick={profilepage} text="Account" />
             <Button onClick={infopage} text="Tutorial" />
-            <Button onClick={gameoverpage} text="GameOver" />
           </>
         }
         {!userIsLoggedIn &&

@@ -40,6 +40,9 @@ export interface IPlayer {
   onlineID: string;
   ballType: string;
   skinType: string;
+  hitsRecived: number;
+  hitsDealt: number;
+  coinsPickedUp: number;
 }
 
 export interface ICoin{
