@@ -155,6 +155,7 @@ export class GameRoom extends Room<GameState> {
 		} while (Maths.checkWalls(newX, newY, 20))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20));
 	}
+	
 	moveBot(id, botDir) {
 		let yMove = Math.random() > 0.5;
 		let xMove = Math.random() > 0.5

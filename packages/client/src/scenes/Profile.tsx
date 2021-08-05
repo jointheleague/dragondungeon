@@ -46,29 +46,29 @@ const Profile = () => {
           <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>Profile</h1>
         </Box>
         <Space size='l'/>
-        <img src={profilePicture} alt="Profile" height="50px"/>
+        <img src={profilePicture} style={{ imageRendering: 'pixelated'}} alt="Profile" height="100px"/>
         <h1>{DOMPurify.sanitize(currentUser.displayName) ? DOMPurify.sanitize(currentUser.displayName) : '...'}</h1>
         
         {userStats.highscore ? 
           <>
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> High Score: {userStats.highscore}</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Lifetime Coins: {userStats.coins}</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Damage Done: {userStats.damagedone}</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Damage Taken: {userStats.damagetaken}</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: {(userStats.damagedone / userStats.damagetaken).toFixed(2)}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Lifetime Score: {userStats.totalScore}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Lifetime games played: {userStats.totalGames}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Hits Dealt: {userStats.damagedone}</h3>
+            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Hits Recived: {userStats.damagetaken}</h3>
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Medals Earned: {userStats.medals}</h3>
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen ball type: {userStats.ballType}</h3>
             <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen skin: {userStats.skin}</h3>
           </>
         : <>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> High Score: X</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Lifetime Coins: X</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Damage Done: X</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Damage Taken: X</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> K/D (Damage Done/Taken) Ratio: X/X</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Medals Earned: X</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen ball type: X</h3>
-            <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen skin: X</h3>
+        <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> High Score: X</h3>
+        <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Lifetime Score: X</h3>
+        <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Lifetime games played: X</h3>
+        <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Hits Dealt: X</h3>
+        <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Hits Recived: X</h3>
+        <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Medals Earned: X</h3>
+        <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen ball type: X</h3>
+        <h3><img src="/icon.png" style={{imageRendering: 'pixelated'}} height="20px" alt="Coin" /> Chosen skin:X</h3>
           </>}
           <br /><br /><br />
         <div style={{
@@ -83,7 +83,7 @@ const Profile = () => {
         }}>
           <img src="/fireball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated'}} height="50px" alt="Fireball" />
           <br />
-          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px' }}>Fireballs</h4>
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'}}>Fireballs</h4>
         </div><br />
         <div style={{
           backgroundColor: '#0081b2',
@@ -125,7 +125,7 @@ const Profile = () => {
         }}>
           <img src="/poisonball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
           <br />
-          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Poisonballs</h4>
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px' }}>Poisonballs</h4>
         </div><br />
         <div style={{
           backgroundColor: '#312103',
