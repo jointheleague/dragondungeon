@@ -149,7 +149,9 @@ export class GameRoom extends Room<GameState> {
 	}
 	moveBot(id, botDir) {
 		let yMove = Math.random() > 0.5;
-		let xMove = Math.random() > 0.5
+		let xMove = Math.random() > 0.5;
+		let space = Math.random() > 0.7;
+		let angle = Math.random() * (Math.PI*2);
 		let left = xMove;
 		let right = !xMove;
 		let up = yMove;
@@ -160,6 +162,8 @@ export class GameRoom extends Room<GameState> {
 			down: down,
 			left: left,
 			right: right,
+			space: space,
+			angle: angle,
 		});
 
 	}
