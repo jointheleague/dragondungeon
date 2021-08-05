@@ -40,7 +40,7 @@ export class GameRoom extends Room<GameState> {
 		this.setState(new GameState())
 		this.registerMessages();
 		this.startGameLoop();
-		this.state.countdown = new Countdown(0, 20);// should be 5, 0 'min, sec'
+		this.state.countdown = new Countdown(5, 0);// should be 5, 0 'min, sec'
 	}
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
