@@ -54,37 +54,53 @@ export class GameRoom extends Room<GameState> {
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
 		const user = await admin.auth().verifyIdToken(options.token);
-		var s1 = "";
-		var s2 = "";
-		switch (Math.floor(Math.random() * 5)) {
-			case 0:
-				s1 = "fire";
-				break;
-			case 1:
-				s1 = "ice";
-				break;
-			case 2:
-				s1 = "poison";
-				break;
-			case 3:
-				s1 = "mud";
-				break;
-			case 4:
-				s1 = "electric";
-				break;
+
+		const db = admin.firestore();
+
+		let ballType = "fireball";
+		let dragonSkin = "default";
+
+		const userDoc = await db.collection(user.uid).doc("gameplay").get();
+		if (userDoc.data().ballType) {
+			ballType = userDoc.data().ballType;
+		} else {
+			switch ( Math.floor( Math.random() * 5 ) ) {
+				case 0:
+					 ballType = "fire";
+					 break;
+				case 1:
+					ballType = "ice";
+					  break;
+				case 2:
+					ballType = "poison";
+					break;
+				case 3:
+					ballType = "mud";
+					break;
+				case 4:
+					ballType = "electricity";
+					break;
+			}
 		}
-		switch (Math.floor(Math.random() * 3)) {
-			case 0:
-				s2 = "normal";
-				break;
-			case 1:
-				s2 = "light";
-				break;
-			case 2:
-				s2 = "gold";
-				break;
+
+		if (userDoc.data().dragonSkin) {
+			dragonSkin = userDoc.data().dragonSkin;
+		} else {
+			switch ( Math.floor( Math.random() * 3 ) ) {
+				case 0:
+					 dragonSkin = "default";
+					 break;
+				case 1:
+					dragonSkin = "light";
+					  break;
+				case 2:
+					dragonSkin = "gold";
+					break;
+			}
 		}
-		this.state.players[client.id] = new Player(s1, s2);
+
+		this.state.players[client.id] = new Player(ballType, dragonSkin);
+
 		if (user.name == null) {
 			const adjectives = require('../../wordlists/adjectives.json');
 			const nouns = require('../../wordlists/nouns.json');
@@ -125,7 +141,7 @@ export class GameRoom extends Room<GameState> {
 
 	gameOver(){
 		this.cancelGameLoop();
-		this.state.gameOver = true;
+		// this.state.gameOver = true;
 		this.state.players.forEach((player: Player) => {
 			player.dead = true;
 		});

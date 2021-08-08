@@ -25,9 +25,9 @@ const Info = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/lightDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="60px" alt="Dragon" />
+          <img src="/lightDragon.png" style={{ imageRendering: 'pixelated' }} height="60px" alt="Dragon" />
           <br />
-          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px', alignSelf: 'center' }}>Controls</h4>
+          <h4 style={{ paddingLeft: '30px', alignSelf: 'center' }}>Controls</h4>
         </div>
         <br />
         <p style={{textAlign:'center'}}>
@@ -44,9 +44,9 @@ const Info = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/Icon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated', paddingTop: '10px' }} height="40px" alt="Coin" />
+          <img src="/Icon.png" style={{ imageRendering: 'pixelated', paddingTop: '10px' }} height="40px" alt="Coin" />
           <br />
-          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px', alignSelf: 'center' }}>Coins</h4>
+          <h4 style={{ paddingLeft: '30px', alignSelf: 'center' }}>Coins</h4>
         </div>
         <br />
         <p style={{textAlign:'center'}}> Collecting coins is how you increase your Score, differently sized coins are worth different ammounts,
@@ -63,9 +63,9 @@ const Info = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/coinJar.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="60px" alt="Coin Jar" />
+          <img src="/coinJar.png" style={{ imageRendering: 'pixelated' }} height="60px" alt="Coin Jar" />
           <br />
-          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px', alignSelf: 'center' }}>Goal</h4>
+          <h4 style={{ paddingLeft: '30px', alignSelf: 'center' }}>Goal</h4>
         </div>
         <br />
         <p style={{textAlign:'center'}}>The goal of the game is to pick up coins and bring them back to the coin jar in the center <br/> (shown above)</p>
@@ -79,9 +79,9 @@ const Info = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/Fireball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="60px" alt="Fireball" />
+          <img src="/Fireball.png" style={{ imageRendering: 'pixelated' }} height="60px" alt="Fireball" />
           <br />
-          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px', alignSelf: 'center' }}>Fireballs</h4>
+          <h4 style={{ paddingLeft: '30px', alignSelf: 'center' }}>Fireballs</h4>
         </div>
         <br />
         <p style={{textAlign:'center'}}>Fireballs are how you interact with other players and try to prevent them from caching coins
