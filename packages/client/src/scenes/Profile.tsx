@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Box, Space, Center, Button } from '../components';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
+import { getFirestore, getDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
 import DOMPurify from 'dompurify';
 
@@ -81,7 +81,12 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/fireball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated'}} height="50px" alt="Fireball" />
+          <img src="/fireball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated'}} height="50px" alt="Fireball" onClick={() => {
+            var gameplayDoc = doc(db, currentUser.uid, "gameplay");
+            setDoc(gameplayDoc, {
+              ballType: "fire",
+            }, { merge: true });
+          }} />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'}}>Fireballs</h4>
         </div><br />
@@ -95,7 +100,12 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/iceball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
+          <img src="/iceball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" onClick={() => {
+            var gameplayDoc = doc(db, currentUser.uid, "gameplay");
+            setDoc(gameplayDoc, {
+              ballType: "ice",
+            }, { merge: true });
+          }} />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Iceballs</h4>
         </div><br />
@@ -109,7 +119,12 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/electricball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
+          <img src="/electricball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" onClick={() => {
+            var gameplayDoc = doc(db, currentUser.uid, "gameplay");
+            setDoc(gameplayDoc, {
+              ballType: "electricity",
+            }, { merge: true });
+          }} />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Electricballs</h4>
         </div><br />
@@ -123,7 +138,12 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/poisonball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
+          <img src="/poisonball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" onClick={() => {
+            var gameplayDoc = doc(db, currentUser.uid, "gameplay");
+            setDoc(gameplayDoc, {
+              ballType: "poison",
+            }, { merge: true });
+          }} />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px' }}>Poisonballs</h4>
         </div><br />
@@ -137,7 +157,12 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/mudball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" />
+          <img src="/mudball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball"  onClick={() => {
+            var gameplayDoc = doc(db, currentUser.uid, "gameplay");
+            setDoc(gameplayDoc, {
+              ballType: "mud",
+            }, { merge: true });
+          }}/>
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Mudballs</h4>
         </div><br />
@@ -151,7 +176,12 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/basicDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Basic Dragon" />
+          <img src="/basicDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Basic Dragon" onClick={() => {
+            var gameplayDoc = doc(db, currentUser.uid, "gameplay");
+            setDoc(gameplayDoc, {
+              dragonSkin: "basic",
+            }, { merge: true });
+          }}/>
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Basic Dragon</h4>
         </div><br />
@@ -165,7 +195,12 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/lightDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Light Dragon" />
+          <img src="/lightDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Light Dragon" onClick={() => {
+            var gameplayDoc = doc(db, currentUser.uid, "gameplay");
+            setDoc(gameplayDoc, {
+              dragonSkin: "light",
+            }, { merge: true });
+          }} />
           <br />
           <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Light Dragon</h4>
         </div><br />
@@ -179,9 +214,14 @@ const Profile = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/goldDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Gold Dragon" />
+          <img src="/goldDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Gold Dragon" onClick={() => {
+            var gameplayDoc = doc(db, currentUser.uid, "gameplay");
+            setDoc(gameplayDoc, {
+              dragonSkin: "gold",
+            }, { merge: true });
+          }} />
           <br />
-          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Gold Dragon</h4>
+          <h4 style={{ cursor: 'pointer' , paddingLeft: '30px'  }}>Golden Dragon</h4>
         </div><br />
       </Center>
         <Space size='xl'/>

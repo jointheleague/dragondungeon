@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Space, Center, Button } from '../components';
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInAnonymously } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInAnonymously, signOut } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
 
@@ -19,7 +19,7 @@ const resume = () => {
       if (user_data.exists()) {
         navigate('/play/random');
       } else {
-        navigate('/onboarding');
+        navigate('/story');
       }
     }
   });
@@ -35,6 +35,11 @@ const infopage = () => {
 
 const gameoverpage = () => {
   navigate('/gameover');
+}
+
+const logout = async () => {
+  await signOut(auth);
+  window.location.reload();
 }
 
 const Game = (props: any) => {
@@ -63,6 +68,7 @@ const Game = (props: any) => {
             <Button onClick={resume} text="Play" />
             <Button onClick={profilepage} text="Account" />
             <Button onClick={infopage} text="Tutorial" />
+            <Button onClick={logout} text="Log Out" />
           </>
         }
         {!userIsLoggedIn &&
