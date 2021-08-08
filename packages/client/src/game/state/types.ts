@@ -11,6 +11,8 @@ export interface IGameState {
   bars: IBar[];
   countdown: ICountdown;
   gameOver: boolean;
+  bats: {[key: string]: IBat};
+  batRot: number;
 }
 
 export interface ICountdown{
@@ -43,6 +45,7 @@ export interface IPlayer {
   hitsRecived: number;
   hitsDealt: number;
   coinsPickedUp: number;
+  dead: boolean;
 }
 
 export interface ICoin{
@@ -61,6 +64,12 @@ export interface ICoinJar{
 export interface ILeaderboard{
   name: string;
   score: number;
+}
+
+export interface IBat{
+  key: number;
+  x: number;
+  y: number;
 }
 
 

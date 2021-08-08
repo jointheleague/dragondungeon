@@ -10,5 +10,8 @@ import {CoinJar} from './CoinJar';
 import {BorderFence} from './BorderFence';
 import {MovingBackground} from './MovingBackground';
 import {Countdown} from './Countdown';
+import {CircleBat} from './Bat';
+import {LineBat} from './Bat';
+import {Bat} from './Bat';
 
-export {IInputs, Maths, Geometry, Fireball, GameState, Coin, Bar, Player, CoinJar, BorderFence, MovingBackground, Countdown};
+export {IInputs, Maths, Geometry, Fireball, GameState, Coin, Bar, Player, CoinJar, BorderFence, MovingBackground, Countdown, CircleBat, LineBat, Bat};

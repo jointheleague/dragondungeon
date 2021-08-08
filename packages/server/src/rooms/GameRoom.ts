@@ -17,7 +17,10 @@ import {
 	Bar,
 	Maths,
 	Countdown,
-	Fireball
+	Fireball,
+	Bat,
+	CircleBat,
+	LineBat
 } from '@dragoncoin/common';
 
 import * as admin from 'firebase-admin';
@@ -40,7 +43,13 @@ export class GameRoom extends Room<GameState> {
 		this.setState(new GameState())
 		this.registerMessages();
 		this.startGameLoop();
-		this.state.countdown = new Countdown(5, 0);// should be 5, 0 'min, sec'
+		this.state.countdown = new Countdown(5, 0);// should be '5, 0'
+		for(var i = 0; i < 3; i++){
+			this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .03, 85*i + 70, 0));
+		}
+		for(var i = 0; i < 3; i++){
+			this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .03, 85*i + 70, Math.PI));
+		}
 	}
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
@@ -61,7 +70,7 @@ export class GameRoom extends Room<GameState> {
 				s1 = "mud";
 				break;
 			case 4:
-				s1 = "electricity";
+				s1 = "electric";
 				break;
 		}
 		switch (Math.floor(Math.random() * 3)) {
@@ -118,7 +127,7 @@ export class GameRoom extends Room<GameState> {
 		this.cancelGameLoop();
 		this.state.gameOver = true;
 		this.state.players.forEach((player: Player) => {
-			player.gameOver = true;
+			player.dead = true;
 		});
 	}
 
@@ -174,8 +183,10 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	tick() {
+
 		this.counter++;
 		const dx = this.clock.deltaTime;
+		this.state.batRot += Math.PI /120;
 		this.state.countdown.elaspseTime();
 
 		if (this.state.countdown.done) {
@@ -213,6 +224,9 @@ export class GameRoom extends Room<GameState> {
 			this.state.players.set(v4(), bot);
 		}
 
+		for(let bat of this.state.bats.values()){
+			bat.move(dx);
+		}
 
 		for (let id of this.state.players.keys()) {
 			if (this.state.players[id].isBot && this.botTimeout == 0) {
@@ -281,13 +295,13 @@ export class GameRoom extends Room<GameState> {
 
 
 							switch (fireBall.type) {
-								case "electricity":
+								case "electric":
 									if (this.state.players[id2].fireballs.length < 10 && Math.random() > .9) {
 										const angle = Math.random() * 6.28;
 										const newX = this.state.players[id].x + 50 * Math.cos(angle);
 										const newY = this.state.players[id].y + 50 * Math.sin(angle);
 										if (!Maths.checkWalls(newX, newY, 22.5)) {
-											this.state.players[id2].fireballs.push(new Fireball(newX, newY, angle + Math.PI, 7, "electricity", 20));
+											this.state.players[id2].fireballs.push(new Fireball(newX, newY, angle + Math.PI, 7, "electric", 20));
 
 										}
 									}
@@ -305,51 +319,57 @@ export class GameRoom extends Room<GameState> {
 					}
 				}
 
-				if (this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y)) {
-					// when a player has collided with the coinjar
-					this.state.players[id].score += this.state.players[id].coins;// add coins to players score
-					this.state.players[id].coins = 0;// remove coins
-				}
-
-				for(let cid of this.state.coins.keys()){
-					if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) && this.state.players[id].coins < 10) {
-						
-						var coins = this.state.players[id].coins;
-						switch (this.state.coins[cid].getSize()) {
-							case (20):
-								coins++;
-								break;
-							case (25):
-								coins += 2;
-								break;
-							case (30):
-								coins += 4;
-								break;
-							case (100):
-								this.state.players[id].score += 50;
-								this.state.players[id].coinsPickedUp += 50;
-								break;
-						}
-						this.state.players[id].coinsPickedUp += Math.min(coins, 10)-this.state.players[id].coins;
-						this.state.players[id].coins = Math.min(coins,10);
-						this.state.coins.delete(cid);
-					}
-				}
-
-				if (this.state.players[id].x < 0) {
-					this.state.players[id].x = 0;
-				} else if (this.state.players[id].x > 2000) {
-					this.state.players[id].x = 2000;
-				}
-
-				if (this.state.players[id].y < 0) {
-					this.state.players[id].y = 0;
-				} else if (this.state.players[id].y > 2000) {
-					this.state.players[id].y = 2000;
-				}
-
 			}
-			// console.log(id + "  " + this.state.players[id].score);
+
+			if (this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y)) {
+				// when a player has collided with the coinjar
+				this.state.players[id].score += this.state.players[id].coins;// add coins to players score
+				this.state.players[id].coins = 0;// remove coins
+			}
+
+			for(let cid of this.state.coins.keys()){
+				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) && this.state.players[id].coins < 10) {
+					
+					var coins = this.state.players[id].coins;
+					switch (this.state.coins[cid].getSize()) {
+						case (20):
+							coins++;
+							break;
+						case (25):
+							coins += 2;
+							break;
+						case (30):
+							coins += 4;
+							break;
+						case (100):
+							this.state.players[id].score += 50;
+							this.state.players[id].coinsPickedUp += 50;
+							break;
+					}
+					this.state.players[id].coinsPickedUp += Math.min(coins, 10)-this.state.players[id].coins;
+					this.state.players[id].coins = Math.min(coins,10);
+					this.state.coins.delete(cid);
+				}
+			}
+			/*
+			if (this.state.players[id].x < 0) {
+				this.state.players[id].x = 0;
+			} else if (this.state.players[id].x > 2000) {
+				this.state.players[id].x = 2000;
+			}
+
+			if (this.state.players[id].y < 0) {
+				this.state.players[id].y = 0;
+			} else if (this.state.players[id].y > 2000) {
+				this.state.players[id].y = 2000;
+			}*/
+
+			for(let bat of this.state.bats.values()){
+				if(bat.checkHit(this.state.players[id].x, this.state.players[id].y)){
+					this.state.players[id].deceleration = 3;
+					this.state.players[id].fireballCooldown += .15;
+				}
+			}
 		}
 	}
 }

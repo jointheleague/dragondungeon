@@ -9,6 +9,7 @@ import { FireballView } from './entities/fireball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
+import { Bat } from './entities/bat';
 import { BorderFence } from './entities/borderFence';
 import { Wall } from './entities/wall';
 import { MovingBackground } from './entities/movingBackground';
@@ -21,6 +22,7 @@ import { Bar } from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
 import { show_error_banner } from 'util/banner';
 import { navigate } from '@reach/router';
+import { continueStatement } from '@babel/types';
 
 interface GameViewProps {
   stateManager: StateManager;
@@ -66,6 +68,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const healthBars = [];
     const tiles = [];
     const walls = [];
+    const bats = [];
     const coinJar = <CoinJar key={"only"} x={1000} y={1000}/>;
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
@@ -85,13 +88,16 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       leaderboard.push(Leaderboard)
     }
 
-    //for(var i = 0; i < 8; i++){
-    //  fences.push(<BorderFence x={i*267+60} y={-76} angle={0} key={`fence1${i}`} />);
-    //  fences.push(<BorderFence x={i*267+60} y={2076} angle={0} key={`fence2${i}`} />);
-    //  fences.push(<BorderFence x={-76} y={i*267+60} angle={Math.PI/2} key={`fence3${i}`} />);
-    //  fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2} key={`fence4${i}`} />);
+    console.log("at least reached in gameview");
+    for(let bid in state.bats){
+      console.log("bat displayed");
+      bats.push(<Bat x={state.bats[bid].x} y={state.bats[bid].y} rot={0} key={bid}/>)
+    }
+    //</Bat>for(var i = 0; i < 4; i++){
+    //  bats.push(<Bat x={1000 + (60*i + 60)*Math.cos(state.batRot)} y={1000 + (60*i + 60)*Math.sin(state.batRot)} rot={0}/>)
     //}
-  
+
+
     const xLen = 455.625;
     const xLen2 = 275.625;
     const xLen3 = 185.625;
@@ -143,7 +149,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size}/>);
     }
     render(
-      <>{tiles}{coinJar}{walls}{coins}{players}{fireballs}{healthBars}</>, 
+      <>{tiles}{coinJar}{walls}{coins}{players}{bats}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }

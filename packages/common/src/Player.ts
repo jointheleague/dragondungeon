@@ -53,7 +53,7 @@ export class Player extends Schema {
 	autoshootOn: boolean = false;
 
 	@type("boolean")
-	gameOver: boolean = false;
+	dead: boolean = false;
 
 	@type("number")
 	hitsRecived: number = 0;
@@ -130,14 +130,20 @@ export class Player extends Schema {
 		this.fireballCooldown -= ticks;
 		if ((this.autoshootOn || this.activeInputs.space) && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI), 22.5)) {
 			switch(this.ballType){
-				case "fire":
-					this.fireballCooldown = 8;
+				case "electric":
+					this.fireballCooldown = 12;
 					break;
-				case "ice" || "mud":
+				case "poison":
+					this.fireballCooldown = 12;
+					break;
+				case "ice":
+					this.fireballCooldown = 10;
+					break;
+				case "mud":
 					this.fireballCooldown = 10;
 					break;
 				default :
-					this.fireballCooldown = 12;
+					this.fireballCooldown = 8;
 			}
 			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType, 40);
 			this.fireballs.push(fireball);

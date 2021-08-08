@@ -48,12 +48,12 @@ export const FireballView = (props: IProps) => {
     //Create textures from sprites
 
     let fireballImages = [];
-    console.log("fireball displayed with type, " + props.fireball.type + "; w, " + props.fireball.width + "; x, " + props.fireball.x);
+    //console.log("fireball displayed with type, " + props.fireball.type + "; w, " + props.fireball.width + "; x, " + props.fireball.x);
     switch(props.fireball.type){
       case "ice":
         fireballImages = [iceball1, iceball2, iceball3, iceball4];
         break;
-      case "electricity":
+      case "electric":
         fireballImages = [electricball1, electricball2, electricball3, electricball4];
         break;
       case "poison":

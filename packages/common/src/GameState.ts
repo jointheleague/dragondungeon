@@ -11,6 +11,8 @@ import { CoinJar } from './CoinJar';
 import { v4 } from "uuid";
 import { BorderFence } from './BorderFence';
 import { Countdown } from './Countdown';
+import { Bat } from './Bat';
+import { CircleBat } from './Bat';
 
 export class GameState extends Schema {
 	@type("boolean")
@@ -32,12 +34,18 @@ export class GameState extends Schema {
 
 	@type(Countdown)
 	countdown = new Countdown(0, 30);
+
+	@type(Bat)
+	bats = new MapSchema <Bat>();
 	
 	@type("boolean")
 	debugOn: boolean = false;
 
 	@type("boolean")
 	gameOver: boolean = false;
+
+	@type("number")
+	batRot: number = 0;
 
 	constructor() {
 		super();

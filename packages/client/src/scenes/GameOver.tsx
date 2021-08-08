@@ -50,7 +50,7 @@ class GameOverLeaderboard extends Component <LeaderboardProps, LeaderboardState>
 }
 
 renderTableHeader() {
-  let header = (["Name","Coins"])
+  let header = (["Name","Score"])
   return header.map((key, index) => {
      return <th key={index}>{key.toUpperCase()}</th>
   })
