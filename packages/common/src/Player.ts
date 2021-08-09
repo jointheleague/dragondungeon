@@ -11,10 +11,10 @@ export class Player extends Schema {
 	fireballs = new ArraySchema < Fireball > ();
 
 	@type("number")
-	x: number = Math.random()*2000;
+	x: number = 0;
 
 	@type("number")
-	y: number = Math.random()*2000;
+	y: number = 0;
 
 	@type("number")
 	angle: number = Math.PI;
@@ -77,23 +77,23 @@ export class Player extends Schema {
 		space: false
 	};
 
-	setPosition(){
-		var newX = 0;
-		var newY = 0;
-		do {
-			newX = Math.random()*2000;
-			newY = Math.random()*2000;
-		}while (Maths.checkWalls(newX, newY, 45))
-		this.x = newX;
-		this.y = newY;
-	} 
-
 	constructor(ballType : string, skinType : string) {
 		super()
 		this.ballType = ballType;
 		this.skinType = skinType;
 		this.setPosition();
 	}
+
+	setPosition(){
+		var newX = 0;
+		var newY = 0;
+		do {
+			newX = Math.random()*2000;
+			newY = Math.random()*2000;
+		}while (Maths.checkWalls(newX, newY, 45) ||  (newX > 500 && newY > 500 && newX < 1500 && newY < 1500))
+		this.x = newX;
+		this.y = newY;
+	} 
 
 	inputs(i: IInputs) {
 		if(i.autoshoot && !this.activeInputs.autoshoot){

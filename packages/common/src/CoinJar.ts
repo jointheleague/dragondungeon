@@ -15,12 +15,12 @@ export class CoinJar extends Schema {
 	}
 
 	checkHit(dragonX: number, dragonY: number) {
-		if (this.x-50 < dragonX+45 && this.x+50 > dragonX-45 && this.y-50 < dragonY+45 && this.y+50 > dragonY-45 ){
+		
+		if (Math.sqrt(Math.pow(this.x - dragonX, 2) + Math.pow(this.y - dragonY, 2)) < 95) {
 			return true;
 		} else {
 			return false
 		}
-
 	}
 
 }

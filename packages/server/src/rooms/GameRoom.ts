@@ -44,11 +44,11 @@ export class GameRoom extends Room<GameState> {
 		this.registerMessages();
 		this.startGameLoop();
 		this.state.countdown = new Countdown(5, 0);// should be '5, 0'
-		for(var i = 0; i < 3; i++){
-			this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .03, 85*i + 70, 0));
-		}
-		for(var i = 0; i < 3; i++){
-			this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .03, 85*i + 70, Math.PI));
+		const spokes = 2;//of center rotating bats
+		for(var j = 0; j < spokes; j++){
+			for(var i = 0; i < 3; i++){
+				this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .03, 85*i + 70, (Math.PI*2/spokes)*j));
+			}
 		}
 	}
 
@@ -383,7 +383,7 @@ export class GameRoom extends Room<GameState> {
 
 			for(let bat of this.state.bats.values()){
 				if(bat.checkHit(this.state.players[id].x, this.state.players[id].y)){
-					this.state.players[id].deceleration = 3;
+					this.state.players[id].deceleration = 2.5;
 					this.state.players[id].fireballCooldown += .15;
 				}
 			}
