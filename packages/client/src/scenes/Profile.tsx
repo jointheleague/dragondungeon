@@ -122,7 +122,7 @@ const Profile = () => {
           <img src="/electricball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" onClick={() => {
             var gameplayDoc = doc(db, currentUser.uid, "gameplay");
             setDoc(gameplayDoc, {
-              ballType: "electricity",
+              ballType: "electric",
             }, { merge: true });
           }} />
           <br />

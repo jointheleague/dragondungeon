@@ -78,7 +78,7 @@ export class GameRoom extends Room<GameState> {
 					ballType = "mud";
 					break;
 				case 4:
-					ballType = "electricity";
+					ballType = "electric";
 					break;
 			}
 		}
@@ -312,7 +312,8 @@ export class GameRoom extends Room<GameState> {
 
 							switch (fireBall.type) {
 								case "electric":
-									if (this.state.players[id2].fireballs.length < 10 && Math.random() > .9) {
+									//this.state.players[id2].fireballs.length < 10 &&
+									if ( Math.random() > .9) {
 										const angle = Math.random() * 6.28;
 										const newX = this.state.players[id].x + 50 * Math.cos(angle);
 										const newY = this.state.players[id].y + 50 * Math.sin(angle);
