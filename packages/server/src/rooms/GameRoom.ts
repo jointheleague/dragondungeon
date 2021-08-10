@@ -20,7 +20,10 @@ import {
 	Fireball,
 	Bat,
 	CircleBat,
-	LineBat
+	LineBat,
+	Skull,
+	CircleSkull,
+	LineSkull
 } from '@dragoncoin/common';
 
 import * as admin from 'firebase-admin';
@@ -47,9 +50,11 @@ export class GameRoom extends Room<GameState> {
 		const spokes = 2;//of center rotating bats
 		for(var j = 0; j < spokes; j++){
 			for(var i = 0; i < 3; i++){
-				this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .03, 85*i + 70, (Math.PI*2/spokes)*j));
+				this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .02, 85*i + 70, (Math.PI*2/spokes)*j));
 			}
 		}
+		this.state.skulls.set(v4(), new LineSkull(this.state.bats.size, 250, 1000, 5, 1500, 0));
+		this.state.skulls.set(v4(), new LineSkull(this.state.bats.size, 1000, 250, 5, 1500, Math.PI/2));
 	}
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
@@ -141,7 +146,7 @@ export class GameRoom extends Room<GameState> {
 
 	gameOver(){
 		this.cancelGameLoop();
-		// this.state.gameOver = true;
+		this.state.gameOver = true;
 		this.state.players.forEach((player: Player) => {
 			player.dead = true;
 		});
@@ -202,7 +207,6 @@ export class GameRoom extends Room<GameState> {
 
 		this.counter++;
 		const dx = this.clock.deltaTime;
-		this.state.batRot += Math.PI /120;
 		this.state.countdown.elaspseTime();
 
 		if (this.state.countdown.done) {
@@ -241,8 +245,13 @@ export class GameRoom extends Room<GameState> {
 		}
 
 		for(let bat of this.state.bats.values()){
-			bat.move(dx);
+			bat.move();
 		}
+
+		for(let skull of this.state.skulls.values()){
+			skull.move();
+		}
+
 
 		for (let id of this.state.players.keys()) {
 			if (this.state.players[id].isBot && this.botTimeout == 0) {
@@ -368,23 +377,25 @@ export class GameRoom extends Room<GameState> {
 					this.state.coins.delete(cid);
 				}
 			}
-			/*
-			if (this.state.players[id].x < 0) {
-				this.state.players[id].x = 0;
-			} else if (this.state.players[id].x > 2000) {
-				this.state.players[id].x = 2000;
-			}
-
-			if (this.state.players[id].y < 0) {
-				this.state.players[id].y = 0;
-			} else if (this.state.players[id].y > 2000) {
-				this.state.players[id].y = 2000;
-			}*/
 
 			for(let bat of this.state.bats.values()){
 				if(bat.checkHit(this.state.players[id].x, this.state.players[id].y)){
-					this.state.players[id].deceleration = 2.5;
-					this.state.players[id].fireballCooldown += .15;
+					this.state.players[id].deceleration = Math.min(this.state.players[id].deceleration + .4 , 2.5 );
+					this.state.players[id].fireballCooldown += .2;
+					break;
+				}
+			}
+			
+			for(let skull of this.state.skulls.values()){
+				if(skull.checkHit(this.state.players[id].x, this.state.players[id].y)){
+					if(Math.random() < .2 && this.state.players[id].coins > 0){
+						this.state.players[id].coins --;
+						this.createCoin(this.state.players[id].x, this.state.players[id].y);
+						if(Math.random() < .5 && this.state.players[id].score > 0){
+							this.state.players[id].score --;
+						}
+					}
+					break;
 				}
 			}
 		}

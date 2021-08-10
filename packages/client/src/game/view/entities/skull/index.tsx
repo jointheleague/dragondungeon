@@ -1,13 +1,9 @@
 import React, {useMemo} from 'react';
 import * as PIXI from 'pixi.js';
 import {AnimatedSprite} from '../AnimatedSprite';
-import batImage1 from './sprites/bat1.png';
-import batImage2 from './sprites/bat2.png';
-import batImage3 from './sprites/bat3.png';
-import batImage4 from './sprites/bat4.png';
-import batImage5 from './sprites/bat5.png';
-import batImage6 from './sprites/bat6.png';
-import batImage7 from './sprites/bat7.png';
+import skullImage1 from './sprites/skull1.png';
+import skullImage2 from './sprites/skull2.png';
+import skullImage3 from './sprites/skull3.png';
 
 interface IProps {
     key: string;
@@ -18,11 +14,11 @@ interface IProps {
 
 
 let ANIMATION_SPEED = 0;
-export const Bat = (props: IProps) => {
+export const Skull = (props: IProps) => {
   ANIMATION_SPEED = Math.random()/10;
   const coinTextures = useMemo(() => {
     //Create textures from spites
-    let coinImages = [batImage1, batImage2, batImage3, batImage4];
+    let coinImages = [skullImage1, skullImage2, skullImage3];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     coinImages.forEach(image =>{
       let texture = PIXI.Texture.from(image);
@@ -36,12 +32,13 @@ export const Bat = (props: IProps) => {
   if(angle > Math.PI/2 && angle < (Math.PI*3)/2){
     yS = -5;
   }
+
   
   return (
     <AnimatedSprite
     anchor = {new PIXI.Point(0.5, 0.5)}
-    width = {45}
-    height = {45}
+    width = {90}
+    height = {90}
     textures = {coinTextures}
     x = {props.x}
     animationSpeed = {ANIMATION_SPEED}

@@ -12,7 +12,7 @@ import { v4 } from "uuid";
 import { BorderFence } from './BorderFence';
 import { Countdown } from './Countdown';
 import { Bat } from './Bat';
-import { CircleBat } from './Bat';
+import { Skull } from './Skull';
 
 export class GameState extends Schema {
 	@type("boolean")
@@ -37,15 +37,15 @@ export class GameState extends Schema {
 
 	@type(Bat)
 	bats = new MapSchema <Bat>();
+
+	@type(Skull)
+	skulls = new MapSchema <Skull>();
 	
 	@type("boolean")
 	debugOn: boolean = false;
 
 	@type("boolean")
 	gameOver: boolean = false;
-
-	@type("number")
-	batRot: number = 0;
 
 	constructor() {
 		super();

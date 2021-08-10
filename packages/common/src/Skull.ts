@@ -1,7 +1,7 @@
 import { Schema, type } from "@colyseus/schema";
 import { Maths } from ".";
 
-export abstract class Bat extends Schema {
+export abstract class Skull extends Schema {
 	@type("number")
 	key: number;
 
@@ -28,7 +28,7 @@ export abstract class Bat extends Schema {
 	abstract move() : void;
 
 	checkHit(dragonX: number, dragonY: number) {
-		if (Math.sqrt((Math.pow((this.x) - (dragonX), 2)) + (Math.pow((this.y) - (dragonY), 2))) < 70) {
+		if (Math.sqrt((Math.pow((this.x) - (dragonX), 2)) + (Math.pow((this.y) - (dragonY), 2))) < 95) {
 			return true;
 		} else {
 			return false
@@ -40,18 +40,15 @@ export abstract class Bat extends Schema {
 
 //----------------------
 
-export class LineBat extends Bat {
+export class LineSkull extends Skull {
 
 	@type("number")
 	maxDist: number = 10;
 
 	@type("number")
-	dist: number = 10;
+	dist: number = 0;
 
-	@type("number")
-	dir: number = 1;
-
-	constructor(key: number, x: number, y: number, speed: number, maxDist: number, angle: number) {
+	constructor(key: number, x: number, y: number, speed: number, maxDist: number, angle: number, ) {
 		super(key, x, y, speed)
 		this.maxDist = maxDist;
 		this.angle = angle;
@@ -72,11 +69,12 @@ export class LineBat extends Bat {
 		this.y += dY;
 	}
 
+
 }
 
 //----------------------
 
-export class CircleBat extends Bat {
+export class CircleSkull extends Skull {
 
 	@type("number")
 	centerX: number = 1;
