@@ -93,6 +93,38 @@ const Info = () => {
           <li style={{paddingBottom:'10px'}}>The mud ball will increase in size on contact with another dragon</li>
           <li>The ice ball will decrease the speed of a dragon temporarily on contact</li>
         </ul>
+        <br />
+        <div style={{
+          backgroundColor: '#737373',
+          color: 'white',
+          borderRadius: '5px',
+          width: '20vw',
+          padding: '10px',
+          display: 'flex',
+          flexDirection: 'row'
+        }}>
+          <img src="/Bat.png" style={{ imageRendering: 'pixelated', paddingTop: '10px' }} height="40px" alt="Coin" />
+          <br />
+          <h4 style={{ paddingLeft: '30px', alignSelf: 'center' }}>Bats</h4>
+        </div>
+        <br />
+        <p style={{textAlign:'center'}}> Bats slow down a player's movement and firespeed on contact </p>
+        <br />
+        <div style={{
+          backgroundColor: '#737373',
+          color: 'white',
+          borderRadius: '5px',
+          width: '20vw',
+          padding: '10px',
+          display: 'flex',
+          flexDirection: 'row'
+        }}>
+          <img src="/Skull.png" style={{ imageRendering: 'pixelated', paddingTop: '10px' }} height="40px" alt="Coin" />
+          <br />
+          <h4 style={{ paddingLeft: '30px', alignSelf: 'center' }}>Skulls</h4>
+        </div>
+        <br />
+        <p style={{textAlign:'center'}}> Skulls cause a player to drop coins on contact </p>
 
       </Center>
         <Space size='xl'/>
