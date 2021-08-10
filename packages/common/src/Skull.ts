@@ -91,6 +91,7 @@ export class CircleSkull extends Skull {
 	constructor(key: number, x: number, y: number, speed: number, radius: number, angle: number) {
 		super(key, x, y, speed)
 		this.rotAngle = angle;
+		this.angle = angle + Math.PI/2;
 		this.radius = radius;
 		this.centerX = x;
 		this.centerY = y;
@@ -103,6 +104,7 @@ export class CircleSkull extends Skull {
 		}else if(this.rotAngle < -Math.PI*2){
 			this.rotAngle += Math.PI*2
 		}
+		this.angle += this.speed;
 		this.x = this.centerX + Math.cos(this.rotAngle)*this.radius;
 		this.y = this.centerY + Math.sin(this.rotAngle)*this.radius;
 	}
