@@ -98,8 +98,7 @@ export class GameRoom extends Room<GameState> {
 					break;
 			}
 		}
-
-		this.state.players[client.id] = new Player(ballType, dragonSkin);
+		this.state.players[client.id] = new Player(ballType, dragonSkin, 1);
 
 		if (user.name == null) {
 			const adjectives = require('../../wordlists/adjectives.json');
@@ -165,7 +164,7 @@ export class GameRoom extends Room<GameState> {
 			newX = Math.random() * 2000;
 			newY = Math.random() * 2000;
 		} while (Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300))
-		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size));
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, 0));
 
 	}
 
@@ -178,7 +177,7 @@ export class GameRoom extends Room<GameState> {
 			newX = x + 100 * Math.cos(rand);
 			newY = y + 100 * Math.sin(rand);
 		} while (Maths.checkWalls(newX, newY, 20))
-		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20));
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
 	}
 	
 	moveBot(id, botDir) {
@@ -214,7 +213,7 @@ export class GameRoom extends Room<GameState> {
 		}
 
 		if (this.state.players.size < 6) {
-			let bot = new Player("Fire", "normal");
+			let bot = new Player("Fire", "normal", 0);
 			bot.isBot = true;
 			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
 			let botNameGender = Math.random() > 0.5 ? true : false;
@@ -280,7 +279,7 @@ export class GameRoom extends Room<GameState> {
 			for (let id2 of this.state.players.keys()) {
 				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
 					if (id != id2) {
-						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y)) {
+						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y, this.state.players[id].team)) {
 						    this.state.players[id2].hitsDealt ++;
 							this.state.players[id].hitsRecived ++;
 							var fireBall = this.state.players[id2].fireballs[i];
@@ -318,7 +317,7 @@ export class GameRoom extends Room<GameState> {
 										const newX = this.state.players[id].x + 50 * Math.cos(angle);
 										const newY = this.state.players[id].y + 50 * Math.sin(angle);
 										if (!Maths.checkWalls(newX, newY, 22.5)) {
-											this.state.players[id2].fireballs.push(new Fireball(newX, newY, angle + Math.PI, 7, "electric", 20));
+											this.state.players[id2].fireballs.push(new Fireball(newX, newY, angle + Math.PI, 7, "electric", 20, 0));
 
 										}
 									}
@@ -338,14 +337,14 @@ export class GameRoom extends Room<GameState> {
 
 			}
 
-			if (this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y)) {
+			if (this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y, 0)) {
 				// when a player has collided with the coinjar
 				this.state.players[id].score += this.state.players[id].coins;// add coins to players score
 				this.state.players[id].coins = 0;// remove coins
 			}
 
 			for(let cid of this.state.coins.keys()){
-				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y) && this.state.players[id].coins < 10) {
+				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y, 0) && this.state.players[id].coins < 10) {
 					
 					var coins = this.state.players[id].coins;
 					switch (this.state.coins[cid].getSize()) {

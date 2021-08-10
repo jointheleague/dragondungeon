@@ -47,6 +47,10 @@ export class GameState extends Schema {
 	@type("number")
 	batRot: number = 0;
 
+	//"FFA" or "coinCapture"
+	@type("string")
+	gamemode: string = "coinCapture"
+
 	constructor() {
 		super();
 	}

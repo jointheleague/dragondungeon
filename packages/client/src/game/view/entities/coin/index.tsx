@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import * as PIXI from 'pixi.js';
 import {AnimatedSprite} from '../AnimatedSprite';
-import coinImage1 from './sprites/coin1.png';
-import coinImage2 from './sprites/coin2.png';
+import coinImage1 from './sprites/redCoin1.png';
+import coinImage2 from './sprites/redCoin2.png';
 
 interface IProps {
     key: string;
