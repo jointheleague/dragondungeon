@@ -33,7 +33,9 @@ const Info = () => {
         <p style={{textAlign:'center'}}>
         Move using, W A S D
         <br/>Shoot fireballs with the SPACEBAR 
-        <br/>To continiously shoot fireballs, hold SPACEBAR or press the X key</p>
+        <br/>To continiously shoot fireballs, hold SPACEBAR or press the X key
+        <br/>To aim the fireballs, use your trackpad or a mouse
+        </p>
         <br />
         <div style={{
           backgroundColor: '#737373',
@@ -49,7 +51,7 @@ const Info = () => {
           <h4 style={{ paddingLeft: '30px', alignSelf: 'center' }}>Coins</h4>
         </div>
         <br />
-        <p style={{textAlign:'center'}}> Collecting coins is how you increase your Score, differently sized coins are worth different ammounts,
+        <p style={{textAlign:'center'}}> Collecting coins is how you increase your Score, differently sized coins are worth different amounts,
         <br /> At first the coins are added to a bar above the dragon 
         <br /> Then when the dragon gets close to the coin jar (shown below) they are deposited and added to your total score
          </p>
