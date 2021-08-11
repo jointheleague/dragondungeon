@@ -47,7 +47,7 @@ export class GameRoom extends Room<GameState> {
 		this.setState(new GameState())
 		this.registerMessages();
 		this.startGameLoop();
-		this.state.countdown = new Countdown(0, 30);// should be '5, 0'
+		this.state.countdown = new Countdown(5, 0);// should be '5, 0'
 		const spokes = 2;//of center rotating bats
 		for(var j = 0; j < spokes; j++){
 			for(var i = 0; i < 3; i++){
