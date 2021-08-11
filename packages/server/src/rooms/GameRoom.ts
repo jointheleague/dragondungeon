@@ -41,12 +41,13 @@ export class GameRoom extends Room<GameState> {
 	counter = 0;
 	botTimeout = 0;
 	maxClients: 10;
+	gameInt;
 
 	onCreate() {
 		this.setState(new GameState())
 		this.registerMessages();
 		this.startGameLoop();
-		this.state.countdown = new Countdown(5, 0);// should be '5, 0'
+		this.state.countdown = new Countdown(0, 30);// should be '5, 0'
 		const spokes = 2;//of center rotating bats
 		for(var j = 0; j < spokes; j++){
 			for(var i = 0; i < 3; i++){
@@ -133,19 +134,17 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	startGameLoop() {
-		setInterval(() => {
+		this.gameInt = setInterval(() => {
+			if(!this.state.gameOver){
 			this.clock.tick();
 			this.tick();
+			}
 		}, 1000 / 60);
-
-	}
-
-	cancelGameLoop() {
-		this.clock.clear()
 	}
 
 	gameOver(){
-		this.cancelGameLoop();
+		this.clock.clear();
+		clearInterval(this.gameInt);
 		this.state.gameOver = true;
 		this.state.players.forEach((player: Player) => {
 			player.dead = true;
