@@ -13,7 +13,6 @@ export interface IGameState {
   gameOver: boolean;
   bats: {[key: string]: IBat};
   skulls: {[key: string]: ISkull}
-
 }
 
 export interface ICountdown{

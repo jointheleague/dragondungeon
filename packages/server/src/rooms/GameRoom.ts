@@ -53,8 +53,6 @@ export class GameRoom extends Room<GameState> {
 				this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .02, 90*i + 90, (Math.PI*2/spokes)*j));
 			}
 		}
-		
-		this.state.skulls.set(v4(), new CircleSkull(this.state.skulls.size, 1000, 1000, .01, 900, 0));
 		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 320, 1000, 5, 1360, 0));
 		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 1000, 320, 5, 1360, Math.PI/2));
 	}
@@ -371,7 +369,7 @@ export class GameRoom extends Room<GameState> {
 
 			for(let bat of this.state.bats.values()){
 				if(bat.checkHit(this.state.players[id].x, this.state.players[id].y)){
-					this.state.players[id].deceleration = 1.5 ;
+					this.state.players[id].deceleration = 2 ;
 					this.state.players[id].fireballCooldown += .2;
 					break;
 				}
