@@ -58,11 +58,11 @@ renderCountdown(){
       }
       return <h1 style={{color:'orange'}}>{Math.floor(this.props.t.seconds)}</h1>
     }
-    return <h2>0 : {Math.floor(this.props.t.seconds)}</h2>
+    return <h2>0:{Math.floor(this.props.t.seconds)}</h2>
   }
 
   if(Math.floor(this.props.t.seconds) < 10){
-    return <h2>{this.props.t.minutes} : 0{Math.floor(this.props.t.seconds)}</h2>
+    return <h2>{this.props.t.minutes}:0{Math.floor(this.props.t.seconds)}</h2>
   }
   return <h2>{this.props.t.minutes}:{Math.floor(this.props.t.seconds)}</h2>
 }

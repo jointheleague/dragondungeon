@@ -43,51 +43,11 @@ const MyDragon = () => {
 
         <table>
           <tr>
-            <td>
-              <img src="/fireball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated'}} height="50px" alt="Fireball" onClick={() => {
-                var gameplayDoc = doc(db, currentUser.uid, "gameplay");
-                setDoc(gameplayDoc, {
-                  ballType: "fire",
-                }, { merge: true });
-                document.querySelector("#profession")!.innerHTML = 'Fire';
-              }} />
-            </td>
-            <td>
-              <img src="/iceball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" onClick={() => {
-                var gameplayDoc = doc(db, currentUser.uid, "gameplay");
-                setDoc(gameplayDoc, {
-                  ballType: "ice",
-                }, { merge: true });
-                document.querySelector("#profession")!.innerHTML = 'Ice';
-              }} />
-            </td>
-            <td>
-              <img src="/electricball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" onClick={() => {
-                var gameplayDoc = doc(db, currentUser.uid, "gameplay");
-                setDoc(gameplayDoc, {
-                  ballType: "electric",
-                }, { merge: true });
-                document.querySelector("#profession")!.innerHTML = 'Electric';
-              }} />
-            </td>
-            <td>
-              <img src="/poisonball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball" onClick={() => {
-                var gameplayDoc = doc(db, currentUser.uid, "gameplay");
-                setDoc(gameplayDoc, {
-                  ballType: "poison",
-                }, { merge: true });
-                document.querySelector("#profession")!.innerHTML = 'Poison';
-              }} />
-            </td>
-            <td>
-              <img src="/mudball.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Fireball"  onClick={() => {
-                var gameplayDoc = doc(db, currentUser.uid, "gameplay");
-                setDoc(gameplayDoc, {
-                  ballType: "mud",
-                }, { merge: true });
-                document.querySelector("#profession")!.innerHTML = 'Mud';
-              }}/>
-            </td>
+            <BallDisplay ballType="fire" uid={currentUser.uid} />
+            <BallDisplay ballType="electric" uid={currentUser.uid} />
+            <BallDisplay ballType="ice" uid={currentUser.uid} />
+            <BallDisplay ballType="poison" uid={currentUser.uid} />
+            <BallDisplay ballType="mud" uid={currentUser.uid} />
           </tr>
         </table>
 
@@ -95,33 +55,9 @@ const MyDragon = () => {
 
         <table>
           <tr>
-          <td>
-              <img src="/lightDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Light Dragon" onClick={() => {
-                var gameplayDoc = doc(db, currentUser.uid, "gameplay");
-                setDoc(gameplayDoc, {
-                  dragonSkin: "light",
-                }, { merge: true });
-                (document.querySelector("#skin")! as HTMLImageElement).src = '/lightDragon.png';
-              }}/>
-            </td>
-            <td>
-              <img src="/goldDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Golden Dragon" onClick={() => {
-                var gameplayDoc = doc(db, currentUser.uid, "gameplay");
-                setDoc(gameplayDoc, {
-                  dragonSkin: "gold",
-                }, { merge: true });
-                (document.querySelector("#skin")! as HTMLImageElement).src = '/goldDragon.png';
-              }}/>
-            </td>
-            <td>
-              <img src="/basicDragon.png" style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px" alt="Basic Dragon" onClick={() => {
-                var gameplayDoc = doc(db, currentUser.uid, "gameplay");
-                setDoc(gameplayDoc, {
-                  dragonSkin: "basic",
-                }, { merge: true });
-                (document.querySelector("#skin")! as HTMLImageElement).src = '/basicDragon.png';
-              }}/>
-            </td>
+            <SkinDisplay skin="basic" uid={currentUser.uid} />
+            <SkinDisplay skin="light" uid={currentUser.uid} />
+            <SkinDisplay skin="gold" uid={currentUser.uid} />
           </tr>
         </table>
       </Center>
@@ -129,5 +65,33 @@ const MyDragon = () => {
     </>
   );
 }
+
+const BallDisplay = (props: any) => {
+  return (
+    <td>
+      <img src={`/${props.ballType}ball.png`} style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px"  onClick={() => {
+        var gameplayDoc = doc(db, props.uid, "gameplay");
+        setDoc(gameplayDoc, {
+          ballType: props.ballType,
+        }, { merge: true });
+        document.querySelector("#profession")!.innerHTML = props.ballType;
+      }}/>
+    </td>
+  );
+};
+
+const SkinDisplay = (props: any) => {
+  return (
+    <td>
+      <img src={`/${props.skin}Dragon.png`} style={{ cursor: 'pointer', imageRendering: 'pixelated' }} height="50px"  onClick={() => {
+        var gameplayDoc = doc(db, props.uid, "gameplay");
+        setDoc(gameplayDoc, {
+          dragonSkin: props.skin,
+        }, { merge: true });
+        (document.querySelector("#skin")! as HTMLImageElement).src = `/${props.skin}Dragon.png`;
+      }}/>
+    </td>
+  );
+};
 
 export default MyDragon;

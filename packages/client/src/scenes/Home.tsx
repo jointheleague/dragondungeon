@@ -28,6 +28,7 @@ const resume = () => {
 
 const Game = (props: any) => {
   const [ userIsLoggedIn, setUserIsLoggedIn ] = useState<boolean>(false);
+  const [ checkUserCompleted, setCheckUserCompleted ] = useState<boolean>(false);
   const [ time, setTime ] = useState<string>(new Date().toLocaleTimeString());
   useEffect(
     () => {
@@ -35,6 +36,7 @@ const Game = (props: any) => {
         if (user) {
           setUserIsLoggedIn(true);
         }
+        setCheckUserCompleted(true);
       });
 
       setInterval(() => {
@@ -58,30 +60,31 @@ const Game = (props: any) => {
       <Box>
         <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>DragonCoin</h1>
       </Box>
-      <br /><br /><br />
-      {userIsLoggedIn && 
-        <>
-          <Button onClick={resume} text="Classic DragonCoin" />
-          <Button onClick={() => { show_error_banner('Coming Soon') }} text="Capture The Coins" />
-          <Space size='xl'></Space>
-          <Button onClick={() => { navigate('/mydragon') }} text="My Dragon" />
-          <Button onClick={async () => {
-            await signOut(auth);
-            window.location.reload();
-          }} text="Log Out" />
-        </>
-      }
-      {!userIsLoggedIn &&
-        <>
-          <Button text="Sign In with Google" onClick={() => {
-            signInWithPopup(auth, new GoogleAuthProvider());
-          }} />
+      { checkUserCompleted && <>
+        {userIsLoggedIn && 
+          <>
+            <Button onClick={resume} text="Classic DragonCoin" />
+            <Button onClick={() => { show_error_banner('Coming Soon') }} text="Capture The Coins" />
+            <Space size='xl'></Space>
+            <Button onClick={() => { navigate('/mydragon') }} text="My Dragon" />
+            <Button onClick={async () => {
+              await signOut(auth);
+              setUserIsLoggedIn(false);
+            }} text="Log Out" />
+          </>
+        }
+        {!userIsLoggedIn &&
+          <>
+            <Button text="Sign In with Google" onClick={() => {
+              signInWithPopup(auth, new GoogleAuthProvider());
+            }} />
 
-          <Button text="Continue without Login" onClick={() => {
-            signInAnonymously(auth);
-          }} />
-        </>
-      }
+            <Button text="Continue without Login" onClick={() => {
+              signInAnonymously(auth);
+            }} />
+          </>
+        }
+      </> }
     </div>
   );
 }
