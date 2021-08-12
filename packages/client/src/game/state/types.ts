@@ -13,6 +13,7 @@ export interface IGameState {
   gameOver: boolean;
   bats: {[key: string]: IBat};
   batRot: number;
+  gamemode: 'FFA'|'coinCapture';
 }
 
 export interface ICountdown{
@@ -46,6 +47,7 @@ export interface IPlayer {
   hitsDealt: number;
   coinsPickedUp: number;
   dead: boolean;
+  team: number;
 }
 
 export interface ICoin{
@@ -53,12 +55,14 @@ export interface ICoin{
   x: number;
   y: number;
   size: number;
+  team: number;
 }
 
 export interface ICoinJar{
   key: number;
   x: number;
   y:number;
+  team:number;
 }
 
 export interface ILeaderboard{

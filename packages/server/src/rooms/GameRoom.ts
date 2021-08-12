@@ -38,7 +38,8 @@ export class GameRoom extends Room<GameState> {
 	counter = 0;
 	botTimeout = 0;
 	maxClients: 10;
-
+	redTeamIds = [];
+	blueTeamIds = [];
 	onCreate() {
 		this.setState(new GameState())
 		this.registerMessages();
@@ -98,7 +99,18 @@ export class GameRoom extends Room<GameState> {
 					break;
 			}
 		}
-		this.state.players[client.id] = new Player(ballType, dragonSkin, 1);
+
+		var teamnum;
+		if(this.state.gamemode == 'coinCapture'){
+			if(this.redTeamIds.length<=this.blueTeamIds.length){
+				teamnum = 1;
+				this.redTeamIds.push(client.id);
+			} else{
+				teamnum = 2;
+				this.blueTeamIds.push(client.id);
+			}
+		} else{teamnum = 0;}
+		this.state.players[client.id] = new Player(ballType, dragonSkin, teamnum);
 
 		if (user.name == null) {
 			const adjectives = require('../../wordlists/adjectives.json');
@@ -164,7 +176,7 @@ export class GameRoom extends Room<GameState> {
 			newX = Math.random() * 2000;
 			newY = Math.random() * 2000;
 		} while (Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300))
-		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, 0));
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, 1));
 
 	}
 
@@ -203,7 +215,6 @@ export class GameRoom extends Room<GameState> {
 		const dx = this.clock.deltaTime;
 		this.state.batRot += Math.PI /120;
 		this.state.countdown.elaspseTime();
-
 		if (this.state.countdown.done) {
 			this.gameOver();
 		}
