@@ -184,13 +184,8 @@ export class GameRoom extends Room<GameState> {
 			newX = Math.random() * 2000;
 			newY = Math.random() * 2000;
 
-		} while (Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300))
-		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, 1));
-
-		//} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
-		//this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size));
-
-
+		} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, 1));
 	}
 
 	createCoin(x: number, y: number) {

@@ -70,10 +70,10 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const tiles = [];
     const walls = [];
     const bats = [];
-
+    const skulls = [];
     const coinJar = <CoinJar key={"only"} x={1000} y={1000} team={state.coinJar.team}/>;
 
-    const skulls = [];
+    
 
 
     const id  = this.props.stateManager.id

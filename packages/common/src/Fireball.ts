@@ -51,7 +51,6 @@ class Fireball extends Schema {
 	}
 
 	checkHit(dragonX: number, dragonY: number, teamNum: number) {
-		console.log(this.team+"  "+teamNum);
 		if( teamNum == this.team && !(teamNum == 0 && this.team == 0) ){return false;}
 		if (Math.sqrt(Math.pow(this.x - dragonX, 2) + Math.pow(this.y - dragonY, 2)) < this.width/2 + 45) {
 			return true;
