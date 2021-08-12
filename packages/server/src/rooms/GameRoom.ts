@@ -185,7 +185,12 @@ export class GameRoom extends Room<GameState> {
 			newY = Math.random() * 2000;
 
 		} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, 1));
+		var teamNum;	
+		if(this.state.gamemode == 'coinCapture'){teamNum = 1;}
+		//this is temporary, change when CTC is more set up
+		else{teamNum = 0;}
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, teamNum));
+			console.log(this.state.gamemode);
 	}
 
 	createCoin(x: number, y: number) {
