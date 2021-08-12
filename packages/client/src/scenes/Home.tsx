@@ -3,6 +3,7 @@ import { Box, Space, Center, Button } from '../components';
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInAnonymously, signOut } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
+import { show_error_banner } from 'util/banner';
 
 const db = getFirestore();
 const auth = getAuth();
@@ -12,7 +13,7 @@ const resume = () => {
     if (user?.isAnonymous) {
       navigate('/play/random');
     } else if (user) {
-      const user_data = await getDoc(doc(db, user.uid, "login"));
+      const user_data = await getDoc(doc(db, user.uid, "gameplay"));
 
       console.log(user_data.exists());
 
@@ -25,25 +26,9 @@ const resume = () => {
   });
 }
 
-const profilepage = () => {
-  navigate('/profile');
-}
-
-const infopage = () => {
-  navigate('/tutorial');
-}
-
-const gameoverpage = () => {
-  navigate('/gameover');
-}
-
-const logout = async () => {
-  await signOut(auth);
-  window.location.reload();
-}
-
 const Game = (props: any) => {
   const [ userIsLoggedIn, setUserIsLoggedIn ] = useState<boolean>(false);
+  const [ time, setTime ] = useState<string>(new Date().toLocaleTimeString());
   useEffect(
     () => {
       onAuthStateChanged(auth, user => {
@@ -51,51 +36,53 @@ const Game = (props: any) => {
           setUserIsLoggedIn(true);
         }
       });
+
+      setInterval(() => {
+        setTime(new Date().toLocaleTimeString());
+      }, 1000)
     }, []
   );
 
   return (
-    <>
+    <div id="page">
+      <div id="heroContent" style={{ float: 'right', imageRendering: 'pixelated', padding: '20px' }}>
+        <img src="/fireball.png" height="400px" />
+        <h2 style={{
+          position: 'absolute',
+          bottom: '0px',
+          right: '0px',
+          padding: '40px',
+          fontSize: '40px',
+        }}>{time}</h2>
+      </div>
+      <Box>
+        <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>DragonCoin</h1>
+      </Box>
       <br /><br /><br />
-      <Center>
-        <Space size='xl'/>
-        <Box>
-          <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>DragonCoin</h1>
-        </Box>
-        <br /><br /><br />
-        {userIsLoggedIn && 
-          <>
-            <Button onClick={resume} text="Play" />
-            <Button onClick={profilepage} text="Account" />
-            <Button onClick={infopage} text="Tutorial" />
-            <Button onClick={logout} text="Log Out" />
-          </>
-        }
-        {!userIsLoggedIn &&
-          <>
-            <Button text="Sign In with Google" onClick={() => {
-              signInWithPopup(auth, new GoogleAuthProvider());
-            }} />
+      {userIsLoggedIn && 
+        <>
+          <Button onClick={resume} text="Classic DragonCoin" />
+          <Button onClick={() => { show_error_banner('Coming Soon') }} text="Capture The Coins" />
+          <Space size='xl'></Space>
+          <Button onClick={() => { navigate('/mydragon') }} text="My Dragon" />
+          <Button onClick={async () => {
+            await signOut(auth);
+            window.location.reload();
+          }} text="Log Out" />
+        </>
+      }
+      {!userIsLoggedIn &&
+        <>
+          <Button text="Sign In with Google" onClick={() => {
+            signInWithPopup(auth, new GoogleAuthProvider());
+          }} />
 
-            <Button text="Continue without Login" onClick={() => {
-              signInAnonymously(auth);
-            }} />
-          </>
-        }
-        <br />
-        { props.location.search.includes('debug') ?
-          <>
-            <input type="text" placeholder="Development Server" id="dbg-dev" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid #c60c30', width:'45%' }} onChange={() => {
-              window.localStorage.server = (document.querySelector('#dbg-dev') as HTMLInputElement).value;
-            }} />
-            <input type="text" placeholder="Websocket Protocol" id="dbg-pro" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid #c60c30', width:'45%' }} onChange={() => {
-              window.localStorage.protocol = (document.querySelector('#dbg-pro') as HTMLInputElement).value;
-            }} />
-          </> :
-          null
-        }
-      </Center>
-    </>
+          <Button text="Continue without Login" onClick={() => {
+            signInAnonymously(auth);
+          }} />
+        </>
+      }
+    </div>
   );
 }
 
