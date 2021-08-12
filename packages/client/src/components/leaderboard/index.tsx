@@ -46,13 +46,6 @@ class Leaderboard extends Component <LeaderboardProps, LeaderboardState>
   })
 }
 
-renderTableHeader() {
-  let header = (["Name","Coins"])
-  return header.map((key, index) => {
-     return <th key={index}>{key.toUpperCase()}</th>
-  })
-}
-
 renderCountdown(){
   if(this.props.t.done){
     return <h2>Game Over</h2>
@@ -71,7 +64,11 @@ renderCountdown(){
   if(Math.floor(this.props.t.seconds) < 10){
     return <h2>{this.props.t.minutes} : 0{Math.floor(this.props.t.seconds)}</h2>
   }
-  return <h2>{this.props.t.minutes} : {Math.floor(this.props.t.seconds)}</h2>
+  return <h2>{this.props.t.minutes}:{Math.floor(this.props.t.seconds)}</h2>
+}
+
+renderClock() {
+  return <h3>{new Date().toLocaleTimeString()}</h3>
 }
 
 render() {  
@@ -88,9 +85,9 @@ render() {
         <table id='students'>
           <tbody id='countdown'>
             {this.renderCountdown()}
+            {this.renderClock()}
           </tbody>
           <tbody id='leaderboard'>
-            <tr>{this.renderTableHeader()}</tr>
             {this.renderTableData(newArr)}
           </tbody>
         </table>

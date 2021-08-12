@@ -10,6 +10,7 @@ import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
 import { Bat } from './entities/bat';
+import { Skull } from './entities/skull';
 import { BorderFence } from './entities/borderFence';
 import { Wall } from './entities/wall';
 import { MovingBackground } from './entities/movingBackground';
@@ -69,7 +70,12 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const tiles = [];
     const walls = [];
     const bats = [];
+
     const coinJar = <CoinJar key={"only"} x={1000} y={1000} team={state.coinJar.team}/>;
+
+    const skulls = [];
+
+
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
     for (let pid in state.players) {
@@ -88,14 +94,13 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       leaderboard.push(Leaderboard)
     }
 
-    console.log("at least reached in gameview");
     for(let bid in state.bats){
-      console.log("bat displayed");
-      bats.push(<Bat x={state.bats[bid].x} y={state.bats[bid].y} rot={0} key={bid}/>)
+      bats.push(<Bat x={state.bats[bid].x} y={state.bats[bid].y} rot={state.bats[bid].angle} key={bid}/>)
     }
-    //</Bat>for(var i = 0; i < 4; i++){
-    //  bats.push(<Bat x={1000 + (60*i + 60)*Math.cos(state.batRot)} y={1000 + (60*i + 60)*Math.sin(state.batRot)} rot={0}/>)
-    //}
+
+    for(let sid in state.skulls){
+      bats.push(<Skull x={state.skulls[sid].x} y={state.skulls[sid].y} rot={state.skulls[sid].angle} key={sid}/>)
+    }
 
 
     const xLen = 455.625;
@@ -149,7 +154,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size} team={state.coins[cid].team}/>);
     }
     render(
-      <>{tiles}{coinJar}{walls}{coins}{players}{bats}{fireballs}{healthBars}</>, 
+      <>{tiles}{coinJar}{walls}{coins}{players}{skulls}{bats}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }

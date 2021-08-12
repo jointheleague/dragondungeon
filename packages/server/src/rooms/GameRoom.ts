@@ -20,7 +20,10 @@ import {
 	Fireball,
 	Bat,
 	CircleBat,
-	LineBat
+	LineBat,
+	Skull,
+	CircleSkull,
+	LineSkull
 } from '@dragoncoin/common';
 
 import * as admin from 'firebase-admin';
@@ -38,8 +41,13 @@ export class GameRoom extends Room<GameState> {
 	counter = 0;
 	botTimeout = 0;
 	maxClients: 10;
+
 	redTeamIds = [];
 	blueTeamIds = [];
+
+	gameInt;
+
+
 	onCreate() {
 		this.setState(new GameState())
 		this.registerMessages();
@@ -48,9 +56,11 @@ export class GameRoom extends Room<GameState> {
 		const spokes = 2;//of center rotating bats
 		for(var j = 0; j < spokes; j++){
 			for(var i = 0; i < 3; i++){
-				this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .03, 85*i + 70, (Math.PI*2/spokes)*j));
+				this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .02, 90*i + 90, (Math.PI*2/spokes)*j));
 			}
 		}
+		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 320, 1000, 5, 1360, 0));
+		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 1000, 320, 5, 1360, Math.PI/2));
 	}
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
@@ -139,20 +149,18 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	startGameLoop() {
-		setInterval(() => {
+		this.gameInt = setInterval(() => {
+			if(!this.state.gameOver){
 			this.clock.tick();
 			this.tick();
+			}
 		}, 1000 / 60);
-
-	}
-
-	cancelGameLoop() {
-		this.clock.clear()
 	}
 
 	gameOver(){
-		this.cancelGameLoop();
-		// this.state.gameOver = true;
+		this.clock.clear();
+		clearInterval(this.gameInt);
+		this.state.gameOver = true;
 		this.state.players.forEach((player: Player) => {
 			player.dead = true;
 		});
@@ -175,8 +183,13 @@ export class GameRoom extends Room<GameState> {
 		do {
 			newX = Math.random() * 2000;
 			newY = Math.random() * 2000;
+
 		} while (Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, 1));
+
+		//} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
+		//this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size));
+
 
 	}
 
@@ -210,10 +223,8 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	tick() {
-
 		this.counter++;
 		const dx = this.clock.deltaTime;
-		this.state.batRot += Math.PI /120;
 		this.state.countdown.elaspseTime();
 		if (this.state.countdown.done) {
 			this.gameOver();
@@ -251,8 +262,13 @@ export class GameRoom extends Room<GameState> {
 		}
 
 		for(let bat of this.state.bats.values()){
-			bat.move(dx);
+			bat.move();
 		}
+
+		for(let skull of this.state.skulls.values()){
+			skull.move();
+		}
+
 
 		for (let id of this.state.players.keys()) {
 			if (this.state.players[id].isBot && this.botTimeout == 0) {
@@ -297,23 +313,14 @@ export class GameRoom extends Room<GameState> {
 							const coinChance = .2; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
 							const lifetimeRemove = 1; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
 
-							const oldX = this.state.players[id].x;
-							const oldY = this.state.players[id].y;
-							const newX = oldX + (fireBall.speed * Math.cos(fireBall.angle - Math.PI));
-							const newY = oldY + (fireBall.speed * Math.sin(fireBall.angle - Math.PI));
-
-							if (!Maths.checkWalls(oldX, newY, 45)) {
-								this.state.players[id].y = newY;
-							}
-							if (!Maths.checkWalls(newX, oldY, 45)) {
-								this.state.players[id].x = newX;
-							}
+							this.state.players[id].push(fireBall.angle - Math.PI, fireBall.speed)
 							//console.log(this.state.players[id].x + "    " + this.state.players[id].y)
 							if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
 								this.state.players[id].coins--;
 								fireBall.lifetime -= lifetimeRemove;
 								if (fireBall.type == "poison" && this.state.players[id2].coins < 10) {
 									this.state.players[id2].coins++;
+									this.state.players[id2].coinsPickedUp++;
 								} else {
 									this.createCoin(this.state.players[id].x, this.state.players[id].y);
 								}
@@ -322,8 +329,7 @@ export class GameRoom extends Room<GameState> {
 
 							switch (fireBall.type) {
 								case "electric":
-									//this.state.players[id2].fireballs.length < 10 &&
-									if ( Math.random() > .9) {
+									if (this.state.players[id2].fireballs.length < 10 && Math.random() > .9) {
 										const angle = Math.random() * 6.28;
 										const newX = this.state.players[id].x + 50 * Math.cos(angle);
 										const newY = this.state.players[id].y + 50 * Math.sin(angle);
@@ -378,23 +384,25 @@ export class GameRoom extends Room<GameState> {
 					this.state.coins.delete(cid);
 				}
 			}
-			/*
-			if (this.state.players[id].x < 0) {
-				this.state.players[id].x = 0;
-			} else if (this.state.players[id].x > 2000) {
-				this.state.players[id].x = 2000;
-			}
-
-			if (this.state.players[id].y < 0) {
-				this.state.players[id].y = 0;
-			} else if (this.state.players[id].y > 2000) {
-				this.state.players[id].y = 2000;
-			}*/
 
 			for(let bat of this.state.bats.values()){
 				if(bat.checkHit(this.state.players[id].x, this.state.players[id].y)){
-					this.state.players[id].deceleration = 2.5;
-					this.state.players[id].fireballCooldown += .15;
+					this.state.players[id].deceleration = 2 ;
+					this.state.players[id].fireballCooldown += .2;
+					break;
+				}
+			}
+			
+			for(let skull of this.state.skulls.values()){
+				if(skull.checkHit(this.state.players[id].x, this.state.players[id].y)){
+					this.state.players[id].push(skull.angle, skull.speed*1.2);
+					if(Math.random() < .2 && this.state.players[id].coins > 0){
+						this.state.players[id].coins --;
+						if(Math.random() < .5 && this.state.players[id].score > 0){
+							this.state.players[id].score --;
+						}
+					}
+					break;
 				}
 			}
 		}

@@ -194,6 +194,21 @@ export class Player extends Schema {
 		
 	}
 
+	push(angle : number, speed: number) {
+		const oldX = this.x;
+		const oldY = this.y;
+		const newX = oldX + (speed * Math.cos(angle));
+		const newY = oldY + (speed * Math.sin(angle));
+
+		if (!Maths.checkWalls(oldX, newY, 45)) {
+			this.y = newY;
+		}
+		if (!Maths.checkWalls(newX, oldY, 45)) {
+			this.x = newX;
+		}
+		
+	}
+
 	
 
 

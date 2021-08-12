@@ -12,8 +12,12 @@ export interface IGameState {
   countdown: ICountdown;
   gameOver: boolean;
   bats: {[key: string]: IBat};
+
   batRot: number;
   gamemode: 'FFA'|'coinCapture';
+
+  skulls: {[key: string]: ISkull}
+
 }
 
 export interface ICountdown{
@@ -74,6 +78,14 @@ export interface IBat{
   key: number;
   x: number;
   y: number;
+  angle: number;
+}
+
+export interface ISkull{
+  key: number;
+  x: number;
+  y: number;
+  angle: number;
 }
 
 

@@ -11,7 +11,7 @@ interface IProps {
 
 export const Button = (props: IProps) => {
   return (<button
-    style={{ ...props.style, fontSize: '20px' }}
+    style={{ ...props.style }}
     className="button"
     disabled={props.disabled}
     data-clipboard-text={props.dataClipboardText}
