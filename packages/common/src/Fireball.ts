@@ -27,9 +27,12 @@ class Fireball extends Schema {
 	@type("number")
 	lifetime: number = 40;
 
+	@type("number")
+	team: number = 0;
+
 	speed;
 
-	constructor(x: number, y: number, angle: number, speed: number, type: string, lifetime: number) {
+	constructor(x: number, y: number, angle: number, speed: number, type: string, lifetime: number, teamNum: number) {
 		super()
 		this.width = 45;
 		this.height = 84.4;
@@ -40,18 +43,20 @@ class Fireball extends Schema {
 		this.speed = speed;
 		this.type = type;
 		this.lifetime = lifetime;
+		this.team = teamNum;
 		if(this.type === "mud"){
 			this.width *= 1.2;
 			this.height *= 1.2;
 		}
 	}
 
-	checkHit(dragonX: number, dragonY: number) {
-		
+	checkHit(dragonX: number, dragonY: number, teamNum: number) {
+		console.log(this.team+"  "+teamNum);
+		if( teamNum == this.team && !(teamNum == 0 && this.team == 0) ){return false;}
 		if (Math.sqrt(Math.pow(this.x - dragonX, 2) + Math.pow(this.y - dragonY, 2)) < this.width/2 + 45) {
 			return true;
 		} else {
-			return false
+			return false;
 		}
 	}
 

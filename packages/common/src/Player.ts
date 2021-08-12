@@ -64,6 +64,9 @@ export class Player extends Schema {
 	@type("number")
 	coinsPickedUp: number = 0;
 
+	@type("number")
+	team: number = 0;
+
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
 
 	activeInputs: IInputs = {
@@ -77,8 +80,9 @@ export class Player extends Schema {
 		space: false
 	};
 
-	constructor(ballType : string, skinType : string) {
+	constructor(ballType : string, skinType : string, teamNum: number) {
 		super()
+		this.team = teamNum;
 		this.ballType = ballType;
 		this.skinType = skinType;
 		this.setPosition();
@@ -145,7 +149,7 @@ export class Player extends Schema {
 				default :
 					this.fireballCooldown = 8;
 			}
-			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType, 40);
+			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType, 40, this.team);
 			this.fireballs.push(fireball);
 		}
 

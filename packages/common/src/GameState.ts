@@ -47,6 +47,15 @@ export class GameState extends Schema {
 	@type("boolean")
 	gameOver: boolean = false;
 
+
+	@type("number")
+	batRot: number = 0;
+
+	//"FFA" or "coinCapture"
+	@type("string")
+	gamemode: string = "coinCapture"
+
+
 	constructor() {
 		super();
 	}
