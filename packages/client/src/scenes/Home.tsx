@@ -26,9 +26,22 @@ const resume = () => {
   });
 }
 
+
+
+if (document.addEventListener)
+{
+ document.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement == null) {
+    console.log('test')
+    navigate('/');
+  }
+ }, false);
+}
+
 const Game = (props: any) => {
   const [ userIsLoggedIn, setUserIsLoggedIn ] = useState<boolean>(false);
   const [ checkUserCompleted, setCheckUserCompleted ] = useState<boolean>(false);
+  const [ fullscreen, setFullscreen ] = useState<boolean>(false);
   const [ time, setTime ] = useState<string>(new Date().toLocaleTimeString());
   useEffect(
     () => {
@@ -48,7 +61,7 @@ const Game = (props: any) => {
   return (
     <div id="page">
       <div id="heroContent" style={{ float: 'right', imageRendering: 'pixelated', padding: '20px' }}>
-        <img src="/fireball.png" height="400px" />
+        <img src="/basicDragon.png" height="400px" />
         <h2 style={{
           position: 'absolute',
           bottom: '0px',
@@ -61,19 +74,31 @@ const Game = (props: any) => {
         <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>DragonCoin</h1>
       </Box>
       { checkUserCompleted && <>
-        {userIsLoggedIn && 
+        { userIsLoggedIn &&
           <>
-            <Button onClick={resume} text="Classic DragonCoin" />
-            <Button onClick={() => { show_error_banner('Coming Soon') }} text="Capture The Coins" />
-            <Space size='xl'></Space>
-            <Button onClick={() => { navigate('/mydragon') }} text="My Dragon" />
-            <Button onClick={async () => {
-              await signOut(auth);
-              setUserIsLoggedIn(false);
-            }} text="Log Out" />
+            { fullscreen &&
+              <>
+                <Button onClick={resume} text="Classic DragonCoin" />
+                <Button onClick={() => { show_error_banner('Coming Soon') }} text="Capture The Coins" />
+                <Space size='xl'></Space>
+                <Button onClick={() => { navigate('/mydragon') }} text="My Dragon" />
+                <Button onClick={async () => {
+                  await signOut(auth);
+                  setUserIsLoggedIn(false);
+                }} text="Log Out" />
+              </>
+            }
+            { !fullscreen &&
+              <Button onClick={() => {
+                document.documentElement.requestFullscreen();
+                let nav = navigator as any;
+                nav.keyboard.lock();
+                setFullscreen(true);
+              }} text="Play" />
+            }
           </>
         }
-        {!userIsLoggedIn &&
+        { !userIsLoggedIn &&
           <>
             <Button text="Sign In with Google" onClick={() => {
               signInWithPopup(auth, new GoogleAuthProvider());

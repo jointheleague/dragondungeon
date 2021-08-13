@@ -230,7 +230,7 @@ export class GameRoom extends Room<GameState> {
 			this.gameOver();
 		}
 
-		for (let i = this.state.coins.size; i < this.state.players.size * 5; i++) {
+		for (let i = this.state.coins.size; i < this.state.players.size * 15; i++) {
 			this.spawnCoin();
 		}
 
