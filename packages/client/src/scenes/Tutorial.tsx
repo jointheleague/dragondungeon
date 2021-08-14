@@ -1,9 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { Box, Space, Center, Button } from '../components';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, getDoc, doc, limit } from 'firebase/firestore/lite';
-import { navigate } from '@reach/router';
-import DOMPurify from 'dompurify';
+import React from 'react';
+import { Box, Space, Center } from '../components';
 
 const Info = () => {
   return (

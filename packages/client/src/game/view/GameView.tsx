@@ -11,7 +11,6 @@ import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
 import { Bat } from './entities/bat';
 import { Skull } from './entities/skull';
-import { BorderFence } from './entities/borderFence';
 import { Wall } from './entities/wall';
 import { MovingBackground } from './entities/movingBackground';
 import { IGameState} from '../state/types';
@@ -22,8 +21,6 @@ import ReactNipple from 'react-nipple';
 import { Bar } from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
 import { show_error_banner } from 'util/banner';
-import { navigate } from '@reach/router';
-import { continueStatement } from '@babel/types';
 
 interface GameViewProps {
   stateManager: StateManager;

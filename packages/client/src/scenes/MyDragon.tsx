@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import { Box, Space, Center, Button } from '../components';
+import { Box, Space, Button } from '../components';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, getDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
-import DOMPurify from 'dompurify';
 
 const db = getFirestore();
 const auth = getAuth();
@@ -29,7 +28,7 @@ const MyDragon = () => {
 
         setPageLoaded(true);
       } else {
-        navigate('/');
+        navigate('/home');
       }
     });
   }, []);
@@ -50,10 +49,10 @@ const MyDragon = () => {
           </Box>
           <div style={{ float: 'right', paddingLeft: '50px' }} id="sidebar">
             <Button onClick={() => navigate('/play/random')} text="Play" />
-            <Button onClick={() => navigate('/')} text="Home" />
+            <Button onClick={() => navigate('/home')} text="Home" />
             <Space size="m" />
-            <Button text="Character" />
             <Button onClick={() => navigate('/settings')} text="Settings" />
+            <Button onClick={() => navigate('/credits')} text="Credits" />
           </div>
           <Space size="xl" />
           <img id="skin" src={`/${userGameplay.dragonSkin}Dragon.png`} style={{ imageRendering: 'pixelated', float: 'right' }} alt="Profile" height="350px"/>

@@ -1,9 +1,6 @@
-import React, {useEffect, useState, Component} from 'react';
+import React, { Component } from 'react';
 import { Box, Space, Center, Button } from '../components';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, getDoc, doc, limit } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
-import DOMPurify from 'dompurify';
 import { StateManager } from '../game/state/StateManager';
 import { IGameState, IPlayer } from '../game/state/types';
 

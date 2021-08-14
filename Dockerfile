@@ -24,4 +24,4 @@ EXPOSE 80
 
 EXPOSE 8001
 
-CMD ["concurrently", "--kill-others-on-fail", "\"cp /etc/tls/privkey1.pem ./key.pem && cp /etc/tls/cert1.pem ./cert.pem\"", "\"http-server packages/client/build --port 443 -S -C cert.pem\"", "\"yarn start:server\"" ]
+CMD ["concurrently", "\"cp /etc/tls/privkey1.pem ./key.pem && cp /etc/tls/cert1.pem ./cert.pem\"", "\"http-server packages/client/build --port 443 -S -C cert.pem\"", "\"http-server packages/client/build --port 80\"", "\"yarn start:server\"" ]
