@@ -13,7 +13,6 @@ const Credits = () => {
         <Button onClick={() => navigate('/home')} text="Home" />
       </div>
       <p style={{ padding: '20px' }}>
-        <h2>Music</h2>
         <div style={{ padding: '10px' }}>
         The LEAGUE of Amazing Programmers<br />
         https://jointheleague.org
