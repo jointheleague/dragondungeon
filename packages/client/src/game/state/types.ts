@@ -10,6 +10,14 @@ export interface IGameState {
   coins: {[key: string]: ICoin};
   bars: IBar[];
   countdown: ICountdown;
+  gameOver: boolean;
+  bats: {[key: string]: IBat};
+
+  batRot: number;
+  gamemode: 'FFA'|'coinCapture';
+
+  skulls: {[key: string]: ISkull}
+
 }
 
 export interface ICountdown{
@@ -39,6 +47,11 @@ export interface IPlayer {
   onlineID: string;
   ballType: string;
   skinType: string;
+  hitsRecived: number;
+  hitsDealt: number;
+  coinsPickedUp: number;
+  dead: boolean;
+  team: number;
 }
 
 export interface ICoin{
@@ -46,17 +59,33 @@ export interface ICoin{
   x: number;
   y: number;
   size: number;
+  team: number;
 }
 
 export interface ICoinJar{
   key: number;
   x: number;
   y:number;
+  team:number;
 }
 
 export interface ILeaderboard{
   name: string;
   score: number;
+}
+
+export interface IBat{
+  key: number;
+  x: number;
+  y: number;
+  angle: number;
+}
+
+export interface ISkull{
+  key: number;
+  x: number;
+  y: number;
+  angle: number;
 }
 
 

@@ -11,10 +11,10 @@ export class Player extends Schema {
 	fireballs = new ArraySchema < Fireball > ();
 
 	@type("number")
-	x: number = Math.random()*2000;
+	x: number = 0;
 
 	@type("number")
-	y: number = Math.random()*2000;
+	y: number = 0;
 
 	@type("number")
 	angle: number = Math.PI;
@@ -53,7 +53,19 @@ export class Player extends Schema {
 	autoshootOn: boolean = false;
 
 	@type("boolean")
-	gameOver: boolean = false;
+	dead: boolean = false;
+
+	@type("number")
+	hitsRecived: number = 0;
+
+	@type("number")
+	hitsDealt: number = 0;
+
+	@type("number")
+	coinsPickedUp: number = 0;
+
+	@type("number")
+	team: number = 0;
 
 	direction: Geometry.Vector = new Geometry.Vector(0, 0);
 
@@ -68,23 +80,24 @@ export class Player extends Schema {
 		space: false
 	};
 
+	constructor(ballType : string, skinType : string, teamNum: number) {
+		super()
+		this.team = teamNum;
+		this.ballType = ballType;
+		this.skinType = skinType;
+		this.setPosition();
+	}
+
 	setPosition(){
 		var newX = 0;
 		var newY = 0;
 		do {
 			newX = Math.random()*2000;
 			newY = Math.random()*2000;
-		}while (Maths.checkWalls(newX, newY, 45))
+		}while (Maths.checkWalls(newX, newY, 45) ||  (newX > 500 && newY > 500 && newX < 1500 && newY < 1500))
 		this.x = newX;
 		this.y = newY;
 	} 
-
-	constructor(ballType : string, skinType : string) {
-		super()
-		this.ballType = ballType;
-		this.skinType = skinType;
-		this.setPosition();
-	}
 
 	inputs(i: IInputs) {
 		if(i.autoshoot && !this.activeInputs.autoshoot){
@@ -120,8 +133,23 @@ export class Player extends Schema {
 		}
 		this.fireballCooldown -= ticks;
 		if ((this.autoshootOn || this.activeInputs.space) && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI), 22.5)) {
-			this.fireballCooldown = 10;
-			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType, 40);
+			switch(this.ballType){
+				case "electric":
+					this.fireballCooldown = 12;
+					break;
+				case "poison":
+					this.fireballCooldown = 12;
+					break;
+				case "ice":
+					this.fireballCooldown = 10;
+					break;
+				case "mud":
+					this.fireballCooldown = 10;
+					break;
+				default :
+					this.fireballCooldown = 8;
+			}
+			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType, 40, this.team);
 			this.fireballs.push(fireball);
 		}
 
@@ -161,6 +189,21 @@ export class Player extends Schema {
 			this.y = newY;
 		}
 		if(!Maths.checkWalls(newX, this.y, 45)){
+			this.x = newX;
+		}
+		
+	}
+
+	push(angle : number, speed: number) {
+		const oldX = this.x;
+		const oldY = this.y;
+		const newX = oldX + (speed * Math.cos(angle));
+		const newY = oldY + (speed * Math.sin(angle));
+
+		if (!Maths.checkWalls(oldX, newY, 45)) {
+			this.y = newY;
+		}
+		if (!Maths.checkWalls(newX, oldY, 45)) {
 			this.x = newX;
 		}
 		

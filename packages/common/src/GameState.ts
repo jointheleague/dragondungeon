@@ -11,6 +11,9 @@ import { CoinJar } from './CoinJar';
 import { v4 } from "uuid";
 import { BorderFence } from './BorderFence';
 import { Countdown } from './Countdown';
+import { Bat } from './Bat';
+import { Skull } from './Skull';
+
 export class GameState extends Schema {
 	@type("boolean")
 	first: boolean = false;
@@ -31,21 +34,29 @@ export class GameState extends Schema {
 
 	@type(Countdown)
 	countdown = new Countdown(0, 30);
+
+	@type(Bat)
+	bats = new MapSchema <Bat>();
+
+	@type(Skull)
+	skulls = new MapSchema <Skull>();
 	
 	@type("boolean")
 	debugOn: boolean = false;
 
+	@type("boolean")
+	gameOver: boolean = false;
+
+
+	@type("number")
+	batRot: number = 0;
+
+	//"FFA" or "coinCapture"
+	@type("string")
+	gamemode: string = "FFA"
+
 	constructor() {
 		super();
-		let coinRadius = 200;
-		let coinCircleX = 250;
-		let coinCircleY = 250;
-		let numberOfCoins = 15;
-		/*
-		for (let i = 0; i < numberOfCoins; i++) {
-			this.coins.set(v4(), new Coin(i, Math.random()*2000, Math.random()*1000));
-		}
-		*/
 	}
 }
 

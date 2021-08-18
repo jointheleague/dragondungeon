@@ -14,7 +14,6 @@ interface IProps {
 }
 
 
-let ANIMATION_SPEED = 0;
 export const Wall = (props: IProps) => {
   const fenceTextures = useMemo(() => {
     let fenceImages = [WallImage2];

@@ -9,7 +9,8 @@ import { FireballView } from './entities/fireball/index';
 import * as PIXI from 'pixi.js';
 import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
-import { BorderFence } from './entities/borderFence';
+import { Bat } from './entities/bat';
+import { Skull } from './entities/skull';
 import { Wall } from './entities/wall';
 import { MovingBackground } from './entities/movingBackground';
 import { IGameState} from '../state/types';
@@ -20,13 +21,12 @@ import ReactNipple from 'react-nipple';
 import { Bar } from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
 import { show_error_banner } from 'util/banner';
-import { navigate } from '@reach/router';
 
 interface GameViewProps {
   stateManager: StateManager;
   state: IGameState;
-
 }
+
 const scale = 1;
 interface GameViewState{};
 
@@ -66,7 +66,13 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const healthBars = [];
     const tiles = [];
     const walls = [];
-    const coinJar = <CoinJar key={"only"} x={1000} y={1000}/>;
+    const bats = [];
+    const skulls = [];
+    const coinJar = <CoinJar key={"only"} x={1000} y={1000} team={state.coinJar.team}/>;
+
+    
+
+
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
     for (let pid in state.players) {
@@ -74,7 +80,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       //console.log("ball type in Gview, " + player.ballType);
       // TODO: Use player name/id for stuff
       
-      players.push(<Dragon key={pid} player={player} />,)
+      players.push(<Dragon key={pid} player={player} team={state.players[pid].team}/>,)
 
       for(let fireball of state.players[pid].fireballs){
         fireballs.push(<FireballView key={fireball.id} fireball={fireball} />)
@@ -85,13 +91,15 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       leaderboard.push(Leaderboard)
     }
 
-    //for(var i = 0; i < 8; i++){
-    //  fences.push(<BorderFence x={i*267+60} y={-76} angle={0} key={`fence1${i}`} />);
-    //  fences.push(<BorderFence x={i*267+60} y={2076} angle={0} key={`fence2${i}`} />);
-    //  fences.push(<BorderFence x={-76} y={i*267+60} angle={Math.PI/2} key={`fence3${i}`} />);
-    //  fences.push(<BorderFence x={2076} y={i*267+60} angle={Math.PI/2} key={`fence4${i}`} />);
-    //}
-  
+    for(let bid in state.bats){
+      bats.push(<Bat x={state.bats[bid].x} y={state.bats[bid].y} rot={state.bats[bid].angle} key={bid}/>)
+    }
+
+    for(let sid in state.skulls){
+      bats.push(<Skull x={state.skulls[sid].x} y={state.skulls[sid].y} rot={state.skulls[sid].angle} key={sid}/>)
+    }
+
+
     const xLen = 455.625;
     const xLen2 = 275.625;
     const xLen3 = 185.625;
@@ -140,10 +148,10 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     }
     for(let cid in state.coins){
       //const coin = state.coins[cid];
-      coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size}/>);
+      coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size} team={state.coins[cid].team}/>);
     }
     render(
-      <>{tiles}{coinJar}{walls}{coins}{players}{fireballs}{healthBars}</>, 
+      <>{tiles}{coinJar}{walls}{coins}{players}{skulls}{bats}{fireballs}{healthBars}</>, 
       this.viewport
     );
    }
@@ -176,7 +184,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
           }}
           onMove={(evt:any, data: any) => console.log(data.direction)}/>
        <ScrollDisable/>
-          <div style={{marginLeft : '3vw'}}>
+          <div style={{marginLeft : '3vw', display:'flex'}}>
             <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard>
           </div>
        <div ref={(thisDiv) => {component.gameCanvas = thisDiv!}} />
