@@ -147,32 +147,28 @@ export class GameRoom extends Room<GameState> {
 		} while (Maths.checkWalls(newX, newY, 20))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20));
 	}
-	moveBot(id, botDir) {
-		let yMove = Math.random() > 0.5;
-		let xMove = Math.random() > 0.5;
+	moveBot(bot: Player, right: boolean, left: boolean, up: boolean, down: boolean) {
 		let space = Math.random() > 0.7;
-		let angle = Math.random() * (Math.PI*2);
-		let left = xMove;
-		let right = !xMove;
-		let up = yMove;
-		let down = !yMove;
-
-		this.state.players[id].inputs({
-			up: up,
-			down: down,
+		let angle = Math.random() * (Math.PI * 2);
+		bot.inputs({
 			left: left,
+			up: up,
 			right: right,
-			space: space,
+			down: down,
+			shoot: false,
+			autoshoot: false,
 			angle: angle,
+			space: space
 		});
-
 	}
+
+
 
 	tick() {
 		this.counter++;
 		const dx = this.clock.deltaTime;
 		this.state.countdown.elaspseTime();
-
+	
 		if (this.state.countdown.done) {
 			this.state.players.forEach((player: Player) => {
 				player.gameOver = true;
@@ -185,6 +181,7 @@ export class GameRoom extends Room<GameState> {
 
 		if (this.state.players.size < 6) {
 			let bot = new Player("Fire", "normal");
+			
 			bot.isBot = true;
 			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
 			let botNameGender = Math.random() > 0.5 ? true : false;
@@ -216,24 +213,29 @@ export class GameRoom extends Room<GameState> {
 				const bot = this.state.players[id];
 				const jar = this.state.coinJar;
 				const range = 50;
-				let botDir = Math.floor(Math.random() * 4);
-				if (bot.coins > MAX_COINS / 4) {
-					if (getDistance(bot.x, bot.y, jar.x, jar.y) < 450) {
+				const moveRandom = ()=>{
+					let yMove = Math.random() > 0.5;
+							let xMove = Math.random() > 0.5;
+							this.moveBot(bot, xMove, !xMove, yMove, !yMove);
+				}
+				if (bot.coins >= MAX_COINS/3) {
+					if (getDistance(bot.x, bot.y, jar.x, jar.y) < 200) {
 						if (bot.x > jar.x + range) {
-							botDir = 2;
+							this.moveBot(bot, false, true, false, false);
 						} else if (bot.x < jar.x - range) {
-							botDir = 3;
+							this.moveBot(bot,  true, false, false, false);
 						} else if (bot.y < jar.y + range) {
-							botDir = 1;
+							this.moveBot(bot, false, false, false, true);
 						}
 						else if (bot.y > jar.y + range) {
-							botDir = 0;
-						}
-
-
+							this.moveBot(bot, false, false, true, false);
+						} 
+					} else {
+						moveRandom();
 					}
+				} else {
+					moveRandom();
 				}
-				this.moveBot(id, botDir);
 			}
 
 			if (this.botTimeout == 0) {
