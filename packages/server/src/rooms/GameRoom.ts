@@ -190,7 +190,7 @@ export class GameRoom extends Room<GameState> {
 		//this is temporary, change when CTC is more set up
 		else{teamNum = 0;}
 			this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, teamNum));
-			console.log(this.state.gamemode);
+			//console.log(this.state.gamemode);
 	}
 
 	createCoin(x: number, y: number) {
@@ -280,8 +280,8 @@ export class GameRoom extends Room<GameState> {
 							let xMove = Math.random() > 0.5;
 							this.moveBot(bot, xMove, !xMove, yMove, !yMove);
 				}
-				if (bot.coins >= MAX_COINS/3) {
-					if (getDistance(bot.x, bot.y, jar.x, jar.y) < 200) {
+				if (bot.coins >= MAX_COINS/4) {
+					if (Math.abs(bot.x-jar.x) < range || Math.abs(bot.y-jar.y) < range) {
 						if (bot.x > jar.x + range) {
 							this.moveBot(bot, false, true, false, false);
 						} else if (bot.x < jar.x - range) {
