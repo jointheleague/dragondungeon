@@ -17,19 +17,19 @@ function show_error_banner(text: string) {
   ).showToast();
 }
 
-function show_tutorial_banner(text: string) {
+function show_info_banner(text: string) {
   if (typeof text == "object") {
     text = JSON.stringify(text);
   }
   console.error(text);
   Toastify(
     {
-      text: `Error: ${text}`,
+      text,
       close: true,
-      duration: 3000,
+      duration: 5000,
       backgroundColor: "#00a1de",
     },
   ).showToast();
 }
 
-export { show_error_banner, show_tutorial_banner };
+export { show_error_banner, show_info_banner };
