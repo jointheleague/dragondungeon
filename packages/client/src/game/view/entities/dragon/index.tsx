@@ -20,12 +20,23 @@ import goldDragon2 from "./sprites/goldDragon3.png";
 import goldDragon3 from "./sprites/goldDragon4.png";
 import goldDragon4 from "./sprites/goldDragon5.png";
 
+import blueDragon1 from "./sprites/blueDragon2.png";
+import blueDragon2 from "./sprites/blueDragon3.png";
+import blueDragon3 from "./sprites/blueDragon4.png";
+import blueDragon4 from "./sprites/blueDragon5.png";
+
+import redDragon1 from "./sprites/redDragon2.png";
+import redDragon2 from "./sprites/redDragon3.png";
+import redDragon3 from "./sprites/redDragon4.png";
+import redDragon4 from "./sprites/redDragon5.png";
+
 import blankDragon from "./sprites/blankDragon.png";
 import { Player } from '../../../../../../common/build';
 
 interface IProps {
     key: string;
     player: IPlayer;
+    team: number;
 }
 
 type TeamOrbProps = {
@@ -33,6 +44,7 @@ type TeamOrbProps = {
   y: number;
   radius: number;
   zIndex?: number;
+  
 };
 
 function propsEqual(oldProps: TeamOrbProps, newProps: TeamOrbProps) {
@@ -81,6 +93,7 @@ export const Dragon = (props: IProps) => {
   const dragonTextures = useMemo(() => {
     // TODO: Create textures from spites
     let dragonImages;
+    if(props.team == 0){
     switch(props.player.skinType){
       case "light":
         dragonImages = [lightDragon1, lightDragon2, lightDragon3, lightDragon4];
@@ -91,6 +104,11 @@ export const Dragon = (props: IProps) => {
       default:
         dragonImages = [dragon1, dragon2, dragon3, dragon4];
     }
+  } else if(props.team == 1){
+    dragonImages = [redDragon1, redDragon2, redDragon3, redDragon4];
+  } else{
+    dragonImages = [blueDragon1, blueDragon2, blueDragon3, blueDragon4];
+  }
     //let dragonImages = [blankDragon];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     dragonImages.forEach(image =>{
@@ -100,7 +118,7 @@ export const Dragon = (props: IProps) => {
     return textures;
   }, []);
 
-  const fireballs = props.player.fireballs.map((fb, i) => <TeamOrb key={i} x={fb.x} y={fb.y} radius={4}/>)
+  const fireballs = props.player.fireballs.map((fb, i) => <TeamOrb key={i} x={fb.x} y={fb.y} radius={4} />)
   var yS = 5;
   if(Math.abs(props.player.angle)<(Math.PI/2)){
     yS = -5;

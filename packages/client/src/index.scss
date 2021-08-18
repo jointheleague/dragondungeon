@@ -1,5 +1,4 @@
-@import-normalize;
-@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Poppins&display=swap');
 
 :root {
   --primary_color: #c60c30;
@@ -14,26 +13,19 @@ a {
 }
 
 * {
-  font-family: 'Cinzel', serif;
-  cursor: crosshair;
+  font-family: 'Poppins', sans-serif;
+  cursor: crosshair !important;
 }
 
 body {
-  font-family: 'Cinzel', serif;
 	width: 100%;
 	height: 100%;
   padding: 0;
   margin: 0;
-  background: url('/background-tile.png');
+  background: black;
   user-select: none;
   color: var(--text_color);
-}
-
-div.centerer {
-  background-color: black;
-  padding: 15px;
-  padding-bottom: 30px;
-  border-radius: 10px;
+  background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('/background-tile.png');
 }
 
 .interactable {
@@ -41,8 +33,14 @@ div.centerer {
   user-select: auto;
 }
 
+#page {
+  padding: 25px;
+  text-align: center;
+}
+
 h1 {
-	color: var(--primary_color);
+	color: whitesmoke;
+  font-family: 'Cinzel Decorative', sans-serif;
 }
 
 .firebaseui-idp-text {
@@ -51,11 +49,25 @@ h1 {
 
 .scores {
   list-style-type: circle;
-  
 }
 
 .scores li {
   font-size: 25px;
   max-width: 350px;
   align-self: center;
+}
+
+@media only screen and (max-width: 900px) {
+  #heroContent {
+    display: none;
+  }
+}
+
+#mydragon {
+  padding: 20px;
+}
+
+#sidebar .button {
+  min-width: 150px;
+  max-width: 300px;
 }

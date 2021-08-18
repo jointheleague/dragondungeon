@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Space, Center, Button } from '../components';
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInAnonymously, signOut } from 'firebase/auth';
+import React, { useEffect } from 'react';
+import { Box, Space, Button } from '../components';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
+import { show_error_banner } from 'util/banner';
+import  * as Mousetrap from "mousetrap";
 
 const db = getFirestore();
 const auth = getAuth();
@@ -12,7 +14,7 @@ const resume = () => {
     if (user?.isAnonymous) {
       navigate('/play/random');
     } else if (user) {
-      const user_data = await getDoc(doc(db, user.uid, "login"));
+      const user_data = await getDoc(doc(db, user.uid, "gameplay"));
 
       console.log(user_data.exists());
 
@@ -25,78 +27,71 @@ const resume = () => {
   });
 }
 
-const profilepage = () => {
-  navigate('/profile');
-}
+const Home = (props: any) => {
+  useEffect(() => {
+    Mousetrap.bind('enter', resume);
+    Mousetrap.bind('shift+enter', () => show_error_banner('Coming Soon'));
+    Mousetrap.bind('alt+enter', () => navigate('/mydragon'));
 
-const infopage = () => {
-  navigate('/tutorial');
-}
+    const music = new Audio('/music/startscreen.mp3');
+    music.play();
 
-const gameoverpage = () => {
-  navigate('/gameover');
-}
+    setTimeout(() => {
+      (document.querySelector('#league-logo') as any).style.display = 'none';
+      (document.querySelector('#dragoncoin-logo') as any).style.display = 'block';
+    }, 5000)
 
-const logout = async () => {
-  await signOut(auth);
-  window.location.reload();
-}
+    setTimeout(() => {
+      (document.querySelector('#logo-screen') as any).style.display = 'none';
+    }, 11000)
 
-const Game = (props: any) => {
-  const [ userIsLoggedIn, setUserIsLoggedIn ] = useState<boolean>(false);
-  useEffect(
-    () => {
-      onAuthStateChanged(auth, user => {
-        if (user) {
-          setUserIsLoggedIn(true);
-        }
-      });
-    }, []
-  );
-
+    return () => {
+      music.pause();
+    }
+  }, []);
   return (
     <>
-      <br /><br /><br />
-      <Center>
-        <Space size='xl'/>
+      <div id="logo-screen" style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'black',
+       }}>
+         <img id="league-logo" src="/jtl.png" style={{
+           position: 'absolute',
+           top: '30%',
+           left: '30%',
+           height: '150px'
+         }} />
+         <h1 id="dragoncoin-logo" style={{
+           position: 'absolute',
+           top: '35%',
+           left: '25%',
+           display: 'none',
+           fontSize: '40pt',
+           color: '#c60c30'
+         }}>DragonCoin Alpha</h1>
+      </div>
+      <div id="page">
+        <div id="heroContent" style={{ float: 'right', imageRendering: 'pixelated', padding: '20px' }}>
+          <img src="/basicDragon.png" height="400px" />
+        </div>
         <Box>
           <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>DragonCoin</h1>
         </Box>
-        <br /><br /><br />
-        {userIsLoggedIn && 
-          <>
-            <Button onClick={resume} text="Play" />
-            <Button onClick={profilepage} text="Account" />
-            <Button onClick={infopage} text="Tutorial" />
-            <Button onClick={logout} text="Log Out" />
-          </>
-        }
-        {!userIsLoggedIn &&
-          <>
-            <Button text="Sign In with Google" onClick={() => {
-              signInWithPopup(auth, new GoogleAuthProvider());
-            }} />
-
-            <Button text="Continue without Login" onClick={() => {
-              signInAnonymously(auth);
-            }} />
-          </>
-        }
-        <br />
-        { props.location.search.includes('debug') ?
-          <>
-            <input type="text" placeholder="Development Server" id="dbg-dev" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid #c60c30', width:'45%' }} onChange={() => {
-              window.localStorage.server = (document.querySelector('#dbg-dev') as HTMLInputElement).value;
-            }} />
-            <input type="text" placeholder="Websocket Protocol" id="dbg-pro" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid #c60c30', width:'45%' }} onChange={() => {
-              window.localStorage.protocol = (document.querySelector('#dbg-pro') as HTMLInputElement).value;
-            }} />
-          </> :
-          null
-        }
-      </Center>
+        <Button onClick={ resume } text="Classic DragonCoin" />
+        <Button onClick={() => show_error_banner('Coming Soon') } text="Capture The Coins" />
+        <Space size='xl'></Space>
+        <Button onClick={() => navigate('/mydragon') } text="My Dragon" />
+        <Button onClick={async () => {
+          await signOut(auth);
+          navigate('/');
+        }} text="Log Out" />
+      </div>
     </>
   );
 }
 
-export default Game;
+export default Home;

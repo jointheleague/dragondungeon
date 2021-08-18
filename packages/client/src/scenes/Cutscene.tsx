@@ -1,8 +1,4 @@
 import React from 'react';
-import { Center } from '../components/center';
-import { Box } from '../components/box';
-import { Space } from '../components/space';
-import { Button } from '../components/button';
 import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { navigate } from '@reach/router';

@@ -10,14 +10,8 @@ interface IState {}
 export default class ErrorRoute extends Component<IProps, IState>  {
   constructor(props: RouteComponentProps) {
     super(props);
-
-    const path = props.location?.pathname;
-    
-    if (path?.includes("play")) {
-      show_error_banner('COW');
-    }
-
-    navigate("/")
+    show_error_banner('COW');
+    navigate("/");
   }
 
   render() {

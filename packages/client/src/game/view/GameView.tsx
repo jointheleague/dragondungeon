@@ -11,7 +11,6 @@ import { Coin } from './entities/coin';
 import { CoinJar } from './entities/coinJar';
 import { Bat } from './entities/bat';
 import { Skull } from './entities/skull';
-import { BorderFence } from './entities/borderFence';
 import { Wall } from './entities/wall';
 import { MovingBackground } from './entities/movingBackground';
 import { IGameState} from '../state/types';
@@ -22,8 +21,6 @@ import ReactNipple from 'react-nipple';
 import { Bar } from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
 import { show_error_banner } from 'util/banner';
-import { navigate } from '@reach/router';
-import { continueStatement } from '@babel/types';
 
 interface GameViewProps {
   stateManager: StateManager;
@@ -71,7 +68,11 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const walls = [];
     const bats = [];
     const skulls = [];
-    const coinJar = <CoinJar key={"only"} x={1000} y={1000}/>;
+    const coinJar = <CoinJar key={"only"} x={1000} y={1000} team={state.coinJar.team}/>;
+
+    
+
+
     const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
     for (let pid in state.players) {
@@ -79,7 +80,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       //console.log("ball type in Gview, " + player.ballType);
       // TODO: Use player name/id for stuff
       
-      players.push(<Dragon key={pid} player={player} />,)
+      players.push(<Dragon key={pid} player={player} team={state.players[pid].team}/>,)
 
       for(let fireball of state.players[pid].fireballs){
         fireballs.push(<FireballView key={fireball.id} fireball={fireball} />)
@@ -147,7 +148,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     }
     for(let cid in state.coins){
       //const coin = state.coins[cid];
-      coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size}/>);
+      coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size} team={state.coins[cid].team}/>);
     }
     render(
       <>{tiles}{coinJar}{walls}{coins}{players}{skulls}{bats}{fireballs}{healthBars}</>, 

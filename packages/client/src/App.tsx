@@ -3,9 +3,11 @@ import { Router, } from '@reach/router';
 import { ColyseusService } from 'services/colyseus';
 
 const Game = lazy(() => import('./scenes/Game'));
+const Credits = lazy(() => import('./scenes/Credits'));
+const StartScreen = lazy(() => import("./scenes/StartScreen"));
 const Home = lazy(() => import("./scenes/Home"));
 const ErrorRoute = lazy(() => import("./scenes/ErrorRoute"));
-const Profile = lazy(() => import("./scenes/Profile"));
+const MyDragon = lazy(() => import("./scenes/MyDragon"));
 const Tutorial = lazy(() => import("./scenes/Tutorial"));
 const GameOver = lazy(() => import("./scenes/GameOver"));
 const VideoCutscene = lazy(() => import("./scenes/Cutscene"));
@@ -27,21 +29,30 @@ class App extends Component {
   render() {
     return (
       <Suspense fallback={(
-        <>
-          <br /><br /><br />
-          <p style={{ textAlign: 'center' }}>Loading...</p>
-        </>
+        <></>
       )}>
         <Router>
           <Game colyseus={this.colyseus} roomId="random" path="/play/random" />
           <Game colyseus={this.colyseus} path="/play/:roomId" />
-          <Home path="/"/>
-          <Profile path="/profile"/>
-          <Tutorial path="/tutorial"/>
-          <GameOver path="/gameover"/>
+          <Credits path="/credits" />
+          <StartScreen path="/" />
+          <Home path="/home" />
+          <MyDragon path="/mydragon" />
+          <Tutorial path="/tutorial" />
+          <GameOver path="/gameover" />
           <VideoCutscene path="/story" />
-          <ErrorRoute default/>
+          <ErrorRoute default />
         </Router>
+        <h2 style={{
+          position: 'absolute',
+          bottom: '0px',
+          right: '0px',
+          padding: '20px',
+        }}>
+          DragonCoin Alpha<br />
+          {window.location.hostname}<br />
+          {navigator.vendor} - {navigator.productSub}
+        </h2>
       </Suspense>
     );
   }
