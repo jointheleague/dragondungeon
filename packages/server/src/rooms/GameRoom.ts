@@ -31,7 +31,7 @@ import { v4 } from "uuid";
 
 const admin_sdk_key = require('../../top_secret/adminsdk.json');
 const botnames = require('./botnames.json');
-const MAX_COINS = 10;
+const MAX_COINS_HELD = 10;
 
 admin.initializeApp({
 	credential: admin.credential.cert(admin_sdk_key)
@@ -274,13 +274,13 @@ export class GameRoom extends Room<GameState> {
 			if (this.state.players[id].isBot && this.botTimeout == 0) {
 				const bot = this.state.players[id];
 				const jar = this.state.coinJar;
-				const range = 50;
+				const range = 100;
 				const moveRandom = ()=>{
 					let yMove = Math.random() > 0.5;
 							let xMove = Math.random() > 0.5;
 							this.moveBot(bot, xMove, !xMove, yMove, !yMove);
 				}
-				if (bot.coins >= MAX_COINS/4) {
+				if (bot.coins >= MAX_COINS_HELD/8) {
 					if (Math.abs(bot.x-jar.x) < range || Math.abs(bot.y-jar.y) < range) {
 						if (bot.x > jar.x + range) {
 							this.moveBot(bot, false, true, false, false);
