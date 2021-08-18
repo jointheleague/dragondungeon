@@ -48,10 +48,8 @@ class App extends Component {
           bottom: '0px',
           right: '0px',
           padding: '20px',
-        }}>
-          DragonCoin Alpha<br />
-          {window.location.hostname}<br />
-          {navigator.vendor} - {navigator.productSub}
+        }} id="watermark">
+          DragonCoin Alpha
         </h2>
       </Suspense>
     );

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StateManager } from '../state/StateManager';
 import { IGameState } from '../state/types';
-import { show_tutorial } from './tutorial';
 import GameOver from '../../scenes/GameOver';
 import { navigate } from '@reach/router';
 
@@ -16,8 +15,6 @@ export const CoreView = (props: IProps) => {
   const {stateManager} = props;
 
   useEffect(() => {
-    show_tutorial();
-
     const ref = stateManager.room.onStateChange(newState => {
       setState(newState)
     });
