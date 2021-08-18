@@ -274,7 +274,7 @@ export class GameRoom extends Room<GameState> {
 			if (this.state.players[id].isBot && this.botTimeout == 0) {
 				const bot = this.state.players[id];
 				const jar = this.state.coinJar;
-				const range = 100;
+				const range = 75;
 				const moveRandom = ()=>{
 					let yMove = Math.random() > 0.5;
 							let xMove = Math.random() > 0.5;
