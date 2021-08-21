@@ -96,7 +96,7 @@ const Home = (props: any) => {
            padding: '10px',
          }}>[Space] Skip</h4>
       </div>
-      <div id="page">
+      <div id="page" className="mobile-center">
         <div id="heroContent" style={{ float: 'right', imageRendering: 'pixelated', padding: '20px' }}>
           <img src="/basicDragon.png" height="400px" />
         </div>
@@ -105,6 +105,7 @@ const Home = (props: any) => {
         </Box>
         <Button onClick={ resume } text="Classic DragonCoin" />
         <Button onClick={() => show_info_banner('Capture The Coins mode is coming soon!') } text="Capture The Coins" />
+        <Button onClick={() => navigate('/play/tutorial')} text="Tutorial" />
         <Space size='xl'></Space>
         <Button onClick={() => {
           onAuthStateChanged(auth, (user) => {

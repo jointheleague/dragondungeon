@@ -23,6 +23,21 @@ const Credits = () => {
         Link: https://incompetech.filmmusic.io/song/5014-volatile-reaction<br />
         License: https://filmmusic.io/standard-license
         </div>
+        <div style={{ padding: '10px' }}>
+        Crossing the Chasm by Kevin MacLeod
+        Link: https://incompetech.filmmusic.io/song/3562-crossing-the-chasm
+        License: https://filmmusic.io/standard-license
+        </div>
+        <div style={{ padding: '10px' }}>
+        The Descent by Kevin MacLeod
+        Link: https://incompetech.filmmusic.io/song/4490-the-descent
+        License: https://filmmusic.io/standard-license
+        </div>
+        <div style={{ padding: '10px' }}>
+        The Ice Giants by Kevin MacLeod
+        Link: https://incompetech.filmmusic.io/song/5745-the-ice-giants
+        License: https://filmmusic.io/standard-license
+        </div>
       </p>
     </>
   );

@@ -8,9 +8,8 @@ const StartScreen = lazy(() => import("./scenes/StartScreen"));
 const Home = lazy(() => import("./scenes/Home"));
 const ErrorRoute = lazy(() => import("./scenes/ErrorRoute"));
 const MyDragon = lazy(() => import("./scenes/MyDragon"));
+const StoryContent = lazy(() => import("./scenes/Cutscene"));
 const Tutorial = lazy(() => import("./scenes/Tutorial"));
-const GameOver = lazy(() => import("./scenes/GameOver"));
-const VideoCutscene = lazy(() => import("./scenes/Cutscene"));
 
 interface IProps {}
 
@@ -26,6 +25,7 @@ class App extends Component {
       window.localStorage.server || `${window.location.hostname}:8001`,
     );
   }
+
   render() {
     return (
       <Suspense fallback={(
@@ -38,19 +38,10 @@ class App extends Component {
           <StartScreen path="/" />
           <Home path="/home" />
           <MyDragon path="/mydragon" />
+          <StoryContent path="/story" />
           <Tutorial path="/tutorial" />
-          <GameOver path="/gameover" />
-          <VideoCutscene path="/story" />
           <ErrorRoute default />
         </Router>
-        <h2 style={{
-          position: 'absolute',
-          bottom: '0px',
-          right: '0px',
-          padding: '20px',
-        }} id="watermark">
-          DragonCoin Alpha
-        </h2>
       </Suspense>
     );
   }

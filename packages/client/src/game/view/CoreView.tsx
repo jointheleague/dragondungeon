@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { StateManager } from '../state/StateManager';
 import { IGameState } from '../state/types';
 import GameOver from '../../scenes/GameOver';
-import { navigate } from '@reach/router';
+import Mousetrap from 'mousetrap';
 
 import {GameView} from './GameView'
+import { navigate } from '@reach/router';
 
 interface IProps {
   stateManager: StateManager;
@@ -12,15 +13,21 @@ interface IProps {
 
 export const CoreView = (props: IProps) => {
   const [state, setState] = useState<IGameState | null>(null);
+  const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(new Audio('/music/ingame.mp3'));
   const {stateManager} = props;
 
   useEffect(() => {
+    Mousetrap.bind('tab', () => { navigate('/home') });
+    gameMusic.loop = true;
+    gameMusic.play();
+
     const ref = stateManager.room.onStateChange(newState => {
       setState(newState)
     });
 
     return () => {
       ref.clear();
+      gameMusic.pause();
     };
   }, [stateManager])
 
@@ -35,7 +42,7 @@ export const CoreView = (props: IProps) => {
 
   if(state.gameOver){
     return (
-      <GameOver stateManager={props.stateManager} state={state}/>
+      <GameOver stateManager={props.stateManager} state={state} music={gameMusic}/>
     )
   }
 

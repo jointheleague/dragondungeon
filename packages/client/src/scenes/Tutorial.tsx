@@ -4,9 +4,7 @@ import { Box, Space, Center } from '../components';
 const Info = () => {
   return (
     <>
-      <br /><br /><br />
       <Center>
-        <a href="/">Back</a>
         <Space size='l'/>
         <Box>
           <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>Info</h1>
@@ -21,14 +19,14 @@ const Info = () => {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          <img src="/lightDragon.png" style={{ imageRendering: 'pixelated' }} height="60px" alt="Dragon" />
+          <img src="/basicDragon.png" style={{ imageRendering: 'pixelated' }} height="60px" alt="Dragon" />
           <br />
           <h4 style={{ paddingLeft: '30px', alignSelf: 'center' }}>Controls</h4>
         </div>
         <br />
         <p style={{textAlign:'center'}}>
-        Move using, W A S D
-        <br/>Shoot fireballs with the SPACEBAR 
+        Move using W, A, S, and D
+        <br/>Shoot fireballs with the spacebar 
         <br/>To continiously shoot fireballs, hold SPACEBAR or press the X key
         <br/>To aim the fireballs, use your trackpad or a mouse
         </p>

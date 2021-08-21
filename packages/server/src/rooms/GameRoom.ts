@@ -29,18 +29,13 @@ import {
 import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
 
-const admin_sdk_key = require('../../top_secret/adminsdk.json');
 const botnames = require('./botnames.json');
-const MAX_COINS_HELD = 10;
-
-admin.initializeApp({
-	credential: admin.credential.cert(admin_sdk_key)
-});
+const MAX_COINS_HELD = 30;
 
 export class GameRoom extends Room<GameState> {
 	counter = 0;
 	botTimeout = 0;
-	maxClients: 10;
+	maxClients = 15;
 
 	redTeamIds = [];
 	blueTeamIds = [];

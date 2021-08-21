@@ -5,6 +5,12 @@ import { navigate } from '@reach/router';
 
 const auth = getAuth();
 
+document.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement == null) {
+    (document.getElementById('fsexit') as any).style.display = 'block';
+  }
+}, false);
+
 const StartScreen = (props: any) => {
   const [ userIsLoggedIn, setUserIsLoggedIn ] = useState<boolean>(false);
   const [ checkUserCompleted, setCheckUserCompleted ] = useState<boolean>(false);
@@ -39,28 +45,25 @@ const StartScreen = (props: any) => {
         { checkUserCompleted && <>
           <Button onClick={ async () => {
             if (userIsLoggedIn) {
-              onAuthStateChanged(auth, (user) => {
-                if (user?.isAnonymous) {
-                  (document.getElementById('watermark') as any).innerHTML += ' Demo Mode'
-                }
-              });
-              document.documentElement.requestFullscreen();
               navigate('/home');
             } else {
               await signInWithPopup(auth, new GoogleAuthProvider());
             }
-          } } text="Play" />
+          } } text="Play DragonCoin" />
           {
             !userIsLoggedIn &&
               <Button onClick={ async () => {
                 await signInAnonymously(auth);
-              } } text="Demo Mode" />
+              } } text="Play Without Account" />
             }
             {
               userIsAnon &&
                 <Button onClick={ async () => {
                   await signInWithPopup(auth, new GoogleAuthProvider());
                   navigate('/home');
+                  document.documentElement.requestFullscreen();
+                  let nav = navigator as any;
+                  nav.keyboard.lock();
                 } } text="Unlock DragonCoin" />
             }
         </> }

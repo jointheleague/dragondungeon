@@ -79,6 +79,7 @@ export { GameOverLeaderboard }
 interface IProps {
   stateManager: StateManager;
   state: IGameState;
+  music: HTMLAudioElement;
 }
 
 interface Ranking {
@@ -90,8 +91,16 @@ const GameOver = (props: IProps) => {
 
   const players = props.state.players;
 
+  const gameMusic = props.music;
+
   const id = props.stateManager.id;
   const me = players[id];
+
+  gameMusic.pause();
+
+  const gameOverMusic = new Audio('/music/gameover.mp3');
+  gameOverMusic.loop = true;
+  gameOverMusic.play();
 
 
 

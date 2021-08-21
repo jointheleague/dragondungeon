@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { navigate } from '@reach/router';
 import DOMPurify from 'dompurify';
+import { Button } from 'components';
 
 const db = getFirestore();
 const auth = getAuth();
@@ -48,11 +49,28 @@ const processUser = () => {
 //   );
 // }
 
-const VideoCutscene = () => {
+const StoryContent = () => {
   return (
-    <></>
+    <>
+      <iframe src="https://www.arcgis.com/apps/Cascade/index.html?appid=75cd545ddeb949629b6494f8228adcd0&classicEmbedMode" style={{
+        border: 0,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+      }} />
+      <Button onClick={ () => {
+        navigate('/tutorial');
+      }} text="Continue" style={{
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        background: 'rgba(0, 0, 0, 0.7)',
+      }} />
+    </>
   );
 }
 
 
-export default VideoCutscene;
+export default StoryContent;
