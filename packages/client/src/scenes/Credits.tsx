@@ -6,7 +6,7 @@ const Credits = () => {
   return (
     <>
       <Box>
-        <h1>About DragonCoin</h1>
+        <h1>About DragonDungeon</h1>
       </Box>
       <div style={{ float: 'right', paddingLeft: '50px' }} id="sidebar">
         <Button onClick={() => navigate('/play/random')} text="Play" />

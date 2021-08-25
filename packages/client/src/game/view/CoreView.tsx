@@ -17,7 +17,7 @@ export const CoreView = (props: IProps) => {
   const {stateManager} = props;
 
   useEffect(() => {
-    Mousetrap.bind('tab', () => { navigate('/home') });
+    Mousetrap.bind('tab', () => { navigate('/') });
     gameMusic.loop = true;
     gameMusic.play();
 

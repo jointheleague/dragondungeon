@@ -1,5 +1,5 @@
 {
-  "name": "@dragoncoin/server",
+  "name": "@dragondungeon/server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,7 +16,7 @@
   "dependencies": {
     "@colyseus/monitor": "^0.14.20",
     "@colyseus/schema": "^1.0.3",
-    "@dragoncoin/common": "1.0.0",
+    "@dragondungeon/common": "1.0.0",
     "colyseus": "^0.13.7",
     "express": "^4.17.1",
     "firebase-admin": "^9.5.0",

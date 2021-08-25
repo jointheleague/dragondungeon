@@ -1,4 +1,4 @@
-import { Fireball } from "@dragoncoin/common";
+import { Fireball } from "@dragondungeon/common";
 import { InteractionManager } from "pixi.js";
 
 export {Fireball};

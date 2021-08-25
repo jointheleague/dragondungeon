@@ -1,76 +1,109 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Space, Center, Button } from '../components';
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInAnonymously, } from 'firebase/auth';
+import { Box, Button } from '../components';
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInAnonymously, User, signOut } from 'firebase/auth';
+import { getFirestore, getDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
+import { show_info_banner } from 'util/banner';
 
 const auth = getAuth();
-
-document.addEventListener('fullscreenchange', () => {
-  if (document.fullscreenElement == null) {
-    (document.getElementById('fsexit') as any).style.display = 'block';
-  }
-}, false);
+const db = getFirestore();
 
 const StartScreen = (props: any) => {
-  const [ userIsLoggedIn, setUserIsLoggedIn ] = useState<boolean>(false);
-  const [ checkUserCompleted, setCheckUserCompleted ] = useState<boolean>(false);
-  const [ userIsAnon, setUserIsAnon ] = useState<boolean>(false);
+  const [ user, setUser ] = useState<User>();
+  const [ userIsAnon, setUserIsAnon ] = useState<boolean>();
   const [ time, setTime ] = useState<string>(new Date().toLocaleTimeString());
   useEffect(
     () => {
+      setTimeout(() => {
+        (document.querySelector('#logo-screen') as any).style.display = 'none';
+        window.sessionStorage.setItem('hasViewedIntro', "true");
+      }, 4000)
+      
       onAuthStateChanged(auth, user => {
         if (user) {
-          setUserIsLoggedIn(true);
           if (user.isAnonymous) {
             setUserIsAnon(true);
           }
+          setUser(user);
         }
-        setCheckUserCompleted(true);
       });
 
-      setInterval(() => {
+      const clockInterval = setInterval(() => {
         setTime(new Date().toLocaleTimeString());
-      }, 1000)
+      }, 1000);
+
+      return () => {
+        clearInterval(clockInterval);
+      };
     }, []
   );
 
   return (
-    <div id="page">
-      <Center>
-        <Space size='giant'></Space>
+    <>
+      <div id="logo-screen" onClick={() => {
+        (document.querySelector('#logo-screen') as any).style.display = 'none';
+      }} style={{
+        display: 'block',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'black',
+        textAlign: 'center',
+       }}>
+         <img id="league-logo" src="/jtl.png" style={{
+          position: "relative",
+          top: "40%",
+          maxWidth: '90vw',
+         }} />
+      </div>
+      <div id="page" className="mobile-center">
         <Box>
-          <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>DragonCoin</h1>
+          <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>dragondungeon</h1>
         </Box>
-        <Space size='l'></Space>
-        { checkUserCompleted && <>
-          <Button onClick={ async () => {
-            if (userIsLoggedIn) {
-              navigate('/home');
+        <div id="heroContent" style={{ float: 'right', imageRendering: 'pixelated', padding: '20px' }}>
+          <img src="/basicDragon.png" height="400px" />
+        </div>
+        <Button onClick={async () => {
+          if (user) {
+            if (user.isAnonymous) {
+              await setDoc(doc(db, user.uid, "gameplay"), {
+                ballType: 'fire',
+                dragonSkin: 'basic',
+              });
+              navigate('/play/random');
             } else {
-              await signInWithPopup(auth, new GoogleAuthProvider());
+              navigate('/play/random');
             }
-          } } text="Play DragonCoin" />
-          {
-            !userIsLoggedIn &&
-              <Button onClick={ async () => {
-                await signInAnonymously(auth);
-              } } text="Play Without Account" />
+          } else {
+            await signInAnonymously(auth);
+            navigate('/play/random');
+          }
+        } } text="Play" />
+        <Button onClick={() => {
+          onAuthStateChanged(auth, (user) => {
+            if (user?.isAnonymous) {
+              show_info_banner('Sign in with a dragondungeon account to create a custom dragon!');
+              navigate('/');
+            } else {
+              navigate('/mydragon');
             }
-            {
-              userIsAnon &&
-                <Button onClick={ async () => {
-                  await signInWithPopup(auth, new GoogleAuthProvider());
-                  navigate('/home');
-                  document.documentElement.requestFullscreen();
-                  let nav = navigator as any;
-                  nav.keyboard.lock();
-                } } text="Unlock DragonCoin" />
-            }
-        </> }
-        <Space size='l'></Space>
-        <h1>{ time }</h1>
-      </Center>
-    </div>
+          });
+          navigate('/mydragon')} } text="My Dragon" />
+        { ( user && !userIsAnon ) && <Button onClick={async () => {
+          await signOut(auth);
+          window.location.reload();
+        }} text="Log Out" /> }
+        { !user && <Button onClick={async () => {
+          await signInWithPopup(auth, new GoogleAuthProvider());
+        }} text="Log In" /> }
+        { userIsAnon && <Button onClick={async () => {
+          await signOut(auth);
+          await signInWithPopup(auth, new GoogleAuthProvider());
+        }} text="Log In" /> }
+      </div>
+    </>
   );
 }
 

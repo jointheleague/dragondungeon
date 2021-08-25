@@ -36,7 +36,7 @@ const processUser = () => {
 //       <Center>
 //         <Space size='xl' />
 //         <Box>
-//           <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>DragonCoin</h1>
+//           <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>DragonDungeon</h1>
 //         </Box>
 //         <Space size='m' />
 //         <b>Now, you'll need to pick a Dragon Name. Your first name is a sensible choice.</b>

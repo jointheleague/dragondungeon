@@ -1,6 +1,6 @@
-# DragonCoin
+# DragonDungeon
 
-DragonCoin is an epic game. With dragons. And coins. And fireballs.
+DragonDungeon is an epic game. With dragons. And coins. And fireballs.
 
 ## Notes
 
