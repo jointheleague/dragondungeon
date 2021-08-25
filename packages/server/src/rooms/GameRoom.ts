@@ -225,19 +225,52 @@ export class GameRoom extends Room<GameState> {
 			this.gameOver();
 		}
 
-		for (let i = this.state.coins.size; i < this.state.players.size * 15; i++) {
+		for (let i = this.state.coins.size; i < this.state.players.size * 25; i++) {
 			this.spawnCoin();
 		}
 
-		if (this.state.players.size < 6) {
+		if (this.state.players.size < 3) {
 
-			let bot = new Player("Fire", "normal", 0);
+			let ballType;
+			let dragonSkin;
+
+			switch ( Math.floor( Math.random() * 5 ) ) {
+				case 0:
+					 ballType = "fire";
+					 break;
+				case 1:
+					ballType = "ice";
+						break;
+				case 2:
+					ballType = "poison";
+					break;
+				case 3:
+					ballType = "mud";
+					break;
+				case 4:
+					ballType = "electric";
+					break;
+			}
+
+			switch ( Math.floor( Math.random() * 3 ) ) {
+				case 0:
+					 dragonSkin = "default";
+					 break;
+				case 1:
+					dragonSkin = "light";
+						break;
+				case 2:
+					dragonSkin = "gold";
+					break;
+			}
+
+			let bot = new Player(ballType, dragonSkin, 0);
 			bot.isBot = true;
 			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
 			let botNameGender = Math.random() > 0.2 ? true : false;
 			let botNameFirst = botNameGender ? botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] : botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
 			let botNameLast = botNameRegion.surnames[Math.floor(Math.random() * botNameRegion.surnames.length)];
-			bot.onlineName = botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botwords[Math.floor(Math.random() * botwords.length)].toLowerCase();
+			bot.onlineName = Math.random() ? botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botwords[Math.floor(Math.random() * botwords.length)].toLowerCase() : botwords[Math.floor(Math.random() * botwords.length)].toLowerCase().botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botNameLast;
 			this.state.players.set(v4(), bot);
 		}
 

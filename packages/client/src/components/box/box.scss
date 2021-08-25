@@ -1,14 +1,18 @@
 .container-box {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
   box-shadow: 0 8px 16px rgba(9,30,66,.5);
-  border: 3px solid var(--primary_color);
+  border-top: 3px solid var(--primary_color);
+  border-bottom: 3px solid var(--primary_color);
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 8;
   padding: 16px;
   overflow: hidden;
-  width: 95%;
+  width: 100vw;
 }

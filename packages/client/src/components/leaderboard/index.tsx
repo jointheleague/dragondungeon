@@ -15,6 +15,7 @@ interface LeaderboardProps {
 interface Ranking {
   onlineName: string;
   score: number;
+  ballType: string;
 }
 
 interface LeaderboardState {
@@ -34,11 +35,13 @@ class Leaderboard extends Component <LeaderboardProps, LeaderboardState>
 
   return ranking.map((ranking: Ranking, index:any) => {
     const score = ranking.score;
-    var name = ranking.onlineName;
+    let name = ranking.onlineName;
+    const ballType = ranking.ballType;
 
     if(name == null){name = "unNamed"}
      return (
         <tr key={index}>
+            <td className="playerData"><img src={`/${ballType}ball.png`} style={{ height: '30px' }} /></td>
            <td className="playerData">{name}</td>
            <td className="playerData"><b><big>{score}</big></b></td>
         </tr>

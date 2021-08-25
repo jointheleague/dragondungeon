@@ -5,9 +5,10 @@
   user-select: none;
   outline: none;
   border: 3px solid red;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.7);
   display: block;
-  color: white;
+  color: red;
+  font-weight: bold;
   max-width: 70%;
   min-width: 30%;
   border-radius: 3px;
@@ -16,7 +17,7 @@
     cursor: default !important ;
   }
   &:hover, &:focus {
-    filter: brightness(90%);
+    background: rgba(0, 0, 0, 0.7);
     border: 3px solid whitesmoke;
   }
 }

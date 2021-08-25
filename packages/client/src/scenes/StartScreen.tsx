@@ -52,7 +52,8 @@ const StartScreen = (props: any) => {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'black',
+        backgroundColor: 'whitesmoke',
+        color: 'black',
         textAlign: 'center',
         zIndex: 100,
        }}>
@@ -77,7 +78,7 @@ const StartScreen = (props: any) => {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'black',
+        backgroundColor: 'whitesmoke',
         textAlign: 'center',
         zIndex: 99,
        }}>

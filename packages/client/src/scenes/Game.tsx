@@ -49,10 +49,10 @@ export default class Game extends Component<IProps, IState>{
   render(): ReactNode {
     if (this.state.loading) {
       return (
-        <>
+        <div style={{ textAlign: 'center' }}>
           <br /><br /><br />
-          <img style={{ textAlign: 'center' }} src="/basicDragon.png" />
-        </>
+          <img style={{ textAlign: 'center', height: '150px', imageRendering: 'pixelated' }} src="/basicDragon.png" />
+        </div>
       )
     }
     return (
