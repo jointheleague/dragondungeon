@@ -3,7 +3,6 @@ import { Box, Button } from '../components';
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInAnonymously, User, signOut } from 'firebase/auth';
 import { getFirestore, getDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
-import { show_info_banner } from 'util/banner';
 
 const auth = getAuth();
 const db = getFirestore();
@@ -12,13 +11,9 @@ const StartScreen = (props: any) => {
   const [ user, setUser ] = useState<User>();
   const [ userIsAnon, setUserIsAnon ] = useState<boolean>();
   const [ time, setTime ] = useState<string>(new Date().toLocaleTimeString());
+  const [ music, setMusic ] = useState<HTMLAudioElement>(new Audio('/music/startscreen.mp3'));
   useEffect(
-    () => {
-      setTimeout(() => {
-        (document.querySelector('#logo-screen') as any).style.display = 'none';
-        window.sessionStorage.setItem('hasViewedIntro', "true");
-      }, 4000)
-      
+    () => {      
       onAuthStateChanged(auth, user => {
         if (user) {
           if (user.isAnonymous) {
@@ -34,12 +29,45 @@ const StartScreen = (props: any) => {
 
       return () => {
         clearInterval(clockInterval);
+        music.pause();
       };
     }, []
   );
 
   return (
     <>
+      <div id="audiocontext-not-allowed" onClick={() => {
+        music.loop = true;
+        music.currentTime = 7;
+        music.play();
+        (document.querySelector('#audiocontext-not-allowed') as any).style.display = 'none';
+        setTimeout(() => {
+          (document.querySelector('#logo-screen') as any).style.display = 'none';
+          window.sessionStorage.setItem('hasViewedIntro', "true");
+        }, 4000);
+      }} style={{
+        display: 'block',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'black',
+        textAlign: 'center',
+        zIndex: 100,
+       }}>
+         {(window.innerWidth <= 600) && <h1>DragonDungeon</h1>}{(window.innerWidth >= 600) && <h1 style={{
+           fontSize: '75px',
+         }}>DragonDungeon</h1>}
+         <img src="/basicDragon.png" style={{
+          position: "relative",
+          top: "40%",
+          maxWidth: '90vw',
+          height: '150px',
+          imageRendering: 'pixelated',
+         }} />
+         <p>{(window.innerWidth <= 600) && "Tap Anywhere"}{(window.innerWidth >= 600) && "Click Anywhere"}</p>
+      </div>
       <div id="logo-screen" onClick={() => {
         (document.querySelector('#logo-screen') as any).style.display = 'none';
       }} style={{
@@ -51,6 +79,7 @@ const StartScreen = (props: any) => {
         height: '100vh',
         backgroundColor: 'black',
         textAlign: 'center',
+        zIndex: 99,
        }}>
          <img id="league-logo" src="/jtl.png" style={{
           position: "relative",
@@ -81,26 +110,19 @@ const StartScreen = (props: any) => {
             navigate('/play/random');
           }
         } } text="Play" />
-        <Button onClick={() => {
-          onAuthStateChanged(auth, (user) => {
-            if (user?.isAnonymous) {
-              show_info_banner('Sign in with a dragondungeon account to create a custom dragon!');
-              navigate('/');
-            } else {
-              navigate('/mydragon');
-            }
-          });
-          navigate('/mydragon')} } text="My Dragon" />
+        { !userIsAnon && <Button onClick={() => navigate('/mydragon')} text="My Dragon" /> }
         { ( user && !userIsAnon ) && <Button onClick={async () => {
           await signOut(auth);
           window.location.reload();
         }} text="Log Out" /> }
         { !user && <Button onClick={async () => {
           await signInWithPopup(auth, new GoogleAuthProvider());
+          window.location.reload();
         }} text="Log In" /> }
         { userIsAnon && <Button onClick={async () => {
           await signOut(auth);
           await signInWithPopup(auth, new GoogleAuthProvider());
+          window.location.reload();
         }} text="Log In" /> }
       </div>
     </>

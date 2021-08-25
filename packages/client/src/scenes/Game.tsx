@@ -51,7 +51,7 @@ export default class Game extends Component<IProps, IState>{
       return (
         <>
           <br /><br /><br />
-          <p style={{ textAlign: 'center' }}>Loading...</p>
+          <img style={{ textAlign: 'center' }} src="/basicDragon.png" />
         </>
       )
     }

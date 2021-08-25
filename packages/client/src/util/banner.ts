@@ -12,7 +12,7 @@ function show_error_banner(text: string) {
       text: `Error: ${text}`,
       close: true,
       duration: 3000,
-      backgroundColor: "#c60c30",
+      backgroundColor: "red",
     },
   ).showToast();
 }

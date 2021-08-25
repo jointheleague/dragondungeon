@@ -42,7 +42,7 @@ const processUser = () => {
 //         <b>Now, you'll need to pick a Dragon Name. Your first name is a sensible choice.</b>
 //         <p>Remember to choose something people can't use to find you in real life.</p>
 //         <Space size='m' />
-//         <input type="text" placeholder="Dragon Name" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid #c60c30', width:'45%' }} />
+//         <input type="text" placeholder="Dragon Name" style={{ fontSize: '20px', color: "white", backgroundColor: 'transparent', padding: '3px', border: '3px solid red', width:'45%' }} />
 //         <Button text="Confirm" style={{ width:'40%' }} onClick={processUser} />
 //       </Center>
 //     </>

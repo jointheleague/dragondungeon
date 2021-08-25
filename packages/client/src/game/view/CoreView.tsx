@@ -35,7 +35,7 @@ export const CoreView = (props: IProps) => {
     return (
       <>
         <br /><br /><br />
-        <p style={{ textAlign: 'center' }}>Loading...</p>
+        <img style={{ textAlign: 'center' }} src="/basicDragon.png" />
       </>
     )
   }

@@ -35,6 +35,10 @@ const MyDragon = () => {
         navigate('/');
       }
     });
+
+    return () => {
+      myDragonAudio.pause();
+    };
   }, []);
   return (
     <>
@@ -53,9 +57,6 @@ const MyDragon = () => {
           </Box>
           <div style={{ float: 'right', paddingLeft: '50px' }} id="sidebar">
             <Button onClick={() => navigate('/play/random')} text="Play" />
-            <Button onClick={() => navigate('/')} text="Home" />
-            <Space size="m" />
-            {/* <Button onClick={() => navigate('/settings')} text="Settings" /> */}
             <Button onClick={() => navigate('/credits')} text="Credits" />
           </div>
           <Space size="xl" />

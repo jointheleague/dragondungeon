@@ -17,7 +17,6 @@ import { IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Leaderboard } from 'components/leaderboard';
 //import { Countdown } from 'components/countdown';
-import ReactNipple from 'react-nipple';
 import { Bar } from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
 import { show_error_banner, show_tutorial_banner } from 'util/banner';
@@ -178,14 +177,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      return (
        <>
        <Controls actionCallback={(v: IInputs) => this.actionCallback(v)} viewport={this.viewport}/>
-        <ReactNipple
-          options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
-          style={{
-            position: 'fixed',
-            width: '100vw',
-            height: '100vh'
-          }}
-          onMove={(evt:any, data: any) => console.log(data.direction)}/>
        <ScrollDisable/>
           <div style={{marginLeft : '3vw', display:'flex'}}>
             <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard>

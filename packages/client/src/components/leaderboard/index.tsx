@@ -40,7 +40,7 @@ class Leaderboard extends Component <LeaderboardProps, LeaderboardState>
      return (
         <tr key={index}>
            <td className="playerData">{name}</td>
-           <td className="playerData">{score}</td>
+           <td className="playerData"><b><big>{score}</big></b></td>
         </tr>
      )
   })
@@ -82,7 +82,21 @@ render() {
 
   return (
      <div className="leaderboard-box" >
-        <table id='students'>
+      {/* Desktop */}
+      { (window.innerWidth >= 600) && <>
+        <h1>DragonDungeon</h1>
+        <h2>{this.renderCountdown()}</h2>
+        <h3>{window.location.pathname.replace('/play/', '')}</h3>
+        <h3>{this.renderClock()}</h3>
+        <table>
+          <tbody id='leaderboard'>
+            {this.renderTableData(newArr)}
+          </tbody>
+        </table>
+      </> }
+      {/* Mobile */}
+      { (window.innerWidth <= 600) && <>
+        <table>
           <tbody id='countdown'>
             {this.renderCountdown()}
             {this.renderClock()}
@@ -91,9 +105,11 @@ render() {
             {this.renderTableData(newArr)}
           </tbody>
         </table>
+      </> }
      </div>
   )
 }
+
 }
 
 export { Leaderboard }

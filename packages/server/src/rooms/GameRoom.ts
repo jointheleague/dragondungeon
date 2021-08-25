@@ -30,6 +30,7 @@ import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
 
 const botnames = require('./botnames.json');
+const botwords = require('../../wordlists/nouns.json');
 const MAX_COINS_HELD = 30;
 
 export class GameRoom extends Room<GameState> {
@@ -47,7 +48,7 @@ export class GameRoom extends Room<GameState> {
 		this.setState(new GameState())
 		this.registerMessages();
 		this.startGameLoop();
-		this.state.countdown = new Countdown(1, 0);// should be '5, 0'
+		this.state.countdown = new Countdown(5, 0);// should be '5, 0'
 		const spokes = 2;//of center rotating bats
 		for(var j = 0; j < spokes; j++){
 			for(var i = 0; i < 3; i++){
@@ -233,26 +234,10 @@ export class GameRoom extends Room<GameState> {
 			let bot = new Player("Fire", "normal", 0);
 			bot.isBot = true;
 			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
-			let botNameGender = Math.random() > 0.5 ? true : false;
+			let botNameGender = Math.random() > 0.2 ? true : false;
 			let botNameFirst = botNameGender ? botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] : botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
 			let botNameLast = botNameRegion.surnames[Math.floor(Math.random() * botNameRegion.surnames.length)];
-			switch (Math.floor(Math.random() * 5)) {
-				case 0:
-					bot.onlineName = botNameFirst.toLowerCase();
-					break;
-				case 1:
-					bot.onlineName = botNameFirst.toLowerCase() + botNameLast.toLowerCase();
-					break;
-				case 2:
-					bot.onlineName = botNameFirst.toLowerCase() + botNameFirst;
-					break;
-				case 3:
-					bot.onlineName = botNameLast + "1";
-					break;
-				case 4:
-					bot.onlineName = botNameFirst + "1";
-					break;
-			}
+			bot.onlineName = botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botwords[Math.floor(Math.random() * botwords.length)].toLowerCase();
 			this.state.players.set(v4(), bot);
 		}
 
