@@ -14,6 +14,10 @@ const MyDragon = () => {
   const [userStats, setUserStats] = useState<any>({});
   const [userGameplay, setUserGameplay] = useState<any>({});
   useEffect(() => {
+    const myDragonAudio = new Audio('/music/mydragon.mp3');
+    myDragonAudio.loop = true;
+    myDragonAudio.play();
+
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         if (user.photoURL) {
@@ -28,9 +32,13 @@ const MyDragon = () => {
 
         setPageLoaded(true);
       } else {
-        navigate('/home');
+        navigate('/');
       }
     });
+
+    return () => {
+      myDragonAudio.pause();
+    };
   }, []);
   return (
     <>
@@ -49,9 +57,6 @@ const MyDragon = () => {
           </Box>
           <div style={{ float: 'right', paddingLeft: '50px' }} id="sidebar">
             <Button onClick={() => navigate('/play/random')} text="Play" />
-            <Button onClick={() => navigate('/home')} text="Home" />
-            <Space size="m" />
-            <Button onClick={() => navigate('/settings')} text="Settings" />
             <Button onClick={() => navigate('/credits')} text="Credits" />
           </div>
           <Space size="xl" />

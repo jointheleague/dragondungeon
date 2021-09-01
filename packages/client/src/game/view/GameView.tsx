@@ -17,10 +17,9 @@ import { IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
 import { Leaderboard } from 'components/leaderboard';
 //import { Countdown } from 'components/countdown';
-import ReactNipple from 'react-nipple';
 import { Bar } from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
-import { show_error_banner } from 'util/banner';
+import { show_error_banner, show_tutorial_banner } from 'util/banner';
 
 interface GameViewProps {
   stateManager: StateManager;
@@ -55,6 +54,11 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      this.app.stage.addChild(this.viewport);
      this.app.start();
      this.app.ticker.add(() => this.renderScene())
+     
+    this.props.stateManager.room.onMessage('hint', message => {
+      console.log("hint: " + message);
+      show_tutorial_banner(message);
+    });
    }
 
    renderScene() {
@@ -70,10 +74,8 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const skulls = [];
     const coinJar = <CoinJar key={"only"} x={1000} y={1000} team={state.coinJar.team}/>;
 
-    
+    const id  = this.props.stateManager.id;
 
-
-    const id  = this.props.stateManager.id
     const me = this.props.state.players[id];
     for (let pid in state.players) {
       const player = state.players[pid];
@@ -175,14 +177,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      return (
        <>
        <Controls actionCallback={(v: IInputs) => this.actionCallback(v)} viewport={this.viewport}/>
-        <ReactNipple
-          options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
-          style={{
-            position: 'fixed',
-            width: '100vw',
-            height: '100vh'
-          }}
-          onMove={(evt:any, data: any) => console.log(data.direction)}/>
        <ScrollDisable/>
           <div style={{marginLeft : '3vw', display:'flex'}}>
             <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard>

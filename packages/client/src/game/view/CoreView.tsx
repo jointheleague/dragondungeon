@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StateManager } from '../state/StateManager';
 import { IGameState } from '../state/types';
-import { show_tutorial } from './tutorial';
 import GameOver from '../../scenes/GameOver';
-import { navigate } from '@reach/router';
+import Mousetrap from 'mousetrap';
 
 import {GameView} from './GameView'
+import { navigate } from '@reach/router';
 
 interface IProps {
   stateManager: StateManager;
@@ -13,10 +13,13 @@ interface IProps {
 
 export const CoreView = (props: IProps) => {
   const [state, setState] = useState<IGameState | null>(null);
+  const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(new Audio('/music/ingame.mp3'));
   const {stateManager} = props;
 
   useEffect(() => {
-    show_tutorial();
+    Mousetrap.bind('tab', () => { navigate('/') });
+    gameMusic.loop = true;
+    gameMusic.play();
 
     const ref = stateManager.room.onStateChange(newState => {
       setState(newState)
@@ -24,21 +27,22 @@ export const CoreView = (props: IProps) => {
 
     return () => {
       ref.clear();
+      gameMusic.pause();
     };
   }, [stateManager])
 
   if (state == null) {
     return (
-      <>
+      <div style={{ textAlign: 'center' }}>
         <br /><br /><br />
-        <p style={{ textAlign: 'center' }}>Loading...</p>
-      </>
+        <img style={{ textAlign: 'center', height: '150px', imageRendering: 'pixelated' }} src="/basicDragon.png" />
+      </div>
     )
   }
 
   if(state.gameOver){
     return (
-      <GameOver stateManager={props.stateManager} state={state}/>
+      <GameOver stateManager={props.stateManager} state={state} music={gameMusic}/>
     )
   }
 

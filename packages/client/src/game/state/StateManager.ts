@@ -42,6 +42,8 @@ export class StateManager {
         return await this.colyseus.client.create('game', options)
       } else if (this.lobby === 'random') {
         return await this.colyseus.client.joinOrCreate('game', options)
+      } else if (this.lobby === 'tutorial') {
+        return await this.colyseus.client.joinOrCreate('tutorial', options)
       } else {
         return await this.colyseus.client.joinById(this.lobby, options)
       }

@@ -1,7 +1,7 @@
 import {
 	getDistance,
 	getRandomInt
-} from '@dragoncoin/common/build/maths';
+} from '@dragondungeon/common/build/maths';
 
 import {
 	Room,
@@ -24,23 +24,19 @@ import {
 	Skull,
 	CircleSkull,
 	LineSkull
-} from '@dragoncoin/common';
+} from '@dragondungeon/common';
 
 import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
 
-const admin_sdk_key = require('../../top_secret/adminsdk.json');
 const botnames = require('./botnames.json');
-const MAX_COINS = 10;
-
-admin.initializeApp({
-	credential: admin.credential.cert(admin_sdk_key)
-});
+const botwords = require('../../wordlists/nouns.json');
+const MAX_COINS_HELD = 30;
 
 export class GameRoom extends Room<GameState> {
 	counter = 0;
 	botTimeout = 0;
-	maxClients: 10;
+	maxClients = 15;
 
 	redTeamIds = [];
 	blueTeamIds = [];
@@ -190,7 +186,7 @@ export class GameRoom extends Room<GameState> {
 		//this is temporary, change when CTC is more set up
 		else{teamNum = 0;}
 			this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, teamNum));
-			console.log(this.state.gamemode);
+			//console.log(this.state.gamemode);
 	}
 
 	createCoin(x: number, y: number) {
@@ -204,23 +200,22 @@ export class GameRoom extends Room<GameState> {
 		} while (Maths.checkWalls(newX, newY, 20))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
 	}
-	
-	moveBot(id, botDir) {
-		let yMove = Math.random() > 0.5;
-		let xMove = Math.random() > 0.5
-		let left = xMove;
-		let right = !xMove;
-		let up = yMove;
-		let down = !yMove;
-
-		this.state.players[id].inputs({
-			up: up,
-			down: down,
+	moveBot(bot: Player, right: boolean, left: boolean, up: boolean, down: boolean) {
+		let space = Math.random() > 0.7;
+		let angle = Math.random() * (Math.PI * 2);
+		bot.inputs({
 			left: left,
+			up: up,
 			right: right,
+			down: down,
+			shoot: false,
+			autoshoot: false,
+			angle: angle,
+			space: space
 		});
-
 	}
+
+
 
 	tick() {
 		this.counter++;
@@ -230,34 +225,52 @@ export class GameRoom extends Room<GameState> {
 			this.gameOver();
 		}
 
-		for (let i = this.state.coins.size; i < this.state.players.size * 15; i++) {
+		for (let i = this.state.coins.size; i < this.state.players.size * 25; i++) {
 			this.spawnCoin();
 		}
 
-		if (this.state.players.size < 6) {
-			let bot = new Player("Fire", "normal", 0);
-			bot.isBot = true;
-			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
-			let botNameGender = Math.random() > 0.5 ? true : false;
-			let botNameFirst = botNameGender ? botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] : botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
-			let botNameLast = botNameRegion.surnames[Math.floor(Math.random() * botNameRegion.surnames.length)];
-			switch (Math.floor(Math.random() * 5)) {
+		if (this.state.players.size < 3) {
+
+			let ballType;
+			let dragonSkin;
+
+			switch ( Math.floor( Math.random() * 5 ) ) {
 				case 0:
-					bot.onlineName = botNameFirst.toLowerCase();
-					break;
+					 ballType = "fire";
+					 break;
 				case 1:
-					bot.onlineName = botNameFirst.toLowerCase() + botNameLast.toLowerCase();
-					break;
+					ballType = "ice";
+						break;
 				case 2:
-					bot.onlineName = botNameFirst.toLowerCase() + botNameFirst;
+					ballType = "poison";
 					break;
 				case 3:
-					bot.onlineName = botNameLast + "1";
+					ballType = "mud";
 					break;
 				case 4:
-					bot.onlineName = botNameFirst + "1";
+					ballType = "electric";
 					break;
 			}
+
+			switch ( Math.floor( Math.random() * 3 ) ) {
+				case 0:
+					 dragonSkin = "default";
+					 break;
+				case 1:
+					dragonSkin = "light";
+						break;
+				case 2:
+					dragonSkin = "gold";
+					break;
+			}
+
+			let bot = new Player(ballType, dragonSkin, 0);
+			bot.isBot = true;
+			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
+			let botNameGender = Math.random() > 0.2 ? true : false;
+			let botNameFirst = botNameGender ? botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] : botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
+			let botNameLast = botNameRegion.surnames[Math.floor(Math.random() * botNameRegion.surnames.length)];
+			bot.onlineName = Math.random() ? botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botwords[Math.floor(Math.random() * botwords.length)].toLowerCase() : botwords[Math.floor(Math.random() * botwords.length)].toLowerCase().botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botNameLast;
 			this.state.players.set(v4(), bot);
 		}
 
@@ -274,25 +287,30 @@ export class GameRoom extends Room<GameState> {
 			if (this.state.players[id].isBot && this.botTimeout == 0) {
 				const bot = this.state.players[id];
 				const jar = this.state.coinJar;
-				const range = 50;
-				let botDir = Math.floor(Math.random() * 4);
-				if (bot.coins > MAX_COINS / 4) {
-					if (getDistance(bot.x, bot.y, jar.x, jar.y) < 450) {
+				const range = 75;
+				const moveRandom = ()=>{
+					let yMove = Math.random() > 0.5;
+							let xMove = Math.random() > 0.5;
+							this.moveBot(bot, xMove, !xMove, yMove, !yMove);
+				}
+				if (bot.coins >= MAX_COINS_HELD/8) {
+					if (Math.abs(bot.x-jar.x) < range || Math.abs(bot.y-jar.y) < range) {
 						if (bot.x > jar.x + range) {
-							botDir = 2;
+							this.moveBot(bot, false, true, false, false);
 						} else if (bot.x < jar.x - range) {
-							botDir = 3;
+							this.moveBot(bot,  true, false, false, false);
 						} else if (bot.y < jar.y + range) {
-							botDir = 1;
+							this.moveBot(bot, false, false, false, true);
 						}
 						else if (bot.y > jar.y + range) {
-							botDir = 0;
-						}
-
-
+							this.moveBot(bot, false, false, true, false);
+						} 
+					} else {
+						moveRandom();
 					}
+				} else {
+					moveRandom();
 				}
-				this.moveBot(id, botDir);
 			}
 
 			if (this.botTimeout == 0) {

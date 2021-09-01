@@ -1,8 +1,8 @@
-Contact: mailto:dragoncoingame@gmail.com
+Contact: mailto:dragondungeongame@gmail.com
 Expires: Tue, 1 Jan 2030 23:59 -0700
 Encryption: https://samuelsharp.com/bugbounty/pgp
 Acknowledgments: https://samuelsharp.com/bugbounty/thanks
 Preferred-Languages: EN, FR
-Canonical: https://dragoncoin.jointheleague.org/.well-known/security.txt
+Canonical: https://dragondungeon.io/.well-known/security.txt
 Policy: https://samuelsharp.com/bugbounty/policy
-Hiring: https://jointheleague.org/contact?utm_campaign=bugbounty&utm_source=dragoncoin
+Hiring: https://jointheleague.org/contact?utm_campaign=bugbounty&utm_source=dragondungeon

@@ -4,6 +4,7 @@ import './index.scss';
 import App from './App';
 
 import { initializeApp } from 'firebase/app';
+import { Button } from 'components';
 
 initializeApp({
   apiKey: "AIzaSyCRClPzTZnRSg_fAap6ENnAkxUBQKJGk5w",
@@ -15,6 +16,6 @@ initializeApp({
 });
 
 ReactDOM.render(
-    <App />,
+  <App />,
   document.getElementById('root')
 );

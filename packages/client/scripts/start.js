@@ -120,8 +120,8 @@ checkBrowsers(paths.appPath, isInteractive)
         console.log();
       }
 
-      console.log(chalk.red('DragonCoin\n'));
-      console.log(chalk.red('https://dragoncoin.jointheleague.org\n'));
+      console.log(chalk.red('DragonDungeon\n'));
+      console.log(chalk.red('https://dragondungeon.io\n'));
       openBrowser(urls.localUrlForBrowser);
     });
 

@@ -4,8 +4,11 @@ import { navigate } from '@reach/router';
 import { StateManager } from '../game/state/StateManager';
 import { IGameState, IPlayer } from '../game/state/types';
 
+let gameOverMusic = new Audio('/audio/gameover.mp3');
+
 const homepage = () => {
-  navigate('/home');
+  gameOverMusic.pause();
+  navigate('/');
 }
 
 interface LeaderboardProps {
@@ -79,6 +82,7 @@ export { GameOverLeaderboard }
 interface IProps {
   stateManager: StateManager;
   state: IGameState;
+  music: HTMLAudioElement;
 }
 
 interface Ranking {
@@ -90,8 +94,15 @@ const GameOver = (props: IProps) => {
 
   const players = props.state.players;
 
+  const gameMusic = props.music;
+
   const id = props.stateManager.id;
   const me = players[id];
+
+  gameMusic.pause();
+
+  gameOverMusic.loop = true;
+  gameOverMusic.play();
 
 
 

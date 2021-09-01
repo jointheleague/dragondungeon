@@ -5,12 +5,10 @@ import { ColyseusService } from 'services/colyseus';
 const Game = lazy(() => import('./scenes/Game'));
 const Credits = lazy(() => import('./scenes/Credits'));
 const StartScreen = lazy(() => import("./scenes/StartScreen"));
-const Home = lazy(() => import("./scenes/Home"));
 const ErrorRoute = lazy(() => import("./scenes/ErrorRoute"));
 const MyDragon = lazy(() => import("./scenes/MyDragon"));
+const StoryContent = lazy(() => import("./scenes/Cutscene"));
 const Tutorial = lazy(() => import("./scenes/Tutorial"));
-const GameOver = lazy(() => import("./scenes/GameOver"));
-const VideoCutscene = lazy(() => import("./scenes/Cutscene"));
 
 interface IProps {}
 
@@ -26,6 +24,7 @@ class App extends Component {
       window.localStorage.server || `${window.location.hostname}:8001`,
     );
   }
+
   render() {
     return (
       <Suspense fallback={(
@@ -36,23 +35,11 @@ class App extends Component {
           <Game colyseus={this.colyseus} path="/play/:roomId" />
           <Credits path="/credits" />
           <StartScreen path="/" />
-          <Home path="/home" />
           <MyDragon path="/mydragon" />
+          <StoryContent path="/story" />
           <Tutorial path="/tutorial" />
-          <GameOver path="/gameover" />
-          <VideoCutscene path="/story" />
           <ErrorRoute default />
         </Router>
-        <h2 style={{
-          position: 'absolute',
-          bottom: '0px',
-          right: '0px',
-          padding: '20px',
-        }}>
-          DragonCoin Alpha<br />
-          {window.location.hostname}<br />
-          {navigator.vendor} - {navigator.productSub}
-        </h2>
       </Suspense>
     );
   }
