@@ -92,9 +92,9 @@ export class Player extends Schema {
 		var newX = 0;
 		var newY = 0;
 		do {
-			newX = Math.random()*2000;
-			newY = Math.random()*2000;
-		}while (Maths.checkWalls(newX, newY, 45) ||  (newX > 500 && newY > 500 && newX < 1500 && newY < 1500))
+			newX = Math.random()*4000;
+			newY = Math.random()*4000;
+		}while (Maths.checkWalls(newX, newY, 45) ||  (newX > 500 && newY > 500 && newX < 3500 && newY < 3500))
 		this.x = newX;
 		this.y = newY;
 	} 
@@ -126,7 +126,7 @@ export class Player extends Schema {
 	tick(dx: number) {
 		const ticks = dx / 50;
 		if (this.direction.x !== 0 || this.direction.y !== 0) {
-			this.move(this.direction.x, this.direction.y, this.speed * (1/this.deceleration) * ticks)
+			this.move(this.direction.x, this.direction.y, (this.speed+this.coins) * (1/this.deceleration) * ticks)
 			if(this.deceleration > 1){
 				this.deceleration *= .9;
 			}

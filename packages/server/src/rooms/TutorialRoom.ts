@@ -163,8 +163,8 @@ export class TutorialRoom extends Room<GameState> {
 		var newX;
 		var newY;
 		do {
-			newX = Math.random() * 2000;
-			newY = Math.random() * 2000;
+			newX = Math.random() * 4000;
+			newY = Math.random() * 4000;
 
 		} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
 		var teamNum;	

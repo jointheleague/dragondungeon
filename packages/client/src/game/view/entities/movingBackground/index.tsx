@@ -26,8 +26,8 @@ export const MovingBackground = (props: IProps) => {
   return (
     <AnimatedSprite
     anchor={new PIXI.Point(0.5, 0.5)}
-    width ={177}
-    height = {177}
+    width ={177*1.2}
+    height = {177*1.2}
     textures = {tileTextures}
     x={props.x}
     animationSpeed = {ANIMATION_SPEED}

@@ -12,7 +12,8 @@ export interface IGameState {
   countdown: ICountdown;
   gameOver: boolean;
   bats: {[key: string]: IBat};
-
+  gamewidth: number;
+  gameheight: number;
   batRot: number;
   gamemode: 'FFA'|'coinCapture';
 

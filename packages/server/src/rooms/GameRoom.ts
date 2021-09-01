@@ -52,11 +52,11 @@ export class GameRoom extends Room<GameState> {
 		const spokes = 2;//of center rotating bats
 		for(var j = 0; j < spokes; j++){
 			for(var i = 0; i < 3; i++){
-				this.state.bats.set(v4(), new CircleBat(this.state.bats.size, 1000, 1000, .02, 90*i + 90, (Math.PI*2/spokes)*j));
+				this.state.bats.set(v4(), new CircleBat(this.state.bats.size, this.state.gamewidth/2, this.state.gamewidth/2, .02, 90*i + 90, (Math.PI*2/spokes)*j));
 			}
 		}
-		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 320, 1000, 5, 1360, 0));
-		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 1000, 320, 5, 1360, Math.PI/2));
+		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 1300, this.state.gameheight/2, 5, 1360, 0));
+		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, this.state.gamewidth/2, 1300, 5, 1360, Math.PI/2));
 	}
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
@@ -177,8 +177,8 @@ export class GameRoom extends Room<GameState> {
 		var newX;
 		var newY;
 		do {
-			newX = Math.random() * 2000;
-			newY = Math.random() * 2000;
+			newX = Math.random() * 4000;
+			newY = Math.random() * 4000;
 
 		} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
 		var teamNum;	
@@ -200,6 +200,7 @@ export class GameRoom extends Room<GameState> {
 		} while (Maths.checkWalls(newX, newY, 20))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
 	}
+
 	moveBot(bot: Player, right: boolean, left: boolean, up: boolean, down: boolean) {
 		let space = Math.random() > 0.7;
 		let angle = Math.random() * (Math.PI * 2);

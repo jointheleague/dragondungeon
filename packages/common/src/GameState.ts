@@ -22,9 +22,6 @@ export class GameState extends Schema {
 		map: Player
 	})
 	players = new MapSchema < Player > ();
-
-	@type(CoinJar)
-	coinJar = new CoinJar();
 	
 	@type({map: Coin})
 	coins = new MapSchema < Coin > ();
@@ -50,6 +47,16 @@ export class GameState extends Schema {
 
 	@type("number")
 	batRot: number = 0;
+
+	@type("number")
+	gamewidth: number = 4000;
+
+	@type("number")
+	gameheight: number = 4000;
+
+	
+	@type(CoinJar)
+	coinJar = new CoinJar(this.gamewidth/2, this.gameheight/2);
 
 	//"FFA" or "coinCapture"
 	@type("string")
