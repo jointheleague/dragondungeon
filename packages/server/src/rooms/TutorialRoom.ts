@@ -100,8 +100,8 @@ export class TutorialRoom extends Room<GameState> {
 	}
 
 	runTutorial(client: Client) {
-		client.send("hint", "Welcome to dragondungeon! Use the W, A, S, and D keys to move!");
-		setTimeout(() => client.send("hint", "The goal of dragondungeon is to collect as many coins as possible within 5 minutes."), 1000);
+		client.send("hint", "Welcome to DRAGON DUNGEON! Use the W, A, S, and D keys to move!");
+		setTimeout(() => client.send("hint", "The goal of DRAGON DUNGEON is to collect as many coins as possible within 5 minutes."), 1000);
 		setTimeout(() => {
 			client.send("hint", "Try collecting a coin now!");
 			this.tutorialCoinCollected = false;

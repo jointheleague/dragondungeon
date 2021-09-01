@@ -4,12 +4,11 @@
   margin: 10px;
   user-select: none;
   outline: none;
-  border: 3px solid red;
-  background: rgba(255, 255, 255, 0.7);
+  border: 3px solid whitesmoke;
+  background: rgba(0, 0, 0, 0.7);
   display: block;
   color: red;
   font-weight: bold;
-  max-width: 70%;
   min-width: 30%;
   border-radius: 3px;
   &:disabled {
@@ -17,13 +16,13 @@
     cursor: default !important ;
   }
   &:hover, &:focus {
-    background: rgba(0, 0, 0, 0.7);
-    border: 3px solid whitesmoke;
+    background: rgba(255, 255, 255, 0.7);
+    border: 3px solid red;
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
   .button {
-    width: 100vw;
+    width: 90vw;
   }
 }
