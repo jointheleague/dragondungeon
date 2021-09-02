@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button } from '../components';
+import { Box, Button, Space } from '../components';
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInAnonymously, User, signOut } from 'firebase/auth';
 import { getFirestore, getDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { navigate } from '@reach/router';
@@ -14,10 +14,28 @@ const StartScreen = (props: any) => {
   const [ music, setMusic ] = useState<HTMLAudioElement>(new Audio('/music/startscreen.mp3'));
   useEffect(
     () => {      
-      onAuthStateChanged(auth, user => {
+      onAuthStateChanged(auth, async user => {
         if (user) {
           if (user.isAnonymous) {
             setUserIsAnon(true);
+          } else {
+            const gameplayDoc = await getDoc(doc(db, user.uid, "gameplay"));
+            switch (gameplayDoc.data()!.ballType) {
+              case "electric":
+                (document.body as any).style.background = "linear-gradient( rgba(255, 186, 0, 0.1), rgba(255, 186, 0, 0.1) ), url('/background-tile.png')";
+                break;
+              case "ice":
+                (document.body as any).style.background = "linear-gradient( rgba(21, 0, 255, 0.1), rgba(21, 0, 255, 0.1) ), url('/background-tile.png')";
+                break;
+              case "poison":
+                (document.body as any).style.background = "linear-gradient( rgba(60, 110, 26, 0.3), rgba(60, 110, 26, 0.3) ), url('/background-tile.png')";
+                break;
+              case "mud":
+                (document.body as any).style.background = "linear-gradient( rgba(110, 74, 26, 0.4), rgba(110, 74, 26, 0.4) ), url('/background-tile.png')";
+                break;
+              default:
+                break;
+            }
           }
           setUser(user);
         }
@@ -52,14 +70,14 @@ const StartScreen = (props: any) => {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'whitesmoke',
-        color: 'black',
+        backgroundColor: 'black',
+        color: 'white',
         textAlign: 'center',
         zIndex: 100,
        }}>
-         {(window.innerWidth <= 600) && <h1>DragonDungeon</h1>}{(window.innerWidth >= 600) && <h1 style={{
+         {(window.innerWidth <= 600) && <h1>DRAGON DUNGEON</h1>}{(window.innerWidth >= 600) && <h1 style={{
            fontSize: '75px',
-         }}>DragonDungeon</h1>}
+         }}>DRAGON DUNGEON</h1>}
          <img src="/basicDragon.png" style={{
           position: "relative",
           top: "40%",
@@ -78,7 +96,7 @@ const StartScreen = (props: any) => {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'whitesmoke',
+        backgroundColor: 'black',
         textAlign: 'center',
         zIndex: 99,
        }}>
@@ -90,11 +108,12 @@ const StartScreen = (props: any) => {
       </div>
       <div id="page" className="mobile-center">
         <Box>
-          <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>dragondungeon</h1>
+          <p>{(window.innerWidth <= 600) && <h1 style={{ fontSize: '30px', fontWeight: 'bold' }}>DRAGON DUNGEON</h1>}{(window.innerWidth >= 600) && <h1 style={{ textAlign: 'center', fontSize: '50px', fontWeight: 'bold' }}>DRAGON DUNGEON</h1>}</p>
         </Box>
         <div id="heroContent" style={{ float: 'right', imageRendering: 'pixelated', padding: '20px' }}>
           <img src="/basicDragon.png" height="400px" />
         </div>
+        <Space size="m" />
         <Button onClick={async () => {
           if (user) {
             if (user.isAnonymous) {
@@ -111,7 +130,7 @@ const StartScreen = (props: any) => {
             navigate('/play/random');
           }
         } } text="Play" />
-        { !userIsAnon && <Button onClick={() => navigate('/mydragon')} text="My Dragon" /> }
+        { ( user && !userIsAnon ) && <Button onClick={() => navigate('/mydragon')} text="My Dragon" /> }
         { ( user && !userIsAnon ) && <Button onClick={async () => {
           await signOut(auth);
           window.location.reload();

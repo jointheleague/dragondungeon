@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { Box } from "../box";
 import './leaderboard.scss';
 import {IGameState, IPlayer, ICountdown} from 'game/state/types';
 
@@ -49,6 +50,20 @@ class Leaderboard extends Component <LeaderboardProps, LeaderboardState>
   })
 }
 
+renderMobileTableData(ranking:Ranking[]) {
+
+  return ranking.map((ranking: Ranking, index:any) => {
+    const score = ranking.score;
+    let name = ranking.onlineName;
+     return (
+        <span key={index} style={{ color: 'white' }}>
+           <span className="playerData">{name}</span>&nbsp;&nbsp;
+           <b className="playerData" style={{ fontSize: '25px' }}>{score}</b>
+        </span>
+     )
+  })
+}
+
 renderCountdown(){
   if(this.props.t.done){
     return <h2>Game Over</h2>
@@ -84,10 +99,9 @@ render() {
 
 
   return (
-     <div className="leaderboard-box" >
-      {/* Desktop */}
-      { (window.innerWidth >= 600) && <>
-        <h1>DragonDungeon</h1>
+    <>
+      { (window.innerWidth >= 600) && <div className="leaderboard-box" >
+        <h1>Dragon Dungeon</h1>
         <h2>{this.renderCountdown()}</h2>
         <h3>{window.location.pathname.replace('/play/', '')}</h3>
         <h3>{this.renderClock()}</h3>
@@ -96,20 +110,15 @@ render() {
             {this.renderTableData(newArr)}
           </tbody>
         </table>
-      </> }
-      {/* Mobile */}
-      { (window.innerWidth <= 600) && <>
-        <table>
-          <tbody id='countdown'>
-            {this.renderCountdown()}
-            {this.renderClock()}
-          </tbody>
-          <tbody id='leaderboard'>
-            {this.renderTableData(newArr)}
-          </tbody>
-        </table>
-      </> }
-     </div>
+      </div> }
+
+    { (window.innerWidth <= 600) && <>
+      <p className="mobileCountdown">{this.renderCountdown()}</p>
+      <Box>
+        { this.renderMobileTableData(newArr) }
+      </Box>
+    </> }
+  </>
   )
 }
 

@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as fs from 'fs';
 import { createServer as createServerTLS } from 'https';
 import { createServer } from 'http';
-import { Server, matchMaker } from 'colyseus';
+import { Server } from 'colyseus';
 import { GameRoom } from './rooms/GameRoom';
 import { TutorialRoom } from './rooms/TutorialRoom';
 import * as admin from 'firebase-admin';
@@ -32,6 +32,7 @@ if (fs.existsSync('../../key.pem')) {
     express: app
   });
   server.define("game", GameRoom);
+  server.define("tutorial", TutorialRoom);
   const PORT = findPort();
   server.listen(PORT);
   console.log(`ws://localhost:${PORT}`);

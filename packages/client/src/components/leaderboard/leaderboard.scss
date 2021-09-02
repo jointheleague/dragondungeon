@@ -5,8 +5,8 @@
   position: fixed;
   top: 0px;
   left: 0px;
-  background-color: rgba(255, 255, 255, 0.7);
-  color: black;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: whitesmoke;
   padding: 16px;
 }
 
@@ -14,10 +14,23 @@
   .leaderboard-box {
     border-bottom: 3px solid var(--primary_color);
     width: 100vw;
-    max-height: 200px;
+    max-height: 100px;
     overflow: hidden;
     padding: 6px;
   }
+}
+
+.mobileCountdown {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: black;
+  border-left: none;
+  border-right: 3px solid red;
+  border-bottom: 3px solid red;
+  border-top: 3px solid red;
+  padding: 15px;
 }
 
 @media only screen and (min-width: 600px) {

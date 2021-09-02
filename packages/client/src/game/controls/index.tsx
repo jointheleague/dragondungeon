@@ -107,29 +107,28 @@ export const Controls = (props: ControlProps) => {
     onMove={( evt: any, data: any) => {
       if (data.direction) {
         if (data.direction.x == 'left') {
-          var change = controlsDown['a']  || {};
-          updateAndSend(change);
+          updateAndSend({
+            left: true,
+            right: false,
+          });
         } else {
-          var change = controlsDown['d']  || {};
-          updateAndSend(change);
+          updateAndSend({
+            left: false,
+            right: true,
+          });
         }
   
         if (data.direction.y == 'up') {
-          var change = controlsDown['w']  || {};
-          updateAndSend(change);
+          updateAndSend({
+            up: true,
+            down: false,
+          });
         } else {
-          var change = controlsDown['s']  || {};
-          updateAndSend(change);
+          updateAndSend({
+            up: false,
+            down: true,
+          });
         }
-      } else {
-        var changeu = controlsUp['w']  || {};
-        var changel = controlsUp['a']  || {};
-        var changed = controlsUp['s']  || {};
-        var changer = controlsUp['d']  || {};
-        updateAndSend(changeu);
-        updateAndSend(changel);
-        updateAndSend(changed);
-        updateAndSend(changer);
       }
     }} /></>
 }

@@ -199,6 +199,7 @@ export class GameRoom extends Room<GameState> {
 			newY = y + 100 * Math.sin(rand);
 		} while (Maths.checkWalls(newX, newY, 20))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
+		Math.random() < 0.5 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
 	}
 
 	moveBot(bot: Player, right: boolean, left: boolean, up: boolean, down: boolean) {
@@ -270,8 +271,7 @@ export class GameRoom extends Room<GameState> {
 			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
 			let botNameGender = Math.random() > 0.2 ? true : false;
 			let botNameFirst = botNameGender ? botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] : botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
-			let botNameLast = botNameRegion.surnames[Math.floor(Math.random() * botNameRegion.surnames.length)];
-			bot.onlineName = Math.random() ? botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botwords[Math.floor(Math.random() * botwords.length)].toLowerCase() : botwords[Math.floor(Math.random() * botwords.length)].toLowerCase().botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botNameLast;
+			bot.onlineName = Math.random() > 0.6 ? botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botwords[Math.floor(Math.random() * botwords.length)].toLowerCase() : botwords[Math.floor(Math.random() * botwords.length)].toLowerCase() + botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '');
 			this.state.players.set(v4(), bot);
 		}
 
@@ -394,8 +394,8 @@ export class GameRoom extends Room<GameState> {
 							coins += 4;
 							break;
 						case (100):
-							this.state.players[id].score += 50;
-							this.state.players[id].coinsPickedUp += 50;
+							this.state.players[id].score += 20;
+							this.state.players[id].coinsPickedUp += 20;
 							break;
 					}
 					this.state.players[id].coinsPickedUp += Math.min(coins, 10)-this.state.players[id].coins;
