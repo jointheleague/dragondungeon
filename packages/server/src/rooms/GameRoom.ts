@@ -185,8 +185,9 @@ export class GameRoom extends Room<GameState> {
 		if(this.state.gamemode == 'coinCapture'){teamNum = 1;}
 		//this is temporary, change when CTC is more set up
 		else{teamNum = 0;}
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, teamNum));
-			//console.log(this.state.gamemode);
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, teamNum));
+		Math.random() < 0.05 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, newX + 40, newY + 40, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
+		//console.log(this.state.gamemode);
 	}
 
 	createCoin(x: number, y: number) {
@@ -199,7 +200,6 @@ export class GameRoom extends Room<GameState> {
 			newY = y + 100 * Math.sin(rand);
 		} while (Maths.checkWalls(newX, newY, 20))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
-		Math.random() < 0.5 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
 	}
 
 	moveBot(bot: Player, right: boolean, left: boolean, up: boolean, down: boolean) {
@@ -227,7 +227,7 @@ export class GameRoom extends Room<GameState> {
 			this.gameOver();
 		}
 
-		for (let i = this.state.coins.size; i < this.state.players.size * 25; i++) {
+		for (let i = this.state.coins.size; i < this.state.players.size * 190; i++) {
 			this.spawnCoin();
 		}
 

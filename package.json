@@ -17,6 +17,7 @@
     "start:server": "yarn workspace @dragondungeon/server start",
     "start:client": "yarn workspace @dragondungeon/client start",
     "start:common": "yarn workspace @dragondungeon/common start",
+    "start:desktop": "yarn workspace @dragondungeon/desktop start",
     "build:client": "yarn workspace @dragondungeon/client build",
     "build:common": "yarn workspace @dragondungeon/common build",
     "build": "yarn build:client && yarn build:common"
