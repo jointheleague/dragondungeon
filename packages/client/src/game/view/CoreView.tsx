@@ -10,10 +10,11 @@ import { navigate } from '@reach/router';
 interface IProps {
   stateManager: StateManager;
 }
+let audio = new Audio('/music/ingame.mp3');
 
 export const CoreView = (props: IProps) => {
   const [state, setState] = useState<IGameState | null>(null);
-  const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(new Audio('/music/ingame.mp3'));
+  const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(audio);
   const {stateManager} = props;
 
   useEffect(() => {

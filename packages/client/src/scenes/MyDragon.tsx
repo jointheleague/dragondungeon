@@ -6,7 +6,7 @@ import { navigate } from '@reach/router';
 
 const db = getFirestore();
 const auth = getAuth();
-
+const myDragonAudio = new Audio('/music/mydragon.mp3');
 const MyDragon = () => {
   const [profilePicture, setProfilePicture] = useState<string>('/icon.png');
   const [pageLoaded, setPageLoaded] = useState<boolean>(false);
@@ -14,10 +14,9 @@ const MyDragon = () => {
   const [userStats, setUserStats] = useState<any>({});
   const [userGameplay, setUserGameplay] = useState<any>({});
   useEffect(() => {
-    const myDragonAudio = new Audio('/music/mydragon.mp3');
+   
     myDragonAudio.loop = true;
     myDragonAudio.play();
-
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         if (user.photoURL) {
