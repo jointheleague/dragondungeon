@@ -60,7 +60,9 @@ const StartScreen = (props: any) => {
         music.play();
         (document.querySelector('#audiocontext-not-allowed') as any).style.display = 'none';
         setTimeout(() => {
-          (document.querySelector('#logo-screen') as any).style.display = 'none';
+          if (document.querySelector('#logo-screen') !== null) {
+            (document.querySelector('#logo-screen') as any).style.display = 'none';
+          }
           window.sessionStorage.setItem('hasViewedIntro', "true");
         }, 4000);
       }} style={{
