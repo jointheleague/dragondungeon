@@ -134,7 +134,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
         this.viewport.x = -me.x * scale + window.innerWidth / 2;
         this.viewport.y = -me.y * scale + window.innerHeight / 2; 
       } catch {
-        show_error_banner('RAT');
+        show_error_banner('Rendering Failed');
       }
     }
     var tileAmt = 19;
@@ -142,7 +142,9 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     console.log(midpoint);
     for(var i = 0; i < tileAmt; i++){
       for(var j = 0; j < tileAmt; j++){
+        if (typeof(me) !== "undefined") {
           tiles.push(<MovingBackground key={`${i}-${j}`} x={(me.x - midpoint)/2 + i*177*1.2 -(177*1.2*5)/7} y={ (me.y - midpoint)/2 + j*177*1.2 -(177*1.2*5)/7}/>);
+        }
       }
     }
     for(let cid in state.coins){

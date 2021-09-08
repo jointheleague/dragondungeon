@@ -38,7 +38,7 @@ export default class Game extends Component<IProps, IState>{
       .catch((e) => {
         navigate("/");
         console.error(e);
-        show_error_banner('FISH');
+        show_error_banner('Cannot Connect');
       })
   }
 

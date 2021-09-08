@@ -75,7 +75,7 @@ export const Controls = (props: ControlProps) => {
 
         updateAndSend(change); 
       } catch {
-        show_error_banner('BAT');
+        show_error_banner('Malfunctioning HID/Inputs');
       }
     }
     window.addEventListener("keydown", keydown)
