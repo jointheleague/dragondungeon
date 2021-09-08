@@ -230,6 +230,38 @@ export class GameRoom extends Room<GameState> {
 		return false;
 	}
 
+	generateBotName() {
+		let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
+		let botNameGender = Math.random() > 0.4 ? true : false;
+		let botNameFirst = botNameGender ?
+			botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] :
+			botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
+		switch (Math.floor(Math.random() * 10)) {
+			case 0:
+				return botNameFirst;
+			case 1:
+				return botNameFirst + botwords[Math.floor(Math.random() * botwords.length)];
+			case 2:
+				return botwords[Math.floor(Math.random() * botwords.length)].toLowerCase();
+			case 3:
+				return botwords[Math.floor(Math.random() * botwords.length)].split('')[0] + botNameFirst;
+			case 4:
+				return botwords[Math.floor(Math.random() * botwords.length)].split('')[0] + "_" + botNameFirst;
+			case 5:
+				return botwords[Math.floor(Math.random() * botwords.length)].toLowerCase();
+			case 6:
+				return botwords[Math.floor(Math.random() * botwords.length)] + "_" + botNameFirst;
+			case 7:
+				return botwords[Math.floor(Math.random() * botwords.length)] + botNameFirst + "_";
+			case 8:
+				return botwords[Math.floor(Math.random() * botwords.length)] + botNameFirst + "1";
+			case 9:
+				return botwords[Math.floor(Math.random() * botwords.length)] + botNameFirst + "0";
+			default:
+				return botNameFirst;
+		}
+	}
+
 	tick() {
 		this.counter++;
 		const dx = this.clock.deltaTime;
@@ -279,10 +311,7 @@ export class GameRoom extends Room<GameState> {
 
 			let bot = new Player(ballType, dragonSkin, 0);
 			bot.isBot = true;
-			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
-			let botNameGender = Math.random() > 0.2 ? true : false;
-			let botNameFirst = botNameGender ? botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] : botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
-			bot.onlineName = Math.random() > 0.6 ? botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botwords[Math.floor(Math.random() * botwords.length)].toLowerCase() : botwords[Math.floor(Math.random() * botwords.length)].toLowerCase() + botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '');
+			bot.onlineName = this.generateBotName();
 			this.state.players.set(v4(), bot);
 		}
 

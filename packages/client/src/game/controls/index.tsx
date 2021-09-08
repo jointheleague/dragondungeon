@@ -81,10 +81,23 @@ export const Controls = (props: ControlProps) => {
     window.addEventListener("keydown", keydown)
     window.addEventListener("keyup", keyup)
     window.addEventListener("mousemove", mouseMove);
+
+    const controlFocusCheck = setInterval(() => {
+      if (!document.hasFocus()) {
+        updateAndSend({
+          up: false,
+          down: false,
+          left: false,
+          right: false,
+        });
+      }
+    }, 100);
+
     return () => {
-      window.removeEventListener("keydown", keydown)
-      window.removeEventListener("keyup", keyup)
-      window.removeEventListener("mousemove", mouseMove)
+      window.removeEventListener("keydown", keydown);
+      window.removeEventListener("keyup", keyup);
+      window.removeEventListener("mousemove", mouseMove);
+      clearInterval(controlFocusCheck);
     }
   }, [props.actionCallback, updateAndSend, props.viewport])
   return <>
