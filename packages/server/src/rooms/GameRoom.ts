@@ -22,6 +22,7 @@ import {
 	CircleBat,
 	LineBat,
 	Skull,
+	Wall,
 	CircleSkull,
 	LineSkull
 } from '@dragoncoin/common';
@@ -56,6 +57,9 @@ export class GameRoom extends Room<GameState> {
 		}
 		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 320, 1000, 5, 1360, 0));
 		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 1000, 320, 5, 1360, Math.PI/2));
+		
+		//this.state.walls.set(v4(), new Wall(200,200,500,50,Math.PI/2, 10, "FFA"))
+
 	}
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
@@ -179,7 +183,7 @@ export class GameRoom extends Room<GameState> {
 			newX = Math.random() * 2000;
 			newY = Math.random() * 2000;
 
-		} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
+		} while ((this.checkWalls(newX, newY, size, false) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
 		var teamNum;	
 		if(this.state.gamemode == 'coinCapture'){teamNum = 1;}
 		//this is temporary, change when CTC is more set up
@@ -196,7 +200,7 @@ export class GameRoom extends Room<GameState> {
 			rand = getRandomInt(0, 62) / 10;
 			newX = x + 100 * Math.cos(rand);
 			newY = y + 100 * Math.sin(rand);
-		} while (Maths.checkWalls(newX, newY, 20))
+		} while (this.checkWalls(newX, newY, 20, false))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
 	}
 	moveBot(bot: Player, right: boolean, left: boolean, up: boolean, down: boolean) {
@@ -214,7 +218,19 @@ export class GameRoom extends Room<GameState> {
 		});
 	}
 
-
+	checkWalls(newX: number, newY: number, rad: number, isFireball: boolean){
+		const gameWidth = 2000;
+		const gameHeight = 2000;
+		if(newX > gameWidth-rad || newY > gameHeight-rad || newX < rad || newY < rad){
+			return true;
+		}
+		for(let wall of this.state.walls.values()){
+			if(wall.checkHit(newX, newY, rad, isFireball)){
+					return true;
+			}
+		}
+		return false;
+	}
 
 	tick() {
 		this.counter++;
@@ -263,7 +279,6 @@ export class GameRoom extends Room<GameState> {
 		for(let skull of this.state.skulls.values()){
 			skull.move();
 		}
-
 
 		for (let id of this.state.players.keys()) {
 			if (this.state.players[id].isBot && this.botTimeout == 0) {
@@ -333,7 +348,7 @@ export class GameRoom extends Room<GameState> {
 										const angle = Math.random() * 6.28;
 										const newX = this.state.players[id].x + 50 * Math.cos(angle);
 										const newY = this.state.players[id].y + 50 * Math.sin(angle);
-										if (!Maths.checkWalls(newX, newY, 22.5)) {
+										if (!this.checkWalls(newX, newY, 22.5, true)) {
 											this.state.players[id2].fireballs.push(new Fireball(newX, newY, angle + Math.PI, 7, "electric", 20, 0));
 
 										}

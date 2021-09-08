@@ -120,19 +120,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     walls.push(<Wall x={0} y={4*xLen} xLength ={xLen3} yLength = {yLen} angle = {Math.PI/2} />)
     walls.push(<Wall x={2000 + yLen} y={4*xLen} xLength ={xLen3} yLength = {yLen} angle = {Math.PI/2} />)
 
-    //top right
-    walls.push(<Wall x={1240} y={760} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2} />)
-    walls.push(<Wall x={1240} y={720} xLength ={xLen} yLength = {yLen} angle = {0} />)
-    //bottom right
-    walls.push(<Wall x={1240} y={1240} xLength ={xLen} yLength = {yLen} angle = {0}/>)
-    walls.push(<Wall x={1280} y={1240} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2}/>)
-    //bottom left
-    walls.push(<Wall x={760} y={1280} xLength ={xLen} yLength = {yLen} angle = {Math.PI}/>)
-    walls.push(<Wall x={760} y={1240} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2}/>)
-    //top left
-    walls.push(<Wall x={760} y={760} xLength ={xLen} yLength = {yLen} angle = {Math.PI}/>)
-    walls.push(<Wall x={720} y={760} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2}/>)
-
     //
     if (me !== null && this.viewport !=null) {
       try {

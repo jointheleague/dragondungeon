@@ -88,5 +88,15 @@ export interface ISkull{
   angle: number;
 }
 
+export interface IWall{
+  key: number;
+  x: number;
+  y: number;
+  xLength: number;
+  yNumber: number;
+  health: number;
+  angle: number;
+}
+
 
 export type GameState = IGameState | null;

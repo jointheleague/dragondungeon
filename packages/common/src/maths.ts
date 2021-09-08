@@ -1,10 +1,13 @@
 /**
+ * 
  * Get the angle in radiant between two points
  * @param x1
  * @param y1
  * @param x2
  * @param y2
  */
+
+
 export function calculateAngle(x1: number, y1: number, x2: number, y2: number): number {
   return Math.atan2(y1 - y2, x1 - x2);
 }
@@ -183,19 +186,6 @@ export function checkWalls (newX: number, newY: number, rad: number){
   if(newX > gameWidth-rad || newY > gameHeight-rad || newX < rad || newY < rad){
     return true;
   }
-  //wall width
-  const width = 42;
-  //offset of player from middle
-  const offX = Math.abs(newX - gameWidth/2);
-  const offY = Math.abs(newY - gameHeight/2);
-  //wall start/end
-  const inner = 200+39.375;
-  const outer = 735-39.375;
-  //if in outer box
-  if(offX > inner - rad && offY > inner - rad && offX < outer + rad && offY < outer + rad){
-    //vertical || horizontal wall
-    if(offX < inner + width + rad || offY < inner + width + rad ){
-      return true;
-    }
-  }
+  
+
 }
