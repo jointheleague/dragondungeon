@@ -182,7 +182,7 @@ export class GameRoom extends Room<GameState> {
 		}
 		var teamNum;	
 		if(this.state.gamemode == 'coinCapture'){teamNum = 1;}
-		//this is temporary, change when CTC is more set up
+		// this is temporary, change when CTC is more set up
 		else{teamNum = 0;}
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 4000, Math.random() * 4000, size, teamNum));
 		Math.random() < 0.01 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 4000 + 40, Math.random() * 4000 + 40, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 4000, Math.random() * 4000, 20, 0));

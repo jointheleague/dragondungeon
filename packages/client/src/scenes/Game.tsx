@@ -36,9 +36,12 @@ export default class Game extends Component<IProps, IState>{
         window.history.replaceState(null, 'dragondungeon', `/play/${this.stateManager.room.id}`);
       })
       .catch((e) => {
-        navigate("/");
-        console.error(e);
-        show_error_banner('Cannot Connect');
+        if (e.toString().startsWith("Error: Room")) {
+          navigate('/');
+          show_error_banner('Room Not Found');
+        } else {
+          window.location.reload();
+        }
       })
   }
 
