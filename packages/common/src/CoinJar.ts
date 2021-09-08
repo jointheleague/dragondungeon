@@ -11,7 +11,7 @@ export class CoinJar extends Schema {
 	@type("number")
 	team: number = 0;
 
-	constructor(x: number = 1000, y: number = 1000) {
+	constructor(x: number, y: number) {
 		super()
 		this.x = x;
 		this.y = y;

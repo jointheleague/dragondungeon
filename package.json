@@ -1,5 +1,5 @@
 {
-  "name": "dragoncoin",
+  "name": "dragondungeon",
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
@@ -9,16 +9,17 @@
       "packages/*"
     ]
   },
-  "repository": "https://github.com/jointheleague/dragoncoin.git",
+  "repository": "https://github.com/jointheleague/dragondungeon.git",
   "author": "Luke Wood <lukewoodcs@gmail.com>, Keith Groves <keith.groves@jointheleague.org>, Samuel Sharp <samuel@samuelsharp.com>, Chris Woolson",
   "license": "MIT",
   "scripts": {
     "start": "yarn build:common && concurrently --kill-others-on-fail \"yarn start:client\" \"yarn start:server\" \"yarn start:common\"",
-    "start:server": "yarn workspace @dragoncoin/server start",
-    "start:client": "yarn workspace @dragoncoin/client start",
-    "start:common": "yarn workspace @dragoncoin/common start",
-    "build:client": "yarn workspace @dragoncoin/client build",
-    "build:common": "yarn workspace @dragoncoin/common build",
+    "start:server": "yarn workspace @dragondungeon/server start",
+    "start:client": "yarn workspace @dragondungeon/client start",
+    "start:common": "yarn workspace @dragondungeon/common start",
+    "start:desktop": "yarn workspace @dragondungeon/desktop start",
+    "build:client": "yarn workspace @dragondungeon/client build",
+    "build:common": "yarn workspace @dragondungeon/common build",
     "build": "yarn build:client && yarn build:common"
   },
   "devDependencies": {

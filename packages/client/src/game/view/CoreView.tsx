@@ -17,7 +17,7 @@ export const CoreView = (props: IProps) => {
   const {stateManager} = props;
 
   useEffect(() => {
-    Mousetrap.bind('tab', () => { navigate('/home') });
+    Mousetrap.bind('tab', () => { navigate('/') });
     gameMusic.loop = true;
     gameMusic.play();
 
@@ -33,10 +33,10 @@ export const CoreView = (props: IProps) => {
 
   if (state == null) {
     return (
-      <>
+      <div style={{ textAlign: 'center' }}>
         <br /><br /><br />
-        <p style={{ textAlign: 'center' }}>Loading...</p>
-      </>
+        <img style={{ textAlign: 'center', height: '150px', imageRendering: 'pixelated' }} src="/basicDragon.png" />
+      </div>
     )
   }
 

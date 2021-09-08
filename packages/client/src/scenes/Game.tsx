@@ -3,7 +3,7 @@ import { RouteComponentProps, navigate } from '@reach/router';
 
 import { StateManager } from '../game/state/StateManager';
 import { CoreView } from '../game/view/CoreView';
-import { ColyseusService } from '@dragoncoin/client/src/services/colyseus'
+import { ColyseusService } from '@dragondungeon/client/src/services/colyseus'
 
 import { show_error_banner } from '../util/banner';
 
@@ -33,7 +33,7 @@ export default class Game extends Component<IProps, IState>{
     this.stateManager.setup()
       .then(() => {
         this.setState({loading: false});
-        window.history.replaceState(null, 'DragonCoin', `/play/${this.stateManager.room.id}`);
+        window.history.replaceState(null, 'dragondungeon', `/play/${this.stateManager.room.id}`);
       })
       .catch((e) => {
         navigate("/");
@@ -49,10 +49,10 @@ export default class Game extends Component<IProps, IState>{
   render(): ReactNode {
     if (this.state.loading) {
       return (
-        <>
+        <div style={{ textAlign: 'center' }}>
           <br /><br /><br />
-          <p style={{ textAlign: 'center' }}>Loading...</p>
-        </>
+          <img style={{ textAlign: 'center', height: '150px', imageRendering: 'pixelated' }} src="/basicDragon.png" />
+        </div>
       )
     }
     return (

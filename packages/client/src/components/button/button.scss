@@ -4,26 +4,25 @@
   margin: 10px;
   user-select: none;
   outline: none;
-  border: 3px solid #c60c30;
-  background-color: transparent;
+  border: 3px solid whitesmoke;
+  background: rgba(0, 0, 0, 0.7);
   display: block;
-  color: white;
-  max-width: 100%;
-  width: 30%;
-  border-radius: 8px;
-  cursor: pointer;
+  color: red;
+  font-weight: bold;
+  min-width: 30%;
+  border-radius: 3px;
   &:disabled {
     filter: brightness(50%) !important;
     cursor: default !important ;
   }
   &:hover, &:focus {
-    filter: brightness(90%);
-    border: 3px solid whitesmoke;
+    background: rgba(255, 255, 255, 0.7);
+    border: 3px solid red;
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
   .button {
-    width: 100vw;
+    width: 90vw;
   }
 }

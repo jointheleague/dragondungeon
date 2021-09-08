@@ -1,7 +1,7 @@
 import {
 	getDistance,
 	getRandomInt
-} from '@dragoncoin/common/build/maths';
+} from '@dragondungeon/common/build/maths';
 
 import {
 	Room,
@@ -24,7 +24,7 @@ import {
 	Skull,
 	CircleSkull,
 	LineSkull
-} from '@dragoncoin/common';
+} from '@dragondungeon/common';
 
 import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
@@ -37,9 +37,12 @@ export class TutorialRoom extends Room<GameState> {
 	botTimeout = 0;
 	maxClients = 1;
 	tutorialStarted = false;
-
-  autoDispose = false;
-
+	tutorialCoinCollected = true;
+	tutorialCoinCollectCheck = false;
+	tutorialCoinBarFull = true;
+	tutorialScoreIsNonZero = true;
+	tutorialScoreIsNonZeroCheck = false;
+	tutorialCoinBarFullCheck = false;
 	redTeamIds = [];
 	blueTeamIds = [];
 
@@ -97,8 +100,34 @@ export class TutorialRoom extends Room<GameState> {
 	}
 
 	runTutorial(client: Client) {
-		client.send("hint", "Welcome to DragonCoin!");
-		client.send("hint", "Use the W, A, S, and D keys to move!");
+		client.send("hint", "Welcome to DRAGON DUNGEON! Use the W, A, S, and D keys to move!");
+		setTimeout(() => client.send("hint", "The goal of DRAGON DUNGEON is to collect as many coins as possible within 5 minutes."), 1000);
+		setTimeout(() => {
+			client.send("hint", "Try collecting a coin now!");
+			this.tutorialCoinCollected = false;
+			this.tutorialCoinBarFull = false;
+			this.tutorialScoreIsNonZero = false;
+			setInterval(() => {
+				if (this.tutorialCoinCollected && !this.tutorialCoinCollectCheck) {
+					client.send("hint", "Great job! Keep trying to collect coins.");
+					this.tutorialCoinCollected = false;
+					this.tutorialCoinCollectCheck = true;
+				}
+				if (this.tutorialCoinBarFull && !this.tutorialCoinBarFullCheck) {
+					client.send("hint", "b Looks like your coin bar is full! Let's take those coins to the bank.");
+					setTimeout(() => client.send("hint", "b The bank is in the center of the map."), 1000);
+					this.tutorialCoinBarFull = false;
+					this.tutorialCoinBarFullCheck = true;
+				}
+				if (this.tutorialScoreIsNonZero && !this.tutorialScoreIsNonZeroCheck) {
+					client.send("hint", "Looks like you got this. Now, let's destroy some other dragons.");
+					setTimeout(() => client.send("hint", "This is Botty McBotFace. Use the spacebar to take away his coins."), 1000);
+					this.state.players.set(v4(), new Player("fire", "light", 0));
+					this.tutorialScoreIsNonZero = false;
+					this.tutorialScoreIsNonZeroCheck = true;
+				}
+			}, 1000)
+		}, 2000);
 	}
 
 	startGameLoop() {
@@ -134,8 +163,8 @@ export class TutorialRoom extends Room<GameState> {
 		var newX;
 		var newY;
 		do {
-			newX = Math.random() * 2000;
-			newY = Math.random() * 2000;
+			newX = Math.random() * 4000;
+			newY = Math.random() * 4000;
 
 		} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
 		var teamNum;	
@@ -182,7 +211,7 @@ export class TutorialRoom extends Room<GameState> {
 			this.gameOver();
 		}
 
-		for (let i = this.state.coins.size; i < this.state.players.size * 150; i++) {
+		for (let i = this.state.coins.size; i < this.state.players.size * 25; i++) {
 			this.spawnCoin();
 		}
 
@@ -258,7 +287,7 @@ export class TutorialRoom extends Room<GameState> {
 
 			for(let cid of this.state.coins.keys()){
 				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y, 0) && this.state.players[id].coins < 10) {
-					
+					this.tutorialCoinCollected = true;
 					var coins = this.state.players[id].coins;
 					switch (this.state.coins[cid].getSize()) {
 						case (20):
@@ -274,6 +303,10 @@ export class TutorialRoom extends Room<GameState> {
 							this.state.players[id].score += 50;
 							this.state.players[id].coinsPickedUp += 50;
 							break;
+					}
+					console.log(this.state.players[id].coinsPickedUp);
+					if (this.state.players[id].coinsPickedUp == 9) {
+						this.tutorialCoinBarFull = true;
 					}
 					this.state.players[id].coinsPickedUp += Math.min(coins, 10)-this.state.players[id].coins;
 					this.state.players[id].coins = Math.min(coins,10);

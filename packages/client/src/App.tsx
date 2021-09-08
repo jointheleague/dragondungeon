@@ -5,7 +5,6 @@ import { ColyseusService } from 'services/colyseus';
 const Game = lazy(() => import('./scenes/Game'));
 const Credits = lazy(() => import('./scenes/Credits'));
 const StartScreen = lazy(() => import("./scenes/StartScreen"));
-const Home = lazy(() => import("./scenes/Home"));
 const ErrorRoute = lazy(() => import("./scenes/ErrorRoute"));
 const MyDragon = lazy(() => import("./scenes/MyDragon"));
 const StoryContent = lazy(() => import("./scenes/Cutscene"));
@@ -36,7 +35,6 @@ class App extends Component {
           <Game colyseus={this.colyseus} path="/play/:roomId" />
           <Credits path="/credits" />
           <StartScreen path="/" />
-          <Home path="/home" />
           <MyDragon path="/mydragon" />
           <StoryContent path="/story" />
           <Tutorial path="/tutorial" />

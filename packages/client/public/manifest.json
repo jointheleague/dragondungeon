@@ -1,6 +1,6 @@
 {
-  "short_name": "DragonCoin",
-  "name": "DragonCoin Game",
+  "short_name": "Dragon Dungeon",
+  "name": "Dragon Dungeon Game",
   "icons": [
     {
       "src": "icon.png",
@@ -10,6 +10,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#c60c30",
+  "theme_color": "red",
   "background_color": "#000000"
 }

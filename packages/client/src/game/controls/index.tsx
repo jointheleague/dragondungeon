@@ -2,7 +2,7 @@ import React, {useEffect, useCallback} from 'react';
 import {IInputs} from './types';
 import {Viewport} from 'pixi-viewport';
 import { show_error_banner } from 'util/banner';
-import { debuglog } from 'util';
+import ReactNipple from 'react-nipple';
 
 interface ControlProps {
     actionCallback: (p: IInputs) => void
@@ -87,5 +87,48 @@ export const Controls = (props: ControlProps) => {
       window.removeEventListener("mousemove", mouseMove)
     }
   }, [props.actionCallback, updateAndSend, props.viewport])
-  return <></>
+  return <>
+  <div style={{
+      position: 'fixed',
+      width: '100vw',
+      height: '100vh'
+    }} onClick={() => {
+      console.log('tap');
+      var change = controlsDown[' ']  || {};
+      updateAndSend(change);
+    }} />
+  <ReactNipple
+    options={{ color: 'transparent', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
+    style={{
+      position: 'fixed',
+      width: '100vw',
+      height: '100vh'
+    }}
+    onMove={( evt: any, data: any) => {
+      if (data.direction) {
+        if (data.direction.x == 'left') {
+          updateAndSend({
+            left: true,
+            right: false,
+          });
+        } else {
+          updateAndSend({
+            left: false,
+            right: true,
+          });
+        }
+  
+        if (data.direction.y == 'up') {
+          updateAndSend({
+            up: true,
+            down: false,
+          });
+        } else {
+          updateAndSend({
+            up: false,
+            down: true,
+          });
+        }
+      }
+    }} /></>
 }

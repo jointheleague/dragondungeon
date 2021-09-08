@@ -4,8 +4,11 @@ import { navigate } from '@reach/router';
 import { StateManager } from '../game/state/StateManager';
 import { IGameState, IPlayer } from '../game/state/types';
 
+let gameOverMusic = new Audio('/audio/gameover.mp3');
+
 const homepage = () => {
-  navigate('/home');
+  gameOverMusic.pause();
+  navigate('/');
 }
 
 interface LeaderboardProps {
@@ -98,52 +101,27 @@ const GameOver = (props: IProps) => {
 
   gameMusic.pause();
 
-  const gameOverMusic = new Audio('/music/gameover.mp3');
   gameOverMusic.loop = true;
   gameOverMusic.play();
 
 
 
   return (
-    <>
-      <br /><br /><br />
-      <Center>
-        <Space size='xl'/>
-        <Box>
-          <h1 style={{ textAlign: 'center', fontSize: '40px', fontWeight: 'bold' }}>Game Over</h1>
-        </Box>
-        <Space size='m'/>
-        <h1>Score : {me.score}</h1>
-        <h3 style={{marginTop:'0px'}}> Hits Dealt : {me.hitsDealt}</h3>
-        <h3 style={{marginTop:'0px'}}> Hits Recived : {me.hitsRecived}</h3>
-        <h3 style={{marginTop:'0px', marginBottom:'0px'}}> Coins picked up : {me.coinsPickedUp}</h3>
-        <Space size='m'/>
-        <h1>Leaderboard</h1>
-        <GameOverLeaderboard p={players}/>
-        
-        <Space size='m'/>
-        <h1>Your Past Top Scores </h1>
-        <h2>(needs to be implemented in firebase)</h2>
-        <ul className="scores" style={{marginTop:'0px'}}>
-          <li>154</li>
-          <li>120</li>
-          <li>55</li>
-          <li>21</li>
-        </ul>
+    <div style={{ padding: '30px' }}>
+      <Box>
+        <h1>Game Over</h1>
+      </Box>
+      <h1>+{me.score} <img src="/icon.png" height="30px" style={{ imageRendering: 'pixelated', verticalAlign: 'middle' }} /></h1>
+      <h3 style={{marginTop:'0px'}}> Hits Dealt: {me.hitsDealt}</h3>
+      <h3 style={{marginTop:'0px'}}> Hits Recived: {me.hitsRecived}</h3>
+      <h3 style={{marginTop:'0px', marginBottom:'0px'}}> Coins picked up: {me.coinsPickedUp}</h3>
+      <Space size='m'/>
+      <h1>Leaderboard</h1>
+      <GameOverLeaderboard p={players}/>
 
-        <Space size='m'/>
-        <Button onClick={homepage} text="Home" />
-      </Center>
-      <p style={{height:'9999999px'}}></p>
-      <Center>
-        <h1>Top Score Ever</h1>
-        <ul className="scores" style={{marginTop:'0px'}}>
-          <li >999,999,999</li>
-          <li><a href="https://www.poetryfoundation.org/poems/46565/ozymandias" target="_blank" rel="noopener"> Look on my Works, ye Mighty, and despair!</a></li>
-        </ul>
-      </Center>
-      <Space size='giant'/>
-    </>
+      <Space size='m'/>
+      <Button onClick={homepage} text="Home" />
+    </div>
   );
 }
 

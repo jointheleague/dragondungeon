@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { Box } from "../box";
 import './leaderboard.scss';
 import {IGameState, IPlayer, ICountdown} from 'game/state/types';
 
@@ -15,6 +16,7 @@ interface LeaderboardProps {
 interface Ranking {
   onlineName: string;
   score: number;
+  ballType: string;
 }
 
 interface LeaderboardState {
@@ -34,14 +36,30 @@ class Leaderboard extends Component <LeaderboardProps, LeaderboardState>
 
   return ranking.map((ranking: Ranking, index:any) => {
     const score = ranking.score;
-    var name = ranking.onlineName;
+    let name = ranking.onlineName;
+    const ballType = ranking.ballType;
 
     if(name == null){name = "unNamed"}
      return (
         <tr key={index}>
+            <td className="playerData"><img src={`/${ballType}ball.png`} style={{ height: '30px' }} /></td>
            <td className="playerData">{name}</td>
-           <td className="playerData">{score}</td>
+           <td className="playerData"><b><big>{score}</big></b></td>
         </tr>
+     )
+  })
+}
+
+renderMobileTableData(ranking:Ranking[]) {
+
+  return ranking.map((ranking: Ranking, index:any) => {
+    const score = ranking.score;
+    let name = ranking.onlineName;
+     return (
+        <span key={index} style={{ color: 'white' }}>
+           <span className="playerData">{name}</span>&nbsp;&nbsp;
+           <b className="playerData" style={{ fontSize: '25px' }}>{score}</b>
+        </span>
      )
   })
 }
@@ -81,19 +99,29 @@ render() {
 
 
   return (
-     <div className="leaderboard-box" >
-        <table id='students'>
-          <tbody id='countdown'>
-            {this.renderCountdown()}
-            {this.renderClock()}
-          </tbody>
+    <>
+      { (window.innerWidth >= 600) && <div className="leaderboard-box" >
+        <h1>Dragon Dungeon</h1>
+        <h2>{this.renderCountdown()}</h2>
+        <h3>{window.location.pathname.replace('/play/', '')}</h3>
+        <h3>{this.renderClock()}</h3>
+        <table>
           <tbody id='leaderboard'>
             {this.renderTableData(newArr)}
           </tbody>
         </table>
-     </div>
+      </div> }
+
+    { (window.innerWidth <= 800) && <>
+      <p className="mobileCountdown">{this.renderCountdown()}</p>
+      <Box>
+        { this.renderMobileTableData(newArr) }
+      </Box>
+    </> }
+  </>
   )
 }
+
 }
 
 export { Leaderboard }
