@@ -114,6 +114,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       walls.push(<Wall x={state.gamewidth + yLen} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
     }    
 
+
     //top right
     walls.push(<Wall x={state.gamewidth/2 + 240} y={state.gameheight/2 - 240} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2} />)
     walls.push(<Wall x={state.gamewidth/2 + 240} y={state.gameheight/2 - 280} xLength ={xLen} yLength = {yLen} angle = {0} />)
@@ -127,7 +128,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     walls.push(<Wall x={state.gamewidth/2 - 240} y={state.gameheight/2 - 240} xLength ={xLen} yLength = {yLen} angle = {Math.PI}/>)
     walls.push(<Wall x={state.gamewidth/2 - 280} y={state.gameheight/2 - 240} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2}/>)
 
-    //
+
     if (me !== null && this.viewport !=null) {
       try {
         this.viewport.x = -me.x * scale + window.innerWidth / 2;

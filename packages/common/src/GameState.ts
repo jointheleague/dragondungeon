@@ -13,6 +13,7 @@ import { BorderFence } from './BorderFence';
 import { Countdown } from './Countdown';
 import { Bat } from './Bat';
 import { Skull } from './Skull';
+import {Wall} from './Wall';
 
 export class GameState extends Schema {
 	@type("boolean")
@@ -43,6 +44,9 @@ export class GameState extends Schema {
 
 	@type("boolean")
 	gameOver: boolean = false;
+
+	@type(Wall)
+	walls = new MapSchema<Wall>();
 
 
 	@type("number")
