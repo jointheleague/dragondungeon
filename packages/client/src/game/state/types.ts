@@ -15,7 +15,7 @@ export interface IGameState {
   gamewidth: number;
   gameheight: number;
   batRot: number;
-  gamemode: 'FFA'|'coinCapture';
+  gamemode: 'FFA'|'CTC';
 
   skulls: {[key: string]: ISkull}
 
