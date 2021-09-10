@@ -62,6 +62,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
    }
 
    renderScene() {
+    //initialize arrays of all rendered objects
     const state = this.props.state;
     const leaderboard = [];
     const players = [];
@@ -73,63 +74,11 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     const bats = [];
     const skulls = [];
     const coinJar = <CoinJar key={"only"} x={state.gamewidth/2} y={state.gameheight/2} team={state.coinJar.team}/>;
-
+    //gets the id for the user and their dragon
     const id  = this.props.stateManager.id;
-
     const me = this.props.state.players[id];
-    for (let pid in state.players) {
-      const player = state.players[pid];
-      //console.log("ball type in Gview, " + player.ballType);
-      // TODO: Use player name/id for stuff
-      
-      players.push(<Dragon key={pid} player={player} team={state.players[pid].team}/>,)
-
-      for(let fireball of state.players[pid].fireballs){
-        fireballs.push(<FireballView key={fireball.id} fireball={fireball} />)
-      }
-      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y - 80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].onlineName}/>)
-      //println("fs");
-      //fireballs.push(player.fireballs);
-      leaderboard.push(Leaderboard)
-    }
-
-    for(let bid in state.bats){
-      bats.push(<Bat x={state.bats[bid].x} y={state.bats[bid].y} rot={state.bats[bid].angle} key={bid}/>)
-    }
-
-    for(let sid in state.skulls){
-      bats.push(<Skull x={state.skulls[sid].x} y={state.skulls[sid].y} rot={state.skulls[sid].angle} key={sid}/>)
-    }
-
-
-    const xLen = 455.625;
-    const xLen2 = 275.625;
-    const xLen3 = 185.625;
-    const yLen = 39.375; 
-
-    for(var i = 0; i < 9; i++){
-      walls.push(<Wall x={i*xLen - yLen} y={-yLen} xLength ={xLen} yLength = {yLen} angle = {0} />)
-      walls.push(<Wall x={i*xLen - yLen} y={state.gameheight} xLength ={xLen} yLength = {yLen} angle = {0} />)
-      walls.push(<Wall x={0} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
-      walls.push(<Wall x={state.gamewidth + yLen} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
-    }    
-
-
-    //top right
-    walls.push(<Wall x={state.gamewidth/2 + 240} y={state.gameheight/2 - 240} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2} />)
-    walls.push(<Wall x={state.gamewidth/2 + 240} y={state.gameheight/2 - 280} xLength ={xLen} yLength = {yLen} angle = {0} />)
-    //bottom right
-    walls.push(<Wall x={state.gamewidth/2 + 240} y={state.gameheight/2 + 240} xLength ={xLen} yLength = {yLen} angle = {0}/>)
-    walls.push(<Wall x={state.gamewidth/2 + 280} y={state.gameheight/2 + 240} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2}/>)
-    //bottom left
-    walls.push(<Wall x={state.gamewidth/2 - 240} y={state.gameheight/2 + 280} xLength ={xLen} yLength = {yLen} angle = {Math.PI}/>)
-    walls.push(<Wall x={state.gamewidth/2 - 240} y={state.gameheight/2 + 240} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2}/>)
-    //top left
-    walls.push(<Wall x={state.gamewidth/2 - 240} y={state.gameheight/2 - 240} xLength ={xLen} yLength = {yLen} angle = {Math.PI}/>)
-    walls.push(<Wall x={state.gamewidth/2 - 280} y={state.gameheight/2 - 240} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2}/>)
-
-
-    if (me !== null && this.viewport !=null) {
+    //moves the center of the veiwport to the player 
+    if (me !== null && this.viewport !== null) {
       try {
         this.viewport.x = -me.x * scale + window.innerWidth / 2;
         this.viewport.y = -me.y * scale + window.innerHeight / 2; 
@@ -137,6 +86,30 @@ export class GameView extends Component<GameViewProps, GameViewState> {
         show_error_banner('Rendering Failed');
       }
     }
+    //push each player's: dragon, healthbar, and fireballs to be rendered and add them to the leaderboard
+    for (let pid in state.players) {
+      const player = state.players[pid];
+      players.push(<Dragon key={pid} player={player} team={state.players[pid].team}/>,)
+      for(let fireball of state.players[pid].fireballs){
+        fireballs.push(<FireballView key={fireball.id} fireball={fireball} />)
+      }
+      healthBars.push(<Bar key={v4()} x={state.players[pid].x - 35} y={state.players[pid].y - 80} width={70} height={18} color ={0xe30b1d} coins={state.players[pid].coins} name={state.players[pid].onlineName}/>) 
+      leaderboard.push(Leaderboard)
+    }
+    //push all bats to be rendered
+    for(let bid in state.bats){
+      bats.push(<Bat x={state.bats[bid].x} y={state.bats[bid].y} rot={state.bats[bid].angle} key={bid}/>)
+    }
+    //push all skulls to be rendered
+    for(let sid in state.skulls){
+      bats.push(<Skull x={state.skulls[sid].x} y={state.skulls[sid].y} rot={state.skulls[sid].angle} key={sid}/>)
+    }
+    //push all coins to be rendered
+    for(let cid in state.coins){
+      //const coin = state.coins[cid];
+      coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size} team={state.coins[cid].team}/>);
+    }
+    //adds a background of random ([ly] chosen at begining) tiles to move with the player
     var tileAmt = 19;
     var midpoint = state.gamewidth/2;
     console.log(midpoint);
@@ -147,10 +120,36 @@ export class GameView extends Component<GameViewProps, GameViewState> {
         }
       }
     }
-    for(let cid in state.coins){
-      //const coin = state.coins[cid];
-      coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size} team={state.coins[cid].team}/>);
+    //push walls to be rendered
+    if(state.gamemode === "FFA"){
+      const xLen = 455.625;
+      const xLen2 = 275.625;
+      const xLen3 = 185.625;
+      const yLen = 39.375; 
+      //outer
+      for(var i = 0; i < 9; i++){
+        walls.push(<Wall x={i*xLen - yLen} y={-yLen} xLength ={xLen} yLength = {yLen} angle = {0} />)
+        walls.push(<Wall x={i*xLen - yLen} y={state.gameheight} xLength ={xLen} yLength = {yLen} angle = {0} />)
+        walls.push(<Wall x={0} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
+        walls.push(<Wall x={state.gamewidth + yLen} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
+      }    
+      //top right
+      walls.push(<Wall x={state.gamewidth/2 + 240} y={state.gameheight/2 - 240} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2} />)
+      walls.push(<Wall x={state.gamewidth/2 + 240} y={state.gameheight/2 - 280} xLength ={xLen} yLength = {yLen} angle = {0} />)
+      //bottom right
+      walls.push(<Wall x={state.gamewidth/2 + 240} y={state.gameheight/2 + 240} xLength ={xLen} yLength = {yLen} angle = {0}/>)
+      walls.push(<Wall x={state.gamewidth/2 + 280} y={state.gameheight/2 + 240} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2}/>)
+      //bottom left
+      walls.push(<Wall x={state.gamewidth/2 - 240} y={state.gameheight/2 + 280} xLength ={xLen} yLength = {yLen} angle = {Math.PI}/>)
+      walls.push(<Wall x={state.gamewidth/2 - 240} y={state.gameheight/2 + 240} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2}/>)
+      //top left
+      walls.push(<Wall x={state.gamewidth/2 - 240} y={state.gameheight/2 - 240} xLength ={xLen} yLength = {yLen} angle = {Math.PI}/>)
+      walls.push(<Wall x={state.gamewidth/2 - 280} y={state.gameheight/2 - 240} xLength ={xLen} yLength = {yLen} angle = {-Math.PI/2}/>)
+    }else if (state.gamemode === "CTC"){
+
     }
+
+
     render(
       <>{tiles}{coinJar}{walls}{coins}{players}{skulls}{bats}{fireballs}{healthBars}</>, 
       this.viewport
