@@ -75,16 +75,29 @@ export const Controls = (props: ControlProps) => {
 
         updateAndSend(change); 
       } catch {
-        show_error_banner('BAT');
+        show_error_banner('Malfunctioning HID/Inputs');
       }
     }
     window.addEventListener("keydown", keydown)
     window.addEventListener("keyup", keyup)
     window.addEventListener("mousemove", mouseMove);
+
+    const controlFocusCheck = setInterval(() => {
+      if (!document.hasFocus()) {
+        updateAndSend({
+          up: false,
+          down: false,
+          left: false,
+          right: false,
+        });
+      }
+    }, 100);
+
     return () => {
-      window.removeEventListener("keydown", keydown)
-      window.removeEventListener("keyup", keyup)
-      window.removeEventListener("mousemove", mouseMove)
+      window.removeEventListener("keydown", keydown);
+      window.removeEventListener("keyup", keyup);
+      window.removeEventListener("mousemove", mouseMove);
+      clearInterval(controlFocusCheck);
     }
   }, [props.actionCallback, updateAndSend, props.viewport])
   return <>

@@ -112,7 +112,7 @@ render() {
         </table>
       </div> }
 
-    { (window.innerWidth <= 600) && <>
+    { (window.innerWidth <= 800) && <>
       <p className="mobileCountdown">{this.renderCountdown()}</p>
       <Box>
         { this.renderMobileTableData(newArr) }

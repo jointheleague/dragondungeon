@@ -168,11 +168,14 @@ export class TutorialRoom extends Room<GameState> {
 
 		} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
 		var teamNum;	
-		if(this.state.gamemode == 'coinCapture'){teamNum = 1;}
+		if(this.state.gamemode == 'CTC'){
+			teamNum = 1;
+		}
 		//this is temporary, change when CTC is more set up
-		else{teamNum = 0;}
-			this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, teamNum));
-			//console.log(this.state.gamemode);
+		else{
+			teamNum = 0;
+		}
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, teamNum));
 	}
 
 	createCoin(x: number, y: number) {

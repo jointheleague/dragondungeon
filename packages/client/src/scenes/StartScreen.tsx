@@ -6,12 +6,13 @@ import { navigate } from '@reach/router';
 
 const auth = getAuth();
 const db = getFirestore();
+const audio = new Audio('/music/startscreen.mp3')
 
 const StartScreen = (props: any) => {
   const [ user, setUser ] = useState<User>();
   const [ userIsAnon, setUserIsAnon ] = useState<boolean>();
   const [ time, setTime ] = useState<string>(new Date().toLocaleTimeString());
-  const [ music, setMusic ] = useState<HTMLAudioElement>(new Audio('/music/startscreen.mp3'));
+  const [ music, setMusic ] = useState<HTMLAudioElement>(audio);
   useEffect(
     () => {      
       onAuthStateChanged(auth, async user => {
@@ -60,7 +61,9 @@ const StartScreen = (props: any) => {
         music.play();
         (document.querySelector('#audiocontext-not-allowed') as any).style.display = 'none';
         setTimeout(() => {
-          (document.querySelector('#logo-screen') as any).style.display = 'none';
+          if (document.querySelector('#logo-screen') !== null) {
+            (document.querySelector('#logo-screen') as any).style.display = 'none';
+          }
           window.sessionStorage.setItem('hasViewedIntro', "true");
         }, 4000);
       }} style={{

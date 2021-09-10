@@ -22,6 +22,7 @@ import {
 	CircleBat,
 	LineBat,
 	Skull,
+	Wall,
 	CircleSkull,
 	LineSkull
 } from '@dragondungeon/common';
@@ -55,8 +56,13 @@ export class GameRoom extends Room<GameState> {
 				this.state.bats.set(v4(), new CircleBat(this.state.bats.size, this.state.gamewidth/2, this.state.gamewidth/2, .02, 90*i + 90, (Math.PI*2/spokes)*j));
 			}
 		}
-		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 1300, this.state.gameheight/2, 5, 1360, 0));
-		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, this.state.gamewidth/2, 1300, 5, 1360, Math.PI/2));
+
+		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 320, 1000, 5, 1360, 0));
+		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 1000, 320, 5, 1360, Math.PI/2));
+		
+		//this.state.walls.set(v4(), new Wall(200,200,500,50,Math.PI/2, 10, "FFA"))
+
+
 	}
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
@@ -174,22 +180,13 @@ export class GameRoom extends Room<GameState> {
 				}
 			}
 		}
-		var newX;
-		var newY;
-		do {
-			newX = Math.random() * 4000;
-			newY = Math.random() * 4000;
-
-		} while ((Maths.checkWalls(newX, newY, size) || (newX > 700 && newY > 700 && newX < 1300 && newY < 1300)) && size != 100)
 		var teamNum;	
-		if(this.state.gamemode == 'CTC'){
-			teamNum = 1;
-		}
-		//this is temporary, change when CTC is more set up
-		else{
-			teamNum = 0;
-		}
-		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, size, teamNum));
+		if(this.state.gamemode == 'CTC'){teamNum = 1;}
+		// this is temporary, change when CTC is more set up
+		else{teamNum = 0;}
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 4000, Math.random() * 4000, size, teamNum));
+		Math.random() < 0.01 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 4000 + 40, Math.random() * 4000 + 40, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 4000, Math.random() * 4000, 20, 0));
+		// console.log(this.state.gamemode);
 	}
 
 	createCoin(x: number, y: number) {
@@ -200,9 +197,8 @@ export class GameRoom extends Room<GameState> {
 			rand = getRandomInt(0, 62) / 10;
 			newX = x + 100 * Math.cos(rand);
 			newY = y + 100 * Math.sin(rand);
-		} while (Maths.checkWalls(newX, newY, 20))
+		} while (this.checkWalls(newX, newY, 20, false))
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
-		Math.random() < 0.5 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
 	}
 
 	moveBot(bot: Player, right: boolean, left: boolean, up: boolean, down: boolean) {
@@ -220,7 +216,51 @@ export class GameRoom extends Room<GameState> {
 		});
 	}
 
+	checkWalls(newX: number, newY: number, rad: number, isFireball: boolean){
+		const gameWidth = 2000;
+		const gameHeight = 2000;
+		if(newX > gameWidth-rad || newY > gameHeight-rad || newX < rad || newY < rad){
+			return true;
+		}
+		for(let wall of this.state.walls.values()){
+			if(wall.checkHit(newX, newY, rad, isFireball)){
+					return true;
+			}
+		}
+		return false;
+	}
 
+	generateBotName() {
+		let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
+		let botNameGender = Math.random() > 0.4 ? true : false;
+		let botNameFirst = botNameGender ?
+			botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] :
+			botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
+		switch (Math.floor(Math.random() * 10)) {
+			case 0:
+				return botNameFirst;
+			case 1:
+				return botNameFirst + botwords[Math.floor(Math.random() * botwords.length)];
+			case 2:
+				return botwords[Math.floor(Math.random() * botwords.length)].toLowerCase();
+			case 3:
+				return botwords[Math.floor(Math.random() * botwords.length)].split('')[0] + botNameFirst;
+			case 4:
+				return botwords[Math.floor(Math.random() * botwords.length)].split('')[0] + "_" + botNameFirst;
+			case 5:
+				return botwords[Math.floor(Math.random() * botwords.length)].toLowerCase();
+			case 6:
+				return botwords[Math.floor(Math.random() * botwords.length)] + "_" + botNameFirst;
+			case 7:
+				return botwords[Math.floor(Math.random() * botwords.length)] + botNameFirst + "_";
+			case 8:
+				return botwords[Math.floor(Math.random() * botwords.length)] + botNameFirst + "1";
+			case 9:
+				return botwords[Math.floor(Math.random() * botwords.length)] + botNameFirst + "0";
+			default:
+				return botNameFirst;
+		}
+	}
 
 	tick() {
 		this.counter++;
@@ -230,7 +270,7 @@ export class GameRoom extends Room<GameState> {
 			this.gameOver();
 		}
 
-		for (let i = this.state.coins.size; i < this.state.players.size * 25; i++) {
+		for (let i = this.state.coins.size; i < this.state.players.size * 270; i++) {
 			this.spawnCoin();
 		}
 
@@ -271,10 +311,7 @@ export class GameRoom extends Room<GameState> {
 
 			let bot = new Player(ballType, dragonSkin, 0);
 			bot.isBot = true;
-			let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
-			let botNameGender = Math.random() > 0.2 ? true : false;
-			let botNameFirst = botNameGender ? botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] : botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
-			bot.onlineName = Math.random() > 0.6 ? botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '') + botwords[Math.floor(Math.random() * botwords.length)].toLowerCase() : botwords[Math.floor(Math.random() * botwords.length)].toLowerCase() + botNameFirst.toLowerCase().replace(/[\u0250-\ue007]/g, '');
+			bot.onlineName = this.generateBotName();
 			this.state.players.set(v4(), bot);
 		}
 
@@ -285,7 +322,6 @@ export class GameRoom extends Room<GameState> {
 		for(let skull of this.state.skulls.values()){
 			skull.move();
 		}
-
 
 		for (let id of this.state.players.keys()) {
 			if (this.state.players[id].isBot && this.botTimeout == 0) {
@@ -355,7 +391,7 @@ export class GameRoom extends Room<GameState> {
 										const angle = Math.random() * 6.28;
 										const newX = this.state.players[id].x + 50 * Math.cos(angle);
 										const newY = this.state.players[id].y + 50 * Math.sin(angle);
-										if (!Maths.checkWalls(newX, newY, 22.5)) {
+										if (!this.checkWalls(newX, newY, 22.5, true)) {
 											this.state.players[id2].fireballs.push(new Fireball(newX, newY, angle + Math.PI, 7, "electric", 20, 0));
 
 										}
