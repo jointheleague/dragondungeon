@@ -60,7 +60,7 @@ export class GameRoom extends Room<GameState> {
 		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 320, 1000, 5, 1360, 0));
 		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 1000, 320, 5, 1360, Math.PI/2));
 		
-		//this.state.walls.set(v4(), new Wall(200,200,500,50,Math.PI/2, 10, "FFA"))
+		this.state.walls.set(v4(), new Wall(200,200,500,50,Math.PI/2, 10, "FFA"))
 
 
 	}
@@ -190,6 +190,7 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	createCoin(x: number, y: number) {
+		console.log("trying to make a coin")
 		var rand;
 		var newX;
 		var newY;
@@ -197,8 +198,8 @@ export class GameRoom extends Room<GameState> {
 			rand = getRandomInt(0, 62) / 10;
 			newX = x + 100 * Math.cos(rand);
 			newY = y + 100 * Math.sin(rand);
-		} while (this.checkWalls(newX, newY, 20, false))
-		this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
+		} while (this.checkWalls(newX, newY, 20, false)==false)
+			this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
 	}
 
 	moveBot(bot: Player, right: boolean, left: boolean, up: boolean, down: boolean) {
@@ -217,9 +218,8 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	checkWalls(newX: number, newY: number, rad: number, isFireball: boolean){
-		const gameWidth = 2000;
-		const gameHeight = 2000;
-		if(newX > gameWidth-rad || newY > gameHeight-rad || newX < rad || newY < rad){
+		//true means its out of bounds or in a wall
+		if(newX > this.state.gamewidth-rad || newY > this.state.gameheight-rad || newX < rad || newY < rad){
 			return true;
 		}
 		for(let wall of this.state.walls.values()){

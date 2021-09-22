@@ -35,7 +35,7 @@ export class Wall extends Schema {
 	}
 
 	checkHit(objectX: number, objectY: number, radius: number, isFireball: boolean) {
-		if(this.health>0){
+		if(this.health<=0){
             if(objectX+radius>this.x && objectX+radius<this.x+this.xLength){
                 if(objectY+radius>this.y && objectY+radius<this.y+this.yLength){
                     //this will diminish the wall only in CTC

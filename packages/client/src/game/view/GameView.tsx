@@ -109,6 +109,11 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       //const coin = state.coins[cid];
       coins.push(<Coin key={cid} x={state.coins[cid].x} y={state.coins[cid].y} size={state.coins[cid].size} team={state.coins[cid].team}/>);
     }
+
+    for(let wid in state.walls){
+      const wall = state.walls[wid];
+      walls.push(<Wall x={wall.x} y={wall.y} xLength={wall.xLength} yLength={wall.yLength} angle={wall.angle}/>)
+    }
     //adds a background of random ([ly] chosen at begining) tiles to move with the player
     var tileAmt = 19;
     var midpoint = state.gamewidth/2;

@@ -18,7 +18,7 @@ export interface IGameState {
   gamemode: 'FFA'|'CTC';
 
   skulls: {[key: string]: ISkull}
-
+  walls: {[key: string]: IWall}
 }
 
 export interface ICountdown{
@@ -94,7 +94,7 @@ export interface IWall{
   x: number;
   y: number;
   xLength: number;
-  yNumber: number;
+  yLength: number;
   health: number;
   angle: number;
 }
