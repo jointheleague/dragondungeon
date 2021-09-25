@@ -1,6 +1,6 @@
 {
   "name": "dragondungeon",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "main": "index.js",
   "private": true,
   "useWorkspaces": true,
@@ -13,7 +13,8 @@
   "author": "Luke Wood <lukewoodcs@gmail.com>, Keith Groves <keith.groves@jointheleague.org>, Samuel Sharp <samuel@samuelsharp.com>, Chris Woolson",
   "license": "MIT",
   "scripts": {
-    "start": "yarn build:common && concurrently --kill-others-on-fail \"yarn start:client\" \"yarn start:server\" \"yarn start:common\"",
+    "start": "yarn build:common && concurrently --kill-others-on-fail \"yarn start:site\" \"yarn start:client\" \"yarn start:server\" \"yarn start:common\"",
+    "start:site": "yarn workspace @dragondungeon/site start",
     "start:server": "yarn workspace @dragondungeon/server start",
     "start:client": "yarn workspace @dragondungeon/client start",
     "start:common": "yarn workspace @dragondungeon/common start",

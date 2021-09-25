@@ -1,15 +1,10 @@
 {
+  "background_color": "#c60c30",
+  "display": "fullscreen",
+  "name": "Dragon Dungeon",
+  "orientation": "any",
+  "scope": "/",
   "short_name": "Dragon Dungeon",
-  "name": "Dragon Dungeon Game",
-  "icons": [
-    {
-      "src": "icon.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/png"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "red",
-  "background_color": "#000000"
+  "start_url": "/",
+  "theme_color": "#c60c30",
 }

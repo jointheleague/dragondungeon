@@ -9,6 +9,11 @@
       name="description"
       content="There are dragons. There are coins. What more could you want?"
     />
+    <script type="module">
+      import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+      const el = document.createElement('pwa-update');
+      document.body.appendChild(el);
+    </script>   
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>DragonDungeon</title>

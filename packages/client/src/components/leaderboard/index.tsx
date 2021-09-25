@@ -100,7 +100,7 @@ render() {
 
   return (
     <>
-      { (window.innerWidth >= 600) && <div className="leaderboard-box" >
+      { (window.innerWidth >= 1000) && <div className="leaderboard-box" >
         <h1>Dragon Dungeon</h1>
         <h2>{this.renderCountdown()}</h2>
         <h3>{window.location.pathname.replace('/play/', '')}</h3>
@@ -112,7 +112,7 @@ render() {
         </table>
       </div> }
 
-    { (window.innerWidth <= 800) && <>
+    { (window.innerWidth <= 1000) && <>
       <p className="mobileCountdown">{this.renderCountdown()}</p>
       <Box>
         { this.renderMobileTableData(newArr) }

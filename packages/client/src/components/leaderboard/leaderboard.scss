@@ -10,7 +10,7 @@
   padding: 16px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
   .leaderboard-box {
     border-bottom: 3px solid var(--primary_color);
     width: 100vw;
@@ -33,7 +33,7 @@
   padding: 15px;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width:1000px) {
   .leaderboard-box {
     border-right: 3px solid var(--primary_color);
     height: 100vh;

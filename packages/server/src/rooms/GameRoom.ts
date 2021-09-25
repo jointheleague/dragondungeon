@@ -57,12 +57,8 @@ export class GameRoom extends Room<GameState> {
 			}
 		}
 
-		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 320, 1000, 5, 1360, 0));
-		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 1000, 320, 5, 1360, Math.PI/2));
-		
-		this.state.walls.set(v4(), new Wall(200,200,500,50,Math.PI/2, 10, "FFA"))
-
-
+		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 640, 2000, 5, 1360, 0));
+		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 2000, 640, 5, 1360, Math.PI/2));
 	}
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
@@ -190,7 +186,6 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	createCoin(x: number, y: number) {
-		console.log("trying to make a coin")
 		var rand;
 		var newX;
 		var newY;
@@ -198,7 +193,7 @@ export class GameRoom extends Room<GameState> {
 			rand = getRandomInt(0, 62) / 10;
 			newX = x + 100 * Math.cos(rand);
 			newY = y + 100 * Math.sin(rand);
-		} while (this.checkWalls(newX, newY, 20, false)==false)
+		} while (this.checkWalls(newX, newY, 20, false))
 			this.state.coins.set(v4(), new Coin(this.state.coins.size, newX, newY, 20, 0));
 	}
 
