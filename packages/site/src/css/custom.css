@@ -4,3 +4,7 @@
   --ifm-color-primary: #c60c30;
   --ifm-font-family-base: 'Cinzel';
 }
+
+* {
+  font-family: 'Cinzel';
+}

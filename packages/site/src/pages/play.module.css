@@ -1,0 +1,22 @@
+button {
+  background-color: transparent;
+  border: 1px solid #c60c30;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 25px;
+  color: #c60c30;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+iframe {
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+}

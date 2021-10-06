@@ -35,7 +35,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'DragonDungeon',
+        title: 'Dragon Dungeon',
         logo: {
           alt: 'Coin',
           src: 'img/icon.png',
@@ -48,7 +48,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
           },
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'tutorial/basics',
             position: 'left',
             label: 'Help',
           },
@@ -82,15 +82,15 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/basics',
+                to: '/docs/tutorial',
               },
               {
                 label: 'Error Codes',
-                to: '/docs/error',
+                to: '/docs/troubleshooting',
               },
               {
                 label: 'Development',
-                to: '/docs/dev',
+                to: '/docs/development',
               },
             ],
           },
