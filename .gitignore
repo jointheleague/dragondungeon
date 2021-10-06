@@ -6,5 +6,6 @@ node_modules/
 packages/server/top_secret
 packages/common/build
 packages/desktop/out
+packages/site/
 *.DS_Store
 yarn_error.log

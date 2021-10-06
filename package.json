@@ -21,7 +21,7 @@
     "start:desktop": "yarn workspace @dragondungeon/desktop start",
     "build:client": "yarn workspace @dragondungeon/client build",
     "build:common": "yarn workspace @dragondungeon/common build",
-    "build": "yarn build:client && yarn build:common"
+    "build:site": "yarn workspace @dragondungeon/site build"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",

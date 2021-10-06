@@ -1,0 +1,33 @@
+name: Dragon Dungeon Full Prod Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build_push:
+    name: Build & Push Dragon Dungeon
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙ Checkout Repo
+        uses: actions/checkout@v2
+      
+      - name: 👤 Log In to Docker Hub
+        uses: docker/login-action
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: 🔖 Generate Release Metadata
+        id: meta
+        uses: docker/metadata-action
+        with:
+          images: samuelbeep/dragondungeon
+      
+      - name: 🐱‍💻 Build & Push Image
+        uses: docker/build-push-action
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

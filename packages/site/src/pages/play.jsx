@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '@theme/Layout';
 import { initializeApp } from 'firebase/app';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import { getAuth, signInWithPopup, signInAnonymously, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import './play.module.css';
 
@@ -31,7 +32,7 @@ export default function Play() {
     <Layout
       title={`Play`}
       description="Ready to jump in? Let's play some Dragon Dungeon!">
-      <div style={{ padding: '20px' }}>
+      <BrowserOnly style={{ padding: '20px' }}>
         <h1>Play Dragon Dungeon</h1>
         {!userIsLoggedIn &&
           <>
@@ -57,28 +58,17 @@ export default function Play() {
           </>
         }
         { userIsLoggedIn && <>
-          <button onClick={() => {
-              onAuthStateChanged(auth, (user) => {
-                if (user) {
-                  document.documentElement.requestFullscreen();
-                  document.documentElement.requestPointerLock();
-                  navigator.keyboard.lock();
-                  document.querySelector('iframe').style.display = 'block';
-                  document.addEventListener('fullscreenchange', () => {
-                    if (document.fullscreenElement == null) {
-                      document.querySelector('iframe').style.display = 'none';
-                      document.querySelector('iframe').src = `${window.location.protocol}//${window.location.hostname}:1337`;
-                    }
-                  });
-                } else {
-                  setUserIsLoggedIn(false);
-                }
-              });
-            }}>Play Now</button>
-            <iframe src={`${window.location.protocol}//${window.location.hostname}:1337`}></iframe>
+            { ('HTMLPortalElement' in window) && <>
+              <portal src={`${window.location.protocol}//${window.location.hostname}:1337/play/random`}></portal>
+            </> }
+            { !('HTMLPortalElement' in window) && <>
+              <button onClick={() => {
+                window.location.href = `${window.location.protocol}//${window.location.hostname}:1337`;
+              }}></button>
+            </> }
         </>
         }
-      </div>
+      </BrowserOnly>
     </Layout>
   );
 }
