@@ -42,11 +42,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         },
         items: [
           {
-            to: '/about',
-            label: 'About',
-            position: 'left'
-          },
-          {
             type: 'doc',
             docId: 'tutorial/basics',
             position: 'left',
@@ -67,11 +62,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             label: 'Play Now',
             position: 'right'
           },
-          {
-            to: '/account',
-            label: 'Account',
-            position: 'right'
-          },
         ],
       },
       footer: {
@@ -82,15 +72,15 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/tutorial',
+                to: '/docs/tutorial/basics',
               },
               {
                 label: 'Error Codes',
-                to: '/docs/troubleshooting',
+                to: '/docs/troubleshooting/error-fish',
               },
               {
                 label: 'Development',
-                to: '/docs/development',
+                to: '/docs/development/git-setup',
               },
             ],
           },
