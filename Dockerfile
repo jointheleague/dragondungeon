@@ -6,6 +6,8 @@ COPY ./package.json .
 COPY ./yarn.lock .
 COPY ./docker-entrypoint.sh .
 
+RUN chmod +x ./docker-entrypoint.sh
+
 COPY ./packages/client/package.json ./packages/client/
 COPY ./packages/common/package.json ./packages/common/
 COPY ./packages/server/package.json ./packages/server/
