@@ -1,7 +1,8 @@
 {
   "name": "dragondungeon",
   "version": "0.3.0",
-  "main": "index.js",
+  "main": "src/index.js",
+  "bin": "src/index.js",
   "private": true,
   "useWorkspaces": true,
   "workspaces": {
@@ -10,15 +11,10 @@
     ]
   },
   "repository": "https://github.com/jointheleague/dragondungeon.git",
-  "author": "Luke Wood <lukewoodcs@gmail.com>, Keith Groves <keith.groves@jointheleague.org>, Samuel Sharp <samuel@samuelsharp.com>, Chris Woolson",
-  "license": "MIT",
+  "author": "Keith Groves, Samuel Sharp, Chris Woolson",
+  "license": "UNLICENSED",
   "scripts": {
-    "start": "yarn build:common && concurrently --kill-others-on-fail \"yarn start:site\" \"yarn start:client\" \"yarn start:server\" \"yarn start:common\"",
-    "start:site": "yarn workspace @dragondungeon/site start",
-    "start:server": "yarn workspace @dragondungeon/server start",
-    "start:client": "yarn workspace @dragondungeon/client start",
-    "start:common": "yarn workspace @dragondungeon/common start",
-    "start:desktop": "yarn workspace @dragondungeon/desktop start",
+    "start": "yarn workspace @dragondungeon/common start && yarn workspace @dragondungeon/core start",
     "build:client": "yarn workspace @dragondungeon/client build",
     "build:common": "yarn workspace @dragondungeon/common build",
     "build:site": "yarn workspace @dragondungeon/site build"
@@ -28,6 +24,9 @@
     "http-server": "^0.12.3"
   },
   "dependencies": {
-    "@types/testing-library__dom": "^7.5.0"
+    "@types/testing-library__dom": "^7.5.0",
+    "colors": "^1.4.0",
+    "commander": "^8.2.0",
+    "shelljs": "^0.8.4"
   }
 }
