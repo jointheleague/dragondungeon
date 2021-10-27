@@ -227,7 +227,7 @@ export class GameRoom extends Room<GameState> {
 
 	generateBotName() {
 		let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
-		let botNameGender = Math.random() > 0.4 ? true : false;
+		let botNameGender = Math.random() > 0.499 ? true : false;
 		let botNameFirst = botNameGender ?
 			botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] :
 			botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];
