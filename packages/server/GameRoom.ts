@@ -1,9 +1,4 @@
 import {
-	getDistance,
-	getRandomInt
-} from '@dragondungeon/common/build/maths';
-
-import {
 	Room,
 	Client
 } from 'colyseus';
@@ -13,19 +8,12 @@ import {
 	Player,
 	IInputs,
 	Coin,
-	CoinJar,
-	Bar,
 	Maths,
 	Countdown,
 	Fireball,
-	Bat,
 	CircleBat,
-	LineBat,
-	Skull,
-	Wall,
-	CircleSkull,
-	LineSkull
-} from '@dragondungeon/common';
+	LineSkull,
+} from '../common';
 
 import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
@@ -190,7 +178,7 @@ export class GameRoom extends Room<GameState> {
 		var newX;
 		var newY;
 		do {
-			rand = getRandomInt(0, 62) / 10;
+			rand = Maths.getRandomInt(0, 62) / 10;
 			newX = x + 100 * Math.cos(rand);
 			newY = y + 100 * Math.sin(rand);
 		} while (this.checkWalls(newX, newY, 20, false))
@@ -227,7 +215,7 @@ export class GameRoom extends Room<GameState> {
 
 	generateBotName() {
 		let botNameRegion = botnames[Math.floor(Math.random() * botnames.length)];
-		let botNameGender = Math.random() > 0.499 ? true : false;
+		let botNameGender = Math.random() > 0.4 ? true : false;
 		let botNameFirst = botNameGender ?
 			botNameRegion.male[Math.floor(Math.random() * botNameRegion.male.length)] :
 			botNameRegion.female[Math.floor(Math.random() * botNameRegion.female.length)];

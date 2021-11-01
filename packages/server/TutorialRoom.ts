@@ -1,9 +1,4 @@
 import {
-	getDistance,
-	getRandomInt
-} from '@dragondungeon/common/build/maths';
-
-import {
 	Room,
 	Client
 } from 'colyseus';
@@ -13,18 +8,12 @@ import {
 	Player,
 	IInputs,
 	Coin,
-	CoinJar,
-	Bar,
 	Maths,
 	Countdown,
 	Fireball,
-	Bat,
 	CircleBat,
-	LineBat,
-	Skull,
-	CircleSkull,
 	LineSkull
-} from '@dragondungeon/common';
+} from '../common';
 
 import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
@@ -183,7 +172,7 @@ export class TutorialRoom extends Room<GameState> {
 		var newX;
 		var newY;
 		do {
-			rand = getRandomInt(0, 62) / 10;
+			rand = Maths.getRandomInt(0, 62) / 10;
 			newX = x + 100 * Math.cos(rand);
 			newY = y + 100 * Math.sin(rand);
 		} while (Maths.checkWalls(newX, newY, 20))
