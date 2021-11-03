@@ -19,7 +19,7 @@ import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
 
 const botnames = require('./botnames.json');
-const botwords = require('../../wordlists/nouns.json');
+const botwords = require('./wordlists/nouns.json');
 const MAX_COINS_HELD = 30;
 
 export class GameRoom extends Room<GameState> {
@@ -27,10 +27,10 @@ export class GameRoom extends Room<GameState> {
 	botTimeout = 0;
 	maxClients = 15;
 
-	redTeamIds = [];
-	blueTeamIds = [];
+	redTeamIds: string[] = [];
+	blueTeamIds: string[] = [];
 
-	gameInt;
+	gameInt: NodeJS.Timeout;
 
 
 	onCreate() {
@@ -58,8 +58,8 @@ export class GameRoom extends Room<GameState> {
 		let dragonSkin = "default";
 
 		const userDoc = await db.collection(user.uid).doc("gameplay").get();
-		if (userDoc.data().ballType) {
-			ballType = userDoc.data().ballType;
+		if (userDoc.data()?.ballType) {
+			ballType = userDoc.data()?.ballType;
 		} else {
 			switch ( Math.floor( Math.random() * 5 ) ) {
 				case 0:
@@ -80,8 +80,8 @@ export class GameRoom extends Room<GameState> {
 			}
 		}
 
-		if (userDoc.data().dragonSkin) {
-			dragonSkin = userDoc.data().dragonSkin;
+		if (userDoc.data()?.dragonSkin) {
+			dragonSkin = userDoc.data()?.dragonSkin;
 		} else {
 			switch ( Math.floor( Math.random() * 3 ) ) {
 				case 0:

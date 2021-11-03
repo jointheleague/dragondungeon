@@ -1,10 +1,10 @@
 import express from 'express';
-import colors from 'colors';
+import 'colors';
 
 import { createServer } from 'http';
 import { Server } from 'colyseus';
 
-import { initializeApp } from 'firebase-admin';
+import * as admin from 'firebase-admin';
 const key = require('../config/adminsdk.json');
 
 import { GameRoom } from '../packages/server/GameRoom';
@@ -13,7 +13,7 @@ import { TutorialRoom } from '../packages/server/TutorialRoom';
 let app = express();
 app.use(express.json());
 
-initializeApp();
+admin.initializeApp();
 
 const server = new Server({
   server: createServer(app)
