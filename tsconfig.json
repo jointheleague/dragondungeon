@@ -4,5 +4,7 @@
         "esModuleInterop": true,
         "downlevelIteration": true,
         "experimentalDecorators": true,
+        "allowJs": true,
+        "jsx": "react"
     }
 }
