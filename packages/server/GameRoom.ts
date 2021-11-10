@@ -13,6 +13,7 @@ import {
 	Fireball,
 	CircleBat,
 	LineSkull,
+	Wall
 } from '../common';
 
 import * as admin from 'firebase-admin';
@@ -47,6 +48,8 @@ export class GameRoom extends Room<GameState> {
 
 		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 640, 2000, 5, 1360, 0));
 		this.state.skulls.set(v4(), new LineSkull(this.state.skulls.size, 2000, 640, 5, 1360, Math.PI/2));
+
+		this.state.walls.set(v4(), new Wall(100,100,400,100,0,10,"FFA"));
 	}
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
@@ -171,6 +174,22 @@ export class GameRoom extends Room<GameState> {
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 4000, Math.random() * 4000, size, teamNum));
 		Math.random() < 0.01 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 4000 + 40, Math.random() * 4000 + 40, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 4000, Math.random() * 4000, 20, 0));
 		// console.log(this.state.gamemode);
+	}
+
+	wallCheckMove(currentX:number, currentY:number, dirX: number, dirY: number, speed: number) {
+		const magnitude = Maths.normalize2D(dirX, dirY);
+		const speedX = Maths.round2Digits(dirX * (speed / magnitude));
+		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
+		const newX = currentX + speedX;
+		const newY = currentY + speedY;
+		
+		if(!this.checkWalls(currentX, newY, 45, false)){
+			currentY = newY;
+		}
+		if(!this.checkWalls(newX, currentY, 45, false)){
+			currentX = newX;
+		}
+		return {currentX, currentY};
 	}
 
 	createCoin(x: number, y: number) {
@@ -327,7 +346,7 @@ export class GameRoom extends Room<GameState> {
 						}
 						else if (bot.y > jar.y + range) {
 							this.moveBot(bot, false, false, true, false);
-						} 
+						}  
 					} else {
 						moveRandom();
 					}
@@ -342,7 +361,18 @@ export class GameRoom extends Room<GameState> {
 
 			this.botTimeout--;
 
+
+			if (this.state.players[id].direction.x !== 0 || this.state.players[id].direction.y !== 0) {
+				const {currentX, currentY} = this.wallCheckMove(this.state.players[id].x, this.state.players[id].y, this.state.players[id].direction.x, this.state.players[id].direction.y, (this.state.players[id].speed+this.state.players[id].coins) * (1/this.state.players[id].deceleration) * (dx/50));
+				this.state.players[id].x = currentX;
+				this.state.players[id].y = currentY;
+
+				if(this.state.players[id].deceleration > 1){
+					this.state.players[id].deceleration *= .9;
+				}
+			}
 			this.state.players[id].tick(dx);
+
 
 			for (let id2 of this.state.players.keys()) {
 				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
