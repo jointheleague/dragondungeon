@@ -125,12 +125,12 @@ export class Player extends Schema {
 	fireballCooldown: number = 0;
 	tick(dx: number) {
 		const ticks = dx / 50;
-		if (this.direction.x !== 0 || this.direction.y !== 0) {
+		/*if (this.direction.x !== 0 || this.direction.y !== 0) {
 			this.move(this.direction.x, this.direction.y, (this.speed+this.coins) * (1/this.deceleration) * ticks)
 			if(this.deceleration > 1){
 				this.deceleration *= .9;
 			}
-		}
+		}*/
 		this.fireballCooldown -= ticks;
 		if ((this.autoshootOn || this.activeInputs.space) && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI), 22.5)) {
 			switch(this.ballType){
@@ -179,7 +179,7 @@ export class Player extends Schema {
 		this.bar.y = this.y;
 	}
 
-	move(dirX: number, dirY: number, speed: number) {
+	/*move(dirX: number, dirY: number, speed: number) {
 		const magnitude = Maths.normalize2D(dirX, dirY);
 		const speedX = Maths.round2Digits(dirX * (speed / magnitude));
 		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
@@ -192,7 +192,7 @@ export class Player extends Schema {
 			this.x = newX;
 		}
 		
-	}
+	}*/
 
 	push(angle : number, speed: number) {
 		const oldX = this.x;
