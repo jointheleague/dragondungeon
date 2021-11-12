@@ -1,0 +1,16 @@
+.leaderboard-box {
+  text-align: left;
+  display: block;
+  margin: auto;
+  margin-right: 40px;
+  margin-left: 40px;
+  position: absolute;
+  right: 0px;
+  margin-top: 20px;
+  border: 3px solid var(--primary_color);
+  border-radius: 2;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 16px;
+  overflow: hidden;
+  height: 90px;
+}

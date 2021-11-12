@@ -1,0 +1,40 @@
+// DragonDungeon Core
+
+// 3rd Party Imports
+import { createServer } from 'http'
+import { parse } from 'url'
+import { Server } from 'colyseus'
+import next from 'next'
+import 'colors'
+
+// 1st Party Imports
+import { GameRoom } from './GameRoom'
+import { TutorialRoom } from './TutorialRoom'
+
+// Friendly Logs
+console.log('DragonDungeon'.red)
+console.log('The LEAGUE of Amazing Programmers'.yellow)
+
+// Initialize Next.js
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handle = app.getRequestHandler()
+
+// Start Client
+app.prepare().then(() => {
+  createServer((req, res) => {
+    const parsedUrl = parse(req.url, true)
+    handle(req, res, parsedUrl)
+  }).listen(8080, () => {
+    console.log('client'.green + ' - localhost:8080')
+  })
+})
+
+// Start Server
+const gameServer = new Server()
+
+gameServer.define('game', GameRoom)
+gameServer.define('tutorial', TutorialRoom)
+
+gameServer.listen(1337)
+console.log('server'.green + ' - localhost:1337')

@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');
+
+:root {
+  --primary_color: red;
+  --primary_variant: red;
+  --secondary_color: #c60c30;
+  --secondary_variant: #c60c30;
+  --text_color: #FFFFFF;
+}
+
+a {
+  color: white;
+}
+
+* {
+  font-family: 'Cinzel Decorative', sans-serif;
+  cursor: crosshair !important;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+  padding: 0;
+  margin: 0;
+  background: black;
+  user-select: none;
+  color: var(--text_color);
+  background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('/background-tile.png');
+}
+
+.interactable {
+  pointer-events: auto;
+  user-select: auto;
+}
+
+#page {
+  padding: 25px;
+  text-align: center;
+}
+
+h1 {
+	color: red;
+  font-family: 'Cinzel Decorative', sans-serif;
+}
+
+.firebaseui-idp-text {
+  font-weight: bolder;
+}
+
+.scores {
+  list-style-type: circle;
+}
+
+.scores li {
+  font-size: 25px;
+  max-width: 350px;
+  align-self: center;
+}
+
+@media only screen and (max-width: 900px) {
+  #heroContent {
+    display: none;
+  }
+  
+  .mobile-center {
+    text-align: center;
+  }
+}
+
+#mydragon {
+  padding: 20px;
+}
+
+#sidebar .button {
+  min-width: 150px;
+  max-width: 300px;
+}
+
+#sidebar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}

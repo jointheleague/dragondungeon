@@ -1,0 +1,9 @@
+/node_modules
+.next
+out
+build
+.DS_Store
+*.pem
+yarn-debug.log*
+yarn-error.log*
+config/private
