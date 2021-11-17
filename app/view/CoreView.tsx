@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { StateManager } from '../state/StateManager';
-import { IGameState } from '../state/types';
-import GameOver from './GameOver';
-import Mousetrap from 'mousetrap';
+import React, { useEffect, useState } from 'react'
+import { StateManager } from '../state/StateManager'
+import { IGameState } from '../state/types'
+import GameOver from './GameOver'
 
+import { ColyseusService } from '../../lib/colyseus'
 import { GameView } from './GameView'
 
-interface IProps {
-  stateManager: StateManager;
-}
-let audio = new Audio('/music/ingame.mp3');
+let audio = new Audio('/music/ingame.mp3')
 
-export const CoreView = (props: IProps) => {
+export default function CoreView() {
+  let stateManager = new StateManager(new ColyseusService('ws', 'localhost:1337'), 'new')
+  // stateManager.setup()
+
   const [state, setState] = useState<IGameState | null>(null);
   const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(audio);
-  const { stateManager } = props;
 
   useEffect(() => {
     gameMusic.loop = true;
@@ -41,9 +40,9 @@ export const CoreView = (props: IProps) => {
 
   if (state.gameOver) {
     return (
-      <GameOver stateManager={props.stateManager} state={state} music={gameMusic} />
+      <GameOver stateManager={stateManager} state={state} music={gameMusic} />
     )
   }
 
-  return (<GameView stateManager={props.stateManager} state={state} />)
+  return (<GameView stateManager={stateManager} state={state} />)
 }

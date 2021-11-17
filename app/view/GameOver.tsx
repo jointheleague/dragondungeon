@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Box, Space, Center, Button } from '../../components';
+import { Box, Space, Button } from '../../components';
 import { StateManager } from '../state/StateManager';
 import { IGameState, IPlayer } from '../state/types';
 
-let gameOverMusic = new Audio('/audio/gameover.mp3');
+let gameOverMusic: HTMLAudioElement;
 
 const homepage = () => {
   gameOverMusic.pause();
@@ -54,7 +54,8 @@ renderTableHeader() {
   })
 }
 
-render() {  
+render() {
+  gameOverMusic = new Audio('/audio/gameover.mp3');  
   const newArr = [];
   for(let pid in this.props.p){
     newArr.push(this.props.p[pid]);

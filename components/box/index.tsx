@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 
-import './box.scss';
+import './box.module.css';
 
 export function Box(props: {
   style?: CSSProperties;

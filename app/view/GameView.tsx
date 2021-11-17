@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StateManager } from '../state/StateManager';
-import { useDisableScroll } from '../../hooks';
 import { Controls } from '../controls';
 import { IInputs } from '../controls/types';
 import { Dragon } from './entities/dragon/index';
@@ -15,24 +14,16 @@ import { Wall } from './entities/wall';
 import { MovingBackground } from './entities/movingBackground';
 import { IGameState} from '../state/types';
 import { Viewport } from "pixi-viewport";
-import { Leaderboard } from 'components/leaderboard';
-//import { Countdown } from 'components/countdown';
+import { Leaderboard } from '../../components/leaderboard';
 import { Bar } from './entities/healthBar/healthBar';
 import { v4 } from "uuid";
-import { show_error_banner, show_tutorial_banner } from 'util/banner';
 
 interface GameViewProps {
   stateManager: StateManager;
   state: IGameState;
 }
 
-const scale = 1;
 interface GameViewState{};
-
-const ScrollDisable = () => {
-  useDisableScroll();
-  return <></>
-}
 
 export class GameView extends Component<GameViewProps, GameViewState> {
    app!: PIXI.Application;
@@ -50,14 +41,12 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      });
      this.gameCanvas!.appendChild(this.app.view);
      this.viewport = new Viewport();
-     this.viewport.scale = new PIXI.Point(scale, scale);
      this.app.stage.addChild(this.viewport);
      this.app.start();
      this.app.ticker.add(() => this.renderScene())
      
     this.props.stateManager.room.onMessage('hint', message => {
       console.log("hint: " + message);
-      show_tutorial_banner(message);
     });
    }
 
@@ -80,10 +69,10 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     //moves the center of the veiwport to the player 
     if (me !== null && this.viewport !== null) {
       try {
-        this.viewport.x = -me.x * scale + window.innerWidth / 2;
-        this.viewport.y = -me.y * scale + window.innerHeight / 2; 
+        this.viewport.x = -me.x * 1 + window.innerWidth / 2;
+        this.viewport.y = -me.y * 1 + window.innerHeight / 2; 
       } catch {
-        show_error_banner('Rendering Failed');
+        console.log('Rendering Failed');
       }
     }
     //push each player's: dragon, healthbar, and fireballs to be rendered and add them to the leaderboard
@@ -180,7 +169,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
      return (
        <>
        <Controls actionCallback={(v: IInputs) => this.actionCallback(v)} viewport={this.viewport}/>
-       <ScrollDisable/>
           <div style={{marginLeft : '3vw', display:'flex'}}>
             <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard>
           </div>

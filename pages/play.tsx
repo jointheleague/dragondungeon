@@ -1,11 +1,11 @@
-import React, { Component, ReactNode } from 'react'
+import React from 'react'
+import dynamic from 'next/dynamic'
 
-import { StateManager } from '../app/state/StateManager'
-import { CoreView } from '../app/view/CoreView'
-import { ColyseusService } from '../lib/colyseus'
+let CoreViewCSR = dynamic(
+    () => import('../app/view/CoreView'),
+    { ssr: false },
+)
 
-export default async function Game() {
-    let stateManager = new StateManager(new ColyseusService('ws', 'localhost:1337'), 'new')
-    await stateManager.setup()
-    return <CoreView stateManager={stateManager}/>
+export default function Game() {
+    return <CoreViewCSR />
 }

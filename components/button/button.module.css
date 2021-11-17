@@ -11,14 +11,6 @@
   font-weight: bold;
   min-width: 30%;
   border-radius: 3px;
-  &:disabled {
-    filter: brightness(50%) !important;
-    cursor: default !important ;
-  }
-  &:hover, &:focus {
-    background: rgba(255, 255, 255, 0.7);
-    border: 3px solid red;
-  }
 }
 
 @media only screen and (max-width: 900px) {

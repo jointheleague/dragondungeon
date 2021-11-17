@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import './centerer.scss';
+import './centerer.module.css';
 
 interface IProps {};
 

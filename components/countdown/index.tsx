@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import './countdown.scss';
-import {IGameState, ICountdown} from 'game/state/types';
+import './countdown.module.css';
+import { IGameState, ICountdown } from '../../app/state/types';
 interface GameViewProps {
   state: IGameState;
 }
@@ -14,27 +14,27 @@ interface CountdownState {
   time: number;
 }
 
-class Countdown extends Component <CountdownProps, CountdownState>{
+class Countdown extends Component<CountdownProps, CountdownState>{
 
-  renderLower(){
+  renderLower() {
 
-    if(this.props.time.done){
+    if (this.props.time.done) {
       return <h2>Game Over</h2>
     }
-    if(Math.floor(this.props.time.seconds) < 10){
+    if (Math.floor(this.props.time.seconds) < 10) {
       return <h2>{this.props.time.minutes} : 0{Math.floor(this.props.time.seconds)}</h2>
     }
     return <h2>{this.props.time.minutes} : {Math.floor(this.props.time.seconds)}</h2>
   }
-  
-  render(){
+
+  render() {
     return (
       <div>
-        <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px'}}>Game Over in: </h1>
+        <h1 style={{ textAlign: 'left', fontSize: '20px', right: '20px' }}>Game Over in: </h1>
         {this.renderLower()}
       </div>
     )
   }
 }
 
-export {Countdown}
+export { Countdown }
