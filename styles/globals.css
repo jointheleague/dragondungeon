@@ -25,7 +25,7 @@ body {
   background: black;
   user-select: none;
   color: var(--text_color);
-  background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('/background-tile.png');
+  background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url('/img/game/background-tile.png');
 }
 
 .interactable {
@@ -39,12 +39,8 @@ body {
 }
 
 h1 {
-	color: red;
+	color: #c60c30;
   font-family: 'Cinzel Decorative', sans-serif;
-}
-
-.firebaseui-idp-text {
-  font-weight: bolder;
 }
 
 .scores {
