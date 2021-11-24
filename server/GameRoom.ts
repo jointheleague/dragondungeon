@@ -22,6 +22,10 @@ const botnames = require('./botnames.json');
 const botwords = require('./wordlists/nouns.json');
 const MAX_COINS_HELD = 30;
 
+const serviceAccount = require('../config/private/adminsdk.json')
+
+admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
+
 export class GameRoom extends Room<GameState> {
 	counter = 0;
 	botTimeout = 0;

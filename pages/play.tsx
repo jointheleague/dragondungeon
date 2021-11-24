@@ -1,11 +1,9 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
+import NoSSR from 'react-no-ssr'
 
-let CoreViewCSR = dynamic(
-    () => import('../app/view/CoreView'),
-    { ssr: false },
-)
+import CoreView from '../app/view/CoreView'
 
 export default function Game() {
-    return <CoreViewCSR />
+    return <NoSSR><CoreView /></NoSSR>
 }

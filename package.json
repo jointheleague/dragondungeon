@@ -21,6 +21,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-nipple": "^1.0.2",
+    "react-no-ssr": "^1.1.0",
     "react-pixi-fiber": "^0.14.3",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4",

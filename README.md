@@ -8,7 +8,7 @@ Dragon Dungeon is a free-to-play game from the LEAGUE of Amazing Programmers. Th
 
 The config folder is **required** and may contain some or all of the following files:
 
-* dragondungeon.yaml: Game config file (*required*)
+* dragondungeon.toml: Game config file (*required*)
 * private/adminsdk.json: Firebase Admin SDK Key (*required*)
 * private/key.pem: Private keyfile for SSL (*recommended*)
 * private/cert.pem: Certificate for SSL (*recommended*)

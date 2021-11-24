@@ -3,6 +3,16 @@ import { Room } from 'colyseus.js';
 import { IGameState } from './types';
 
 import { getAuth, onAuthStateChanged, User, signInAnonymously, updateProfile } from 'firebase/auth';
+import { initializeApp } from 'firebase/app'
+
+initializeApp({
+  apiKey: "AIzaSyCRClPzTZnRSg_fAap6ENnAkxUBQKJGk5w",
+  authDomain: "leaguedragoncoin.firebaseapp.com",
+  projectId: "leaguedragoncoin",
+  storageBucket: "leaguedragoncoin.appspot.com",
+  messagingSenderId: "320692217416",
+  appId: "1:320692217416:web:f9cd0efdc04445865e9a7d"
+})
 
 const auth = getAuth();
 
@@ -14,43 +24,15 @@ export class StateManager {
      private readonly lobby: string
    ) {}
 
-  async setup() {
-    this.room = await this.getGameRoom();
-  }
-
-  currentUserPromise(): Promise<User> {
-    return new Promise((resolve, reject) => {
-      onAuthStateChanged(auth, user => user ? resolve(user) : reject());
+  async getGameRoom() {
+    onAuthStateChanged(auth, async user => {
+      if (user) {
+        let token = await user.getIdToken()
+        await this.colyseus.client.joinOrCreate('game', { token }).then(room => {
+          this.room = room as Room<IGameState>
+        }).catch(console.warn)
+      }
     })
-  }
-
-  async getGameRoom(): Promise<Room> {
-    var user;
-
-    try {
-      user = await this.currentUserPromise();
-    } catch (error) {
-      await signInAnonymously(auth);
-      user = await this.currentUserPromise();
-    }
-
-      const options = {
-        token: await user?.getIdToken(),
-      }
-  
-      if (this.lobby === 'new') {
-        return await this.colyseus.client.create('game', options)
-      } else if (this.lobby === 'random') {
-        return await this.colyseus.client.joinOrCreate('game', options)
-      } else if (this.lobby === 'tutorial') {
-        return await this.colyseus.client.joinOrCreate('tutorial', options)
-      } else {
-        return await this.colyseus.client.joinById(this.lobby, options)
-      }
-  }
-
-  get id(){
-    return this.room.sessionId;
   }
 
 }
