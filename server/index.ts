@@ -4,7 +4,10 @@
 import { createServer } from 'http'
 import { parse } from 'url'
 import { Server } from 'colyseus'
+import { monitor } from '@colyseus/monitor'
+import { WebSocketTransport } from '@colyseus/ws-transport'
 import next from 'next'
+import express from 'express'
 import 'colors'
 
 // 1st Party Imports
@@ -31,7 +34,15 @@ app.prepare().then(() => {
 })
 
 // Start Server
-const gameServer = new Server()
+const exp = express()
+
+exp.get('/*', monitor())
+
+const gameServer = new Server({
+  transport: new WebSocketTransport({
+    server: createServer(exp)
+  })
+})
 
 gameServer.define('game', GameRoom)
 gameServer.define('tutorial', TutorialRoom)

@@ -8,9 +8,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@colyseus/monitor": "^0.14.22",
     "colors": "^1.4.0",
     "colyseus": "^0.14.23",
     "colyseus.js": "^0.14.13",
+    "express": "^4.17.1",
     "firebase": "^9.4.0",
     "firebase-admin": "^10.0.0",
     "mousetrap": "^1.6.5",

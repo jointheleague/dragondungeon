@@ -33,10 +33,10 @@ export class GameState extends Schema {
 	@type(Countdown)
 	countdown = new Countdown(0, 30);
 
-	@type(Bat)
+	@type({map: Bat})
 	bats = new MapSchema <Bat>();
 
-	@type(Skull)
+	@type({map: Skull})
 	skulls = new MapSchema <Skull>();
 	
 	@type("boolean")
@@ -45,7 +45,7 @@ export class GameState extends Schema {
 	@type("boolean")
 	gameOver: boolean = false;
 
-	@type(Wall)
+	@type({map: Wall})
 	walls = new MapSchema<Wall>();
 
 
