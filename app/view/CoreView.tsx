@@ -17,23 +17,21 @@ export default function CoreView() {
   let stateManager = new StateManager(new ColyseusService('ws', 'localhost:1337'), 'random')
 
   useEffect(() => {
-    async function initStateMan() {
-      gameMusic.loop = true
-      gameMusic.play()
-  
-      await stateManager.getGameRoom()
-  
-      const ref = stateManager.room.onStateChange(newState => {
+    let ref
+
+    gameMusic.loop = true
+    gameMusic.play()
+
+    stateManager.getGameRoom.then(() => {
+      ref = stateManager.room.onStateChange(newState => {
         setState(newState)
       })
-  
-      return () => {
-        ref.clear()
-        gameMusic.pause()
-      }; 
-    }
+    })
 
-    initStateMan()
+    return () => {
+      ref.clear()
+      gameMusic.pause()
+    };
   }, [stateManager])
 
   if (state == null) {

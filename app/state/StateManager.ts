@@ -20,20 +20,25 @@ export class StateManager {
   room!: Room<IGameState>;
 
   constructor(
-     private readonly colyseus: ColyseusService,
-     private readonly lobby: string
-   ) {}
+    private readonly colyseus: ColyseusService,
+    private readonly lobby: string
+  ) { }
 
-  async getGameRoom() {
+  getGameRoom: Promise<void> = new Promise((resolve, reject) => {
+
     onAuthStateChanged(auth, async user => {
       if (user) {
         let token = await user.getIdToken()
         await this.colyseus.client.joinOrCreate('game', { token }).then(room => {
           this.room = room as Room<IGameState>
+          resolve()
         }).catch(console.warn)
+      } else {
+        reject()
       }
     })
-  }
+
+  })
 
 }
 
