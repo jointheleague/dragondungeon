@@ -2,16 +2,15 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { initializeApp } from 'firebase/app'
 
 import { StateManager } from '../state/StateManager'
-import { IGameState } from '../state/types'
-import GameOver from './GameOver'
 import { ColyseusService } from '../../lib/colyseus'
 import { GameView } from './GameView'
+import { GameState } from '../../common'
 
 let audio = new Audio('/music/ingame.mp3')
 
 export default function CoreView() {
 
-  const [state, setState] = useState<IGameState | null>(null);
+  const [state, setState] = useState<GameState | null>(null);
   const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(audio);
 
   let stateManager = new StateManager(new ColyseusService('ws', 'localhost:1337'), 'random')
@@ -19,12 +18,13 @@ export default function CoreView() {
   useMemo(() => {
     let ref
 
-    gameMusic.loop = true
-    gameMusic.play()
+    //gameMusic.loop = true
+    //gameMusic.play()
 
     stateManager.getGameRoom.then(() => {
       ref = stateManager.room.onStateChange(newState => {
-        setState(newState as IGameState)
+        console.log('state change')
+        setState(newState); 
       })
     })
 
@@ -37,15 +37,8 @@ export default function CoreView() {
   if (state == null) {
     return (
       <div style={{ textAlign: 'center' }}>
-        <br /><br /><br />
-        <img style={{ textAlign: 'center', height: '150px', imageRendering: 'pixelated' }} src="/img/dragons/basicDragon.png" />
+          <p>state is null</p>
       </div>
-    )
-  }
-
-  if (state.gameOver) {
-    return (
-      <GameOver stateManager={stateManager} state={state} music={gameMusic} />
     )
   }
 

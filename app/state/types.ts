@@ -3,24 +3,6 @@ import { InteractionManager } from "pixi.js";
 
 export { Fireball };
 
-export interface IGameState {
-  lifecycle: 'lobby' | 'deathmatch';
-  players: { [key: string]: IPlayer };
-  coinJar: ICoinJar;
-  coins: { [key: string]: ICoin };
-  bars: IBar[];
-  countdown: ICountdown;
-  gameOver: boolean;
-  bats: { [key: string]: IBat };
-  gamewidth: number;
-  gameheight: number;
-  batRot: number;
-  gamemode: 'FFA' | 'CTC';
-
-  skulls: { [key: string]: ISkull }
-  walls: { [key: string]: IWall }
-}
-
 export interface ICountdown {
   seconds: number;
   minutes: number;
@@ -100,4 +82,4 @@ export interface IWall {
 }
 
 
-export type GameState = IGameState | null;
+

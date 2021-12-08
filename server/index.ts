@@ -12,7 +12,6 @@ import 'colors'
 
 // 1st Party Imports
 import { GameRoom } from './GameRoom'
-import { TutorialRoom } from './TutorialRoom'
 
 // Friendly Logs
 console.log('DragonDungeon'.red)
@@ -45,7 +44,6 @@ const gameServer = new Server({
 })
 
 gameServer.define('game', GameRoom)
-gameServer.define('tutorial', TutorialRoom)
 
 gameServer.listen(1337)
 console.log('server'.green + ' - localhost:1337')

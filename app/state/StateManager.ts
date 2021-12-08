@@ -4,6 +4,7 @@ import { IGameState } from './types';
 
 import { getAuth, onAuthStateChanged, User, signInAnonymously, updateProfile } from 'firebase/auth';
 import { initializeApp } from 'firebase/app'
+import { GameState } from '../../common';
 
 initializeApp({
   apiKey: "AIzaSyCRClPzTZnRSg_fAap6ENnAkxUBQKJGk5w",
@@ -17,7 +18,7 @@ initializeApp({
 const auth = getAuth();
 
 export class StateManager {
-  room!: Room<IGameState>;
+  room!: Room<GameState>;
 
   constructor(
     private readonly colyseus: ColyseusService,
@@ -29,7 +30,7 @@ export class StateManager {
       if (user) {
         let token = await user.getIdToken()
         await this.colyseus.client.joinOrCreate('game', { token }).then(room => {
-          this.room = room as Room<IGameState>
+          this.room = room as Room<GameState>
           resolve()
         }).catch(console.warn)
       } else {
