@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { IInputs } from './types';
+import { IInputs } from '../../common';
 import { Viewport } from 'pixi-viewport';
 import ReactNipple from 'react-nipple';
 

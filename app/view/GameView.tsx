@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StateManager } from '../state/StateManager';
 import { Controls } from '../controls';
-import { IInputs } from '../controls/types';
+import { IInputs } from '../../common';
 import { render } from "react-pixi-fiber";
 import * as PIXI from 'pixi.js';
 
@@ -55,6 +55,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
    }
 
    actionCallback(v: IInputs) {
+
      this.props.stateManager.room?.send('input', v);
    }
 
