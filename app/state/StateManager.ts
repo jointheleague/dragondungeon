@@ -25,7 +25,6 @@ export class StateManager {
   ) { }
 
   getGameRoom: Promise<void> = new Promise((resolve, reject) => {
-
     onAuthStateChanged(auth, async user => {
       if (user) {
         let token = await user.getIdToken()

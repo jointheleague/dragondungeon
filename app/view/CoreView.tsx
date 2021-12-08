@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { initializeApp } from 'firebase/app'
 
 import { StateManager } from '../state/StateManager'
@@ -16,7 +16,7 @@ export default function CoreView() {
 
   let stateManager = new StateManager(new ColyseusService('ws', 'localhost:1337'), 'random')
 
-  useEffect(() => {
+  useMemo(() => {
     let ref
 
     gameMusic.loop = true
@@ -24,7 +24,7 @@ export default function CoreView() {
 
     stateManager.getGameRoom.then(() => {
       ref = stateManager.room.onStateChange(newState => {
-        setState(newState)
+        setState(newState as IGameState)
       })
     })
 
@@ -32,7 +32,7 @@ export default function CoreView() {
       ref.clear()
       gameMusic.pause()
     };
-  }, [stateManager])
+  }, [])
 
   if (state == null) {
     return (

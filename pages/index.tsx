@@ -19,12 +19,20 @@ export default function Home() {
           appId: "1:320692217416:web:f9cd0efdc04445865e9a7d"
         })
         let auth = getAuth()
-        onAuthStateChanged(auth, async user => {
+        let isSuccessfulSignIn = false
+
+        let unsubAuthState = onAuthStateChanged(auth, async user => {
           if (user) {
-            router.push('/play')
+            isSuccessfulSignIn = true
           } else {
             let info = await signInWithPopup(auth, new GoogleAuthProvider())
-            info.user ? router.push('/play') : alert('There was an issue signing in.')
+            info.user ? isSuccessfulSignIn = true : alert('There was an issue signing in.')
+          }
+
+          unsubAuthState()
+
+          if (isSuccessfulSignIn) {
+            router.push('/play')
           }
         })
       }}>Play</button>

@@ -1,9 +1,14 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import NoSSR from 'react-no-ssr'
 
-import CoreView from '../app/view/CoreView'
+const CoreView = dynamic(
+    () => import('../app/view/CoreView'),
+    { ssr: false }
+)
 
 export default function Game() {
-    return <NoSSR><CoreView /></NoSSR>
+
+    console.log("coreview init")
+
+    return <CoreView />
 }
