@@ -9,11 +9,14 @@ import { GameState } from '../../common'
 let audio = new Audio('/music/ingame.mp3')
 
 export default function CoreView() {
+  const [room, setRoom] = useState<GameState | null>(null)
+  const [state, setState] = useState<GameState | null>(null)
+  const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(audio)
 
-  const [state, setState] = useState<GameState | null>(null);
-  const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(audio);
-
-  let stateManager = new StateManager(new ColyseusService('ws', 'localhost:1337'), 'random')
+  let stateManager = new StateManager(
+    new ColyseusService('ws', 'localhost:1337'),
+    'random',
+  )
 
   useMemo(() => {
     let ref
@@ -22,25 +25,25 @@ export default function CoreView() {
     // gameMusic.play()
 
     stateManager.getGameRoom.then(() => {
-      ref = stateManager.room.onStateChange(newState => {
+      setRoom(room)
+      ref = stateManager.room.onStateChange((newState) => {
         console.log('state change')
-        setState(newState); 
+        setState(newState)
       })
     })
 
     return () => {
       ref.clear()
       gameMusic.pause()
-    };
+    }
   }, [])
-
   if (state == null) {
     return (
       <div style={{ textAlign: 'center' }}>
-          <p>state is null</p>
+        <p>state is null</p>
       </div>
     )
   }
 
-  return (<GameView stateManager={stateManager} state={state} />)
+  return <GameView stateManager={stateManager} state={state} />
 }

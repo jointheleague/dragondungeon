@@ -132,6 +132,7 @@ export class GameRoom extends Room<GameState> {
 		
 			this.clock.tick();
 			this.tick();
+			this.state.debugOn = !this.state.debugOn;
 			
 		}, 1000 / 60);
 	}
