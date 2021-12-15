@@ -18,8 +18,8 @@ export default function CoreView() {
   useMemo(() => {
     let ref
 
-    //gameMusic.loop = true
-    //gameMusic.play()
+    gameMusic.loop = true
+    // gameMusic.play()
 
     stateManager.getGameRoom.then(() => {
       ref = stateManager.room.onStateChange(newState => {

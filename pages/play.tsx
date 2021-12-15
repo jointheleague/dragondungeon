@@ -1,14 +1,10 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 
-const CoreView = dynamic(
-    () => import('../app/view/CoreView'),
-    { ssr: false }
-)
+const FakeView = dynamic(() => import('../app/view/FakeView'), { ssr: false })
 
 export default function Game() {
+  console.log('coreview init')
 
-    console.log("coreview init")
-
-    return <CoreView />
+  return <FakeView />
 }

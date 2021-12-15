@@ -31,11 +31,11 @@ import redDragon3 from "./sprites/redDragon4.png";
 import redDragon4 from "./sprites/redDragon5.png";
 
 import blankDragon from "./sprites/blankDragon.png";
-import { Player } from '../../../../../../common/build';
+import { Player } from '../../../../common/Player';
 
 interface IProps {
     key: string;
-    player: IPlayer;
+    player: Player;
     team: number;
 }
 

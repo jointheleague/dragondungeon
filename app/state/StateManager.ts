@@ -1,6 +1,5 @@
 import { ColyseusService } from '../../lib/colyseus'
 import { Room } from 'colyseus.js';
-import { IGameState } from './types';
 
 import { getAuth, onAuthStateChanged, User, signInAnonymously, updateProfile } from 'firebase/auth';
 import { initializeApp } from 'firebase/app'
@@ -26,6 +25,7 @@ export class StateManager {
   ) { }
 
   getGameRoom: Promise<void> = new Promise((resolve, reject) => {
+    console.log("Getting Game Room")
     onAuthStateChanged(auth, async user => {
       if (user) {
         let token = await user.getIdToken()
