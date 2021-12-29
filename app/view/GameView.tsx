@@ -41,11 +41,24 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
   renderScene() {
     let dragons = []
+
     this.props.state.players.forEach(player => {
-      player.x = 100
-      player.y = 100
+      console.log(`x: ${player.x} - y: ${player.y}`)
       dragons.push(<Dragon player={player} key={player.onlineID} team={0} />)
     })
+    
+    const id = this.props.stateManager.room.sessionId;
+    const me = this.props.state.players[id];
+    //moves the center of the veiwport to the player 
+    if (me !== null && this.viewport !== null) {
+      console.log(me)
+      try {
+        this.viewport.x = -me.x * 1 + window.innerWidth / 2;
+        this.viewport.y = -me.y * 1 + window.innerHeight / 2; 
+      } catch {
+        console.log('Rendering Failed');
+      }
+    }
 
     render(
       <>{ dragons }</>,
