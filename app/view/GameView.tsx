@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { StateManager } from '../state/StateManager'
 import { Controls } from '../controls'
-import { IInputs } from '../../common'
+import { IInputs, Player } from '../../common'
 import { render } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
 
 import { Viewport } from 'pixi-viewport'
 
 import { GameState } from '../../common'
-import { Dragon } from './entities/dragon'
+import { Dragon, TeamOrb } from './entities/dragon'
+import { FireballView } from './entities/fireball'
 
 interface GameViewProps {
   stateManager: StateManager
@@ -39,12 +40,14 @@ export class GameView extends Component<GameViewProps, GameViewState> {
   }
 
   renderScene() {
-    for (let pid in this.props.state.players) {
-      const player = this.props.state.players[pid]
-    }
+    let dragons = []
+    this.props.state.players.forEach(player => {
+      dragons.push(<Dragon player={player} key={player.onlineID} team={0} />)
+    })
+
     render(
-      <>{/* <Dragon team={0} player={} key={'12312'}></Dragon> */}</>,
-      this.viewport,
+      <>{ dragons }</>,
+      this.viewport
     )
   }
 

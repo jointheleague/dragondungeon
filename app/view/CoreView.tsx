@@ -1,42 +1,31 @@
+import { Room } from 'colyseus.js'
 import React, { useEffect, useMemo, useState } from 'react'
-import { initializeApp } from 'firebase/app'
-
-import { StateManager } from '../state/StateManager'
-import { ColyseusService } from '../../lib/colyseus'
-import { GameView } from './GameView'
 import { GameState } from '../../common'
-
-let audio = new Audio('/music/ingame.mp3')
-
+import { ColyseusService } from '../../lib/colyseus'
+import { StateManager } from '../state/StateManager'
+import { GameView } from './GameView'
+let stateManager = new StateManager(
+  new ColyseusService('ws', 'localhost:1337'),
+  'random',
+)
 export default function CoreView() {
-  const [room, setRoom] = useState<GameState | null>(null)
+  let audio = useMemo(() => new Audio('/music/ingame.mp3'), [])
+  console.log('FakeView Renderred')
+  console.log('CoreView starting')
+  const [room, setRoom] = useState<Room<GameState> | null>(null)
   const [state, setState] = useState<GameState | null>(null)
   const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(audio)
 
-  let stateManager = new StateManager(
-    new ColyseusService('ws', 'localhost:1337'),
-    'random',
-  )
-
-  useMemo(() => {
-    let ref
-
-    gameMusic.loop = true
-    // gameMusic.play()
-
+  useEffect(() => {
     stateManager.getGameRoom.then(() => {
-      setRoom(room)
-      ref = stateManager.room.onStateChange((newState) => {
-        console.log('state change')
+      setRoom(stateManager.room)
+    })
+    if (room) {
+      room.onStateChange((newState) => {
         setState(newState)
       })
-    })
-
-    return () => {
-      ref.clear()
-      gameMusic.pause()
     }
-  }, [])
+  }, [room])
   if (state == null) {
     return (
       <div style={{ textAlign: 'center' }}>
