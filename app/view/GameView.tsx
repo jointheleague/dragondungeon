@@ -8,7 +8,7 @@ import * as PIXI from 'pixi.js'
 import { Viewport } from 'pixi-viewport'
 
 import { GameState } from '../../common'
-import { Dragon, TeamOrb } from './entities/dragon'
+import { Dragon, TeamOrb } from './entities/dragon/index'
 import { FireballView } from './entities/fireball'
 
 interface GameViewProps {
@@ -42,6 +42,8 @@ export class GameView extends Component<GameViewProps, GameViewState> {
   renderScene() {
     let dragons = []
     this.props.state.players.forEach(player => {
+      player.x = 100
+      player.y = 100
       dragons.push(<Dragon player={player} key={player.onlineID} team={0} />)
     })
 

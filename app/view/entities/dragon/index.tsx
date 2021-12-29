@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { IPlayer } from '../../../state/types';
 import * as PIXI from 'pixi.js-legacy'
-import { AnimatedSprite } from '../AnimatedSprite'; import {
+import { AnimatedSprite } from '../AnimatedSprite';
+import {
   CustomPIXIComponent,
 } from "react-pixi-fiber";
 
@@ -32,7 +33,7 @@ import redDragon4 from "./sprites/redDragon5.png";
 
 import blankDragon from "./sprites/blankDragon.png";
 import { Player } from '../../../../common/Player';
-import { FireballView } from '../fireball';
+// import { FireballView } from '../fireball';
 
 interface IProps {
   key: string;
@@ -111,27 +112,27 @@ export const Dragon = (props: IProps) => {
       dragonImages = [blueDragon1, blueDragon2, blueDragon3, blueDragon4];
     }
     //let dragonImages = [blankDragon];
-    let textures: PIXI.AnimatedSprite["textures"] = [];
-    dragonImages.forEach(image => {
-      let texture = PIXI.Texture.from(image);
-      textures.push(texture);
-    });
+    let textures: any = [];
+
+    Promise.all(dragonImages.map(async (image) => {
+      let texture = await PIXI.Texture.fromURL(image.src)
+      textures.push(texture)
+    }))
+    
+    console.log(`textures: ${textures}`)
     return textures;
   }, []);
 
-  let fireballs = []
-
-  props.player.fireballs.forEach(fireball => {
-    fireballs.push(<TeamOrb x={4} y={5} radius={4} key={4} />)
-  })
+  const fireballs = props.player.fireballs.map((fb, i) => <TeamOrb key={i} x={fb.x} y={fb.y} radius={4} />)
 
   var yS = 5;
   if (Math.abs(props.player.angle) < (Math.PI / 2)) {
     yS = -5;
   }
+
   return (
     <>
-      <AnimatedSprite
+    { dragonTextures.length > 0 && <AnimatedSprite
         anchor={new PIXI.Point(0.5, 0.5)}
         width={90}
         height={90}
@@ -143,8 +144,10 @@ export const Dragon = (props: IProps) => {
         y={props.player.y}
         xScale={5}
         yScale={yS}
-      />
-      {fireballs}
+      /> }
+
+      { fireballs }
+      
     </>
   )
 }

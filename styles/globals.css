@@ -6,6 +6,7 @@
   --secondary_color: #c60c30;
   --secondary_variant: #c60c30;
   --text_color: #FFFFFF;
+  overflow: hidden;
 }
 
 a {
