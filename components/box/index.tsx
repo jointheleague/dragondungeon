@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 
-import './box.module.css';
+import styles from 'styles/box.module.css';
 
 export function Box(props: {
   style?: CSSProperties;
@@ -10,5 +10,5 @@ export function Box(props: {
     style,
     children,
   } = props;
-  return <div style={style} className="container-box">{children}</div>
+  return <div style={style} className={styles.boxContainer}>{children}</div>
 }

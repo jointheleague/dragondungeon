@@ -1,0 +1,29 @@
+.link {
+  width: 15%;
+  padding: 10px;
+  border-right: 2px solid #c60c30;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.link:hover {
+  border-right: 5px solid #c60c30;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.heroImage {
+  float: right;
+  padding-top: 70px;
+  padding-right: 40px;
+  height: 240pt;
+  image-rendering: pixelated;
+}
+
+@media screen and (max-width: 800px) {  
+  .heroImage {
+    display: none;
+  }
+  .link {
+    border: hidden;
+    background: transparent;
+  }
+}

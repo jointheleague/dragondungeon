@@ -10,17 +10,12 @@ let stateManager = new StateManager(
   'random',
 )
 export default function CoreView() {
-  let audio = useMemo(() => new Audio('/music/ingame.mp3'), [])
   const [room, setRoom] = useState<Room<GameState> | null>(null)
   const [state, setState] = useState<GameState | null>(null)
   const [gameOver, setGameOver] = useState<boolean>(false)
-  const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(audio)
 
   useMemo(() => {
     let ref
-
-    gameMusic.loop = true
-    gameMusic.play()
 
     stateManager.getGameRoom.then(() => {
       ref = stateManager.room.onStateChange(newState => {
@@ -31,7 +26,6 @@ export default function CoreView() {
 
     return () => {
       ref.clear()
-      gameMusic.pause()
     };
   }, [])
 

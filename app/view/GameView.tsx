@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { StateManager } from '../state/StateManager'
-import { Controls } from '../controls'
-import { IInputs, Player } from '../../common'
+import { Controls } from 'app/controls'
+import { IInputs, Player } from 'common'
 import { render } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
 
 import { Viewport } from 'pixi-viewport'
 
-import { GameState } from '../../common'
+import { GameState } from 'common'
 import { Dragon, TeamOrb } from './entities/dragon/index'
 import { FireballView } from './entities/fireball'
-// import { Leaderboard } from './'
+import { Leaderboard } from 'components'
 import router from 'next/router'
 
 interface GameViewProps {
@@ -89,7 +89,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
           viewport={this.viewport}
         />
         <div style={{ marginLeft: '3vw', display: 'flex' }}>
-        {/* <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard> */}
+        <Leaderboard players={this.props.state.players} countdown={this.props.state.countdown}></Leaderboard>
         </div>
         <div
           ref={(thisDiv) => {
