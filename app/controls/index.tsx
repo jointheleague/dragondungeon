@@ -74,7 +74,7 @@ export const Controls = (props: ControlProps) => {
 
         updateAndSend(change);
       } catch {
-        console.log('Malfunctioning HID/Inputs');
+        console.error('Malfunctioning HID');
       }
     }
     window.addEventListener("keydown", keydown)
@@ -110,7 +110,7 @@ export const Controls = (props: ControlProps) => {
       updateAndSend(change);
     }} />
     <ReactNipple
-      options={{ color: 'transparent', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
+      options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
       style={{
         position: 'fixed',
         width: '100vw',

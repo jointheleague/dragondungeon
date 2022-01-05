@@ -40,7 +40,6 @@ export default function Home() {
             unsubAuthState()
 
             if (isSuccessfulSignIn) {
-              console.log('redirecting to page!')
               router.push('/play')
             }
           })

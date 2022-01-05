@@ -10,6 +10,8 @@ import { Viewport } from 'pixi-viewport'
 import { GameState } from '../../common'
 import { Dragon, TeamOrb } from './entities/dragon/index'
 import { FireballView } from './entities/fireball'
+// import { Leaderboard } from './'
+import router from 'next/router'
 
 interface GameViewProps {
   stateManager: StateManager
@@ -43,20 +45,18 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     let dragons = []
 
     this.props.state.players.forEach(player => {
-      console.log(`x: ${player.x} - y: ${player.y}`)
       dragons.push(<Dragon player={player} key={player.onlineID} team={0} />)
     })
     
     const id = this.props.stateManager.room.sessionId;
     const me = this.props.state.players[id];
-    //moves the center of the veiwport to the player 
+    //moves the center of the viewport to the player 
     if (me !== null && this.viewport !== null) {
-      console.log(me)
       try {
         this.viewport.x = -me.x * 1 + window.innerWidth / 2;
         this.viewport.y = -me.y * 1 + window.innerHeight / 2; 
-      } catch {
-        console.log('Rendering Failed');
+      } catch (e) {
+        console.error(e);
       }
     }
 
@@ -89,7 +89,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
           viewport={this.viewport}
         />
         <div style={{ marginLeft: '3vw', display: 'flex' }}>
-          {/* <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard> */}
+        {/* <Leaderboard p={this.props.stateManager.room.state.players} t={this.props.state.countdown}></Leaderboard> */}
         </div>
         <div
           ref={(thisDiv) => {

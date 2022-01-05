@@ -92,8 +92,8 @@ export class Player extends Schema {
 		var newX = 0;
 		var newY = 0;
 		do {
-			newX = Math.random()*4000;
-			newY = Math.random()*4000;
+			newX = Math.random()*100;
+			newY = Math.random()*100;
 		}while (Maths.checkWalls(newX, newY, 45) ||  (newX > 500 && newY > 500 && newX < 3500 && newY < 3500))
 		this.x = newX;
 		this.y = newY;

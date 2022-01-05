@@ -1,4 +1,5 @@
 import { Room } from 'colyseus.js'
+import router from 'next/router'
 import React, { useEffect, useMemo, useState } from 'react'
 import { GameState } from '../../common'
 import { ColyseusService } from '../../lib/colyseus'
@@ -10,27 +11,42 @@ let stateManager = new StateManager(
 )
 export default function CoreView() {
   let audio = useMemo(() => new Audio('/music/ingame.mp3'), [])
-  console.log('FakeView Renderred')
-  console.log('CoreView starting')
   const [room, setRoom] = useState<Room<GameState> | null>(null)
   const [state, setState] = useState<GameState | null>(null)
+  const [gameOver, setGameOver] = useState<boolean>(false)
   const [gameMusic, setGameMusic] = useState<HTMLAudioElement>(audio)
 
-  useEffect(() => {
+  useMemo(() => {
+    let ref
+
+    gameMusic.loop = true
+    gameMusic.play()
+
     stateManager.getGameRoom.then(() => {
-      setRoom(stateManager.room)
-    })
-    if (room) {
-      room.onStateChange((newState) => {
+      ref = stateManager.room.onStateChange(newState => {
+        setGameOver(newState.gameOver)
         setState(newState)
       })
-    }
-  }, [room])
+    })
+
+    return () => {
+      ref.clear()
+      gameMusic.pause()
+    };
+  }, [])
+
   if (state == null) {
     return (
       <div style={{ textAlign: 'center' }}>
-        <p>state is null</p>
+        <br /><br /><br />
+        <img style={{ textAlign: 'center', height: '150px', imageRendering: 'pixelated' }} src="/img/dragons/basicDragon.png" />
       </div>
+    )
+  }
+
+  if (gameOver) {
+    return (
+     <p>Game over</p>
     )
   }
 

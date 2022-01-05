@@ -118,8 +118,6 @@ export const Dragon = (props: IProps) => {
       let texture = await PIXI.Texture.fromURL(image.src)
       textures.push(texture)
     }))
-    
-    console.log(`textures: ${textures}`)
     return textures;
   }, []);
 

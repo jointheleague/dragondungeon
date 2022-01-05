@@ -45,7 +45,6 @@ export class GameRoom extends Room<GameState> {
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
 		const user = await admin.auth().verifyIdToken(options.token);
-		console.log("creating player " + user.uid)
 		const db = admin.firestore();
 		let ballType = "fireball";
 		let dragonSkin = "default";
@@ -138,7 +137,10 @@ export class GameRoom extends Room<GameState> {
 
 	gameOver(){
 		this.clock.clear();
-		clearInterval(this.gameInt);
+		this.state.gameOver = true;
+		this.state.players.forEach((player: Player) => {
+			player.dead = true;
+		});
 	}
 
 	spawnCoin() {
@@ -164,7 +166,10 @@ export class GameRoom extends Room<GameState> {
 		const dx = this.clock.deltaTime;
 		this.state.countdown.elaspseTime();
 		if (this.state.countdown.done) {
-			this.gameOver();
+			if (this.state.gameOver) {
+				clearInterval(this.gameInt)
+			}
+			this.gameOver()
 		}
 
 		for (let i = this.state.coins.size; i < this.state.players.size * 270; i++) {
