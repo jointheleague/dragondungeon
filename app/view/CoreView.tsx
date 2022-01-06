@@ -1,14 +1,31 @@
 import { Room } from 'colyseus.js'
-import router from 'next/router'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { GameState } from '../../common'
 import { ColyseusService } from '../../lib/colyseus'
 import { StateManager } from '../state/StateManager'
 import { GameView } from './GameView'
+import { MapSchema } from '@colyseus/schema'
+import { Player } from 'common'
 let stateManager = new StateManager(
   new ColyseusService('ws', 'localhost:1337'),
   'random',
 )
+
+function renderTableData(players: MapSchema<Player>) {
+  let leaderboardData = []
+  players.forEach((player: Player, key: any) => {
+      const score = player.score;
+      let name = player.onlineName;
+      const ballType = player.ballType;
+      leaderboardData.push(<tr key={key}>
+          <td style={{ padding: '10px' }} className="playerData"><img src={`/img/abilities/${ballType}ball.png`} style={{ height: '30px' }} /></td>
+          <td style={{ padding: '10px' }} className="playerData">{name}</td>
+          <td style={{ padding: '10px' }} className="playerData"><b><big>{score}</big></b></td>
+      </tr>)
+  })
+  return leaderboardData
+}
+
 export default function CoreView() {
   const [room, setRoom] = useState<Room<GameState> | null>(null)
   const [state, setState] = useState<GameState | null>(null)
@@ -40,7 +57,10 @@ export default function CoreView() {
 
   if (gameOver) {
     return (
-     <p>Game over</p>
+      <div style={{ padding: '30px' }}>
+        <h1>Game Over</h1>
+        <table><tbody id='leaderboard'>{renderTableData(state.players)}</tbody></table>
+      </div>
     )
   }
 
