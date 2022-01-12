@@ -19,7 +19,7 @@ export const MovingBackground = (props: IProps) => {
   ANIMATION_SPEED = Math.random()/100;
   const tileTextures = useMemo(() => {
     let tileImages = [TileImage1,TileImage2,TileImage3,TileImage4,TileImage5,TileImage6];
-    let textures: PIXI.AnimatedSprite["textures"] = [PIXI.Texture.from(tileImages[Math.floor(Math.random()*5)])];
+    let textures: PIXI.AnimatedSprite["textures"] = [PIXI.Texture.from(tileImages[Math.floor(Math.random()*5)].src)];
     return textures;
   }, []);
 

@@ -31,7 +31,7 @@ export class GameState extends Schema {
 	fences = new MapSchema < BorderFence > ();
 
 	@type(Countdown)
-	countdown = new Countdown(0, 5);
+	countdown = new Countdown(5, 0);
 
 	@type({map: Bat})
 	bats = new MapSchema <Bat>();
@@ -53,10 +53,10 @@ export class GameState extends Schema {
 	batRot: number = 0;
 
 	@type("number")
-	gamewidth: number = 4000;
+	gamewidth: number = 3000;
 
 	@type("number")
-	gameheight: number = 4000;
+	gameheight: number = 3000;
 
 
 	@type(CoinJar)

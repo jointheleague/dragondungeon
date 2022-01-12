@@ -15,11 +15,12 @@ export const BorderFence = (props: IProps) => {
   ANIMATION_SPEED = Math.random()/10;
   const fenceTextures = useMemo(() => {
     let fenceImages = [FenceImage];
-    let textures: PIXI.AnimatedSprite["textures"] = [];
-    fenceImages.forEach(image =>{
-      let texture = PIXI.Texture.from(image);
-       textures.push(texture);
-    });
+    let textures: any = [];
+
+    Promise.all(fenceImages.map(async (image) => {
+      let texture = await PIXI.Texture.fromURL(image.src)
+      textures.push(texture)
+    }))
     return textures;
   }, []);
 
