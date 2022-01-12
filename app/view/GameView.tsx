@@ -38,6 +38,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     })
     this.gameCanvas!.appendChild(this.app.view)
     this.viewport = new Viewport()
+    if (window.innerWidth > 700) { this.viewport.zoom(500) }
     this.app.stage.addChild(this.viewport)
     this.app.start()
     this.app.ticker.add(() => this.renderScene())
@@ -57,8 +58,13 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     //moves the center of the viewport to the player 
     if (me !== null && this.viewport !== null) {
       try {
-        this.viewport.x = -me.x * 1 + window.innerWidth / 2;
-        this.viewport.y = -me.y * 1 + window.innerHeight / 2; 
+        if (window.innerWidth > 700) {
+          this.viewport.x = -me.x * 0.6 + window.innerWidth / 1.8;
+          this.viewport.y = -me.y * 0.6 + window.innerHeight / 3.8;
+        } else {
+          this.viewport.x = -me.x + window.innerWidth / 2;
+          this.viewport.y = -me.y + window.innerHeight / 2; 
+        }
       } catch (e) {
         console.error(e);
       }
