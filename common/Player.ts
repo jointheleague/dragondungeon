@@ -4,7 +4,6 @@ import { Bar } from "./Bar";
 import { Fireball } from "./Fireball";
 import { IInputs } from "./IInputs";
 
-
 export class Player extends Schema {
 
 	@type([Fireball])

@@ -105,7 +105,6 @@ export const Controls = (props: ControlProps) => {
       width: '100vw',
       height: '100vh'
     }} onClick={() => {
-      console.log('tap');
       var change = controlsDown[' '] || {};
       updateAndSend(change);
     }} />

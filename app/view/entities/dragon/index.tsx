@@ -39,6 +39,7 @@ interface IProps {
   key: string;
   player: Player;
   team: number;
+  celebration: boolean;
 }
 
 type TeamOrbProps = {
@@ -135,7 +136,7 @@ export const Dragon = (props: IProps) => {
         width={90}
         height={90}
         textures={dragonTextures}
-        rotation={props.player.angle + Math.PI}
+        rotation={props.celebration ? Math.random() * 400 : props.player.angle + Math.PI}
         x={props.player.x}
         animationSpeed={ANIMATION_SPEED}
         loop={true}
