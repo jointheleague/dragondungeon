@@ -22,7 +22,7 @@ export function lerp(a: number, b: number, n: number): number {
   return (1 - n) * a + n * b;
 }
 
-/**
+/** 
  * Lerp between two angles
  * @param from
  * @param to
@@ -179,7 +179,9 @@ export function checkWalls(newX: number, newY: number){
   return false;
 }
 */
-export function checkWalls (newX: number, newY: number, rad: number){
+
+
+/*export function checkWalls (newX: number, newY: number, rad: number){
   const gameWidth = 3000;
   const gameHeight = 3000;
   //this just checks the basic outer walls
@@ -203,4 +205,4 @@ export function checkWalls (newX: number, newY: number, rad: number){
     }
   }
 
-}
+}*/

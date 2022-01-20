@@ -53,6 +53,10 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       dragons.push(<Dragon player={player} key={player.onlineID} team={0} />)
     })
     
+    this.props.state.walls.forEach(wall => {
+      walls.push(<Wall x={wall.x} y={wall.y} xLength={wall.xLength} yLength={wall.yLength} angle = {wall.angle} />)
+    })
+
     const id = this.props.stateManager.room.sessionId;
     const me = this.props.state.players[id];
     //moves the center of the viewport to the player 
@@ -92,17 +96,19 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       walls.push(<Wall x={this.props.state.gamewidth + yLen} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
     }    
     //top right
-    walls.push(<Wall x={this.props.state.gamewidth/2 + 240} y={this.props.state.gameheight/2 - 240} xLength ={xLenInner} yLength = {yLen} angle = {-Math.PI/2} />)
-    walls.push(<Wall x={this.props.state.gamewidth/2 + 240} y={this.props.state.gameheight/2 - 280} xLength ={xLenInner} yLength = {yLen} angle = {0} />)
+    //walls.push(<Wall x={this.props.state.gamewidth/2 + 240} y={this.props.state.gameheight/2 - 240} xLength ={xLenInner} yLength = {yLen} angle = {-Math.PI/2} />)
+    //walls.push(<Wall x={this.props.state.gamewidth/2 + 240} y={this.props.state.gameheight/2 - 280} xLength ={xLenInner} yLength = {yLen} angle = {0} />)
     //bottom right
-    walls.push(<Wall x={this.props.state.gamewidth/2 + 240} y={this.props.state.gameheight/2 + 240} xLength ={xLenInner} yLength = {yLen} angle = {0}/>)
-    walls.push(<Wall x={this.props.state.gamewidth/2 + 280} y={this.props.state.gameheight/2 + 240} xLength ={xLenInner} yLength = {yLen} angle = {Math.PI/2}/>)
+    //walls.push(<Wall x={this.props.state.gamewidth/2 + 240} y={this.props.state.gameheight/2 + 240} xLength ={xLenInner} yLength = {yLen} angle = {0}/>)
+    //walls.push(<Wall x={this.props.state.gamewidth/2 + 280} y={this.props.state.gameheight/2 + 240} xLength ={xLenInner} yLength = {yLen} angle = {Math.PI/2}/>)
     //bottom left
-    walls.push(<Wall x={this.props.state.gamewidth/2 - 240} y={this.props.state.gameheight/2 + 280} xLength ={xLenInner} yLength = {yLen} angle = {Math.PI}/>)
-    walls.push(<Wall x={this.props.state.gamewidth/2 - 240} y={this.props.state.gameheight/2 + 240} xLength ={xLenInner} yLength = {yLen} angle = {Math.PI/2}/>)
+    //walls.push(<Wall x={this.props.state.gamewidth/2 - 240} y={this.props.state.gameheight/2 + 280} xLength ={xLenInner} yLength = {yLen} angle = {Math.PI}/>)
+    //walls.push(<Wall x={this.props.state.gamewidth/2 - 240} y={this.props.state.gameheight/2 + 240} xLength ={xLenInner} yLength = {yLen} angle = {Math.PI/2}/>)
     //top left
-    walls.push(<Wall x={this.props.state.gamewidth/2 - 240} y={this.props.state.gameheight/2 - 240} xLength ={xLenInner} yLength = {yLen} angle = {Math.PI}/>)
-    walls.push(<Wall x={this.props.state.gamewidth/2 - 280} y={this.props.state.gameheight/2 - 240} xLength ={xLenInner} yLength = {yLen} angle = {-Math.PI/2}/>)
+    //walls.push(<Wall x={this.props.state.gamewidth/2 - 240} y={this.props.state.gameheight/2 - 240} xLength ={xLenInner} yLength = {yLen} angle = {Math.PI}/>)
+    //walls.push(<Wall x={this.props.state.gamewidth/2 - 280} y={this.props.state.gameheight/2 - 240} xLength ={xLenInner} yLength = {yLen} angle = {-Math.PI/2}/>)
+
+
 
     render(
       <>{ tiles }{ dragons }{ walls }</>,

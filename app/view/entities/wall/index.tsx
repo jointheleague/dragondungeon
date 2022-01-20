@@ -13,7 +13,7 @@ interface IProps {
   yLength: number;
   angle: number;
 }
-
+ 
 
 export const Wall = (props: IProps) => {
   const fenceTextures = useMemo(() => {

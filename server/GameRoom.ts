@@ -13,6 +13,7 @@ import {
 	Fireball,
 	CircleBat,
 	LineSkull,
+	Wall
 } from '../common';
 
 import * as admin from 'firebase-admin';
@@ -33,7 +34,6 @@ export class GameRoom extends Room<GameState> {
 
 	redTeamIds: string[] = [];
 	blueTeamIds: string[] = [];
-
 	gameInt: NodeJS.Timeout;
 
 
@@ -126,6 +126,8 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	startGameLoop() {
+		this.setWalls(false)
+
 		this.gameInt = setInterval(() => {
 		
 			this.clock.tick();
@@ -148,13 +150,141 @@ export class GameRoom extends Room<GameState> {
 
 	createCoin(x: number, y: number) {
 	}
+	//sets x and y of player to random numbers
+	spawnPlayer(player: Player){
+		var newX = 0;
+		var newY = 0;
+		do {
+			newX = Math.random()*100;
+			newY = Math.random()*100;
+		}while (this.checkWalls(newX, newY, 45, false) ||  (newX > 500 && newY > 500 && newX < 3500 && newY < 3500))
+		player.x = newX;
+		player.y = newY;
+	}
 
 	moveBot(bot: Player, right: boolean, left: boolean, up: boolean, down: boolean) {
 		
 	}
 
-	checkWalls(newX: number, newY: number, rad: number, isFireball: boolean){
-	
+	//this is where the setup of all inner walls is
+	setWalls(isCTC: boolean){
+		const gamewidth = this.state.gamewidth
+		const gameheight = this.state.gameheight
+		const midAreaLength = 350
+		const wallLength = 650
+		const wallWidth = 50
+
+			//bottom right
+			const wall2 = new Wall( (gamewidth/2) +midAreaLength, (gameheight/2)+midAreaLength, wallLength, wallWidth, true, 2, "coingrab")
+			const wall3 = new Wall( (gamewidth/2) +midAreaLength, (gameheight/2)+midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
+			//bottom left
+			const wall4 = new Wall( (gamewidth/2) -midAreaLength, (gameheight/2)+midAreaLength, wallLength, wallWidth, true, 2, "coingrab")
+			const wall5 = new Wall( (gamewidth/2) -midAreaLength-wallLength, (gameheight/2)+midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
+			//top left
+			const wall6 = new Wall( (gamewidth/2) -midAreaLength, (gameheight/2)-midAreaLength-wallLength, wallLength, wallWidth, true, 2, "coingrab")
+			const wall7 = new Wall( (gamewidth/2) -midAreaLength-wallLength, (gameheight/2)-midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
+			//top right
+			const wall8 = new Wall( (gamewidth/2) +midAreaLength, (gameheight/2)-midAreaLength-wallLength, wallLength, wallWidth, true, 2, "coingrab")
+			const wall9 = new Wall( (gamewidth/2) +midAreaLength, (gameheight/2)-midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
+
+			this.state.walls[v4()] = wall2
+			this.state.walls[v4()] = wall3
+
+			this.state.walls[v4()] = wall4
+			this.state.walls[v4()] = wall5
+
+			this.state.walls[v4()] = wall6
+			this.state.walls[v4()] = wall7
+
+			this.state.walls[v4()] = wall8
+			this.state.walls[v4()] = wall9
+	}
+
+	removeDeadWalls(){
+		for (let id of this.state.walls.keys()) {
+			if(this.state.walls[id].health <= 0){
+				this.state.walls[id].remove
+			}
+		}
+	}
+
+	movePlayer(player: Player, ticks: number){
+		if (player.direction.x !== 0 || player.direction.y !== 0) {
+			const magnitude = Maths.normalize2D(player.direction.x, player.direction.y);
+			const speedX = Maths.round2Digits(player.direction.x * (((player.speed+player.coins) * (1/player.deceleration) * ticks) / magnitude));
+			const speedY = Maths.round2Digits(player.direction.y * (((player.speed+player.coins) * (1/player.deceleration) * ticks) / magnitude));
+			const newX = player.x + speedX;
+			const newY = player.y + speedY;
+			console.log(newX+"  "+newY)
+			if(!this.checkWalls(player.x, newY, 45, false)){
+				player.y = newY;
+			} 
+			if(!this.checkWalls(newX, player.y, 45, false)){
+				player.x = newX;
+			}
+			
+			
+			if(player.deceleration > 1){
+				player.deceleration *= .9;
+			}
+		}
+
+	}
+
+	//false means no collision, true means collision
+	checkWalls(objectX: number, objectY: number, radius: number, isFireball: boolean){
+		let walls = this.state.walls
+		let result = false
+
+
+
+
+
+		if(objectX > this.state.gamewidth-radius || objectY > this.state.gameheight-radius || objectX < radius || objectY < radius){
+			return true;
+		  }
+
+		for(let wallKey of this.state.walls.keys()){
+			let wall = this.state.walls[wallKey]
+			let xLen = wall.xLength
+			let yLen = wall.yLength
+			if(wall.isRotated){
+				xLen = (wall.yLength*(1))
+				yLen = wall.xLength
+			}
+			if(wall.health>=0){
+				if( ( (objectY+radius)>wall.y && (objectY-radius)<(wall.y+yLen)) ){
+					
+					if( wall.isRotated && ( (objectX+radius) >(wall.x - xLen)&& (objectX-radius)<(wall.x)) || (!wall.isRotated) && ( (objectX+radius) >(wall.x)&& (objectX-radius)<(wall.x+xLen))){
+						if(isFireball && wall.gamemode == "CTC"){
+							wall.health -=1
+						}
+						result = true
+					}
+				}
+			}
+		}
+		
+		return result
+	}
+
+	moveFireballs(player: Player, ticks: number){
+		for(let fireball of player.fireballs){
+			fireball.lifetime -= ticks;
+
+			var newX = fireball.x + (fireball.speed * Math.cos(fireball.angle - Math.PI));
+			var newY = fireball.y + (fireball.speed * Math.sin(fireball.angle - Math.PI));
+			if(!this.checkWalls(newX, fireball.y, 22.5, true)){
+				fireball.x = newX;
+			}else{
+				fireball.lifetime -= .3;
+			}
+			if(!this.checkWalls(fireball.x, newY, 22.5, true)){
+				fireball.y = newY;
+			}else{
+				fireball.lifetime -= .3;
+			}
+		}
 	}
 
 	generateBotName() {
@@ -185,6 +315,9 @@ export class GameRoom extends Room<GameState> {
 		}
 
 		for (let id of this.state.players.keys()) {
+
+			this.movePlayer(this.state.players[id], dx/50)
+			this.moveFireballs(this.state.players[id], dx/50)
 
 			this.state.players[id].tick(dx);
 
@@ -293,4 +426,8 @@ export class GameRoom extends Room<GameState> {
 			}
 		}
 	}
+
+
+
+
 }
