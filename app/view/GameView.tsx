@@ -9,11 +9,13 @@ import { Viewport } from 'pixi-viewport'
 
 import { GameState } from 'common'
 import { Dragon, TeamOrb } from './entities/dragon/index'
-import { FireballView } from './entities/fireball'
 import { MovingBackground } from './entities/movingBackground'
+import { Coin } from './entities/coin'
 import { Wall } from './entities/wall'
+import { CoinJar } from './entities/coinJar'
 import { Leaderboard } from 'components'
-import router from 'next/router'
+
+let dragonCelebrating = false;
 
 interface GameViewProps {
   stateManager: StateManager
@@ -34,24 +36,27 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     this.app = new PIXI.Application({
       resizeTo: window,
       antialias: true,
-      transparent: true,
+      backgroundAlpha: 100,
     })
     this.gameCanvas!.appendChild(this.app.view)
     this.viewport = new Viewport()
-    if (window.innerWidth > 700) { this.viewport.zoom(500) }
     this.app.stage.addChild(this.viewport)
     this.app.start()
     this.app.ticker.add(() => this.renderScene())
+
+    this.props.stateManager.room.onMessage('sfx', audioURL => {
+      dragonCelebrating = true
+      let sfx = new Audio(audioURL)
+      sfx.play()
+      setTimeout(() => dragonCelebrating = false, 1000)
+    })
   }
 
   renderScene() {
     let dragons = []
     let tiles = []
     let walls = []
-
-    this.props.state.players.forEach(player => {
-      dragons.push(<Dragon player={player} key={player.onlineID} team={0} />)
-    })
+    let coins = []
     
     this.props.state.walls.forEach(wall => {
       walls.push(<Wall x={wall.x} y={wall.y} xLength={wall.xLength} yLength={wall.yLength} angle = {wall.angle} />)
@@ -59,16 +64,20 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
     const id = this.props.stateManager.room.sessionId;
     const me = this.props.state.players[id];
+
+    this.props.state.players.forEach(player => {
+      if (player == me) {
+        dragons.push(<Dragon player={player} key={player.onlineID} team={0} celebration={dragonCelebrating} />)
+      } else {
+        dragons.push(<Dragon player={player} key={player.onlineID} team={0} celebration={false} />)
+      }
+    })
+
     //moves the center of the viewport to the player 
     if (me !== null && this.viewport !== null) {
       try {
-        if (window.innerWidth > 700) {
-          this.viewport.x = -me.x * 0.6 + window.innerWidth / 1.8;
-          this.viewport.y = -me.y * 0.6 + window.innerHeight / 3.8;
-        } else {
           this.viewport.x = -me.x + window.innerWidth / 2;
-          this.viewport.y = -me.y + window.innerHeight / 2; 
-        }
+          this.viewport.y = -me.y + window.innerHeight / 2;
       } catch (e) {
         console.error(e);
       }
@@ -76,7 +85,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
     var tileAmt = 19;
     var midpoint = this.props.state.gamewidth / 2;
-    console.log(midpoint);
     for(var i = 0; i < tileAmt; i++){
       for(var j = 0; j < tileAmt; j++){
         if (typeof(me) !== "undefined") {
@@ -110,8 +118,16 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
 
 
+    if(this.props.state.coins.size !== 0) {
+      Array.from(this.props.state.coins.keys()).forEach((cid) => {
+        coins.push(<Coin key={cid} x={this.props.state.coins.get(cid).x} y={this.props.state.coins.get(cid).y} size={this.props.state.coins.get(cid).size} team={this.props.state.coins.get(cid).team} />);
+      })
+    }
+
+    let coinJar = <CoinJar x={1500} y={1500} key={'coinJar'} team={0} />
+
     render(
-      <>{ tiles }{ dragons }{ walls }</>,
+      <>{ tiles }{ walls }{ coins }{ coinJar }{ dragons }</>,
       this.viewport
     )
   }

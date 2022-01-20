@@ -27,13 +27,24 @@ const serviceAccount = require('../config/private/adminsdk.json')
 
 admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
 
+class ServerPlayer extends Player {
+	colyseusClient: Client = null
+
+	constructor(ballType: string, skinType: string, teamNum: number, client: Client) {
+		super(ballType, skinType, teamNum)
+		this.colyseusClient = client
+	}
+}
+
 export class GameRoom extends Room<GameState> {
 	counter = 0;
-	botTimeout = 0;
 	maxClients = 15;
 
 	redTeamIds: string[] = [];
 	blueTeamIds: string[] = [];
+
+	botPlayers: Player[] = [];
+
 	gameInt: NodeJS.Timeout;
 
 
@@ -53,13 +64,13 @@ export class GameRoom extends Room<GameState> {
 		if (userDoc.data()?.ballType) {
 			ballType = userDoc.data()?.ballType;
 		} else {
-			switch ( Math.floor( Math.random() * 5 ) ) {
+			switch (Math.floor(Math.random() * 5)) {
 				case 0:
-					 ballType = "fire";
-					 break;
+					ballType = "fire";
+					break;
 				case 1:
 					ballType = "ice";
-					  break;
+					break;
 				case 2:
 					ballType = "poison";
 					break;
@@ -75,13 +86,13 @@ export class GameRoom extends Room<GameState> {
 		if (userDoc.data()?.dragonSkin) {
 			dragonSkin = userDoc.data()?.dragonSkin;
 		} else {
-			switch ( Math.floor( Math.random() * 3 ) ) {
+			switch (Math.floor(Math.random() * 3)) {
 				case 0:
-					 dragonSkin = "default";
-					 break;
+					dragonSkin = "default";
+					break;
 				case 1:
 					dragonSkin = "light";
-					  break;
+					break;
 				case 2:
 					dragonSkin = "gold";
 					break;
@@ -89,16 +100,16 @@ export class GameRoom extends Room<GameState> {
 		}
 
 		var teamnum;
-		if(this.state.gamemode == 'CTC'){
-			if(this.redTeamIds.length<=this.blueTeamIds.length){
+		if (this.state.gamemode == 'CTC') {
+			if (this.redTeamIds.length <= this.blueTeamIds.length) {
 				teamnum = 1;
 				this.redTeamIds.push(client.id);
-			} else{
+			} else {
 				teamnum = 2;
 				this.blueTeamIds.push(client.id);
 			}
-		} else{teamnum = 0;}
-		this.state.players[client.id] = new Player(ballType, dragonSkin, teamnum);
+		} else { teamnum = 0; }
+		this.state.players[client.id] = new ServerPlayer(ballType, dragonSkin, teamnum, client);
 
 		if (user.name == null) {
 			const adjectives = require('../../wordlists/adjectives.json');
@@ -110,13 +121,13 @@ export class GameRoom extends Room<GameState> {
 			this.state.players[client.id].onlineName = user.name;
 		}
 		this.state.players[client.id].onlineID = user.uid;
-		}
+	}
 
 
 
 
 	onLeave(client: Client, _consent: boolean) {
-		
+
 	}
 
 	registerMessages() {
@@ -129,15 +140,15 @@ export class GameRoom extends Room<GameState> {
 		this.setWalls(false)
 
 		this.gameInt = setInterval(() => {
-		
+
 			this.clock.tick();
 			this.tick();
 			this.state.debugOn = !this.state.debugOn;
-			
+
 		}, 1000 / 60);
 	}
 
-	gameOver(){
+	gameOver() {
 		this.clock.clear();
 		this.state.gameOver = true;
 		this.state.players.forEach((player: Player) => {
@@ -146,9 +157,26 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	spawnCoin() {
+		var num = Math.random();
+		var size = 20;
+		if (num >= .75) {
+			size += 5;
+			if (num >= .95) {
+				size += 5;
+				if (num >= .995) {
+					size = 100;
+				}
+			}
+		}
+		var teamNum;
+		if (this.state.gamemode == 'CTC') { teamNum = 1; }
+		else { teamNum = 0; }
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000, Math.random() * 3000, size, teamNum));
+		Math.random() < 0.01 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000 + 40, Math.random() * 3000 + 40, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000, Math.random() * 3000, 20, 0));
 	}
 
 	createCoin(x: number, y: number) {
+		this.state.coins.set(v4(), new Coin(v4(), x, y, 20, 0))
 	}
 	//sets x and y of player to random numbers
 	spawnPlayer(player: Player){
@@ -287,11 +315,53 @@ export class GameRoom extends Room<GameState> {
 		}
 	}
 
-	generateBotName() {
 	
-	}
 
 	tick() {
+
+		if (this.state.players.size < 4) {
+			for (let botIndex = 0; botIndex < 3; botIndex++) {
+				let botNames = require('./botnames.json')
+
+				let ballType = 'fire'
+				let dragonSkin = 'light'
+				switch (Math.floor(Math.random() * 5)) {
+					case 0:
+						ballType = "fire";
+						break;
+					case 1:
+						ballType = "ice";
+						break;
+					case 2:
+						ballType = "poison";
+						break;
+					case 3:
+						ballType = "mud";
+						break;
+					case 4:
+						ballType = "electric";
+						break;
+				}
+
+				switch (Math.floor(Math.random() * 3)) {
+					case 0:
+						dragonSkin = "default";
+						break;
+					case 1:
+						dragonSkin = "light";
+						break;
+					case 2:
+						dragonSkin = "gold";
+						break;
+				}
+
+				let botPlayer = new Player(ballType, dragonSkin, 0)
+				botPlayer.onlineName = botNames[Math.floor(Math.random() * botNames.length)]
+				this.botPlayers.push(botPlayer)
+				this.state.players.set(v4(), botPlayer)
+			}
+		}
+
 		this.counter++;
 		const dx = this.clock.deltaTime;
 		this.state.countdown.elaspseTime();
@@ -302,15 +372,15 @@ export class GameRoom extends Room<GameState> {
 			this.gameOver()
 		}
 
-		for (let i = this.state.coins.size; i < this.state.players.size * 270; i++) {
+		for (let i = this.state.coins.size; i < this.state.players.size * 10; i++) {
 			this.spawnCoin();
 		}
 
-		for(let bat of this.state.bats.values()){
+		for (let bat of this.state.bats.values()) {
 			bat.move();
 		}
 
-		for(let skull of this.state.skulls.values()){
+		for (let skull of this.state.skulls.values()) {
 			skull.move();
 		}
 
@@ -325,14 +395,13 @@ export class GameRoom extends Room<GameState> {
 				for (let i = 0; i < this.state.players[id2].fireballs.length; i++) {
 					if (id != id2) {
 						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y, this.state.players[id].team)) {
-						    this.state.players[id2].hitsDealt ++;
-							this.state.players[id].hitsRecived ++;
+							this.state.players[id2].hitsDealt++;
+							this.state.players[id].hitsRecived++;
 							var fireBall = this.state.players[id2].fireballs[i];
 							const coinChance = .2; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
 							const lifetimeRemove = 1; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
 
 							this.state.players[id].push(fireBall.angle - Math.PI, fireBall.speed)
-							//console.log(this.state.players[id].x + "    " + this.state.players[id].y)
 							if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
 								this.state.players[id].coins--;
 								fireBall.lifetime -= lifetimeRemove;
@@ -376,12 +445,16 @@ export class GameRoom extends Room<GameState> {
 			if (this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y, 0)) {
 				// when a player has collided with the coinjar
 				this.state.players[id].score += this.state.players[id].coins;// add coins to players score
+				if(this.state.players[id].coins > 0) {
+					this.state.players[id].colyseusClient.send('sfx', '/audio/coinjar.wav')
+					this.state.players[id].angle += 100
+				}
 				this.state.players[id].coins = 0;// remove coins
 			}
 
-			for(let cid of this.state.coins.keys()){
+			for (let cid of this.state.coins.keys()) {
 				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y, 0) && this.state.players[id].coins < 10) {
-					
+
 					var coins = this.state.players[id].coins;
 					switch (this.state.coins[cid].getSize()) {
 						case (20):
@@ -398,27 +471,27 @@ export class GameRoom extends Room<GameState> {
 							this.state.players[id].coinsPickedUp += 20;
 							break;
 					}
-					this.state.players[id].coinsPickedUp += Math.min(coins, 10)-this.state.players[id].coins;
-					this.state.players[id].coins = Math.min(coins,10);
+					this.state.players[id].coinsPickedUp += Math.min(coins, 10) - this.state.players[id].coins;
+					this.state.players[id].coins = Math.min(coins, 10);
 					this.state.coins.delete(cid);
 				}
 			}
 
-			for(let bat of this.state.bats.values()){
-				if(bat.checkHit(this.state.players[id].x, this.state.players[id].y)){
-					this.state.players[id].deceleration = 2 ;
+			for (let bat of this.state.bats.values()) {
+				if (bat.checkHit(this.state.players[id].x, this.state.players[id].y)) {
+					this.state.players[id].deceleration = 2;
 					this.state.players[id].fireballCooldown += .2;
 					break;
 				}
 			}
-			
-			for(let skull of this.state.skulls.values()){
-				if(skull.checkHit(this.state.players[id].x, this.state.players[id].y)){
-					this.state.players[id].push(skull.angle, skull.speed*1.2);
-					if(Math.random() < .2 && this.state.players[id].coins > 0){
-						this.state.players[id].coins --;
-						if(Math.random() < .5 && this.state.players[id].score > 0){
-							this.state.players[id].score --;
+
+			for (let skull of this.state.skulls.values()) {
+				if (skull.checkHit(this.state.players[id].x, this.state.players[id].y)) {
+					this.state.players[id].push(skull.angle, skull.speed * 1.2);
+					if (Math.random() < .2 && this.state.players[id].coins > 0) {
+						this.state.players[id].coins--;
+						if (Math.random() < .5 && this.state.players[id].score > 0) {
+							this.state.players[id].score--;
 						}
 					}
 					break;
@@ -427,7 +500,6 @@ export class GameRoom extends Room<GameState> {
 		}
 	}
 
-
-
-
 }
+
+

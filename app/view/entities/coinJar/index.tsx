@@ -41,9 +41,9 @@ export const CoinJar = (props: IProps) => {
       default:
         jarImages = [jarImage1, jarImage2, jarImage3, jarImage4, jarImage5];
     }
-    let textures: PIXI.AnimatedSprite["textures"] = [];
+    let textures = [];
     jarImages.forEach(image =>{
-      let texture = PIXI.Texture.from(image);
+      let texture = PIXI.Texture.from(image.src);
        textures.push(texture);
     });
     return textures;

@@ -17,7 +17,6 @@ interface IProps {
 
 export const Wall = (props: IProps) => {
   const fenceTextures = useMemo(() => {
-    console.log(WallImage)
     let textures: any = []
     textures = [PIXI.Texture.from(WallImage.src)]
     return textures
@@ -25,6 +24,7 @@ export const Wall = (props: IProps) => {
 
   return (
     <AnimatedSprite
+      key={Math.floor(Math.random() * 100000)}
       anchor={new PIXI.Point(0, 0)}
       width={props.xLength}
       height={props.yLength}
