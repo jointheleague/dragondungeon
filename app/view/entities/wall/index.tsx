@@ -14,7 +14,7 @@ interface IProps {
   angle: number;
 }
  
-
+ 
 export const Wall = (props: IProps) => {
   const fenceTextures = useMemo(() => {
     let textures: any = []
