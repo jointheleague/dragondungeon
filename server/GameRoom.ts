@@ -31,7 +31,6 @@ admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
 
 class ServerPlayer extends Player {
 	colyseusClient: Client = null
-
 	constructor(ballType: string, skinType: string, teamNum: number, client: Client) {
 		super(ballType, skinType, teamNum)
 		this.colyseusClient = client
@@ -113,6 +112,15 @@ export class GameRoom extends Room<GameState> {
 		} else { teamnum = 0; }
 		this.state.players[client.id] = new ServerPlayer(ballType, dragonSkin, teamnum, client);
 
+		var xPos = this.state.gamewidth*Math.random()
+		var yPos = this.state.gameheight*Math.random()
+		while(this.checkWalls(xPos, yPos, 45, false)){
+			xPos = this.state.gamewidth*Math.random()
+			yPos = this.state.gameheight*Math.random()
+		}
+		this.state.players[client.id].x = xPos
+		this.state.players[client.id].y = yPos
+
 		if (user.name == null) {
 			const adjectives = require('../../wordlists/adjectives.json');
 			const nouns = require('../../wordlists/nouns.json');
@@ -173,8 +181,17 @@ export class GameRoom extends Room<GameState> {
 		var teamNum;
 		if (this.state.gamemode == 'CTC') { teamNum = 1; }
 		else { teamNum = 0; }
-		this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000, Math.random() * 3000, size, teamNum));
-		Math.random() < 0.01 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000 + 40, Math.random() * 3000 + 40, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000, Math.random() * 3000, 20, 0));
+		let xPos = Math.random()*this.state.gamewidth
+		let yPos = Math.random()*this.state.gameheight
+		while(this.checkWalls(xPos, yPos, size, false)){
+			xPos = Math.random()*this.state.gamewidth
+			yPos = Math.random()*this.state.gameheight
+		}
+		this.state.coins.set(v4(), new Coin(this.state.coins.size, xPos, yPos, size, teamNum));
+		
+		
+		//IDK what this line does. Old?
+		//Math.random() < 0.01 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000 + 40, Math.random() * 3000 + 40, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000, Math.random() * 3000, 20, 0));
 	}
 
 	createCoin(x: number, y: number) {
@@ -241,6 +258,7 @@ export class GameRoom extends Room<GameState> {
 
 	removeDeadWalls(){
 		for (let id of this.state.walls.keys()) {
+			console.log(this.state.walls[id].health)
 			if(this.state.walls[id].health <= 0){
 				this.state.walls[id].remove
 			}
@@ -259,6 +277,7 @@ export class GameRoom extends Room<GameState> {
 			const speedY = Maths.round2Digits(player.direction.y * (((player.speed+player.coins) * (1/player.deceleration) * ticks) / magnitude));
 			const newX = player.x + speedX;
 			const newY = player.y + speedY;
+			
 			if(!this.checkWalls(player.x, newY, 45, false)){
 				player.y = newY;
 			} 
@@ -279,10 +298,6 @@ export class GameRoom extends Room<GameState> {
 		let walls = this.state.walls
 		let result = false
 
-
-
-
-
 		if(objectX > this.state.gamewidth-radius || objectY > this.state.gameheight-radius || objectX < radius || objectY < radius){
 			return true;
 		  }
@@ -300,7 +315,8 @@ export class GameRoom extends Room<GameState> {
 					
 					if( wall.isRotated && ( (objectX+radius) >(wall.x - xLen)&& (objectX-radius)<(wall.x)) || (!wall.isRotated) && ( (objectX+radius) >(wall.x)&& (objectX-radius)<(wall.x+xLen))){
 						if(isFireball && wall.gamemode == "CTC"){
-							wall.health -=1
+						//if(isFireball){
+							wall.health -= 1
 						}
 						result = true
 					}
@@ -404,7 +420,7 @@ export class GameRoom extends Room<GameState> {
 
 			this.movePlayer(this.state.players[id], dx/50)
 			this.moveFireballs(this.state.players[id], dx/50)
-
+			
 			this.state.players[id].tick(dx);
 
 			for (let id2 of this.state.players.keys()) {
@@ -521,6 +537,7 @@ export class GameRoom extends Room<GameState> {
 				}
 			}
 		}
+		this.removeDeadWalls()
 	}
 
 }
