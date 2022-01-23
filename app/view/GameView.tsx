@@ -16,6 +16,7 @@ import { CoinJar } from './entities/coinJar'
 import { Leaderboard } from 'components'
 
 let dragonCelebrating = false;
+let SFXPlayTimeout = false;
 
 interface GameViewProps {
   stateManager: StateManager
@@ -45,10 +46,25 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     this.app.ticker.add(() => this.renderScene())
 
     this.props.stateManager.room.onMessage('sfx', audioURL => {
-      dragonCelebrating = true
-      let sfx = new Audio(audioURL)
-      sfx.play()
+      if (audioURL == '/audio/coinjar.wav') {
+        dragonCelebrating = true
+      }
+      if (!SFXPlayTimeout || audioURL == '/audio/coin.wav' || audioURL == '/audio/coinjar.wav') {
+        SFXPlayTimeout = true
+        let sfx = new Audio(audioURL)
+        sfx.play()
+        setTimeout(() => SFXPlayTimeout = false, 1000)
+      }
       setTimeout(() => dragonCelebrating = false, 1000)
+    })
+
+    this.props.stateManager.room.onMessage('chatlog', chatMessage => {
+      console.log(chatMessage)
+      if (document.querySelectorAll('.chatlog-item').length >= 4) {
+        document.querySelector('#chatlog').innerHTML = ''
+      }
+      document.querySelector('#chatlog').innerHTML += `<p class='chatlog-item'>${chatMessage}</p>`
+      setTimeout(() => SFXPlayTimeout = false, 1000)
     })
   }
 

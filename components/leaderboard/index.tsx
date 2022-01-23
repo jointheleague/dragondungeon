@@ -61,9 +61,9 @@ export function Leaderboard(props: {
         <>
             {(window.innerWidth >= 1000) && <div className={styles.leaderboardContainer} >
                 <h1>Dragon Dungeon</h1>
-                <h2>{countdownRender}</h2>
-                <h3>{new Date().toLocaleTimeString()}</h3>
                 <table><tbody id='leaderboard'>{renderTableData(props.players)}</tbody></table>
+                <h2>{countdownRender}</h2>
+                <div id='chatlog'></div>
             </div>}
 
             {(window.innerWidth <= 1000) && <>
