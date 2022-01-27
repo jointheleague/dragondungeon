@@ -10,6 +10,9 @@ export class Player extends Schema {
 	fireballs = new ArraySchema < Fireball > ();
 
 	@type("number")
+	botTimeout: number = Math.random() * 5000
+
+	@type("number")
 	x: number = 1500;
 
 	@type("number")
@@ -195,24 +198,5 @@ export class Player extends Schema {
 		}
 		
 	}*/
-
-	/*push(angle : number, speed: number) {
-		const oldX = this.x;
-		const oldY = this.y;
-		const newX = oldX + (speed * Math.cos(angle));
-		const newY = oldY + (speed * Math.sin(angle));
-
-		if (!Maths.checkWalls(oldX, newY, 45)) {
-			this.y = newY;
-		}
-		if (!Maths.checkWalls(newX, oldY, 45)) {
-			this.x = newX;
-		}
-		
-	}
-*/
-	
-
-
 }
 

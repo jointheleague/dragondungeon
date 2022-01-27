@@ -59,15 +59,12 @@ export function Leaderboard(props: {
 
     return (
         <>
-            {(window.innerWidth >= 1000) && <div className={styles.leaderboardContainer} >
-                <h1>Dragon Dungeon</h1>
+            <p className={styles.mobileCountdown}>{countdownRender}</p>
+            {(window.innerWidth >= 1000) && <><div id='chatlog' className={styles.chatlog}></div><div className={styles.leaderboardContainer} >
                 <table><tbody id='leaderboard'>{renderTableData(props.players)}</tbody></table>
-                <h2>{countdownRender}</h2>
-                <div id='chatlog'></div>
-            </div>}
+            </div></>}
 
             {(window.innerWidth <= 1000) && <>
-                <p className={styles.mobileCountdown}>{countdownRender}</p>
                 <Box>{renderMobileTableData(players)}</Box>
             </>}
         </>

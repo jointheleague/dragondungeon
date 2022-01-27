@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Cinzel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 :root {
   --primary_color: red;
@@ -14,7 +14,7 @@ a {
 }
 
 * {
-  font-family: 'Cinzel Decorative', sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   cursor: crosshair !important;
 }
 
@@ -44,7 +44,8 @@ body {
 
 h1 {
 	color: #c60c30;
-  font-family: 'Cinzel Decorative', sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 25pt;
 }
 
 .scores {

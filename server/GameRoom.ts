@@ -23,8 +23,6 @@ const botnames = require('./botnames.json');
 const botwords = require('./wordlists/nouns.json');
 const MAX_COINS_HELD = 30;
 
-let botTimeout = true
-
 const serviceAccount = require('../config/private/adminsdk.json')
 
 admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
@@ -39,7 +37,7 @@ class ServerPlayer extends Player {
 
 export class GameRoom extends Room<GameState> {
 	counter = 0;
-	maxClients = 15;
+	maxClients = 6;
 
 	redTeamIds: string[] = [];
 	blueTeamIds: string[] = [];
@@ -258,7 +256,6 @@ export class GameRoom extends Room<GameState> {
 
 	removeDeadWalls(){
 		for (let id of this.state.walls.keys()) {
-			console.log(this.state.walls[id].health)
 			if(this.state.walls[id].health <= 0){
 				this.state.walls[id].remove
 			}
@@ -266,11 +263,6 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	movePlayer(player: Player, ticks: number){
-		if (player.isBot && botTimeout) {
-			botTimeout = false
-			this.moveBot(player)
-			setTimeout(() => botTimeout = true, 1000)
-		}
 		if (player.direction.x !== 0 || player.direction.y !== 0) {
 			const magnitude = Maths.normalize2D(player.direction.x, player.direction.y);
 			const speedX = Maths.round2Digits(player.direction.x * (((player.speed+player.coins) * (1/player.deceleration) * ticks) / magnitude));
@@ -350,12 +342,11 @@ export class GameRoom extends Room<GameState> {
 
 	tick() {
 
-		if (this.state.players.size < 4) {
+		if (this.state.players.size < 2) {
 			for (let botIndex = 0; botIndex < 3; botIndex++) {
 				let botNames = require('./botnames.json')
 
 				let ballType = 'fire'
-				let dragonSkin = 'light'
 				switch (Math.floor(Math.random() * 5)) {
 					case 0:
 						ballType = "fire";
@@ -374,21 +365,10 @@ export class GameRoom extends Room<GameState> {
 						break;
 				}
 
-				switch (Math.floor(Math.random() * 3)) {
-					case 0:
-						dragonSkin = "default";
-						break;
-					case 1:
-						dragonSkin = "light";
-						break;
-					case 2:
-						dragonSkin = "gold";
-						break;
-				}
-
-				let botPlayer = new Player(ballType, dragonSkin, 0)
+				let botPlayer = new Player(ballType, 'light', 0)
 				botPlayer.onlineName = botNames[Math.floor(Math.random() * botNames.length)]
 				botPlayer.isBot = true
+				setInterval(() => this.moveBot(botPlayer), botPlayer.botTimeout)
 				this.botPlayers.push(botPlayer)
 				this.state.players.set(v4(), botPlayer)
 			}
@@ -434,7 +414,18 @@ export class GameRoom extends Room<GameState> {
 							const lifetimeRemove = 1; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
 
 							try {
-								this.state.players[id].push(fireBall.angle - Math.PI, fireBall.speed)
+								const oldX = this.state.players[id].x;
+								const oldY = this.state.players[id].y;
+								const newX = oldX + (fireBall.speed * Math.cos(fireBall.angle - Math.PI));
+								const newY = oldY + (fireBall.speed * Math.sin(fireBall.angle - Math.PI));
+						
+								if (!this.checkWalls(oldX, newY, 45, true)) {
+									this.state.players[id].y = newY;
+								}
+								if (!this.checkWalls(newX, oldY, 45, true)) {
+									this.state.players[id].x = newX;
+								}
+
 								if (this.state.players[id].coins > 0 && Math.random() < coinChance) {
 									this.state.players[id].coins--;
 									fireBall.lifetime -= lifetimeRemove;
@@ -491,7 +482,8 @@ export class GameRoom extends Room<GameState> {
 			for (let cid of this.state.coins.keys()) {
 				if (this.state.coins[cid].checkHit(this.state.players[id].x, this.state.players[id].y, 0) && this.state.players[id].coins < 10) {
 
-					var coins = this.state.players[id].coins;
+					let prevCoins = this.state.players[id].coins
+					var coins = this.state.players[id].coins
 					try {
 						this.state.players[id].colyseusClient.send('sfx', '/audio/coin.wav')
 					} catch {}
@@ -509,6 +501,12 @@ export class GameRoom extends Room<GameState> {
 							this.state.players[id].score += 20;
 							this.state.players[id].coinsPickedUp += 20;
 							break;
+					}
+					if (prevCoins < 10 && coins >= 10) {
+						try {
+							this.state.players[id].colyseusClient.send('sfx', '/audio/error.wav')
+							this.state.players[id].colyseusClient.send('chatlog', 'Coin jar full!')
+						} catch {}
 					}
 					this.state.players[id].coinsPickedUp += Math.min(coins, 10) - this.state.players[id].coins;
 					this.state.players[id].coins = Math.min(coins, 10);

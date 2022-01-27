@@ -3,9 +3,9 @@
   display: block;
   margin: auto;
   position: fixed;
-  top: 0px;
+  bottom: 20px;
   left: 0px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: black;
   color: whitesmoke;
   padding: 16px;
 }
@@ -14,7 +14,7 @@
   .leaderboardContainer {
     border-bottom: 3px solid var(--primary_color);
     width: 100vw;
-    max-height: 100px;
+    max-height: 40px;
     overflow: hidden;
     padding: 6px;
   }
@@ -24,24 +24,31 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: black;
   color: whitesmoke;
   border-left: none;
   border-right: 3px solid red;
   border-bottom: 3px solid red;
   border-top: 3px solid red;
-  padding: 15px;
+  padding: 20px;
 }
 
 @media only screen and (min-width:1000px) {
   .leaderboardContainer {
     border-right: 3px solid var(--primary_color);
-    height: 100vh;
+    border-top: 3px solid var(--primary_color);
+    border-bottom: 3px solid var(--primary_color);
+    height: 30vh;
+    min-width: 30%;
   }
 }
 
 .leaderboardContainer tr, .leaderboardContainer th {
   padding: 5px;
+}
+
+.mobileCountdown tr, .mobileCountdown th {
+  padding: 15px;
 }
 
 .playerData {
@@ -51,4 +58,17 @@
 .leaderboardContainer table {
   width: 100%;
   text-align: center;
+}
+
+.chatlog {
+  text-align: right;
+  height: 30vh;
+  width: 30vw;
+  position: fixed;
+  bottom: 20px;
+  right: 0;
+  padding: 15px;
+  font-size: 13pt;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
 }
