@@ -16,6 +16,8 @@ import { Wall } from './entities/wall'
 import { CoinJar } from './entities/coinJar'
 import { Bar } from './entities/healthBar/healthBar'
 import { Leaderboard } from 'components'
+import { Skull } from './entities/skull'
+import { Bat } from './entities/bat'
 
 let dragonCelebrating = false;
 let SFXPlayTimeout = false;
@@ -77,6 +79,18 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     let walls = []
     let coins = []
     let hudBars = []
+    let bats = [];
+    let skulls = [];
+
+    console.log(this.props.state.bats)
+
+    this.props.state.bats.forEach(bat => {
+      bats.push(<Bat x={bat.x} y={bat.y} rot={bat.angle} key={bat.key.toString()}/>)
+    });
+
+    this.props.state.skulls.forEach(skull => {
+      skulls.push(<Skull x={skull.x} y={skull.y} rot={skull.angle} key={skull.key.toString()}/>)
+    });
     
     this.props.state.walls.forEach(wall => {
       const factor = 6;
@@ -153,7 +167,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     let coinJar = <CoinJar x={1500} y={1500} key={'coinJar'} team={0} />
 
     render(
-      <>{ tiles }{ walls }{ coins }{ coinJar }{ dragons }{ hudBars }</>,
+      <>{ tiles }{ walls }{ coins }{ coinJar }{ dragons }{ hudBars }{ bats }{ skulls }</>,
       this.viewport
     )
   }

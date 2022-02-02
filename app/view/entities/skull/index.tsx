@@ -21,7 +21,7 @@ export const Skull = (props: IProps) => {
     let coinImages = [skullImage1, skullImage2, skullImage3];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     coinImages.forEach(image =>{
-      let texture = PIXI.Texture.from(image);
+      let texture = PIXI.Texture.from(image.src);
        textures.push(texture);
     });
     return textures;

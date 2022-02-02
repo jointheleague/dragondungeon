@@ -11,13 +11,14 @@ import {
 	Maths,
 	Countdown,
 	Fireball,
-	CircleBat,
-	LineSkull,
+	Bat,
+	Skull,
 	Wall
 } from '../common';
 
 import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
+import { BaseTexture } from 'pixi.js';
 
 const botnames = require('./botnames.json');
 const botwords = require('./wordlists/nouns.json');
@@ -53,7 +54,31 @@ export class GameRoom extends Room<GameState> {
 		this.startGameLoop();
 	}
 
+	manageBat() {
+		let bat = new Bat(Math.floor(Math.random() * 10000), Math.floor(Math.random() * 3000), Math.floor(Math.random() * 3000), 1)
+		this.state.bats.set(v4(), bat)
+		setTimeout(() => {
+			if (bat.angle == 0) {
+				bat.x += Math.floor(Math.random() * 20)
+				bat.y += Math.floor(Math.random() * 20)
+			} else {
+				bat.x -= Math.floor(Math.random() * 20)
+				bat.y -= Math.floor(Math.random() * 20)
+			}
+
+			if (this.checkWalls(bat.x, bat.y, 1, false)) {
+				bat.angle == 0 ? bat.angle = 1 : bat.angle = 0
+			}
+		}, 100)
+	}
+
 	async onJoin(client: Client, options: { token: string }, _2: any) {
+
+		for (let batCreationIndex = 0; batCreationIndex < 70; batCreationIndex++) { this.manageBat() }
+
+		this.state.skulls.set(v4(), new Skull(Math.floor(Math.random() * 10000), 1500, 1500, 1))
+		this.state.skulls.set(v4(), new Skull(Math.floor(Math.random() * 10000), 0, 1500, 1))
+
 		const user = await admin.auth().verifyIdToken(options.token);
 		const db = admin.firestore();
 		let ballType = "fireball";
@@ -110,11 +135,11 @@ export class GameRoom extends Room<GameState> {
 		} else { teamnum = 0; }
 		this.state.players[client.id] = new ServerPlayer(ballType, dragonSkin, teamnum, client);
 
-		var xPos = this.state.gamewidth*Math.random()
-		var yPos = this.state.gameheight*Math.random()
-		while(this.checkWalls(xPos, yPos, 45, false)){
-			xPos = this.state.gamewidth*Math.random()
-			yPos = this.state.gameheight*Math.random()
+		var xPos = this.state.gamewidth * Math.random()
+		var yPos = this.state.gameheight * Math.random()
+		while (this.checkWalls(xPos, yPos, 45, false)) {
+			xPos = this.state.gamewidth * Math.random()
+			yPos = this.state.gameheight * Math.random()
 		}
 		this.state.players[client.id].x = xPos
 		this.state.players[client.id].y = yPos
@@ -179,15 +204,15 @@ export class GameRoom extends Room<GameState> {
 		var teamNum;
 		if (this.state.gamemode == 'CTC') { teamNum = 1; }
 		else { teamNum = 0; }
-		let xPos = Math.random()*this.state.gamewidth
-		let yPos = Math.random()*this.state.gameheight
-		while(this.checkWalls(xPos, yPos, size, false)){
-			xPos = Math.random()*this.state.gamewidth
-			yPos = Math.random()*this.state.gameheight
+		let xPos = Math.random() * this.state.gamewidth
+		let yPos = Math.random() * this.state.gameheight
+		while (this.checkWalls(xPos, yPos, size, false)) {
+			xPos = Math.random() * this.state.gamewidth
+			yPos = Math.random() * this.state.gameheight
 		}
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, xPos, yPos, size, teamNum));
-		
-		
+
+
 		//IDK what this line does. Old?
 		//Math.random() < 0.01 ? this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000 + 40, Math.random() * 3000 + 40, 100, 0)) : this.state.coins.set(v4(), new Coin(this.state.coins.size, Math.random() * 3000, Math.random() * 3000, 20, 0));
 	}
@@ -196,13 +221,13 @@ export class GameRoom extends Room<GameState> {
 		this.state.coins.set(v4(), new Coin(v4(), x, y, 20, 0))
 	}
 	//sets x and y of player to random numbers
-	spawnPlayer(player: Player){
+	spawnPlayer(player: Player) {
 		var newX = 0;
 		var newY = 0;
 		do {
-			newX = Math.random()*100;
-			newY = Math.random()*100;
-		}while (this.checkWalls(newX, newY, 45, false) ||  (newX > 500 && newY > 500 && newX < 3500 && newY < 3500))
+			newX = Math.random() * 100;
+			newY = Math.random() * 100;
+		} while (this.checkWalls(newX, newY, 45, false) || (newX > 500 && newY > 500 && newX < 3500 && newY < 3500))
 		player.x = newX;
 		player.y = newY;
 	}
@@ -221,7 +246,7 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	//this is where the setup of all inner walls is
-	setWalls(isCTC: boolean){
+	setWalls(isCTC: boolean) {
 		const gamewidth = this.state.gamewidth
 		const gameheight = this.state.gameheight
 		const midAreaLength = 350
@@ -229,57 +254,57 @@ export class GameRoom extends Room<GameState> {
 		const wallLength = 700
 		const wallWidth = 50
 
-			//bottom right
-			const wall2 = new Wall( (gamewidth/2) +midAreaLength, (gameheight/2)+midAreaLength, wallLength, wallWidth, true, 2, "coingrab")
-			const wall3 = new Wall( (gamewidth/2) +midAreaLength, (gameheight/2)+midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
-			//bottom left
-			const wall4 = new Wall( (gamewidth/2) -midAreaLength, (gameheight/2)+midAreaLength, wallLength, wallWidth, true, 2, "coingrab")
-			const wall5 = new Wall( (gamewidth/2) -midAreaLength-wallLength, (gameheight/2)+midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
-			//top left
-			const wall6 = new Wall( (gamewidth/2) -midAreaLength, (gameheight/2)-midAreaLength-wallLength, wallLength, wallWidth, true, 2, "coingrab")
-			const wall7 = new Wall( (gamewidth/2) -midAreaLength-wallLength, (gameheight/2)-midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
-			//top right
-			const wall8 = new Wall( (gamewidth/2) +midAreaLength, (gameheight/2)-midAreaLength-wallLength, wallLength, wallWidth, true, 2, "coingrab")
-			const wall9 = new Wall( (gamewidth/2) +midAreaLength, (gameheight/2)-midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
+		//bottom right
+		const wall2 = new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, true, 2, "coingrab")
+		const wall3 = new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
+		//bottom left
+		const wall4 = new Wall((gamewidth / 2) - midAreaLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, true, 2, "coingrab")
+		const wall5 = new Wall((gamewidth / 2) - midAreaLength - wallLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
+		//top left
+		const wall6 = new Wall((gamewidth / 2) - midAreaLength, (gameheight / 2) - midAreaLength - wallLength, wallLength, wallWidth, true, 2, "coingrab")
+		const wall7 = new Wall((gamewidth / 2) - midAreaLength - wallLength, (gameheight / 2) - midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
+		//top right
+		const wall8 = new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) - midAreaLength - wallLength, wallLength, wallWidth, true, 2, "coingrab")
+		const wall9 = new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) - midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
 
-			this.state.walls[v4()] = wall2
-			this.state.walls[v4()] = wall3
+		this.state.walls[v4()] = wall2
+		this.state.walls[v4()] = wall3
 
-			this.state.walls[v4()] = wall4
-			this.state.walls[v4()] = wall5
+		this.state.walls[v4()] = wall4
+		this.state.walls[v4()] = wall5
 
-			this.state.walls[v4()] = wall6
-			this.state.walls[v4()] = wall7
+		this.state.walls[v4()] = wall6
+		this.state.walls[v4()] = wall7
 
-			this.state.walls[v4()] = wall8
-			this.state.walls[v4()] = wall9
+		this.state.walls[v4()] = wall8
+		this.state.walls[v4()] = wall9
 	}
 
-	removeDeadWalls(){
+	removeDeadWalls() {
 		for (let id of this.state.walls.keys()) {
-			if(this.state.walls[id].health <= 0){
+			if (this.state.walls[id].health <= 0) {
 				this.state.walls[id].remove
 			}
 		}
 	}
 
-	movePlayer(player: Player, ticks: number){
+	movePlayer(player: Player, ticks: number) {
 		if (player.direction.x !== 0 || player.direction.y !== 0) {
 			const magnitude = Maths.normalize2D(player.direction.x, player.direction.y);
-			const speedX = Maths.round2Digits(player.direction.x * (((player.speed+player.coins) * (1/player.deceleration) * ticks) / magnitude));
-			const speedY = Maths.round2Digits(player.direction.y * (((player.speed+player.coins) * (1/player.deceleration) * ticks) / magnitude));
+			const speedX = Maths.round2Digits(player.direction.x * (((player.speed + player.coins) * (1 / player.deceleration) * ticks) / magnitude));
+			const speedY = Maths.round2Digits(player.direction.y * (((player.speed + player.coins) * (1 / player.deceleration) * ticks) / magnitude));
 			const newX = player.x + speedX;
 			const newY = player.y + speedY;
-			
-			if(!this.checkWalls(player.x, newY, 45, false)){
+
+			if (!this.checkWalls(player.x, newY, 45, false)) {
 				player.y = newY;
-			} 
-			if(!this.checkWalls(newX, player.y, 45, false)){
+			}
+			if (!this.checkWalls(newX, player.y, 45, false)) {
 				player.x = newX;
 			}
-			
-			
-			if(player.deceleration > 1){
+
+
+			if (player.deceleration > 1) {
 				player.deceleration *= .9;
 			}
 		}
@@ -287,28 +312,28 @@ export class GameRoom extends Room<GameState> {
 	}
 
 	//false means no collision, true means collision
-	checkWalls(objectX: number, objectY: number, radius: number, isFireball: boolean){
+	checkWalls(objectX: number, objectY: number, radius: number, isFireball: boolean) {
 		let walls = this.state.walls
 		let result = false
 
-		if(objectX > this.state.gamewidth-radius || objectY > this.state.gameheight-radius || objectX < radius || objectY < radius){
+		if (objectX > this.state.gamewidth - radius || objectY > this.state.gameheight - radius || objectX < radius || objectY < radius) {
 			return true;
-		  }
+		}
 
-		for(let wallKey of this.state.walls.keys()){
+		for (let wallKey of this.state.walls.keys()) {
 			let wall = this.state.walls[wallKey]
 			let xLen = wall.xLength
 			let yLen = wall.yLength
-			if(wall.isRotated){
-				xLen = (wall.yLength*(1))
+			if (wall.isRotated) {
+				xLen = (wall.yLength * (1))
 				yLen = wall.xLength
 			}
-			if(wall.health>=0){
-				if( ( (objectY+radius)>wall.y && (objectY-radius)<(wall.y+yLen)) ){
-					
-					if( wall.isRotated && ( (objectX+radius) >(wall.x - xLen)&& (objectX-radius)<(wall.x)) || (!wall.isRotated) && ( (objectX+radius) >(wall.x)&& (objectX-radius)<(wall.x+xLen))){
-						if(isFireball && wall.gamemode == "CTC"){
-						//if(isFireball){
+			if (wall.health >= 0) {
+				if (((objectY + radius) > wall.y && (objectY - radius) < (wall.y + yLen))) {
+
+					if (wall.isRotated && ((objectX + radius) > (wall.x - xLen) && (objectX - radius) < (wall.x)) || (!wall.isRotated) && ((objectX + radius) > (wall.x) && (objectX - radius) < (wall.x + xLen))) {
+						if (isFireball && wall.gamemode == "CTC") {
+							//if(isFireball){
 							wall.health -= 1
 						}
 						result = true
@@ -316,30 +341,30 @@ export class GameRoom extends Room<GameState> {
 				}
 			}
 		}
-		
+
 		return result
 	}
 
-	moveFireballs(player: Player, ticks: number){
-		for(let fireball of player.fireballs){
+	moveFireballs(player: Player, ticks: number) {
+		for (let fireball of player.fireballs) {
 			fireball.lifetime -= ticks;
 
 			var newX = fireball.x + (fireball.speed * Math.cos(fireball.angle - Math.PI));
 			var newY = fireball.y + (fireball.speed * Math.sin(fireball.angle - Math.PI));
-			if(!this.checkWalls(newX, fireball.y, 22.5, true)){
+			if (!this.checkWalls(newX, fireball.y, 22.5, true)) {
 				fireball.x = newX;
-			}else{
+			} else {
 				fireball.lifetime -= .3;
 			}
-			if(!this.checkWalls(fireball.x, newY, 22.5, true)){
+			if (!this.checkWalls(fireball.x, newY, 22.5, true)) {
 				fireball.y = newY;
-			}else{
+			} else {
 				fireball.lifetime -= .3;
 			}
 		}
 	}
 
-	
+
 
 	tick() {
 
@@ -389,19 +414,15 @@ export class GameRoom extends Room<GameState> {
 			this.spawnCoin();
 		}
 
-		for (let bat of this.state.bats.values()) {
-			bat.move();
-		}
-
 		for (let skull of this.state.skulls.values()) {
 			skull.move();
 		}
 
 		for (let id of this.state.players.keys()) {
 
-			this.movePlayer(this.state.players[id], dx/50)
-			this.moveFireballs(this.state.players[id], dx/50)
-			
+			this.movePlayer(this.state.players[id], dx / 50)
+			this.moveFireballs(this.state.players[id], dx / 50)
+
 			this.state.players[id].tick(dx);
 
 			for (let id2 of this.state.players.keys()) {
@@ -411,7 +432,7 @@ export class GameRoom extends Room<GameState> {
 							this.state.players[id2].hitsDealt++;
 							this.state.players[id].hitsRecived++;
 							this.state.players[id].health -= 0.1;
-							if(this.state.players[id].health < 0) {
+							if (this.state.players[id].health < 0) {
 								this.state.players[id].health = 0;
 								try {
 									this.state.players[id].colyseusClient.send('chatlog', 'You are very dead')
@@ -424,7 +445,7 @@ export class GameRoom extends Room<GameState> {
 										this.state.players[id].y = 200
 										this.state.players[id].health = 10
 									}, 5000)
-								} catch {}
+								} catch { }
 							}
 							var fireBall = this.state.players[id2].fireballs[i];
 							const coinChance = .2; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
@@ -435,7 +456,7 @@ export class GameRoom extends Room<GameState> {
 								const oldY = this.state.players[id].y;
 								const newX = oldX + (fireBall.speed * Math.cos(fireBall.angle - Math.PI));
 								const newY = oldY + (fireBall.speed * Math.sin(fireBall.angle - Math.PI));
-						
+
 								if (!this.checkWalls(oldX, newY, 45, true)) {
 									this.state.players[id].y = newY;
 								}
@@ -453,7 +474,7 @@ export class GameRoom extends Room<GameState> {
 										this.createCoin(this.state.players[id].x, this.state.players[id].y);
 									}
 								}
-							} catch {}
+							} catch { }
 
 
 							switch (fireBall.type) {
@@ -487,11 +508,11 @@ export class GameRoom extends Room<GameState> {
 			if (this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y, 0)) {
 				// when a player has collided with the coinjar
 				this.state.players[id].score += this.state.players[id].coins;// add coins to players score
-				if(this.state.players[id].coins > 0 ) {
+				if (this.state.players[id].coins > 0) {
 					try {
 						this.state.players[id].colyseusClient.send('sfx', '/audio/coinjar.wav')
 						this.broadcast('chatlog', `${this.state.players[id].onlineName} <img src='/img/game/coinJar.png' height='20px' height='20px' style='image-rendering:pixelated' /> ${this.state.players[id].coins}`)
-					} catch {}
+					} catch { }
 				}
 				this.state.players[id].coins = 0;// remove coins
 			}
@@ -503,7 +524,7 @@ export class GameRoom extends Room<GameState> {
 					var coins = this.state.players[id].coins
 					try {
 						this.state.players[id].colyseusClient.send('sfx', '/audio/coin.wav')
-					} catch {}
+					} catch { }
 					switch (this.state.coins[cid].getSize()) {
 						case (20):
 							coins++;
@@ -523,7 +544,7 @@ export class GameRoom extends Room<GameState> {
 						try {
 							this.state.players[id].colyseusClient.send('sfx', '/audio/error.wav')
 							this.state.players[id].colyseusClient.send('chatlog', '<img src="/img/game/icon.png" width="20px" height="20px" /> out of space')
-						} catch {}
+						} catch { }
 					}
 					this.state.players[id].coinsPickedUp += Math.min(coins, 10) - this.state.players[id].coins;
 					this.state.players[id].coins = Math.min(coins, 10);
@@ -541,7 +562,6 @@ export class GameRoom extends Room<GameState> {
 
 			for (let skull of this.state.skulls.values()) {
 				if (skull.checkHit(this.state.players[id].x, this.state.players[id].y)) {
-					this.state.players[id].push(skull.angle, skull.speed * 1.2);
 					if (Math.random() < .2 && this.state.players[id].coins > 0) {
 						this.state.players[id].coins--;
 						if (Math.random() < .5 && this.state.players[id].score > 0) {
