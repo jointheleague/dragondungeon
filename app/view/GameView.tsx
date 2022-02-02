@@ -77,7 +77,12 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     let coins = []
     
     this.props.state.walls.forEach(wall => {
-      walls.push(<Wall x={wall.x} y={wall.y} xLength={wall.xLength} yLength={wall.yLength} angle = {wall.angle} />)
+      const factor = 6;
+        for(let i = 0; i<factor; i++){
+          const newLen = (wall.xLength/factor)
+          if(!wall.isRotated){walls.push(<Wall x={(newLen*i)+wall.x} y={wall.y} xLength={newLen} yLength={wall.yLength} angle = {wall.angle} />)}
+          else{walls.push(<Wall x={wall.x} y={(newLen*i)+wall.y} xLength={newLen} yLength={wall.yLength} angle = {wall.angle} />)}
+      }
     })
 
     const id = this.props.stateManager.room.sessionId;

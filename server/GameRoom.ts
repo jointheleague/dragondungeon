@@ -225,7 +225,8 @@ export class GameRoom extends Room<GameState> {
 		const gamewidth = this.state.gamewidth
 		const gameheight = this.state.gameheight
 		const midAreaLength = 350
-		const wallLength = 650
+		//wall length needs to be a multiple of 100
+		const wallLength = 700
 		const wallWidth = 50
 
 			//bottom right
