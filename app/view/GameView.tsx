@@ -4,6 +4,7 @@ import { Controls } from 'app/controls'
 import { IInputs, Player } from 'common'
 import { render } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
+import { v4 } from 'uuid'
 
 import { Viewport } from 'pixi-viewport'
 
@@ -13,6 +14,7 @@ import { MovingBackground } from './entities/movingBackground'
 import { Coin } from './entities/coin'
 import { Wall } from './entities/wall'
 import { CoinJar } from './entities/coinJar'
+import { Bar } from './entities/healthBar/healthBar'
 import { Leaderboard } from 'components'
 
 let dragonCelebrating = false;
@@ -41,6 +43,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     })
     this.gameCanvas!.appendChild(this.app.view)
     this.viewport = new Viewport()
+    this.viewport.zoom(30, true)
     this.app.stage.addChild(this.viewport)
     this.app.start()
     this.app.ticker.add(() => this.renderScene())
@@ -59,14 +62,16 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     })
 
     this.props.stateManager.room.onMessage('chatlog', chatMessage => {
-      console.log(chatMessage);
-      (document.querySelector('#chatlog') as any).style.display = 'block'
-      if (document.querySelectorAll('.chatlog-item').length >= 4) {
-        document.querySelector('#chatlog').innerHTML = ''
-      }
-      document.querySelector('#chatlog').innerHTML += `<p class='chatlog-item'>${chatMessage}</p>`
-      setTimeout(() => SFXPlayTimeout = false, 1000)
-      setTimeout(() => (document.querySelector('#chatlog') as any).style.display = 'none', 10000)
+        console.log(chatMessage);
+        if (typeof (document.querySelector('#chatlog') as any) == undefined) {
+          (document.querySelector('#chatlog') as any).style.display = 'block'
+          if (document.querySelectorAll('.chatlog-item').length >= 3) {
+            document.querySelector('#chatlog').innerHTML = ''
+          }
+          document.querySelector('#chatlog').innerHTML += `<p class='chatlog-item'>${chatMessage}</p>`
+          setTimeout(() => SFXPlayTimeout = false, 1000)
+          setTimeout(() => (document.querySelector('#chatlog') as any).style.display = 'none', 10000)
+        }
     })
   }
 
@@ -75,6 +80,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     let tiles = []
     let walls = []
     let coins = []
+    let hudBars = []
     
     this.props.state.walls.forEach(wall => {
       walls.push(<Wall x={wall.x} y={wall.y} xLength={wall.xLength} yLength={wall.yLength} angle = {wall.angle} />)
@@ -89,6 +95,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       } else {
         dragons.push(<Dragon player={player} key={player.onlineID} team={0} celebration={false} />)
       }
+      hudBars.push(<Bar key={v4()} health={player.health}  x={player.x - 35} y={player.y - 80} width={70} height={18} color ={0xe30b1d} coins={player.coins} name={player.onlineName}/>) 
     })
 
     //moves the center of the viewport to the player 
@@ -145,7 +152,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     let coinJar = <CoinJar x={1500} y={1500} key={'coinJar'} team={0} />
 
     render(
-      <>{ tiles }{ walls }{ coins }{ coinJar }{ dragons }</>,
+      <>{ tiles }{ walls }{ coins }{ coinJar }{ dragons }{ hudBars }</>,
       this.viewport
     )
   }

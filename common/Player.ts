@@ -13,6 +13,9 @@ export class Player extends Schema {
 	botTimeout: number = Math.random() * 5000
 
 	@type("number")
+	health: number = 10
+
+	@type("number")
 	x: number = 1500;
 
 	@type("number")

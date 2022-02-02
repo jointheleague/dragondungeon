@@ -8,6 +8,7 @@ interface BarProps {
   height: number;
   color: number;
   coins: number;
+  health: number;
   name: string;
   zIndex?: number;
 }
@@ -19,6 +20,7 @@ function propsEqual(oldProps: BarProps, newProps: BarProps) {
     oldProps.width === newProps.width &&
     oldProps.color === newProps.color &&
     oldProps.height === newProps.height &&
+    oldProps.health === newProps.health &&
     oldProps.coins === newProps.coins &&
     oldProps.name === newProps.name 
   );
@@ -39,23 +41,23 @@ export const Bar = CustomPIXIComponent<PIXI.Graphics, BarProps>(
           newProps.y + 80,
           50
         );*/
-        instance.beginFill(.2);
-        instance.drawRect(
-          newProps.x - 2,
-          newProps.y + 10,
-          newProps.width + 5,
-          newProps.height
-        );
-        instance.beginFill(newProps.color);
+        instance.beginFill(0xf9e300);
         instance.drawRect(
           newProps.x,
-          newProps.y + 10,
+          newProps.y - 35,
           newProps.coins * 7.5,
           newProps.height - 3
         );
-        let name = new PIXI.Text(newProps.name, {fontFamily : 'Arial', fontSize: 20, align : 'center', fill: 0xfcba03 });
+        instance.beginFill(0xc60c30);
+        instance.drawRect(
+          newProps.x,
+          newProps.y - 30,
+          newProps.health * 7.5,
+          newProps.height - 3
+        );
+        let name = new PIXI.Text(newProps.name, {fontFamily : 'Press Start 2P', fontSize: 20, align : 'center', fill: '#ffffff' });
         name.x = newProps.x - (name.width / 2) + 35;
-        name.y = newProps.y - 15;
+        name.y = newProps.y - 5;
         instance.addChild(name);
         instance.endFill();
       }

@@ -409,6 +409,22 @@ export class GameRoom extends Room<GameState> {
 						if (this.state.players[id2].fireballs[i].checkHit(this.state.players[id].x, this.state.players[id].y, this.state.players[id].team)) {
 							this.state.players[id2].hitsDealt++;
 							this.state.players[id].hitsRecived++;
+							this.state.players[id].health -= 0.1;
+							if(this.state.players[id].health < 0) {
+								this.state.players[id].health = 0;
+								try {
+									this.state.players[id].colyseusClient.send('chatlog', 'You are very dead')
+									this.state.players[id].x = -40000
+									this.state.players[id].y = -40000
+									this.state.players[id].coins = 0
+
+									setTimeout(() => {
+										this.state.players[id].x = 200
+										this.state.players[id].y = 200
+										this.state.players[id].health = 10
+									}, 5000)
+								} catch {}
+							}
 							var fireBall = this.state.players[id2].fireballs[i];
 							const coinChance = .2; // the possibility of removing a coin on collision with a fireball, this is done to spread out the coins more
 							const lifetimeRemove = 1; // the lifetime decreace of the fireball for every coin it removes from a dragon (as if  it is heavier)
@@ -473,7 +489,7 @@ export class GameRoom extends Room<GameState> {
 				if(this.state.players[id].coins > 0 ) {
 					try {
 						this.state.players[id].colyseusClient.send('sfx', '/audio/coinjar.wav')
-						this.broadcast('chatlog', `&rarr; ${this.state.players[id].onlineName} deposited ${this.state.players[id].coins} coins!`)
+						this.broadcast('chatlog', `${this.state.players[id].onlineName} deposited ${this.state.players[id].coins} coins!`)
 					} catch {}
 				}
 				this.state.players[id].coins = 0;// remove coins
@@ -505,7 +521,7 @@ export class GameRoom extends Room<GameState> {
 					if (prevCoins < 10 && coins >= 10) {
 						try {
 							this.state.players[id].colyseusClient.send('sfx', '/audio/error.wav')
-							this.state.players[id].colyseusClient.send('chatlog', 'Coin jar full!')
+							this.state.players[id].colyseusClient.send('chatlog', 'Bank your coins!')
 						} catch {}
 					}
 					this.state.players[id].coinsPickedUp += Math.min(coins, 10) - this.state.players[id].coins;
