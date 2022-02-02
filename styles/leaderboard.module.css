@@ -63,12 +63,11 @@
 .chatlog {
   text-align: right;
   height: 30vh;
-  width: 30vw;
+  width: 25vw;
   position: fixed;
   bottom: 20px;
   right: 0;
   padding: 15px;
   font-size: 13pt;
   background: rgba(0, 0, 0, 0.6);
-  display: none;
 }

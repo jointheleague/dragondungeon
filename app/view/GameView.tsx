@@ -63,15 +63,11 @@ export class GameView extends Component<GameViewProps, GameViewState> {
 
     this.props.stateManager.room.onMessage('chatlog', chatMessage => {
         console.log(chatMessage);
-        if (typeof (document.querySelector('#chatlog') as any) == undefined) {
-          (document.querySelector('#chatlog') as any).style.display = 'block'
-          if (document.querySelectorAll('.chatlog-item').length >= 3) {
-            document.querySelector('#chatlog').innerHTML = ''
-          }
-          document.querySelector('#chatlog').innerHTML += `<p class='chatlog-item'>${chatMessage}</p>`
-          setTimeout(() => SFXPlayTimeout = false, 1000)
-          setTimeout(() => (document.querySelector('#chatlog') as any).style.display = 'none', 10000)
+        if (document.querySelectorAll('.chatlog-item').length >= 5) {
+          document.querySelector('#chatlog').innerHTML = ''
         }
+        document.querySelector('#chatlog').innerHTML += `<p class='chatlog-item'>${chatMessage}</p>`
+        setTimeout(() => SFXPlayTimeout = false, 1000)
     })
   }
 

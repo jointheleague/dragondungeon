@@ -490,7 +490,7 @@ export class GameRoom extends Room<GameState> {
 				if(this.state.players[id].coins > 0 ) {
 					try {
 						this.state.players[id].colyseusClient.send('sfx', '/audio/coinjar.wav')
-						this.broadcast('chatlog', `${this.state.players[id].onlineName} deposited ${this.state.players[id].coins} coins!`)
+						this.broadcast('chatlog', `${this.state.players[id].onlineName} <img src='/img/game/coinJar.png' height='20px' height='20px' style='image-rendering:pixelated' /> ${this.state.players[id].coins}`)
 					} catch {}
 				}
 				this.state.players[id].coins = 0;// remove coins
@@ -522,7 +522,7 @@ export class GameRoom extends Room<GameState> {
 					if (prevCoins < 10 && coins >= 10) {
 						try {
 							this.state.players[id].colyseusClient.send('sfx', '/audio/error.wav')
-							this.state.players[id].colyseusClient.send('chatlog', 'Bank your coins!')
+							this.state.players[id].colyseusClient.send('chatlog', '<img src="/img/game/icon.png" width="20px" height="20px" /> out of space')
 						} catch {}
 					}
 					this.state.players[id].coinsPickedUp += Math.min(coins, 10) - this.state.players[id].coins;
