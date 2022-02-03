@@ -11,7 +11,7 @@ export class Bat extends Schema {
 	y: number = 1;
 	
 	@type("number")
-	speed: number = 1;
+	speed: number = 3;
 
 	@type("number")
 	angle: number = 0;
