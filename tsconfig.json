@@ -4,6 +4,7 @@
     "esModuleInterop": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "baseUrl": "./",
     "allowJs": true,
     "jsx": "preserve",
     "target": "es6",

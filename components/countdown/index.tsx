@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
 import './countdown.module.css';
-import { IGameState, ICountdown } from '../../app/state/types';
+import { ICountdown } from '../../app/state/types';
+import { GameState } from '../../common';
 interface GameViewProps {
-  state: IGameState;
+  state: GameState;
 }
 
 interface CountdownProps {

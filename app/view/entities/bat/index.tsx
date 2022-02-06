@@ -25,7 +25,7 @@ export const Bat = (props: IProps) => {
     let coinImages = [batImage1, batImage2, batImage3, batImage4];
     let textures: PIXI.AnimatedSprite["textures"] = [];
     coinImages.forEach(image =>{
-      let texture = PIXI.Texture.from(image);
+      let texture = PIXI.Texture.from(image.src);
        textures.push(texture);
     });
     return textures;

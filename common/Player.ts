@@ -4,17 +4,22 @@ import { Bar } from "./Bar";
 import { Fireball } from "./Fireball";
 import { IInputs } from "./IInputs";
 
-
 export class Player extends Schema {
 
 	@type([Fireball])
 	fireballs = new ArraySchema < Fireball > ();
 
 	@type("number")
-	x: number = 0;
+	botTimeout: number = Math.random() * 5000
 
 	@type("number")
-	y: number = 0;
+	health: number = 10
+
+	@type("number")
+	x: number = 1500;
+
+	@type("number")
+	y: number = 1500;
 
 	@type("number")
 	angle: number = Math.PI;
@@ -41,7 +46,7 @@ export class Player extends Schema {
 	skinType: string;
 
 	@type("number")
-	speed: number = 18;
+	speed: number = 27;
 
 	@type("number")
 	deceleration: number = 1;
@@ -85,19 +90,19 @@ export class Player extends Schema {
 		this.team = teamNum;
 		this.ballType = ballType;
 		this.skinType = skinType;
-		this.setPosition();
+		//this.setPosition();
 	}
 
-	setPosition(){
+	/* setPosition(){
 		var newX = 0;
 		var newY = 0;
 		do {
-			newX = Math.random()*4000;
-			newY = Math.random()*4000;
+			newX = Math.random()*100;
+			newY = Math.random()*100;
 		}while (Maths.checkWalls(newX, newY, 45) ||  (newX > 500 && newY > 500 && newX < 3500 && newY < 3500))
 		this.x = newX;
 		this.y = newY;
-	} 
+	} */
 
 	inputs(i: IInputs) {
 		if(i.autoshoot && !this.activeInputs.autoshoot){
@@ -125,14 +130,16 @@ export class Player extends Schema {
 	fireballCooldown: number = 0;
 	tick(dx: number) {
 		const ticks = dx / 50;
-		if (this.direction.x !== 0 || this.direction.y !== 0) {
+		/* if (this.direction.x !== 0 || this.direction.y !== 0) {
 			this.move(this.direction.x, this.direction.y, (this.speed+this.coins) * (1/this.deceleration) * ticks)
 			if(this.deceleration > 1){
 				this.deceleration *= .9;
 			}
-		}
+		}*/
 		this.fireballCooldown -= ticks;
-		if ((this.autoshootOn || this.activeInputs.space) && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI), 22.5)) {
+		//i temp changed this line bc idk what the checkwalls does exactly
+		//old: if ((this.autoshootOn || this.activeInputs.space) && this.fireballCooldown <= 0 && !Maths.checkWalls(this.x + 45 * Math.cos(this.angle + Math.PI),this.y + 45 * Math.sin(this.angle + Math.PI), 22.5)) {
+		if ((this.autoshootOn || this.activeInputs.space) && this.fireballCooldown <= 0) {
 			switch(this.ballType){
 				case "electric":
 					this.fireballCooldown = 12;
@@ -152,7 +159,7 @@ export class Player extends Schema {
 			const fireball = new Fireball(this.x , this.y , this.angle, 6, this.ballType, 40, this.team);
 			this.fireballs.push(fireball);
 		}
-
+		/*
 		for (let fireball of this.fireballs) {
 			fireball.lifetime -= ticks;
 
@@ -169,6 +176,7 @@ export class Player extends Schema {
 				fireball.lifetime -= .3;
 			}
 		}
+		*/
 		for (var i = 0; i < this.fireballs.length; i++) {
 			if (this.fireballs[i].lifetime <= 0) {
 				this.fireballs.splice(i, 1);
@@ -179,7 +187,7 @@ export class Player extends Schema {
 		this.bar.y = this.y;
 	}
 
-	move(dirX: number, dirY: number, speed: number) {
+	/*move(dirX: number, dirY: number, speed: number) {
 		const magnitude = Maths.normalize2D(dirX, dirY);
 		const speedX = Maths.round2Digits(dirX * (speed / magnitude));
 		const speedY = Maths.round2Digits(dirY * (speed / magnitude));
@@ -187,30 +195,11 @@ export class Player extends Schema {
 		const newY = this.y + speedY;
 		if(!Maths.checkWalls(this.x, newY, 45)){
 			this.y = newY;
-		}
+		} 
 		if(!Maths.checkWalls(newX, this.y, 45)){
 			this.x = newX;
 		}
 		
-	}
-
-	push(angle : number, speed: number) {
-		const oldX = this.x;
-		const oldY = this.y;
-		const newX = oldX + (speed * Math.cos(angle));
-		const newY = oldY + (speed * Math.sin(angle));
-
-		if (!Maths.checkWalls(oldX, newY, 45)) {
-			this.y = newY;
-		}
-		if (!Maths.checkWalls(newX, oldY, 45)) {
-			this.x = newX;
-		}
-		
-	}
-
-	
-
-
+	}*/
 }
 

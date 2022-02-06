@@ -21,9 +21,12 @@ export class Wall extends Schema {
 	@type("number")
     health: number = 10;
 
+    @type("boolean")
+    isRotated: boolean = false;
+
     gamemode: string;
 
-	constructor(x: number = 1000, y: number = 1000, xLen: number, yLen: number, angle: number, health: number, gamemode: string) {
+	constructor(x: number = 1000, y: number = 1000, xLen: number, yLen: number, isRotated: boolean, health: number, gamemode: string) {
 		super()
 		this.x = x;
 		this.y = y;
@@ -31,10 +34,14 @@ export class Wall extends Schema {
         this.yLength = yLen;
         this.health = health;
         this.gamemode = gamemode;
-        this.angle = angle;
+        this.isRotated = isRotated;
+        if(isRotated == true){
+            this.angle = Math.PI/2
+        }
+            
 	}
 
-	checkHit(objectX: number, objectY: number, radius: number, isFireball: boolean) {
+	/*checkHit(objectX: number, objectY: number, radius: number, isFireball: boolean) {
 		if(this.health<=0){
             if(objectX+radius>this.x && objectX+radius<this.x+this.xLength){
                 if(objectY+radius>this.y && objectY+radius<this.y+this.yLength){
@@ -49,7 +56,7 @@ export class Wall extends Schema {
             }
         }
         return false;
-	}
+	} */
 
 
 }

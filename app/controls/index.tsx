@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { IInputs } from './types';
+import { IInputs } from '../../common';
 import { Viewport } from 'pixi-viewport';
 import ReactNipple from 'react-nipple';
 
@@ -74,7 +74,7 @@ export const Controls = (props: ControlProps) => {
 
         updateAndSend(change);
       } catch {
-        console.log('Malfunctioning HID/Inputs');
+        console.error('Malfunctioning HID');
       }
     }
     window.addEventListener("keydown", keydown)
@@ -105,12 +105,11 @@ export const Controls = (props: ControlProps) => {
       width: '100vw',
       height: '100vh'
     }} onClick={() => {
-      console.log('tap');
       var change = controlsDown[' '] || {};
       updateAndSend(change);
     }} />
     <ReactNipple
-      options={{ color: 'transparent', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
+      options={{ color: '#c60c30', mode: 'dynamic', position: { bottom: '50%', right: '50%' } }}
       style={{
         position: 'fixed',
         width: '100vw',

@@ -38,7 +38,7 @@ export const Coin = (props: IProps) => {
     
     let textures: PIXI.AnimatedSprite["textures"] = [];
     coinImages.forEach(image =>{
-      let texture = PIXI.Texture.from(image);
+      let texture = PIXI.Texture.from(image.src);
        textures.push(texture);
     });
     return textures;
@@ -48,8 +48,8 @@ export const Coin = (props: IProps) => {
   return (
     <AnimatedSprite
     anchor={new PIXI.Point(0.5, 0.5)}
-    width ={props.size}
-    height = {props.size}
+    width ={props.size * 2}
+    height = {props.size * 2}
     textures = {coinTextures}
     x={props.x}
     animationSpeed = {ANIMATION_SPEED}

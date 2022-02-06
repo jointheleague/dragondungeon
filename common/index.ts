@@ -11,12 +11,8 @@ import { CoinJar } from './CoinJar';
 import { BorderFence } from './BorderFence';
 import { MovingBackground } from './MovingBackground';
 import { Countdown } from './Countdown';
-import { CircleBat } from './Bat';
-import { LineBat } from './Bat';
 import { Bat } from './Bat';
 import { Wall } from "./Wall";
 import { Skull } from './Skull';
-import { CircleSkull } from './Skull';
-import { LineSkull } from './Skull';
 
-export { Maths, Geometry, IInputs, Fireball, GameState, Coin, Bar, Player, CoinJar, Wall, BorderFence, MovingBackground, Countdown, CircleBat, LineBat, Bat, Skull, CircleSkull, LineSkull };
+export { Maths, Geometry, IInputs, Fireball, GameState, Coin, Bar, Player, CoinJar, Wall, BorderFence, MovingBackground, Countdown, Bat, Skull };

@@ -23,7 +23,7 @@ export class GameState extends Schema {
 		map: Player
 	})
 	players = new MapSchema < Player > ();
-	
+
 	@type({map: Coin})
 	coins = new MapSchema < Coin > ();
 
@@ -31,14 +31,14 @@ export class GameState extends Schema {
 	fences = new MapSchema < BorderFence > ();
 
 	@type(Countdown)
-	countdown = new Countdown(0, 30);
+	countdown = new Countdown(3, 0);
 
 	@type({map: Bat})
 	bats = new MapSchema <Bat>();
 
 	@type({map: Skull})
 	skulls = new MapSchema <Skull>();
-	
+
 	@type("boolean")
 	debugOn: boolean = false;
 
@@ -53,19 +53,19 @@ export class GameState extends Schema {
 	batRot: number = 0;
 
 	@type("number")
-	gamewidth: number = 4000;
+	gamewidth: number = 3000;
 
 	@type("number")
-	gameheight: number = 4000;
+	gameheight: number = 3000;
 
-	
+
 	@type(CoinJar)
 	coinJar = new CoinJar(this.gamewidth/2, this.gameheight/2);
 
 	//"FFA" or "coinCapture"
 	@type("string")
 	gamemode: string = "FFA"
-
+	
 	constructor() {
 		super();
 	}
