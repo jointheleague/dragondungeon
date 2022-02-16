@@ -38,7 +38,7 @@ app.prepare().then(() => {
     createSecureServer(secureServerOptions, (req, res) => { handle(req, res, parse(req.url, true))})
 
   clientServer.listen(8080, () => {
-    console.log('client'.green + ' - localhost:8080 - ' + (secureServer ? 'https'.green : 'http'.yellow))
+    console.log('client'.green + ' - [::]:8080 - ' + (secureServer ? 'https'.green : 'http'.yellow))
   })
 })
 
@@ -56,4 +56,4 @@ const colyseusServer = new Server({
 colyseusServer.define('game', GameRoom)
 
 colyseusServer.listen(1337)
-console.log('server'.green + ' - localhost:1337 - ' + (secureServer ? 'https'.green : 'http'.yellow))
+console.log('server'.green + ' - [::]:1337 - ' + (secureServer ? 'https'.green : 'http'.yellow))

@@ -7,7 +7,7 @@ import { GameView } from './GameView'
 import { MapSchema } from '@colyseus/schema'
 import { Player } from 'common'
 let stateManager = new StateManager(
-  new ColyseusService('ws', 'localhost:1337'),
+  new ColyseusService('ws', window.location.hostname + ':1337'),
   'random',
 )
 
