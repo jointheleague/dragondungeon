@@ -33,27 +33,39 @@ const handle = app.getRequestHandler()
 
 // Start Client
 app.prepare().then(() => {
-  let clientServer = !secureServer ?
-    createServer((req, res) => { handle(req, res, parse(req.url, true))}) :
-    createSecureServer(secureServerOptions, (req, res) => { handle(req, res, parse(req.url, true))})
+  let clientServer = !secureServer
+    ? createServer((req, res) => {
+        handle(req, res, parse(req.url, true))
+      })
+    : createSecureServer(secureServerOptions, (req, res) => {
+        handle(req, res, parse(req.url, true))
+      })
 
   clientServer.listen(8080, () => {
-    console.log('client'.green + ' - [::]:8080 - ' + (secureServer ? 'https'.green : 'http'.yellow))
+    console.log(
+      'client'.green +
+        ' - [::]:8080 - ' +
+        (secureServer ? 'https'.green : 'http'.yellow),
+    )
   })
 })
 
 // Start Server
-let gameServer = !secureServer ?
-    createServer() :
-    createSecureServer(secureServerOptions)
+let gameServer = !secureServer
+  ? createServer()
+  : createSecureServer(secureServerOptions)
 
 const colyseusServer = new Server({
   transport: new WebSocketTransport({
-    server: gameServer
-  })
+    server: gameServer,
+  }),
 })
 
 colyseusServer.define('game', GameRoom)
 
 colyseusServer.listen(1337)
-console.log('server'.green + ' - [::]:1337 - ' + (secureServer ? 'https'.green : 'http'.yellow))
+console.log(
+  'server'.green +
+    ' - [::]:1337 - ' +
+    (secureServer ? 'https'.green : 'http'.yellow),
+)
