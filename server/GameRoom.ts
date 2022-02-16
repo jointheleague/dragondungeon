@@ -74,7 +74,7 @@ export class GameRoom extends Room<GameState> {
 
 	async onJoin(client: Client, options: { token: string }, _2: any) {
 
-		for (let batCreationIndex = 0; batCreationIndex < 70; batCreationIndex++) { this.manageBat() }
+		for (let batCreationIndex = 0; batCreationIndex < 10; batCreationIndex++) { this.manageBat() }
 
 		this.state.skulls.set(v4(), new Skull(Math.floor(Math.random() * 10000), 1500, 1500, 1))
 		this.state.skulls.set(v4(), new Skull(Math.floor(Math.random() * 10000), 0, 1500, 1))
