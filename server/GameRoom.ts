@@ -369,7 +369,7 @@ export class GameRoom extends Room<GameState> {
 	tick() {
 
 		if (this.state.players.size < 2) {
-			for (let botIndex = 0; botIndex < 3; botIndex++) {
+			for (let botIndex = 0; botIndex < 2; botIndex++) {
 				let botNames = require('./botnames.json')
 
 				let ballType = 'fire'
