@@ -73,9 +73,7 @@ export const Controls = (props: ControlProps) => {
         const change = { angle: -Math.atan2(X - e.x, Y - e.y) + Math.PI / 2 };
 
         updateAndSend(change);
-      } catch {
-        console.error('Malfunctioning HID');
-      }
+      } catch {}
     }
     window.addEventListener("keydown", keydown)
     window.addEventListener("keyup", keyup)

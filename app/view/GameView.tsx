@@ -82,8 +82,6 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     let bats = [];
     let skulls = [];
 
-    console.log(this.props.state.bats)
-
     this.props.state.bats.forEach(bat => {
       bats.push(<Bat x={bat.x} y={bat.y} rot={bat.angle} key={bat.key.toString()}/>)
     });
@@ -118,9 +116,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       try {
           this.viewport.x = -me.x + window.innerWidth / 2;
           this.viewport.y = -me.y + window.innerHeight / 2;
-      } catch (e) {
-        console.error(e);
-      }
+      } catch {}
     }
 
     var tileAmt = 19;
