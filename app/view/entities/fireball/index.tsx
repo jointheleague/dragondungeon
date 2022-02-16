@@ -65,9 +65,9 @@ export const FireballView = (props: IProps) => {
         fireballImages = [fireball1, fireball2, fireball3, fireball4];
     }
     //fireballImages = [blankBall];
-    let textures: PIXI.AnimatedSprite["textures"] = [];
+    let textures = [];
     fireballImages.forEach(image =>{
-      let texture = PIXI.Texture.from(image);
+      let texture = PIXI.Texture.from(image.src);
        textures.push(texture);
     });
     return textures;

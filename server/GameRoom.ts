@@ -13,7 +13,8 @@ import {
 	Fireball,
 	Bat,
 	Skull,
-	Wall
+	Wall,
+	CoinJar
 } from '../common';
 
 import * as admin from 'firebase-admin';
@@ -171,7 +172,7 @@ export class GameRoom extends Room<GameState> {
 
 	startGameLoop() {
 		this.setWalls(false)
-
+		this.setCoinJar()
 		this.gameInt = setInterval(() => {
 
 			this.clock.tick();
@@ -189,9 +190,20 @@ export class GameRoom extends Room<GameState> {
 		});
 	}
 
+	setCoinJar(){
+		if(this.state.gamemode == "CTC"){
+			this.state.coinJars.set(v4(), new CoinJar(this.state.gamewidth/4, this.state.gameheight/2, 1))
+			this.state.coinJars.set(v4(), new CoinJar(this.state.gamewidth/1.25, this.state.gameheight/2, 2))
+		} else{
+			this.state.coinJars.set(v4(), new CoinJar(this.state.gamewidth/2, this.state.gameheight/2, 0))
+		}
+	}
+
 	spawnCoin() {
 		var num = Math.random();
 		var size = 20;
+		var xPos
+		var yPos
 		if (num >= .75) {
 			size += 5;
 			if (num >= .95) {
@@ -202,14 +214,30 @@ export class GameRoom extends Room<GameState> {
 			}
 		}
 		var teamNum;
-		if (this.state.gamemode == 'CTC') { teamNum = 1; }
-		else { teamNum = 0; }
-		let xPos = Math.random() * this.state.gamewidth
-		let yPos = Math.random() * this.state.gameheight
-		while (this.checkWalls(xPos, yPos, size, false)) {
+		if (this.state.gamemode == 'CTC') { 
+			teamNum = 1; 
+			if(this.state.coins.size % 2 == 0){
+				xPos = Math.random()*700+100
+				yPos = Math.random()*800+1100
+			}
+			else if(this.state.coins.size%2 == 1){
+				teamNum = 2
+				xPos = Math.random()*800+2100
+				yPos = Math.random()*800+1100
+			}
+		}
+		else {
+			teamNum = 0; 
 			xPos = Math.random() * this.state.gamewidth
 			yPos = Math.random() * this.state.gameheight
+			while (this.checkWalls(xPos, yPos, size, false)) {
+				xPos = Math.random() * this.state.gamewidth
+				yPos = Math.random() * this.state.gameheight
+			}
+
 		}
+		
+		
 		this.state.coins.set(v4(), new Coin(this.state.coins.size, xPos, yPos, size, teamNum));
 
 
@@ -254,30 +282,36 @@ export class GameRoom extends Room<GameState> {
 		const wallLength = 700
 		const wallWidth = 50
 
-		//bottom right
-		const wall2 = new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, true, 2, "coingrab")
-		const wall3 = new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
-		//bottom left
-		const wall4 = new Wall((gamewidth / 2) - midAreaLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, true, 2, "coingrab")
-		const wall5 = new Wall((gamewidth / 2) - midAreaLength - wallLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
-		//top left
-		const wall6 = new Wall((gamewidth / 2) - midAreaLength, (gameheight / 2) - midAreaLength - wallLength, wallLength, wallWidth, true, 2, "coingrab")
-		const wall7 = new Wall((gamewidth / 2) - midAreaLength - wallLength, (gameheight / 2) - midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
-		//top right
-		const wall8 = new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) - midAreaLength - wallLength, wallLength, wallWidth, true, 2, "coingrab")
-		const wall9 = new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) - midAreaLength, wallLength, wallWidth, false, 2, "coingrab")
-
-		this.state.walls[v4()] = wall2
-		this.state.walls[v4()] = wall3
-
-		this.state.walls[v4()] = wall4
-		this.state.walls[v4()] = wall5
-
-		this.state.walls[v4()] = wall6
-		this.state.walls[v4()] = wall7
-
-		this.state.walls[v4()] = wall8
-		this.state.walls[v4()] = wall9
+		var walls: Wall[] = [];
+		if(this.state.gamemode == "CTC"){
+			//left side
+			//walls.push(new Wall(0, (gameheight/3), (gamewidth/3), wallWidth, false, 10, "CTC"))
+			for(let i = 0; i<5; i++){
+				walls.push(new Wall(i*((gamewidth/3)/5), (gameheight/3), (gamewidth/3)/5, wallWidth, false, 10, "CTC"))
+			}
+			walls.push(new Wall(0, (gameheight/1.5), (gamewidth/3), wallWidth, false, 10, "CTC"))
+			walls.push(new Wall(gamewidth/3, gameheight/3, gamewidth/3, wallWidth, true, 10, "CTC"))
+			//right side
+			walls.push(new Wall(gamewidth/1.5, (gameheight/3), (gamewidth/3), wallWidth, false, 10, "CTC"))
+			walls.push(new Wall(gamewidth/1.5, (gameheight/1.5), (gamewidth/3), wallWidth, false, 10, "CTC"))
+			walls.push(new Wall(gamewidth/1.5, gameheight/3, gamewidth/3, wallWidth, true, 10, "CTC"))
+		} else{
+			//bottom right
+			walls.push(new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, true, 2, "coingrab"))
+			walls.push(new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, false, 2, "coingrab"))
+			//bottom left
+			walls.push(new Wall((gamewidth / 2) - midAreaLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, true, 2, "coingrab"))
+			walls.push(new Wall((gamewidth / 2) - midAreaLength - wallLength, (gameheight / 2) + midAreaLength, wallLength, wallWidth, false, 2, "coingrab"))
+			//top left
+			walls.push(new Wall((gamewidth / 2) - midAreaLength, (gameheight / 2) - midAreaLength - wallLength, wallLength, wallWidth, true, 2, "coingrab"))
+			walls.push(new Wall((gamewidth / 2) - midAreaLength - wallLength, (gameheight / 2) - midAreaLength, wallLength, wallWidth, false, 2, "coingrab"))
+			//top right
+			walls.push(new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) - midAreaLength - wallLength, wallLength, wallWidth, true, 2, "coingrab"))
+			walls.push(new Wall((gamewidth / 2) + midAreaLength, (gameheight / 2) - midAreaLength, wallLength, wallWidth, false, 2, "coingrab"))
+		}
+		for(let wall of walls){
+			this.state.walls[v4()] = wall
+		}
 	}
 
 	removeDeadWalls() {
@@ -420,6 +454,8 @@ export class GameRoom extends Room<GameState> {
 
 		for (let id of this.state.players.keys()) {
 
+			//console.log(this.state.players[id].x+"   "+this.state.players[id].y)
+
 			this.movePlayer(this.state.players[id], dx / 50)
 			this.moveFireballs(this.state.players[id], dx / 50)
 
@@ -504,17 +540,18 @@ export class GameRoom extends Room<GameState> {
 				}
 
 			}
-
-			if (this.state.coinJar.checkHit(this.state.players[id].x, this.state.players[id].y, 0)) {
-				// when a player has collided with the coinjar
-				this.state.players[id].score += this.state.players[id].coins;// add coins to players score
-				if (this.state.players[id].coins > 0) {
-					try {
-						this.state.players[id].colyseusClient.send('sfx', '/audio/coinjar.wav')
-						this.broadcast('chatlog', `${this.state.players[id].onlineName} <img src='/img/game/coinJar.png' height='20px' height='20px' style='image-rendering:pixelated' /> ${this.state.players[id].coins}`)
-					} catch { }
+			for(let coinJarId of this.state.coinJars.keys()){
+				if (this.state.coinJars[coinJarId].checkHit(this.state.players[id].x, this.state.players[id].y, this.state.players[id].team)) {
+					// when a player has collided with the coinjar
+					this.state.players[id].score += this.state.players[id].coins;// add coins to players score
+					if (this.state.players[id].coins > 0) {
+						try {
+							this.state.players[id].colyseusClient.send('sfx', '/audio/coinjar.wav')
+							this.broadcast('chatlog', `${this.state.players[id].onlineName} <img src='/img/game/coinJar.png' height='20px' height='20px' style='image-rendering:pixelated' /> ${this.state.players[id].coins}`)
+						} catch { }
+					}
+					this.state.players[id].coins = 0;// remove coins
 				}
-				this.state.players[id].coins = 0;// remove coins
 			}
 
 			for (let cid of this.state.coins.keys()) {

@@ -81,6 +81,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
     let hudBars = []
     let bats = [];
     let skulls = [];
+    let coinJars = []
 
     console.log(this.props.state.bats)
 
@@ -142,7 +143,7 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       walls.push(<Wall x={i*xLen - yLen} y={this.props.state.gameheight} xLength ={xLen} yLength = {yLen} angle = {0} />)
       walls.push(<Wall x={0} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
       walls.push(<Wall x={this.props.state.gamewidth + yLen} y={i*xLen} xLength ={xLen} yLength = {yLen} angle = {Math.PI/2} />)
-    }    
+    }
     //top right
     //walls.push(<Wall x={this.props.state.gamewidth/2 + 240} y={this.props.state.gameheight/2 - 240} xLength ={xLenInner} yLength = {yLen} angle = {-Math.PI/2} />)
     //walls.push(<Wall x={this.props.state.gamewidth/2 + 240} y={this.props.state.gameheight/2 - 280} xLength ={xLenInner} yLength = {yLen} angle = {0} />)
@@ -164,10 +165,12 @@ export class GameView extends Component<GameViewProps, GameViewState> {
       })
     }
 
-    let coinJar = <CoinJar x={1500} y={1500} key={'coinJar'} team={0} />
+    this.props.state.coinJars.forEach(coinJar => {
+      coinJars.push(<CoinJar x={coinJar.x} y={coinJar.y} key={v4()} team={coinJar.team} />)
+    });
 
     render(
-      <>{ tiles }{ walls }{ coins }{ coinJar }{ dragons }{ hudBars }{ bats }{ skulls }</>,
+      <>{ tiles }{ walls }{ coins }{ coinJars }{ dragons }{ hudBars }{ bats }{ skulls }</>,
       this.viewport
     )
   }

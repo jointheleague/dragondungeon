@@ -24,6 +24,8 @@ export class Wall extends Schema {
     @type("boolean")
     isRotated: boolean = false;
 
+    
+
     gamemode: string;
 
 	constructor(x: number = 1000, y: number = 1000, xLen: number, yLen: number, isRotated: boolean, health: number, gamemode: string) {

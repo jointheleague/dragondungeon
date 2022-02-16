@@ -48,7 +48,6 @@ export class GameState extends Schema {
 	@type({map: Wall})
 	walls = new MapSchema<Wall>();
 
-
 	@type("number")
 	batRot: number = 0;
 
@@ -59,13 +58,14 @@ export class GameState extends Schema {
 	gameheight: number = 3000;
 
 
-	@type(CoinJar)
-	coinJar = new CoinJar(this.gamewidth/2, this.gameheight/2);
+	@type({map: CoinJar})
+	coinJars = new MapSchema<CoinJar>();
+
 
 	//"FFA" or "coinCapture"
 	@type("string")
-	gamemode: string = "FFA"
-	
+	gamemode: string = "CTC"
+
 	constructor() {
 		super();
 	}

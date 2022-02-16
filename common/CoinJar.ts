@@ -11,10 +11,11 @@ export class CoinJar extends Schema {
 	@type("number")
 	team: number = 0;
 
-	constructor(x: number, y: number) {
+	constructor(x: number, y: number, teamNum: number) {
 		super()
-		this.x = x;
-		this.y = y;
+		this.x = x
+		this.y = y
+		this.team = teamNum
 	}
 
 	checkHit(dragonX: number, dragonY: number, teamNum: number) {
